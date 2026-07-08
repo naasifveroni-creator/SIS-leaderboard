@@ -5,12 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Δ SIS Performance · Delta</title>
   <style>
-    /* ---------- RESET & BASE ---------- */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
     }
 
     body {
@@ -59,19 +58,19 @@
       position: relative;
     }
 
-    /* ========== SLIDE 0: TITLE ========== */
+    /* SLIDE 0: TITLE */
     #slide0 {
       background: url('slide-title.webp.jpg') center/cover no-repeat, #0b1a33;
     }
 
-    /* ========== SLIDE 1 & 2: LEADERBOARD ========== */
+    /* SLIDE 1 & 2: LEADERBOARD */
     #slide1,
     #slide2 {
       background: url('slide-data.webp.jpg') center/cover no-repeat, #f0f3f8;
       padding: 0;
     }
 
-    /* Table overlay positioning */
+    /* Table overlay */
     #slide1 .table-wrap,
     #slide2 .table-wrap {
       padding: 16% 6% 6% 6%;
@@ -82,7 +81,6 @@
       align-items: center;
     }
 
-    /* Table styling */
     #slide1 .table-wrap table,
     #slide2 .table-wrap table {
       width: 100%;
@@ -141,7 +139,6 @@
       color: #0b1a33;
     }
 
-    /* #1 rank – RED accent */
     #slide1 .table-wrap tr.top1 td,
     #slide2 .table-wrap tr.top1 td {
       background: #fef0ee;
@@ -169,7 +166,7 @@
       width: 100%;
     }
 
-    /* ---------- NAVIGATION ---------- */
+    /* NAVIGATION */
     .nav-controls {
       position: absolute;
       bottom: 2%;
@@ -234,7 +231,6 @@
       background: #fff;
     }
 
-    /* ---------- RESPONSIVE ---------- */
     @media (max-width: 800px) {
       #slide1 .table-wrap,
       #slide2 .table-wrap {
@@ -284,24 +280,24 @@
   <div class="slide-deck">
     <div class="slides-wrapper" id="slidesWrapper">
 
-      <!-- ========== SLIDE 0: TITLE ========== -->
+      <!-- SLIDE 0: TITLE -->
       <div class="slide active" id="slide0" data-index="0"></div>
 
-      <!-- ========== SLIDE 1: TEAMS ========== -->
+      <!-- SLIDE 1: TEAMS -->
       <div class="slide" id="slide1" data-index="1">
         <div class="table-wrap" id="teamTableWrap">
           <div class="empty-state">Loading teams…</div>
         </div>
       </div>
 
-      <!-- ========== SLIDE 2: AGENTS ========== -->
+      <!-- SLIDE 2: AGENTS -->
       <div class="slide" id="slide2" data-index="2">
         <div class="table-wrap" id="agentTableWrap">
           <div class="empty-state">Loading agents…</div>
         </div>
       </div>
 
-      <!-- ========== NAVIGATION ========== -->
+      <!-- NAVIGATION -->
       <div class="nav-controls">
         <button class="arrow" id="prevSlide">‹</button>
         <div class="dots" id="dotsContainer"></div>
@@ -312,14 +308,12 @@
   </div>
 
   <script>
-    // ---------- SLIDESHOW ENGINE ----------
     const slides = document.querySelectorAll('.slide');
     const dotsContainer = document.getElementById('dotsContainer');
     let currentIndex = 0;
     let autoPlayInterval = null;
     const AUTO_DELAY = 5500;
 
-    // Build dots
     slides.forEach((_, i) => {
       const dot = document.createElement('button');
       dot.className = 'dot' + (i === 0 ? ' active' : '');
@@ -341,13 +335,8 @@
       resetAutoPlay();
     }
 
-    function nextSlide() {
-      goToSlide(currentIndex + 1);
-    }
-
-    function prevSlide() {
-      goToSlide(currentIndex - 1);
-    }
+    function nextSlide() { goToSlide(currentIndex + 1); }
+    function prevSlide() { goToSlide(currentIndex - 1); }
 
     function resetAutoPlay() {
       if (autoPlayInterval) clearInterval(autoPlayInterval);
@@ -371,7 +360,6 @@
       if (e.key === 'ArrowLeft') prevSlide();
     });
 
-    // ---------- DATA LOADER ----------
     function renderTable(containerId, items, type) {
       const container = document.getElementById(containerId);
       if (!items || items.length === 0) {
