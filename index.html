@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Δ SIS Performance · Delta</title>
   <style>
-    /* ---------- RESET & BASE ---------- */
     * {
       margin: 0;
       padding: 0;
@@ -64,71 +63,9 @@
       background: url('slide-title.webp.jpg') center/cover no-repeat, #0b1a33;
     }
 
-    /* ========== SLIDE 1: IMPACTFUL BEHAVIORS ========== */
+    /* ========== SLIDE 1: IMPACTFUL BEHAVIORS (image) ========== */
     #slide1 {
-      background: #0b1a33;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 2rem;
-    }
-
-    #slide1 .behaviors-title {
-      color: #fff;
-      font-size: clamp(1.5rem, 4vw, 3.5rem);
-      font-weight: 300;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 2rem;
-    }
-
-    #slide1 .behaviors-title span {
-      color: #d32f2f;
-      font-weight: 700;
-    }
-
-    #slide1 .behaviors-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.5rem 3rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    #slide1 .behaviors-grid .item {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 60px;
-      padding: 0.8rem 2.2rem;
-      color: #fff;
-      font-size: clamp(0.9rem, 1.5vw, 1.4rem);
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      backdrop-filter: blur(4px);
-      transition: 0.2s;
-    }
-
-    #slide1 .behaviors-grid .item.red {
-      background: #d32f2f;
-      color: #fff;
-      border-color: #d32f2f;
-    }
-
-    #slide1 .behaviors-grid .item.coach {
-      background: #2a4a7f;
-      border-color: #2a4a7f;
-    }
-
-    #slide1 .behaviors-sub {
-      margin-top: 2.5rem;
-      color: #8a9bb0;
-      font-size: clamp(0.8rem, 1.2vw, 1.1rem);
-      letter-spacing: 2px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      padding-top: 1.5rem;
-      width: 60%;
+      background: url('slide-data.webp') center/cover no-repeat, #0b1a33;
     }
 
     /* ========== SLIDE 2 & 3: LEADERBOARD (pure HTML/CSS) ========== */
@@ -379,13 +316,6 @@
         height: 30px;
         font-size: 0.9rem;
       }
-      #slide1 .behaviors-grid {
-        gap: 1rem;
-      }
-      #slide1 .behaviors-grid .item {
-        padding: 0.5rem 1.2rem;
-        font-size: 0.7rem;
-      }
     }
 
     @media (max-width: 500px) {
@@ -415,10 +345,6 @@
         width: 8px;
         height: 8px;
       }
-      #slide1 .behaviors-grid .item {
-        font-size: 0.55rem;
-        padding: 0.3rem 0.8rem;
-      }
     }
   </style>
 </head>
@@ -430,25 +356,10 @@
       <!-- ========== SLIDE 0: TITLE (image) ========== -->
       <div class="slide active" id="slide0" data-index="0"></div>
 
-      <!-- ========== SLIDE 1: IMPACTFUL BEHAVIORS ========== -->
-      <div class="slide" id="slide1" data-index="1">
-        <div class="behaviors-title">
-          <span>Δ</span> IMPACTFUL <span>BEHAVIORS</span>
-        </div>
-        <div class="behaviors-grid">
-          <div class="item">GREET ME</div>
-          <div class="item">RECOGNIZE ME</div>
-          <div class="item">BE KIND TO ME</div>
-          <div class="item">INFORM ME</div>
-          <div class="item red">CONSISTENTLY EXECUTED</div>
-          <div class="item coach">Leaders as Coaches</div>
-        </div>
-        <div class="behaviors-sub">
-          Come to life through our behaviors
-        </div>
-      </div>
+      <!-- ========== SLIDE 1: IMPACTFUL BEHAVIORS (image) ========== -->
+      <div class="slide" id="slide1" data-index="1"></div>
 
-      <!-- ========== SLIDE 2: AGENTS ========== -->
+      <!-- ========== SLIDE 2: AGENTS (HTML table) ========== -->
       <div class="slide" id="slide2" data-index="2">
         <div class="slide-header">
           <div class="logo-area">
@@ -478,7 +389,7 @@
         </div>
       </div>
 
-      <!-- ========== SLIDE 3: TEAMS ========== -->
+      <!-- ========== SLIDE 3: TEAMS (HTML table) ========== -->
       <div class="slide" id="slide3" data-index="3">
         <div class="slide-header">
           <div class="logo-area">
