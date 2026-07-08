@@ -58,12 +58,12 @@
       position: relative;
     }
 
-    /* ========== SLIDE 0: TITLE (image) ========== */
+    /* ========== SLIDE 0: TITLE ========== */
     #slide0 {
       background: url('slide-title.webp.jpg') center/cover no-repeat, #0b1a33;
     }
 
-    /* ========== SLIDE 1: IMPACTFUL BEHAVIORS (image) ========== */
+    /* ========== SLIDE 1: BEHAVIORS ========== */
     #slide1 {
       background: url('slide-data.webp.jpg') center/cover no-repeat, #0b1a33;
     }
@@ -77,14 +77,14 @@
 
     .slide-header {
       background: #0b1a33;
-      padding: 0.6rem 2rem;
+      padding: 0.5rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 0.3rem 1rem;
       flex-shrink: 0;
-      min-height: 10%;
+      min-height: 60px;
     }
 
     .slide-header .logo-area {
@@ -94,13 +94,13 @@
     }
 
     .slide-header .logo-area svg {
-      height: 30px;
+      height: 28px;
       width: auto;
     }
 
     .slide-header .logo-area h1 {
       font-weight: 300;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       letter-spacing: 1px;
       color: #fff;
     }
@@ -142,20 +142,21 @@
       color: #8a9bb0;
     }
 
+    /* TABLE CONTAINER - FILLS REMAINING SPACE */
     .table-wrap {
       flex: 1;
       overflow: hidden;
-      padding: 0.8rem 2rem 0.5rem;
+      padding: 0.5rem 2rem 0.3rem;
       background: #f0f3f8;
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      justify-content: center;
       min-height: 0;
     }
 
     .table-wrap table {
       width: 100%;
       border-collapse: collapse;
-      font-size: clamp(0.65rem, 1vw, 0.9rem);
       background: #ffffff;
       border-radius: 10px;
       overflow: hidden;
@@ -166,20 +167,20 @@
       background: #f5f7fc;
       color: #1a2a4a;
       font-weight: 600;
-      padding: 0.5rem 1rem;
+      padding: 0.3rem 0.8rem;
       text-align: left;
       border-bottom: 2px solid #dce2ec;
-      font-size: clamp(0.5rem, 0.7vw, 0.7rem);
+      font-size: 0.6rem;
       text-transform: uppercase;
       letter-spacing: 0.3px;
     }
 
     .table-wrap td {
-      padding: 0.4rem 1rem;
+      padding: 0.25rem 0.8rem;
       border-bottom: 1px solid #edf0f6;
       vertical-align: middle;
       color: #0b1a33;
-      font-size: clamp(0.6rem, 0.9vw, 0.85rem);
+      font-size: 0.7rem;
     }
 
     .table-wrap tr:last-child td {
@@ -250,9 +251,9 @@
       color: #fff;
       border: none;
       border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      font-size: 1.1rem;
+      width: 34px;
+      height: 34px;
+      font-size: 1rem;
       cursor: pointer;
       transition: 0.2s;
       backdrop-filter: blur(4px);
@@ -294,30 +295,32 @@
     /* ---------- RESPONSIVE ---------- */
     @media (max-width: 800px) {
       .slide-header {
-        padding: 0.4rem 1rem;
+        padding: 0.3rem 1rem;
+        min-height: 45px;
       }
       .slide-header .logo-area h1 {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
       }
       .slide-header .logo-area svg {
-        height: 22px;
+        height: 20px;
       }
       .behavior-tags {
-        padding: 0.15rem 0.6rem;
-        gap: 0.15rem 0.4rem;
+        padding: 0.15rem 0.5rem;
+        gap: 0.15rem 0.3rem;
       }
       .behavior-tags .tag {
-        font-size: 0.4rem;
+        font-size: 0.35rem;
       }
       .table-wrap {
-        padding: 0.5rem 0.8rem 0.3rem;
+        padding: 0.3rem 0.8rem 0.2rem;
       }
-      .table-wrap th,
+      .table-wrap th {
+        font-size: 0.5rem;
+        padding: 0.2rem 0.5rem;
+      }
       .table-wrap td {
-        padding: 0.3rem 0.6rem;
-      }
-      .table-wrap .rank-col {
-        width: 15%;
+        font-size: 0.55rem;
+        padding: 0.15rem 0.5rem;
       }
       .arrow {
         width: 28px;
@@ -328,65 +331,88 @@
 
     @media (max-width: 500px) {
       body {
-        padding: 0.5rem;
+        padding: 0.3rem;
       }
       .slide-deck {
-        border-radius: 10px;
+        border-radius: 8px;
       }
       .slide-header {
         flex-direction: column;
         align-items: flex-start;
-        padding: 0.3rem 0.6rem;
-        gap: 0.2rem;
+        padding: 0.2rem 0.5rem;
+        min-height: 35px;
+        gap: 0.1rem;
+      }
+      .slide-header .logo-area h1 {
+        font-size: 0.6rem;
+      }
+      .slide-header .logo-area svg {
+        height: 16px;
       }
       .behavior-tags {
-        flex-wrap: wrap;
-        gap: 0.1rem 0.3rem;
+        padding: 0.1rem 0.3rem;
+        gap: 0.1rem 0.2rem;
       }
       .behavior-tags .tag {
-        font-size: 0.35rem;
+        font-size: 0.3rem;
+      }
+      .behavior-tags .divider {
+        display: none;
       }
       .table-wrap {
-        padding: 0.3rem 0.4rem 0.2rem;
+        padding: 0.2rem 0.3rem 0.1rem;
       }
-      .table-wrap th,
+      .table-wrap th {
+        font-size: 0.4rem;
+        padding: 0.15rem 0.3rem;
+      }
       .table-wrap td {
-        padding: 0.2rem 0.3rem;
-        font-size: 0.5rem;
+        font-size: 0.45rem;
+        padding: 0.1rem 0.3rem;
+      }
+      .table-wrap .rank-col {
+        width: 15%;
       }
       .dot {
         width: 7px;
         height: 7px;
       }
       .arrow {
-        width: 24px;
-        height: 24px;
-        font-size: 0.7rem;
+        width: 22px;
+        height: 22px;
+        font-size: 0.6rem;
       }
     }
 
-    /* TV / Projector optimization */
+    /* TV / Projector */
     @media (min-width: 1400px) {
       .slide-deck {
         max-width: 90vh;
         max-height: 90vh;
       }
+      .slide-header {
+        min-height: 80px;
+        padding: 0.8rem 3rem;
+      }
       .slide-header .logo-area h1 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
       }
       .slide-header .logo-area svg {
         height: 40px;
       }
       .behavior-tags .tag {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
+      }
+      .table-wrap {
+        padding: 0.8rem 3rem 0.5rem;
       }
       .table-wrap th {
         font-size: 0.85rem;
-        padding: 0.8rem 1.5rem;
+        padding: 0.6rem 1.2rem;
       }
       .table-wrap td {
-        font-size: 1rem;
-        padding: 0.7rem 1.5rem;
+        font-size: 0.95rem;
+        padding: 0.5rem 1.2rem;
       }
     }
   </style>
@@ -396,13 +422,13 @@
   <div class="slide-deck">
     <div class="slides-wrapper" id="slidesWrapper">
 
-      <!-- ========== SLIDE 0: TITLE (image) ========== -->
+      <!-- SLIDE 0: TITLE -->
       <div class="slide active" id="slide0" data-index="0"></div>
 
-      <!-- ========== SLIDE 1: IMPACTFUL BEHAVIORS (image) ========== -->
+      <!-- SLIDE 1: BEHAVIORS -->
       <div class="slide" id="slide1" data-index="1"></div>
 
-      <!-- ========== SLIDE 2: AGENTS ========== -->
+      <!-- SLIDE 2: AGENTS -->
       <div class="slide" id="slide2" data-index="2">
         <div class="slide-header">
           <div class="logo-area">
@@ -432,7 +458,7 @@
         </div>
       </div>
 
-      <!-- ========== SLIDE 3: TEAMS ========== -->
+      <!-- SLIDE 3: TEAMS -->
       <div class="slide" id="slide3" data-index="3">
         <div class="slide-header">
           <div class="logo-area">
@@ -462,7 +488,7 @@
         </div>
       </div>
 
-      <!-- ========== NAVIGATION ========== -->
+      <!-- NAVIGATION -->
       <div class="nav-controls">
         <button class="arrow" id="prevSlide">‹</button>
         <div class="dots" id="dotsContainer"></div>
