@@ -210,6 +210,227 @@
       showStatus('❌ Could not detect repo. Open this page from your GitHub Pages URL.', 'error');
       return;
     }
+
+    try {
+      // 1. Get current file SHA
+      const fileUrl = `https://api.github.com/repos/${repoPath}/contents/data.json`;
+      const headRes = await fetch(fileUrl, {
+        headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+      });
+      if (!headRes.ok) throw new Error('Could not fetch data.json. Check token and repo path.');
+      const fileMeta = await headRes.json();
+      const sha = fileMeta.sha;
+
+      // 2. Commit new content
+      const commitRes = await fetch(fileUrl, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `token ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/vnd.github.v3+json'
+        },
+        body: JSON.stringify({
+          message: `Update SIS leaderboard (${new Date().toLocaleString()})`,
+          content: content,
+          sha: sha
+        })
+      });
+      if (!commitRes.ok) {
+        const err = await commitRes.json();
+        throw new Error(err.message || 'Commit failed');
+      }
+      showStatus('✅ Published! Live page will update in 1–2 minutes (GitHub cache).', 'success');
+    } catch (err) {
+      showStatus(`❌ Error: ${err.message}`, 'error');
+    }
+  });
+
+  // ----- RESET TO SAMPLE -----
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    if (confirm('Reset textarea to sample data?')) {
+      const sample = `1	Sinazo Nogaga	88.18%\n2	Zintle Daba	87.14%\n3	Mbono, Phelisa	86.22%\n4	Botshelo Manoko	85.71%\n5	Jesse Machelm	83.11%\n6	Justin Salisbury	83.00%\n7	Tina Barron	82.58%\n8	Waylon Alexander	81.43%\n9	Terrayn Moses	81.06%\n10	Dawood Thaaqib	80.86%\n11	Daniel Van Der Poel	79.46%\n12	Moegamat Naeem Abrahams	79.16%\n13	Fatima Becket	78.24%\n14	Claasen, Ryan	77.73%\n15	ETHEL ZANELE KARAWE	77.52%\n16	Saban, Mogamat Muaath	75.18%\n17	Ivewe Ncapayi	71.38%\n\n1	Abdul Abrahams	Moses Terrayn V	100.00%\n2	Stone Jade	Mbono, Phelisa	100.00%\n3	Alvino Februarie	Waylon Alexander	100.00%\n4	Shanseau Khabana	Waylon Alexander	100.00%\n5	Casey Williams	Tina Barron	100.00%\n6	Asavela Mkuyana	ETHEL ZANELE KARAWE	100.00%\n7	Gideon Muller	ETHEL ZANELE KARAWE	100.00%\n8	Hanton Kock	Waylon Alexander	100.00%\n9	Denica Williams	Fanti, Siphovuyo	100.00%\n10	Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%`;
+      document.getElementById('rawInput').value = sample;
+      showStatus('↺ Reset to sample data. Preview or publish when ready.', 'success');
+    }
+  });
+</script>
+</body>
+</html>      outline: none;
+    }
+    .actions {
+      display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1.5rem 0 1rem;
+    }
+    .btn {
+      background: #0b1a33; color: #fff; border: none;
+      padding: 0.7rem 2rem; border-radius: 40px; font-weight: 600;
+      font-size: 0.95rem; cursor: pointer; transition: 0.2s;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn:hover { background: #1a3050; }
+    .btn.red {
+      background: #d32f2f; color: #fff;
+    }
+    .btn.red:hover { background: #b71c1c; }
+    .btn.secondary {
+      background: #e9edf4; color: #0b1a33;
+    }
+    .btn.secondary:hover { background: #d5dce8; }
+    .token-input {
+      margin: 1rem 0 0.5rem;
+      display: flex; flex-wrap: wrap; gap: 0.8rem;
+      align-items: center;
+    }
+    .token-input label { font-weight: 600; color: #0b1a33; font-size: 0.9rem; }
+    .token-input input {
+      flex: 1; min-width: 200px; padding: 0.5rem 1rem;
+      border: 1px solid #d0d7e2; border-radius: 30px;
+      font-size: 0.85rem;
+    }
+    #status {
+      margin-top: 1rem; padding: 0.8rem 1.2rem; border-radius: 12px;
+      display: none; font-weight: 500;
+    }
+    #status.success { background: #e1f5e8; color: #1a5a3a; display: block; }
+    #status.error { background: #fde8e8; color: #a13a3a; display: block; }
+    .preview-link { margin-top: 1.8rem; text-align: right; border-top: 1px solid #edf0f6; padding-top: 1.2rem; }
+    .preview-link a { color: #0b1a33; text-decoration: none; font-weight: 500; border-bottom: 1px dashed #b0bcca; }
+    .preview-link a:hover { border-bottom-color: #0b1a33; }
+    @media (max-width: 600px) {
+      .admin-box { padding: 1.2rem; }
+      .header-mini h1 { font-size: 1.3rem; }
+      textarea { height: 240px; }
+    }
+  </style>
+</head>
+<body>
+<div class="admin-box">
+  <div class="header-mini">
+    <svg viewBox="0 0 60 50" fill="none">
+      <path d="M30 2 L2 46 L58 46 L30 2Z" fill="#d32f2f" stroke="#d32f2f" stroke-width="2"/>
+      <path d="M30 10 L10 44 L50 44 L30 10Z" fill="#0b1a33" stroke="#0b1a33" stroke-width="1.5"/>
+      <text x="30" y="38" font-size="14" font-weight="700" fill="#d32f2f" text-anchor="middle">Δ</text>
+    </svg>
+    <h1><span>DELTA</span> · Update SIS Data</h1>
+  </div>
+
+  <div class="info-box">
+    <strong>📋 Paste your new weekly table</strong> – tab or multiple spaces between columns.<br />
+    Teams: <code>Rank  Name  SIS%</code> &nbsp;|&nbsp; Agents: <code>Rank  Name  TeamLeader  SIS%</code><br />
+    <span style="background:#fef0ee; padding:0.1rem 0.6rem; border-radius:6px; font-size:0.85rem; color:#b71c1c;">
+      ⚠️ You need a GitHub token with <code>repo</code> scope to publish.
+    </span>
+  </div>
+
+  <textarea id="rawInput" spellcheck="false">1	Sinazo Nogaga	88.18%
+2	Zintle Daba	87.14%
+3	Mbono, Phelisa	86.22%
+4	Botshelo Manoko	85.71%
+5	Jesse Machelm	83.11%
+6	Justin Salisbury	83.00%
+7	Tina Barron	82.58%
+8	Waylon Alexander	81.43%
+9	Terrayn Moses	81.06%
+10	Dawood Thaaqib	80.86%
+11	Daniel Van Der Poel	79.46%
+12	Moegamat Naeem Abrahams	79.16%
+13	Fatima Becket	78.24%
+14	Claasen, Ryan	77.73%
+15	ETHEL ZANELE KARAWE	77.52%
+16	Saban, Mogamat Muaath	75.18%
+17	Ivewe Ncapayi	71.38%
+
+1	Abdul Abrahams	Moses Terrayn V	100.00%
+2	Stone Jade	Mbono, Phelisa	100.00%
+3	Alvino Februarie	Waylon Alexander	100.00%
+4	Shanseau Khabana	Waylon Alexander	100.00%
+5	Casey Williams	Tina Barron	100.00%
+6	Asavela Mkuyana	ETHEL ZANELE KARAWE	100.00%
+7	Gideon Muller	ETHEL ZANELE KARAWE	100.00%
+8	Hanton Kock	Waylon Alexander	100.00%
+9	Denica Williams	Fanti, Siphovuyo	100.00%
+10	Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%</textarea>
+
+  <div class="token-input">
+    <label for="tokenField">🔑 GitHub Token:</label>
+    <input type="password" id="tokenField" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
+    <span style="font-size:0.75rem; color:#6b7f96;">(stored only in your browser)</span>
+  </div>
+
+  <div class="actions">
+    <button class="btn secondary" id="previewBtn">👁 Preview</button>
+    <button class="btn red" id="publishBtn">🚀 Publish to GitHub</button>
+    <button class="btn secondary" id="resetBtn">↺ Reset to sample</button>
+  </div>
+
+  <div id="status"></div>
+  <div class="preview-link"><a href="index.html" target="_blank">📊 View live board</a></div>
+</div>
+
+<script>
+  // ----- PARSER -----
+  function parseText(text) {
+    const blocks = text.split(/\n\s*\n/).filter(b => b.trim().length > 0);
+    let allTeams = [], allAgents = [];
+    blocks.forEach(block => {
+      const lines = block.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+      const rows = lines.map(l => l.split(/\t| {2,}/).filter(s => s.length > 0));
+      if (rows.length === 0) return;
+      const has4 = rows.some(r => r.length >= 4);
+      const parsed = rows.map(r => {
+        if (has4 && r.length >= 4) {
+          return { rank: parseInt(r[0]), name: r[1], team: r[2], score: r[3] };
+        } else {
+          return { rank: parseInt(r[0]), name: r[1], score: r[2] };
+        }
+      });
+      if (has4) allAgents = allAgents.concat(parsed);
+      else allTeams = allTeams.concat(parsed);
+    });
+    return { teams: allTeams, agents: allAgents };
+  }
+
+  const statusEl = document.getElementById('status');
+  function showStatus(msg, type) {
+    statusEl.textContent = msg;
+    statusEl.className = type;
+  }
+
+  // ----- PREVIEW -----
+  document.getElementById('previewBtn').addEventListener('click', () => {
+    const raw = document.getElementById('rawInput').value;
+    const parsed = parseText(raw);
+    if (!parsed || (parsed.teams.length === 0 && parsed.agents.length === 0)) {
+      showStatus('❌ Could not parse. Use tabs or multiple spaces.', 'error');
+      return;
+    }
+    showStatus(`✅ Parsed OK — Teams: ${parsed.teams.length}, Agents: ${parsed.agents.length}`, 'success');
+  });
+
+  // ----- PUBLISH via GitHub API -----
+  document.getElementById('publishBtn').addEventListener('click', async () => {
+    const token = document.getElementById('tokenField').value.trim();
+    if (!token) {
+      showStatus('❌ Please enter your GitHub token.', 'error');
+      return;
+    }
+    const raw = document.getElementById('rawInput').value;
+    const parsed = parseText(raw);
+    if (!parsed || (parsed.teams.length === 0 && parsed.agents.length === 0)) {
+      showStatus('❌ Invalid data format. Preview first.', 'error');
+      return;
+    }
+
+    // Build the new data.json object
+    const week = 'Week of ' + new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const newData = { week, teams: parsed.teams, agents: parsed.agents };
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
+
+    // Get repo info from the current URL
+    const repoPath = window.location.pathname.split('/').slice(1, 3).join('/'); // e.g. "username/repo"
+    if (!repoPath || repoPath.includes('admin.html')) {
+      showStatus('❌ Could not detect repo. Open this page from your GitHub Pages URL.', 'error');
+      return;
+    }
 <!DOCTYPE html>
 <html lang="en">
 <head>
