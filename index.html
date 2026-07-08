@@ -12,24 +12,27 @@
       font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
     }
 
-    body {
+    html, body {
+      width: 100%;
+      height: 100%;
       background: #0b1a33;
+      overflow: hidden;
+    }
+
+    body {
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
-      padding: 1.5rem;
+      padding: 0;
     }
 
     .slide-deck {
-      max-width: 1200px;
-      width: 100%;
-      aspect-ratio: 16 / 9;
+      width: 100vw;
+      height: 100vh;
       background: #0b1a33;
-      border-radius: 16px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
       overflow: hidden;
       position: relative;
+      border-radius: 0;
     }
 
     .slides-wrapper {
@@ -75,34 +78,34 @@
       padding: 0;
     }
 
-    /* ---------- HEADER ---------- */
+    /* ---------- HEADER (bigger) ---------- */
     .slide-header {
       background: #0b1a33;
-      padding: 0.3rem 1.5rem;
+      padding: 1vh 2vw;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 0.1rem 0.8rem;
+      gap: 0.5vh 1vw;
       flex-shrink: 0;
-      min-height: 38px;
+      min-height: 8vh;
     }
 
     .slide-header .logo-area {
       display: flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.8vw;
     }
 
     .slide-header .logo-area svg {
-      height: 20px;
+      height: 5vh;
       width: auto;
     }
 
     .slide-header .logo-area h1 {
       font-weight: 300;
-      font-size: 0.8rem;
-      letter-spacing: 1px;
+      font-size: 2.5vh;
+      letter-spacing: 0.1em;
       color: #fff;
     }
 
@@ -115,25 +118,25 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 0.1rem 0.3rem;
+      gap: 0.3vh 0.8vw;
       background: rgba(255, 255, 255, 0.06);
-      padding: 0.1rem 0.4rem;
+      padding: 0.3vh 1vw;
       border-radius: 40px;
       border: 1px solid rgba(255, 255, 255, 0.04);
     }
 
     .behavior-tags .tag {
       color: #fff;
-      font-size: 0.4rem;
+      font-size: 1.4vh;
       font-weight: 600;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
     }
 
     .behavior-tags .divider {
       color: rgba(255, 255, 255, 0.2);
       font-weight: 300;
-      font-size: 0.4rem;
+      font-size: 1.2vh;
     }
 
     .behavior-tags .tag.red {
@@ -148,7 +151,7 @@
     .table-wrap {
       flex: 1;
       overflow: hidden;
-      padding: 0.2rem 1.5rem 0.1rem;
+      padding: 1vh 2vw 0.5vh;
       background: #f0f3f8;
       display: flex;
       flex-direction: column;
@@ -156,17 +159,17 @@
     }
 
     .slide-title {
-      font-size: clamp(0.8rem, 1.2vw, 1.2rem);
+      font-size: 3vh;
       font-weight: 700;
       color: #0b1a33;
       text-align: center;
-      padding-bottom: 0.1rem;
+      padding-bottom: 0.5vh;
       flex-shrink: 0;
     }
 
     .slide-title .week-date {
       font-weight: 400;
-      font-size: clamp(0.5rem, 0.7vw, 0.7rem);
+      font-size: 2vh;
       color: #6b7f96;
       display: block;
     }
@@ -175,7 +178,7 @@
     .table-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.5rem 1rem;
+      gap: 1vw 2vw;
       flex: 1;
       min-height: 0;
       align-content: start;
@@ -185,9 +188,9 @@
       width: 100%;
       border-collapse: collapse;
       background: #ffffff;
-      border-radius: 4px;
+      border-radius: 0.5vw;
       overflow: hidden;
-      box-shadow: 0 1px 4px rgba(11, 26, 51, 0.06);
+      box-shadow: 0 0.2vw 0.8vw rgba(11, 26, 51, 0.06);
     }
 
     /* ---------- AGENTS: Single column ---------- */
@@ -202,55 +205,50 @@
       width: 100%;
       border-collapse: collapse;
       background: #ffffff;
-      border-radius: 4px;
+      border-radius: 0.5vw;
       overflow: hidden;
-      box-shadow: 0 1px 4px rgba(11, 26, 51, 0.06);
+      box-shadow: 0 0.2vw 0.8vw rgba(11, 26, 51, 0.06);
     }
 
-    /* ---------- TABLE STYLES ---------- */
+    /* ---------- TABLE STYLES (large) ---------- */
     .table-wrap th {
       background: #f5f7fc;
       color: #1a2a4a;
       font-weight: 600;
-      padding: 0.1rem 0.3rem;
+      padding: 0.6vh 1vw;
       text-align: center;
-      border-bottom: 1.5px solid #dce2ec;
-      font-size: clamp(0.35rem, 0.4vw, 0.45rem);
+      border-bottom: 0.2vw solid #dce2ec;
+      font-size: 1.6vh;
       text-transform: uppercase;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.05em;
     }
 
     .table-wrap td {
-      padding: 0.08rem 0.3rem;
-      border-bottom: 1px solid #edf0f6;
+      padding: 0.5vh 0.8vw;
+      border-bottom: 0.1vw solid #edf0f6;
       vertical-align: middle;
       color: #0b1a33;
       text-align: center;
-      font-size: clamp(0.35rem, 0.4vw, 0.5rem);
+      font-size: 1.8vh;
     }
 
-    /* ===== TEAMS TABLE - ULTRA TIGHT ===== */
-    #slide3 .table-wrap {
-      padding: 0.1rem 1.5rem 0.05rem;
-    }
-
+    /* ===== TEAMS TABLE - adjust for 17 rows ===== */
     #slide3 .table-wrap td {
-      padding: 0.04rem 0.25rem;
-      font-size: clamp(0.3rem, 0.35vw, 0.45rem);
+      padding: 0.3vh 0.6vw;
+      font-size: 1.5vh;
     }
 
     #slide3 .table-wrap th {
-      padding: 0.04rem 0.25rem;
-      font-size: clamp(0.28rem, 0.32vw, 0.4rem);
+      padding: 0.3vh 0.6vw;
+      font-size: 1.3vh;
     }
 
     #slide3 .slide-title {
-      font-size: clamp(0.7rem, 1vw, 1rem);
-      padding-bottom: 0.05rem;
+      font-size: 2.5vh;
     }
 
     #slide3 .slide-title .week-date {
-      font-size: clamp(0.45rem, 0.6vw, 0.6rem);
+      font-size: 1.6vh;
     }
 
     .table-wrap tr:last-child td {
@@ -286,36 +284,36 @@
 
     .table-wrap tr.top1 .score-col {
       color: #d32f2f;
-      font-size: 1.05em;
+      font-size: 1.1em;
     }
 
     .table-wrap .empty-state {
-      padding: 1rem;
+      padding: 2vh;
       text-align: center;
       color: #8a9bb0;
       background: #fff;
-      border-radius: 4px;
+      border-radius: 0.5vw;
       width: 100%;
     }
 
-    /* ---------- FOOTER: Your logo ---------- */
+    /* ---------- FOOTER: Logo (larger) ---------- */
     .slide-footer {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 0.08rem 2rem 0.2rem;
+      padding: 0.3vh 2vw 0.6vh;
       flex-shrink: 0;
       background: #f0f3f8;
-      border-top: 1px solid #e0e5ec;
+      border-top: 0.1vw solid #e0e5ec;
     }
 
     .slide-footer .footer-logo {
-      height: clamp(22px, 2.8vh, 35px);
+      height: 6vh;
       width: auto;
       display: block;
     }
 
-    /* ---------- NAVIGATION ---------- */
+    /* ---------- NAVIGATION (bigger for touch/projector) ---------- */
     .nav-controls {
       position: absolute;
       bottom: 2%;
@@ -324,7 +322,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 1.2rem;
+      gap: 1.5vw;
       z-index: 20;
       pointer-events: none;
     }
@@ -339,9 +337,9 @@
       color: #fff;
       border: none;
       border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      font-size: 0.9rem;
+      width: 4vh;
+      height: 4vh;
+      font-size: 2.5vh;
       cursor: pointer;
       transition: 0.2s;
       backdrop-filter: blur(4px);
@@ -357,12 +355,12 @@
 
     .dots {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.8vw;
     }
 
     .dot {
-      width: 8px;
-      height: 8px;
+      width: 1.2vh;
+      height: 1.2vh;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.3);
       border: none;
@@ -380,199 +378,19 @@
       background: #fff;
     }
 
-    /* ---------- RESPONSIVE ---------- */
-    @media (max-width: 800px) {
-      .slide-header {
-        padding: 0.15rem 0.8rem;
-        min-height: 30px;
-      }
-      .slide-header .logo-area h1 {
-        font-size: 0.55rem;
-      }
-      .slide-header .logo-area svg {
-        height: 14px;
-      }
-      .behavior-tags {
-        padding: 0.05rem 0.3rem;
-        gap: 0.05rem 0.2rem;
-      }
-      .behavior-tags .tag {
-        font-size: 0.3rem;
-      }
-      .behavior-tags .divider {
-        font-size: 0.3rem;
-      }
-      .table-wrap {
-        padding: 0.1rem 0.6rem 0.05rem;
-      }
-      .table-grid {
-        gap: 0.2rem 0.4rem;
-      }
-      .table-wrap th {
-        font-size: 0.3rem;
-        padding: 0.06rem 0.2rem;
-      }
-      .table-wrap td {
-        font-size: 0.3rem;
-        padding: 0.05rem 0.2rem;
-      }
-      #slide3 .table-wrap td {
-        padding: 0.03rem 0.15rem;
-        font-size: 0.28rem;
-      }
-      #slide3 .table-wrap th {
-        padding: 0.03rem 0.15rem;
-        font-size: 0.25rem;
-      }
-      #slide3 .table-wrap {
-        padding: 0.05rem 0.6rem 0.03rem;
-      }
-      #slide3 .slide-title {
-        font-size: 0.6rem;
-      }
-      #slide3 .slide-title .week-date {
-        font-size: 0.4rem;
-      }
-      .slide-footer {
-        padding: 0.05rem 0.8rem 0.15rem;
-      }
-      .slide-footer .footer-logo {
-        height: 18px;
-      }
-      .arrow {
-        width: 22px;
-        height: 22px;
-        font-size: 0.6rem;
-      }
+    /* ---------- RESPONSIVE: fine-tune for small screens ---------- */
+    @media (max-aspect-ratio: 16/9) {
+      /* On narrower screens, reduce font sizes slightly to avoid overlap */
+      .slide-header .logo-area h1 { font-size: 2vh; }
+      .behavior-tags .tag { font-size: 1.2vh; }
+      .slide-title { font-size: 2.5vh; }
+      .table-wrap td { font-size: 1.5vh; }
+      #slide3 .table-wrap td { font-size: 1.2vh; }
     }
 
-    @media (max-width: 500px) {
-      body {
-        padding: 0.3rem;
-      }
-      .slide-deck {
-        border-radius: 8px;
-      }
-      .slide-header {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 0.08rem 0.4rem;
-        min-height: 22px;
-        gap: 0.05rem;
-      }
-      .slide-header .logo-area h1 {
-        font-size: 0.4rem;
-      }
-      .slide-header .logo-area svg {
-        height: 12px;
-      }
-      .behavior-tags {
-        padding: 0.04rem 0.2rem;
-        gap: 0.03rem 0.1rem;
-      }
-      .behavior-tags .tag {
-        font-size: 0.25rem;
-      }
-      .behavior-tags .divider {
-        display: none;
-      }
-      .table-wrap {
-        padding: 0.05rem 0.2rem 0.03rem;
-      }
-      .table-grid {
-        grid-template-columns: 1fr;
-        gap: 0.1rem;
-      }
-      .table-wrap th {
-        font-size: 0.25rem;
-        padding: 0.04rem 0.1rem;
-      }
-      .table-wrap td {
-        font-size: 0.25rem;
-        padding: 0.03rem 0.1rem;
-      }
-      #slide3 .table-wrap td {
-        padding: 0.02rem 0.1rem;
-        font-size: 0.22rem;
-      }
-      #slide3 .table-wrap th {
-        padding: 0.02rem 0.1rem;
-        font-size: 0.2rem;
-      }
-      #slide3 .table-wrap {
-        padding: 0.03rem 0.2rem 0.02rem;
-      }
-      #slide3 .slide-title {
-        font-size: 0.5rem;
-      }
-      #slide3 .slide-title .week-date {
-        font-size: 0.3rem;
-      }
-      .slide-footer {
-        padding: 0.04rem 0.3rem 0.1rem;
-      }
-      .slide-footer .footer-logo {
-        height: 14px;
-      }
-      .dot {
-        width: 6px;
-        height: 6px;
-      }
-      .arrow {
-        width: 18px;
-        height: 18px;
-        font-size: 0.5rem;
-      }
-    }
-
-    /* TV / Projector */
-    @media (min-width: 1400px) {
-      .slide-deck {
-        max-width: 90vh;
-        max-height: 90vh;
-      }
-      .slide-header {
-        min-height: 60px;
-        padding: 0.6rem 2.5rem;
-      }
-      .slide-header .logo-area h1 {
-        font-size: 1.4rem;
-      }
-      .slide-header .logo-area svg {
-        height: 34px;
-      }
-      .behavior-tags .tag {
-        font-size: 0.6rem;
-      }
-      .table-wrap {
-        padding: 0.5rem 2.5rem 0.3rem;
-      }
-      .slide-title {
-        font-size: 1.6rem;
-        padding-bottom: 0.3rem;
-      }
-      .table-wrap th {
-        font-size: 0.7rem;
-        padding: 0.3rem 1rem;
-      }
-      .table-wrap td {
-        font-size: 0.8rem;
-        padding: 0.2rem 1rem;
-      }
-      #slide3 .table-wrap td {
-        padding: 0.1rem 0.6rem;
-        font-size: 0.6rem;
-      }
-      #slide3 .table-wrap th {
-        padding: 0.1rem 0.6rem;
-        font-size: 0.55rem;
-      }
-      .slide-footer {
-        padding: 0.2rem 2.5rem 0.4rem;
-      }
-      .slide-footer .footer-logo {
-        height: 50px;
-      }
+    @media (max-aspect-ratio: 4/3) {
+      .table-grid { grid-template-columns: 1fr; gap: 0.5vh; }
+      #slide3 .table-wrap td { padding: 0.2vh 0.4vw; font-size: 1.2vh; }
     }
   </style>
 </head>
@@ -770,13 +588,11 @@
         return;
       }
 
-      // Split: first 10 rows, remaining rows
       const firstCol = items.slice(0, 10);
       const secondCol = items.slice(10);
 
       let html = '';
 
-      // First column (ranks 1-10)
       html += `<table>
         <thead><tr>
           <th>#</th>
@@ -793,7 +609,6 @@
       });
       html += `</tbody></table>`;
 
-      // Second column (ranks 11-17)
       html += `<table>
         <thead><tr>
           <th>#</th>
