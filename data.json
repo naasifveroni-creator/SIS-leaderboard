@@ -1,0 +1,34 @@
+{
+  "week": "Week of Jun 25 – Jul 01, 2026",
+  "teams": [
+    { "rank": 1, "name": "Sinazo Nogaga", "score": "88.18%" },
+    { "rank": 2, "name": "Zintle Daba", "score": "87.14%" },
+    { "rank": 3, "name": "Mbono, Phelisa", "score": "86.22%" },
+    { "rank": 4, "name": "Botshelo Manoko", "score": "85.71%" },
+    { "rank": 5, "name": "Jesse Machelm", "score": "83.11%" },
+    { "rank": 6, "name": "Justin Salisbury", "score": "83.00%" },
+    { "rank": 7, "name": "Tina Barron", "score": "82.58%" },
+    { "rank": 8, "name": "Waylon Alexander", "score": "81.43%" },
+    { "rank": 9, "name": "Terrayn Moses", "score": "81.06%" },
+    { "rank": 10, "name": "Dawood Thaaqib", "score": "80.86%" },
+    { "rank": 11, "name": "Daniel Van Der Poel", "score": "79.46%" },
+    { "rank": 12, "name": "Moegamat Naeem Abrahams", "score": "79.16%" },
+    { "rank": 13, "name": "Fatima Becket", "score": "78.24%" },
+    { "rank": 14, "name": "Claasen, Ryan", "score": "77.73%" },
+    { "rank": 15, "name": "ETHEL ZANELE KARAWE", "score": "77.52%" },
+    { "rank": 16, "name": "Saban, Mogamat Muaath", "score": "75.18%" },
+    { "rank": 17, "name": "Ivewe Ncapayi", "score": "71.38%" }
+  ],
+  "agents": [
+    { "rank": 1, "name": "Abdul Abrahams", "team": "Moses Terrayn V", "score": "100.00%" },
+    { "rank": 2, "name": "Stone Jade", "team": "Mbono, Phelisa", "score": "100.00%" },
+    { "rank": 3, "name": "Alvino Februarie", "team": "Waylon Alexander", "score": "100.00%" },
+    { "rank": 4, "name": "Shanseau Khabana", "team": "Waylon Alexander", "score": "100.00%" },
+    { "rank": 5, "name": "Casey Williams", "team": "Tina Barron", "score": "100.00%" },
+    { "rank": 6, "name": "Asavela Mkuyana", "team": "ETHEL ZANELE KARAWE", "score": "100.00%" },
+    { "rank": 7, "name": "Gideon Muller", "team": "ETHEL ZANELE KARAWE", "score": "100.00%" },
+    { "rank": 8, "name": "Hanton Kock", "team": "Waylon Alexander", "score": "100.00%" },
+    { "rank": 9, "name": "Denica Williams", "team": "Fanti, Siphovuyo", "score": "100.00%" },
+    { "rank": 10, "name": "Sihle Mdedetyana", "team": "Moegamat Naeem Abrahams", "score": "100.00%" }
+  ]
+}
