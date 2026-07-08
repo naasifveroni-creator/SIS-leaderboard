@@ -65,7 +65,7 @@
 
     /* ========== SLIDE 1: IMPACTFUL BEHAVIORS (image) ========== */
     #slide1 {
-      background: url('slide-data.webp') center/cover no-repeat, #0b1a33;
+      background: url('slide-data.webp.jpg') center/cover no-repeat, #0b1a33;
     }
 
     /* ========== SLIDE 2 & 3: LEADERBOARD (pure HTML/CSS) ========== */
@@ -430,7 +430,6 @@
   </div>
 
   <script>
-    // ---------- SLIDESHOW ENGINE ----------
     const slides = document.querySelectorAll('.slide');
     const dotsContainer = document.getElementById('dotsContainer');
     let currentIndex = 0;
@@ -483,7 +482,6 @@
       if (e.key === 'ArrowLeft') prevSlide();
     });
 
-    // ---------- DATA LOADER ----------
     function renderTable(containerId, items, type) {
       const container = document.getElementById(containerId);
       if (!items || items.length === 0) {
