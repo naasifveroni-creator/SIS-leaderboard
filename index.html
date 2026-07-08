@@ -100,7 +100,6 @@
       overflow: hidden;
     }
 
-    /* Subtle animated line under header */
     .slide-header::after {
       content: '';
       position: absolute;
@@ -317,9 +316,8 @@
       position: relative;
     }
 
-    /* ---- Row hover effect (lift + shadow) ---- */
     .table-wrap tr:not(.empty-row):not(:first-child):hover td {
-      background: rgba(211, 47, 47, 0.04);
+      background: rgba(27, 138, 78, 0.04);
       transform: scale(1.01);
       box-shadow: 0 4px 16px rgba(11, 26, 51, 0.08);
       position: relative;
@@ -352,26 +350,26 @@
       font-variant-numeric: tabular-nums;
     }
 
-    /* ===== #1 ROW – GLOW EFFECT + PULSE ===== */
+    /* ===== #1 ROW – GLOW EFFECT + PULSE (GREEN) ===== */
     .table-wrap tr.top1 td {
-      background: linear-gradient(90deg, rgba(211, 47, 47, 0.08), rgba(253, 185, 19, 0.06));
+      background: linear-gradient(90deg, rgba(27, 138, 78, 0.08), rgba(253, 185, 19, 0.04));
       position: relative;
-      border-left: 4px solid #d32f2f;
+      border-left: 4px solid #1b8a4e;
     }
 
     .table-wrap tr.top1 .rank-col {
-      color: #d32f2f;
+      color: #1b8a4e;
       font-weight: 900;
       font-size: 2vh;
     }
 
     .table-wrap tr.top1 .score-col {
-      color: #d32f2f;
+      color: #1b8a4e;
       font-size: 2.2vh;
       font-weight: 800;
     }
 
-    /* Glow ring around #1 row */
+    /* Glow ring around #1 row – GREEN */
     .table-wrap tr.top1 td::before {
       content: '';
       position: absolute;
@@ -379,14 +377,14 @@
       left: -2px;
       right: -2px;
       bottom: -2px;
-      background: radial-gradient(ellipse at center, rgba(211, 47, 47, 0.15), transparent 70%);
+      background: radial-gradient(ellipse at center, rgba(27, 138, 78, 0.2), transparent 70%);
       z-index: -1;
       border-radius: 4px;
-      animation: pulseGlow 2.5s ease-in-out infinite;
+      animation: pulseGlowGreen 2.5s ease-in-out infinite;
       pointer-events: none;
     }
 
-    @keyframes pulseGlow {
+    @keyframes pulseGlowGreen {
       0%, 100% { opacity: 0.4; transform: scale(1); }
       50% { opacity: 1; transform: scale(1.02); }
     }
@@ -714,20 +712,15 @@
 
         isTransitioning = true;
 
-        // Remove active from current
         slides[currentIndex].classList.remove('active');
         dots[currentIndex].classList.remove('active');
 
         currentIndex = index;
 
-        // Set active on new
         slides[currentIndex].classList.add('active');
         dots[currentIndex].classList.add('active');
 
-        // Reset animations for new slide
         resetAnimations(currentIndex);
-
-        // Reset progress bar
         resetProgressBar();
 
         setTimeout(() => {
@@ -757,10 +750,8 @@
           progressInterval = null;
         }
 
-        // Reset all progress bars to 0
         progressBars.forEach(bar => { bar.style.width = '0%'; });
 
-        // Animate to 100% over AUTO_DELAY
         let startTime = Date.now();
         progressInterval = setInterval(() => {
           const elapsed = Date.now() - startTime;
@@ -775,39 +766,32 @@
 
       // ---------- Reset animations for slide ----------
       function resetAnimations(index) {
-        // Find all tables in the active slide
         const activeSlide = slides[index];
         const tables = activeSlide.querySelectorAll('table');
 
-        // Reset counters and row animations
         tables.forEach(table => {
-          // Reset all rows to hidden (except header)
           const rows = table.querySelectorAll('tbody tr');
           rows.forEach((row, i) => {
             row.style.opacity = '0';
             row.style.transform = 'translateY(10px)';
-            // Animate counters in rows with score-col
             const scoreCell = row.querySelector('.score-col');
             if (scoreCell) {
               const originalText = scoreCell.textContent;
-              // Store original value for counter animation
               row.dataset.targetScore = originalText;
             }
           });
 
-          // Animate rows in sequence
           rows.forEach((row, i) => {
             setTimeout(() => {
               row.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
               row.style.opacity = '1';
               row.style.transform = 'translateY(0)';
 
-              // Animate counter for this row
               const scoreCell = row.querySelector('.score-col');
               if (scoreCell && row.dataset.targetScore) {
                 animateCounter(scoreCell, row.dataset.targetScore);
               }
-            }, 150 + (i * 100)); // Staggered delay
+            }, 150 + (i * 100));
           });
         });
       }
@@ -817,7 +801,6 @@
         const targetValue = parseFloat(target);
         if (isNaN(targetValue)) return;
 
-        // Store original text
         const suffix = target.includes('%') ? '%' : '';
         const duration = 1200;
         const startTime = performance.now();
@@ -825,7 +808,6 @@
         function updateCounter(currentTime) {
           const elapsed = currentTime - startTime;
           const progress = Math.min(elapsed / duration, 1);
-          // Ease out cubic
           const eased = 1 - Math.pow(1 - progress, 3);
           const currentValue = eased * targetValue;
           element.textContent = currentValue.toFixed(2) + suffix;
@@ -844,7 +826,6 @@
       document.getElementById('nextSlide').addEventListener('click', nextSlide);
       document.getElementById('prevSlide').addEventListener('click', prevSlide);
 
-      // Pause on hover
       const wrapper = document.getElementById('slidesWrapper');
       wrapper.addEventListener('mouseenter', () => {
         if (autoPlayInterval) {
@@ -858,7 +839,6 @@
       });
       wrapper.addEventListener('mouseleave', resetAutoPlay);
 
-      // Keyboard
       document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight') nextSlide();
         if (e.key === 'ArrowLeft') prevSlide();
@@ -953,7 +933,6 @@
           renderAgents('agentTableWrap', data.agents);
           renderTeams('teamTableWrap', data.teams);
 
-          // Trigger animations after data loads
           setTimeout(() => {
             resetAnimations(currentIndex);
             resetProgressBar();
@@ -971,9 +950,7 @@
       resetAutoPlay();
       resetProgressBar();
 
-      // Re-trigger animations on slide change
       const observer = new MutationObserver(() => {
-        // When slide changes, reset animations for the new slide
         setTimeout(() => {
           resetAnimations(currentIndex);
           resetProgressBar();
@@ -984,7 +961,6 @@
         observer.observe(slide, { attributes: true, attributeFilter: ['class'] });
       });
 
-      // Fix for slide transitions – re-trigger when active class added
       const originalGoTo = goToSlide;
       goToSlide = function(index) {
         originalGoTo(index);
