@@ -229,6 +229,17 @@
       font-size: clamp(0.45rem, 0.55vw, 0.65rem);
     }
 
+    /* ===== TEAMS TABLE - EXTRA TIGHT TO FIT 17 ROWS ===== */
+    #slide3 .table-wrap td {
+      padding: 0.06rem 0.4rem;
+      font-size: clamp(0.4rem, 0.5vw, 0.6rem);
+    }
+
+    #slide3 .table-wrap th {
+      padding: 0.06rem 0.4rem;
+      font-size: clamp(0.35rem, 0.45vw, 0.55rem);
+    }
+
     .table-wrap tr:last-child td {
       border-bottom: none;
     }
@@ -392,6 +403,14 @@
         font-size: 0.4rem;
         padding: 0.08rem 0.3rem;
       }
+      #slide3 .table-wrap td {
+        padding: 0.04rem 0.25rem;
+        font-size: 0.35rem;
+      }
+      #slide3 .table-wrap th {
+        padding: 0.04rem 0.25rem;
+        font-size: 0.3rem;
+      }
       .slide-footer {
         padding: 0.1rem 1rem 0.2rem;
       }
@@ -450,6 +469,14 @@
         font-size: 0.35rem;
         padding: 0.05rem 0.2rem;
       }
+      #slide3 .table-wrap td {
+        padding: 0.03rem 0.15rem;
+        font-size: 0.3rem;
+      }
+      #slide3 .table-wrap th {
+        padding: 0.03rem 0.15rem;
+        font-size: 0.28rem;
+      }
       .slide-footer {
         padding: 0.08rem 0.5rem 0.15rem;
       }
@@ -500,6 +527,14 @@
       .table-wrap td {
         font-size: 0.9rem;
         padding: 0.35rem 1.2rem;
+      }
+      #slide3 .table-wrap td {
+        padding: 0.2rem 0.8rem;
+        font-size: 0.75rem;
+      }
+      #slide3 .table-wrap th {
+        padding: 0.2rem 0.8rem;
+        font-size: 0.65rem;
       }
       .slide-footer {
         padding: 0.3rem 3rem 0.5rem;
@@ -704,11 +739,13 @@
         return;
       }
 
+      // Split into two columns: first 10, next 7
       const firstCol = items.slice(0, 10);
       const secondCol = items.slice(10);
 
       let html = '';
 
+      // First column (ranks 1-10)
       html += `<table>
         <thead><tr>
           <th>#</th>
@@ -725,6 +762,7 @@
       });
       html += `</tbody></table>`;
 
+      // Second column (ranks 11-17)
       html += `<table>
         <thead><tr>
           <th>#</th>
