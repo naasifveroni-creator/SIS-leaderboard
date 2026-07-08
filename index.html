@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Δ SIS Performance · Delta</title>
   <style>
+    /* ---------- RESET & BASE ---------- */
     * {
       margin: 0;
       padding: 0;
@@ -58,43 +59,171 @@
       position: relative;
     }
 
-    /* SLIDE 0: TITLE */
+    /* ========== SLIDE 0: TITLE (image) ========== */
     #slide0 {
       background: url('slide-title.webp.jpg') center/cover no-repeat, #0b1a33;
     }
 
-    /* SLIDE 1 & 2: LEADERBOARD */
-    #slide1,
-    #slide2 {
-      background: url('slide-data.webp.jpg') center/cover no-repeat, #f0f3f8;
+    /* ========== SLIDE 1: IMPACTFUL BEHAVIORS ========== */
+    #slide1 {
+      background: #0b1a33;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    #slide1 .behaviors-title {
+      color: #fff;
+      font-size: clamp(1.5rem, 4vw, 3.5rem);
+      font-weight: 300;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    #slide1 .behaviors-title span {
+      color: #d32f2f;
+      font-weight: 700;
+    }
+
+    #slide1 .behaviors-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    #slide1 .behaviors-grid .item {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 60px;
+      padding: 0.8rem 2.2rem;
+      color: #fff;
+      font-size: clamp(0.9rem, 1.5vw, 1.4rem);
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      backdrop-filter: blur(4px);
+      transition: 0.2s;
+    }
+
+    #slide1 .behaviors-grid .item.red {
+      background: #d32f2f;
+      color: #fff;
+      border-color: #d32f2f;
+    }
+
+    #slide1 .behaviors-grid .item.coach {
+      background: #2a4a7f;
+      border-color: #2a4a7f;
+    }
+
+    #slide1 .behaviors-sub {
+      margin-top: 2.5rem;
+      color: #8a9bb0;
+      font-size: clamp(0.8rem, 1.2vw, 1.1rem);
+      letter-spacing: 2px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 1.5rem;
+      width: 60%;
+    }
+
+    /* ========== SLIDE 2 & 3: LEADERBOARD (pure HTML/CSS) ========== */
+    #slide2,
+    #slide3 {
+      background: #f0f3f8;
       padding: 0;
     }
 
-    /* Table overlay */
-    #slide1 .table-wrap,
-    #slide2 .table-wrap {
-      padding: 16% 6% 6% 6%;
-      background: transparent;
-      flex: 1;
-      overflow-x: auto;
+    .slide-header {
+      background: #0b1a33;
+      padding: 0.8rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      flex-shrink: 0;
+    }
+
+    .slide-header .logo-area {
       display: flex;
       align-items: center;
+      gap: 0.75rem;
     }
 
-    #slide1 .table-wrap table,
-    #slide2 .table-wrap table {
+    .slide-header .logo-area svg {
+      height: 34px;
+      width: auto;
+    }
+
+    .slide-header .logo-area h1 {
+      font-weight: 300;
+      font-size: 1.4rem;
+      letter-spacing: 1px;
+      color: #fff;
+    }
+
+    .slide-header .logo-area h1 span {
+      font-weight: 700;
+      color: #d32f2f;
+    }
+
+    .behavior-tags {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.3rem 0.8rem;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .behavior-tags .tag {
+      color: #fff;
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .behavior-tags .divider {
+      color: rgba(255, 255, 255, 0.15);
+      font-weight: 300;
+    }
+
+    .behavior-tags .tag.red {
+      color: #d32f2f;
+    }
+
+    .behavior-tags .tag.coach {
+      color: #8a9bb0;
+    }
+
+    .table-wrap {
+      flex: 1;
+      overflow-x: auto;
+      padding: 1.5rem 2rem 1rem;
+      background: #f0f3f8;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .table-wrap table {
       width: 100%;
       border-collapse: collapse;
-      font-size: clamp(0.7rem, 1vw, 0.95rem);
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(2px);
+      font-size: clamp(0.75rem, 1vw, 0.95rem);
+      background: #ffffff;
       border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
       overflow: hidden;
+      box-shadow: 0 2px 12px rgba(11, 26, 51, 0.08);
     }
 
-    #slide1 .table-wrap th,
-    #slide2 .table-wrap th {
+    .table-wrap th {
       background: #f5f7fc;
       color: #1a2a4a;
       font-weight: 600;
@@ -106,67 +235,58 @@
       letter-spacing: 0.5px;
     }
 
-    #slide1 .table-wrap td,
-    #slide2 .table-wrap td {
+    .table-wrap td {
       padding: 0.6rem 1.2rem;
       border-bottom: 1px solid #edf0f6;
       vertical-align: middle;
       color: #0b1a33;
     }
 
-    #slide1 .table-wrap tr:last-child td,
-    #slide2 .table-wrap tr:last-child td {
+    .table-wrap tr:last-child td {
       border-bottom: none;
     }
 
-    #slide1 .table-wrap .rank-col,
-    #slide2 .table-wrap .rank-col {
+    .table-wrap .rank-col {
       width: 12%;
       color: #6b7f96;
       font-weight: 600;
     }
 
-    #slide1 .table-wrap .name-col,
-    #slide2 .table-wrap .name-col {
+    .table-wrap .name-col {
       font-weight: 500;
     }
 
-    #slide1 .table-wrap .score-col,
-    #slide2 .table-wrap .score-col {
+    .table-wrap .score-col {
       font-weight: 700;
       text-align: right;
       width: 15%;
       color: #0b1a33;
     }
 
-    #slide1 .table-wrap tr.top1 td,
-    #slide2 .table-wrap tr.top1 td {
+    .table-wrap tr.top1 td {
       background: #fef0ee;
     }
 
-    #slide1 .table-wrap tr.top1 .rank-col,
-    #slide2 .table-wrap tr.top1 .rank-col {
+    .table-wrap tr.top1 .rank-col {
       color: #d32f2f;
       font-weight: 800;
     }
 
-    #slide1 .table-wrap tr.top1 .score-col,
-    #slide2 .table-wrap tr.top1 .score-col {
+    .table-wrap tr.top1 .score-col {
       color: #d32f2f;
       font-size: 1.05em;
     }
 
-    #slide1 .table-wrap .empty-state,
-    #slide2 .table-wrap .empty-state {
+    .table-wrap .empty-state {
       padding: 2rem;
       text-align: center;
       color: #8a9bb0;
-      background: rgba(255, 255, 255, 0.8);
+      background: #fff;
       border-radius: 12px;
       width: 100%;
     }
 
-    /* NAVIGATION */
+    /* ---------- NAVIGATION ---------- */
     .nav-controls {
       position: absolute;
       bottom: 2%;
@@ -231,22 +351,40 @@
       background: #fff;
     }
 
+    /* ---------- RESPONSIVE ---------- */
     @media (max-width: 800px) {
-      #slide1 .table-wrap,
-      #slide2 .table-wrap {
-        padding: 14% 4% 4% 4%;
+      .slide-header {
+        padding: 0.5rem 1rem;
       }
-      #slide1 .table-wrap th,
-      #slide2 .table-wrap th,
-      #slide1 .table-wrap td,
-      #slide2 .table-wrap td {
-        padding: 0.4rem 0.8rem;
+      .slide-header .logo-area h1 {
+        font-size: 1rem;
+      }
+      .behavior-tags {
+        padding: 0.2rem 0.6rem;
+        gap: 0.2rem 0.5rem;
+      }
+      .behavior-tags .tag {
+        font-size: 0.45rem;
+      }
+      .table-wrap {
+        padding: 0.8rem 1rem 0.5rem;
+      }
+      .table-wrap th,
+      .table-wrap td {
+        padding: 0.4rem 0.6rem;
         font-size: 0.7rem;
       }
       .arrow {
         width: 30px;
         height: 30px;
         font-size: 0.9rem;
+      }
+      #slide1 .behaviors-grid {
+        gap: 1rem;
+      }
+      #slide1 .behaviors-grid .item {
+        padding: 0.5rem 1.2rem;
+        font-size: 0.7rem;
       }
     }
 
@@ -257,20 +395,29 @@
       .slide-deck {
         border-radius: 10px;
       }
-      #slide1 .table-wrap,
-      #slide2 .table-wrap {
-        padding: 20% 2% 2% 2%;
+      .slide-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.4rem 0.8rem;
       }
-      #slide1 .table-wrap th,
-      #slide2 .table-wrap th,
-      #slide1 .table-wrap td,
-      #slide2 .table-wrap td {
+      .behavior-tags {
+        flex-wrap: wrap;
+      }
+      .table-wrap {
+        padding: 0.5rem 0.5rem 0.2rem;
+      }
+      .table-wrap th,
+      .table-wrap td {
         padding: 0.3rem 0.4rem;
-        font-size: 0.55rem;
+        font-size: 0.6rem;
       }
       .dot {
         width: 8px;
         height: 8px;
+      }
+      #slide1 .behaviors-grid .item {
+        font-size: 0.55rem;
+        padding: 0.3rem 0.8rem;
       }
     }
   </style>
@@ -280,24 +427,88 @@
   <div class="slide-deck">
     <div class="slides-wrapper" id="slidesWrapper">
 
-      <!-- SLIDE 0: TITLE -->
+      <!-- ========== SLIDE 0: TITLE (image) ========== -->
       <div class="slide active" id="slide0" data-index="0"></div>
 
-      <!-- SLIDE 1: TEAMS -->
+      <!-- ========== SLIDE 1: IMPACTFUL BEHAVIORS ========== -->
       <div class="slide" id="slide1" data-index="1">
-        <div class="table-wrap" id="teamTableWrap">
-          <div class="empty-state">Loading teams…</div>
+        <div class="behaviors-title">
+          <span>Δ</span> IMPACTFUL <span>BEHAVIORS</span>
+        </div>
+        <div class="behaviors-grid">
+          <div class="item">GREET ME</div>
+          <div class="item">RECOGNIZE ME</div>
+          <div class="item">BE KIND TO ME</div>
+          <div class="item">INFORM ME</div>
+          <div class="item red">CONSISTENTLY EXECUTED</div>
+          <div class="item coach">Leaders as Coaches</div>
+        </div>
+        <div class="behaviors-sub">
+          Come to life through our behaviors
         </div>
       </div>
 
-      <!-- SLIDE 2: AGENTS -->
+      <!-- ========== SLIDE 2: AGENTS ========== -->
       <div class="slide" id="slide2" data-index="2">
+        <div class="slide-header">
+          <div class="logo-area">
+            <svg viewBox="0 0 60 50" fill="none" width="34" height="28">
+              <path d="M30 2 L2 46 L58 46 L30 2Z" fill="#d32f2f" stroke="#d32f2f" stroke-width="2"/>
+              <path d="M30 10 L10 44 L50 44 L30 10Z" fill="#0b1a33" stroke="#0b1a33" stroke-width="1.5"/>
+              <text x="30" y="38" font-size="14" font-weight="700" fill="#d32f2f" text-anchor="middle">Δ</text>
+            </svg>
+            <h1><span>DELTA</span> · SIS</h1>
+          </div>
+          <div class="behavior-tags">
+            <span class="tag">GREET ME</span>
+            <span class="divider">|</span>
+            <span class="tag">RECOGNIZE ME</span>
+            <span class="divider">|</span>
+            <span class="tag">BE KIND TO ME</span>
+            <span class="divider">|</span>
+            <span class="tag">INFORM ME</span>
+            <span class="divider">|</span>
+            <span class="tag red">CONSISTENTLY EXECUTED</span>
+            <span class="divider">|</span>
+            <span class="tag coach">Leaders as Coaches</span>
+          </div>
+        </div>
         <div class="table-wrap" id="agentTableWrap">
           <div class="empty-state">Loading agents…</div>
         </div>
       </div>
 
-      <!-- NAVIGATION -->
+      <!-- ========== SLIDE 3: TEAMS ========== -->
+      <div class="slide" id="slide3" data-index="3">
+        <div class="slide-header">
+          <div class="logo-area">
+            <svg viewBox="0 0 60 50" fill="none" width="34" height="28">
+              <path d="M30 2 L2 46 L58 46 L30 2Z" fill="#d32f2f" stroke="#d32f2f" stroke-width="2"/>
+              <path d="M30 10 L10 44 L50 44 L30 10Z" fill="#0b1a33" stroke="#0b1a33" stroke-width="1.5"/>
+              <text x="30" y="38" font-size="14" font-weight="700" fill="#d32f2f" text-anchor="middle">Δ</text>
+            </svg>
+            <h1><span>DELTA</span> · SIS</h1>
+          </div>
+          <div class="behavior-tags">
+            <span class="tag">GREET ME</span>
+            <span class="divider">|</span>
+            <span class="tag">RECOGNIZE ME</span>
+            <span class="divider">|</span>
+            <span class="tag">BE KIND TO ME</span>
+            <span class="divider">|</span>
+            <span class="tag">INFORM ME</span>
+            <span class="divider">|</span>
+            <span class="tag red">CONSISTENTLY EXECUTED</span>
+            <span class="divider">|</span>
+            <span class="tag coach">Leaders as Coaches</span>
+          </div>
+        </div>
+        <div class="table-wrap" id="teamTableWrap">
+          <div class="empty-state">Loading teams…</div>
+        </div>
+      </div>
+
+      <!-- ========== NAVIGATION ========== -->
       <div class="nav-controls">
         <button class="arrow" id="prevSlide">‹</button>
         <div class="dots" id="dotsContainer"></div>
@@ -308,6 +519,7 @@
   </div>
 
   <script>
+    // ---------- SLIDESHOW ENGINE ----------
     const slides = document.querySelectorAll('.slide');
     const dotsContainer = document.getElementById('dotsContainer');
     let currentIndex = 0;
@@ -360,6 +572,7 @@
       if (e.key === 'ArrowLeft') prevSlide();
     });
 
+    // ---------- DATA LOADER ----------
     function renderTable(containerId, items, type) {
       const container = document.getElementById(containerId);
       if (!items || items.length === 0) {
