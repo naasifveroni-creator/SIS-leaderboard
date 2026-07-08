@@ -4,12 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Δ SIS Performance · Delta</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
+    /* ========== RESET & BASE ========== */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+      font-family: 'Inter', 'Segoe UI', Roboto, system-ui, sans-serif;
     }
 
     html, body {
@@ -42,6 +44,7 @@
       overflow: hidden;
     }
 
+    /* ========== SLIDE BASE ========== */
     .slide {
       position: absolute;
       top: 0;
@@ -50,15 +53,18 @@
       height: 100%;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.6s ease, visibility 0.6s ease;
+      transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s ease;
       display: flex;
       flex-direction: column;
+      transform: scale(0.98);
     }
 
     .slide.active {
       opacity: 1;
       visibility: visible;
       position: relative;
+      transform: scale(1);
+      transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s ease;
     }
 
     /* ========== SLIDE 0: TITLE ========== */
@@ -74,13 +80,13 @@
     /* ========== SLIDE 2 & 3: LEADERBOARD ========== */
     #slide2,
     #slide3 {
-      background: #f0f3f8;
+      background: linear-gradient(145deg, #f0f3f8 0%, #e8ecf4 100%);
       padding: 0;
     }
 
-    /* ---------- HEADER (bigger) ---------- */
+    /* ---------- HEADER ---------- */
     .slide-header {
-      background: #0b1a33;
+      background: linear-gradient(135deg, #0b1a33 0%, #1a3050 100%);
       padding: 1vh 2vw;
       display: flex;
       justify-content: space-between;
@@ -89,6 +95,26 @@
       gap: 0.5vh 1vw;
       flex-shrink: 0;
       min-height: 8vh;
+      border-bottom: 3px solid #d32f2f;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle animated line under header */
+    .slide-header::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: -100%;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #d32f2f, #fdb913, #d32f2f, transparent);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
     }
 
     .slide-header .logo-area {
@@ -100,6 +126,7 @@
     .slide-header .logo-area svg {
       height: 5vh;
       width: auto;
+      filter: drop-shadow(0 0 10px rgba(211, 47, 47, 0.3));
     }
 
     .slide-header .logo-area h1 {
@@ -110,7 +137,7 @@
     }
 
     .slide-header .logo-area h1 span {
-      font-weight: 700;
+      font-weight: 800;
       color: #d32f2f;
     }
 
@@ -123,6 +150,7 @@
       padding: 0.3vh 1vw;
       border-radius: 40px;
       border: 1px solid rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(4px);
     }
 
     .behavior-tags .tag {
@@ -131,6 +159,11 @@
       font-weight: 600;
       letter-spacing: 0.05em;
       text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .behavior-tags .tag:hover {
+      color: #fdb913;
     }
 
     .behavior-tags .divider {
@@ -141,10 +174,28 @@
 
     .behavior-tags .tag.red {
       color: #d32f2f;
+      font-weight: 700;
     }
 
     .behavior-tags .tag.coach {
       color: #8a9bb0;
+    }
+
+    /* ---------- SLIDE INDICATOR ---------- */
+    .slide-counter {
+      position: absolute;
+      top: 1.5vh;
+      right: 2vw;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 1.4vh;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      z-index: 5;
+    }
+
+    .slide-counter .current {
+      color: #fff;
+      font-size: 2vh;
     }
 
     /* ---------- TABLE CONTAINER ---------- */
@@ -152,19 +203,32 @@
       flex: 1;
       overflow: hidden;
       padding: 1vh 2vw 0.5vh;
-      background: #f0f3f8;
+      background: transparent;
       display: flex;
       flex-direction: column;
       min-height: 0;
+      position: relative;
     }
 
     .slide-title {
       font-size: 3vh;
-      font-weight: 700;
+      font-weight: 800;
       color: #0b1a33;
       text-align: center;
       padding-bottom: 0.5vh;
       flex-shrink: 0;
+      letter-spacing: -0.02em;
+      position: relative;
+    }
+
+    .slide-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, #d32f2f, #fdb913);
+      margin: 0.3vh auto 0;
+      border-radius: 10px;
     }
 
     .slide-title .week-date {
@@ -172,6 +236,7 @@
       font-size: 2vh;
       color: #6b7f96;
       display: block;
+      margin-top: 0.2vh;
     }
 
     /* ---------- TEAMS: Two columns ---------- */
@@ -187,10 +252,17 @@
     .table-grid table {
       width: 100%;
       border-collapse: collapse;
-      background: #ffffff;
-      border-radius: 0.5vw;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 0.2vw 0.8vw rgba(11, 26, 51, 0.06);
+      box-shadow: 0 8px 32px rgba(11, 26, 51, 0.12), 0 2px 8px rgba(11, 26, 51, 0.06);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .table-grid table:hover {
+      box-shadow: 0 12px 48px rgba(11, 26, 51, 0.18), 0 4px 16px rgba(11, 26, 51, 0.08);
+      transform: translateY(-2px);
     }
 
     /* ---------- AGENTS: Single column ---------- */
@@ -204,35 +276,132 @@
     .table-single table {
       width: 100%;
       border-collapse: collapse;
-      background: #ffffff;
-      border-radius: 0.5vw;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 0.2vw 0.8vw rgba(11, 26, 51, 0.06);
+      box-shadow: 0 8px 32px rgba(11, 26, 51, 0.12), 0 2px 8px rgba(11, 26, 51, 0.06);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
     }
 
-    /* ---------- TABLE STYLES (large) ---------- */
+    .table-single table:hover {
+      box-shadow: 0 12px 48px rgba(11, 26, 51, 0.18), 0 4px 16px rgba(11, 26, 51, 0.08);
+      transform: translateY(-2px);
+    }
+
+    /* ---------- TABLE STYLES ---------- */
     .table-wrap th {
-      background: #f5f7fc;
-      color: #1a2a4a;
-      font-weight: 600;
+      background: linear-gradient(135deg, #0b1a33 0%, #1a3050 100%);
+      color: #fff;
+      font-weight: 700;
       padding: 0.6vh 1vw;
       text-align: center;
-      border-bottom: 0.2vw solid #dce2ec;
+      border-bottom: 3px solid #d32f2f;
       font-size: 1.6vh;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
+      position: sticky;
+      top: 0;
+      z-index: 2;
     }
 
     .table-wrap td {
       padding: 0.5vh 0.8vw;
-      border-bottom: 0.1vw solid #edf0f6;
+      border-bottom: 1px solid rgba(237, 240, 246, 0.6);
       vertical-align: middle;
       color: #0b1a33;
       text-align: center;
       font-size: 1.8vh;
+      font-weight: 500;
+      transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
     }
 
-    /* ===== TEAMS TABLE - adjust for 17 rows ===== */
+    /* ---- Row hover effect (lift + shadow) ---- */
+    .table-wrap tr:not(.empty-row):not(:first-child):hover td {
+      background: rgba(211, 47, 47, 0.04);
+      transform: scale(1.01);
+      box-shadow: 0 4px 16px rgba(11, 26, 51, 0.08);
+      position: relative;
+      z-index: 1;
+    }
+
+    .table-wrap tr:last-child td {
+      border-bottom: none;
+    }
+
+    .table-wrap .rank-col {
+      width: 10%;
+      color: #6b7f96;
+      font-weight: 600;
+      font-size: 1.6vh;
+    }
+
+    .table-wrap .name-col {
+      font-weight: 500;
+      text-align: left;
+      font-size: 1.7vh;
+    }
+
+    .table-wrap .score-col {
+      font-weight: 700;
+      text-align: right;
+      width: 12%;
+      color: #0b1a33;
+      font-size: 1.8vh;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ===== #1 ROW – GLOW EFFECT + PULSE ===== */
+    .table-wrap tr.top1 td {
+      background: linear-gradient(90deg, rgba(211, 47, 47, 0.08), rgba(253, 185, 19, 0.06));
+      position: relative;
+      border-left: 4px solid #d32f2f;
+    }
+
+    .table-wrap tr.top1 .rank-col {
+      color: #d32f2f;
+      font-weight: 900;
+      font-size: 2vh;
+    }
+
+    .table-wrap tr.top1 .score-col {
+      color: #d32f2f;
+      font-size: 2.2vh;
+      font-weight: 800;
+    }
+
+    /* Glow ring around #1 row */
+    .table-wrap tr.top1 td::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: radial-gradient(ellipse at center, rgba(211, 47, 47, 0.15), transparent 70%);
+      z-index: -1;
+      border-radius: 4px;
+      animation: pulseGlow 2.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.02); }
+    }
+
+    .table-wrap .empty-state {
+      padding: 2vh;
+      text-align: center;
+      color: #8a9bb0;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 12px;
+      width: 100%;
+      font-size: 2vh;
+    }
+
+    /* ===== TEAMS TABLE - adjusted for 17 rows ===== */
     #slide3 .table-wrap td {
       padding: 0.3vh 0.6vw;
       font-size: 1.5vh;
@@ -251,72 +420,60 @@
       font-size: 1.6vh;
     }
 
-    .table-wrap tr:last-child td {
-      border-bottom: none;
-    }
-
-    .table-wrap .rank-col {
-      width: 10%;
-      color: #6b7f96;
-      font-weight: 600;
-    }
-
-    .table-wrap .name-col {
-      font-weight: 500;
-      text-align: left;
-    }
-
-    .table-wrap .score-col {
-      font-weight: 700;
-      text-align: right;
-      width: 12%;
-      color: #0b1a33;
-    }
-
-    .table-wrap tr.top1 td {
-      background: #fef0ee;
-    }
-
-    .table-wrap tr.top1 .rank-col {
-      color: #d32f2f;
-      font-weight: 800;
-    }
-
-    .table-wrap tr.top1 .score-col {
-      color: #d32f2f;
-      font-size: 1.1em;
-    }
-
-    .table-wrap .empty-state {
-      padding: 2vh;
-      text-align: center;
-      color: #8a9bb0;
-      background: #fff;
-      border-radius: 0.5vw;
-      width: 100%;
-    }
-
-    /* ---------- FOOTER: Logo (larger) ---------- */
+    /* ---------- FOOTER ---------- */
     .slide-footer {
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 0.3vh 2vw 0.6vh;
       flex-shrink: 0;
-      background: #f0f3f8;
-      border-top: 0.1vw solid #e0e5ec;
+      background: transparent;
+      border-top: 1px solid rgba(224, 229, 236, 0.3);
     }
 
     .slide-footer .footer-logo {
       height: 6vh;
       width: auto;
       display: block;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+      transition: transform 0.3s ease;
     }
 
-    /* ---------- NAVIGATION (bigger for touch/projector) ---------- */
+    .slide-footer .footer-logo:hover {
+      transform: scale(1.05);
+    }
+
+    /* ========== PROGRESS BAR ========== */
+    .progress-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 30;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #d32f2f, #fdb913, #d32f2f);
+      background-size: 200% 100%;
+      animation: progressGradient 1.5s ease-in-out infinite;
+      border-radius: 0 4px 4px 0;
+      transition: width 0.1s linear;
+    }
+
+    @keyframes progressGradient {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    /* ---------- NAVIGATION ---------- */
     .nav-controls {
       position: absolute;
-      bottom: 2%;
+      bottom: 3%;
       left: 0;
       right: 0;
       display: flex;
@@ -333,16 +490,16 @@
     }
 
     .arrow {
-      background: rgba(11, 26, 51, 0.6);
+      background: rgba(11, 26, 51, 0.5);
       color: #fff;
-      border: none;
+      border: 2px solid rgba(255, 255, 255, 0.1);
       border-radius: 50%;
       width: 4vh;
       height: 4vh;
       font-size: 2.5vh;
       cursor: pointer;
-      transition: 0.2s;
-      backdrop-filter: blur(4px);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -350,7 +507,13 @@
 
     .arrow:hover {
       background: #d32f2f;
-      transform: scale(1.05);
+      border-color: #d32f2f;
+      transform: scale(1.1);
+      box-shadow: 0 0 30px rgba(211, 47, 47, 0.4);
+    }
+
+    .arrow:active {
+      transform: scale(0.95);
     }
 
     .dots {
@@ -362,25 +525,27 @@
       width: 1.2vh;
       height: 1.2vh;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.2);
       border: none;
       cursor: pointer;
-      transition: 0.25s;
+      transition: all 0.3s ease;
       padding: 0;
+      position: relative;
     }
 
     .dot.active {
       background: #d32f2f;
-      transform: scale(1.3);
+      transform: scale(1.4);
+      box-shadow: 0 0 20px rgba(211, 47, 47, 0.5);
     }
 
     .dot:hover {
-      background: #fff;
+      background: rgba(255, 255, 255, 0.6);
+      transform: scale(1.2);
     }
 
-    /* ---------- RESPONSIVE: fine-tune for small screens ---------- */
+    /* ========== RESPONSIVE ========== */
     @media (max-aspect-ratio: 16/9) {
-      /* On narrower screens, reduce font sizes slightly to avoid overlap */
       .slide-header .logo-area h1 { font-size: 2vh; }
       .behavior-tags .tag { font-size: 1.2vh; }
       .slide-title { font-size: 2.5vh; }
@@ -392,6 +557,13 @@
       .table-grid { grid-template-columns: 1fr; gap: 0.5vh; }
       #slide3 .table-wrap td { padding: 0.2vh 0.4vw; font-size: 1.2vh; }
     }
+
+    @media (max-width: 768px) {
+      .slide-counter { display: none; }
+      .behavior-tags .divider { display: none; }
+      .behavior-tags { gap: 0.2vh 0.4vw; }
+      .behavior-tags .tag { font-size: 0.8vh; }
+    }
   </style>
 </head>
 <body>
@@ -400,13 +572,18 @@
     <div class="slides-wrapper" id="slidesWrapper">
 
       <!-- ========== SLIDE 0: TITLE ========== -->
-      <div class="slide active" id="slide0" data-index="0"></div>
+      <div class="slide active" id="slide0" data-index="0" data-slide="1">
+        <div class="slide-counter"><span class="current">1</span> / 4</div>
+      </div>
 
       <!-- ========== SLIDE 1: BEHAVIORS ========== -->
-      <div class="slide" id="slide1" data-index="1"></div>
+      <div class="slide" id="slide1" data-index="1" data-slide="2">
+        <div class="slide-counter"><span class="current">2</span> / 4</div>
+      </div>
 
       <!-- ========== SLIDE 2: AGENTS ========== -->
-      <div class="slide" id="slide2" data-index="2">
+      <div class="slide" id="slide2" data-index="2" data-slide="3">
+        <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
             <svg viewBox="0 0 60 50" fill="none" width="34" height="28">
@@ -444,10 +621,12 @@
         <div class="slide-footer">
           <img src="delta-logo.png" alt="Delta" class="footer-logo" />
         </div>
+        <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
       </div>
 
       <!-- ========== SLIDE 3: TEAMS ========== -->
-      <div class="slide" id="slide3" data-index="3">
+      <div class="slide" id="slide3" data-index="3" data-slide="4">
+        <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
             <svg viewBox="0 0 60 50" fill="none" width="34" height="28">
@@ -485,6 +664,7 @@
         <div class="slide-footer">
           <img src="delta-logo.png" alt="Delta" class="footer-logo" />
         </div>
+        <div class="progress-container"><div class="progress-bar" id="progressBar2"></div></div>
       </div>
 
       <!-- ========== NAVIGATION ========== -->
@@ -498,156 +678,323 @@
   </div>
 
   <script>
-    // ---------- SLIDESHOW ENGINE ----------
-    const slides = document.querySelectorAll('.slide');
-    const dotsContainer = document.getElementById('dotsContainer');
-    let currentIndex = 0;
-    let autoPlayInterval = null;
-    const AUTO_DELAY = 5500;
+    // =============================================
+    // SLIDESHOW ENGINE + ENHANCEMENTS
+    // =============================================
 
-    slides.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.className = 'dot' + (i === 0 ? ' active' : '');
-      dot.dataset.index = i;
-      dot.addEventListener('click', () => goToSlide(i));
-      dotsContainer.appendChild(dot);
-    });
-    const dots = dotsContainer.querySelectorAll('.dot');
+    (function() {
+      'use strict';
 
-    function goToSlide(index) {
-      if (index === currentIndex) return;
-      if (index < 0) index = slides.length - 1;
-      if (index >= slides.length) index = 0;
-      slides[currentIndex].classList.remove('active');
-      dots[currentIndex].classList.remove('active');
-      currentIndex = index;
-      slides[currentIndex].classList.add('active');
-      dots[currentIndex].classList.add('active');
+      // ---------- DOM refs ----------
+      const slides = document.querySelectorAll('.slide');
+      const dotsContainer = document.getElementById('dotsContainer');
+      const progressBars = document.querySelectorAll('.progress-bar');
+
+      let currentIndex = 0;
+      let autoPlayInterval = null;
+      let progressInterval = null;
+      const AUTO_DELAY = 5500;
+      let isTransitioning = false;
+
+      // ---------- Build dots ----------
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.dataset.index = i;
+        dot.addEventListener('click', () => goToSlide(i));
+        dotsContainer.appendChild(dot);
+      });
+      const dots = dotsContainer.querySelectorAll('.dot');
+
+      // ---------- Slide navigation ----------
+      function goToSlide(index) {
+        if (isTransitioning || index === currentIndex) return;
+        if (index < 0) index = slides.length - 1;
+        if (index >= slides.length) index = 0;
+
+        isTransitioning = true;
+
+        // Remove active from current
+        slides[currentIndex].classList.remove('active');
+        dots[currentIndex].classList.remove('active');
+
+        currentIndex = index;
+
+        // Set active on new
+        slides[currentIndex].classList.add('active');
+        dots[currentIndex].classList.add('active');
+
+        // Reset animations for new slide
+        resetAnimations(currentIndex);
+
+        // Reset progress bar
+        resetProgressBar();
+
+        setTimeout(() => {
+          isTransitioning = false;
+        }, 800);
+
+        resetAutoPlay();
+      }
+
+      function nextSlide() { goToSlide(currentIndex + 1); }
+      function prevSlide() { goToSlide(currentIndex - 1); }
+
+      // ---------- Auto-play ----------
+      function resetAutoPlay() {
+        if (autoPlayInterval) {
+          clearInterval(autoPlayInterval);
+          autoPlayInterval = null;
+        }
+        autoPlayInterval = setInterval(nextSlide, AUTO_DELAY);
+        resetProgressBar();
+      }
+
+      // ---------- Progress bar ----------
+      function resetProgressBar() {
+        if (progressInterval) {
+          clearInterval(progressInterval);
+          progressInterval = null;
+        }
+
+        // Reset all progress bars to 0
+        progressBars.forEach(bar => { bar.style.width = '0%'; });
+
+        // Animate to 100% over AUTO_DELAY
+        let startTime = Date.now();
+        progressInterval = setInterval(() => {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min((elapsed / AUTO_DELAY) * 100, 100);
+          progressBars.forEach(bar => { bar.style.width = progress + '%'; });
+          if (progress >= 100) {
+            clearInterval(progressInterval);
+            progressInterval = null;
+          }
+        }, 50);
+      }
+
+      // ---------- Reset animations for slide ----------
+      function resetAnimations(index) {
+        // Find all tables in the active slide
+        const activeSlide = slides[index];
+        const tables = activeSlide.querySelectorAll('table');
+
+        // Reset counters and row animations
+        tables.forEach(table => {
+          // Reset all rows to hidden (except header)
+          const rows = table.querySelectorAll('tbody tr');
+          rows.forEach((row, i) => {
+            row.style.opacity = '0';
+            row.style.transform = 'translateY(10px)';
+            // Animate counters in rows with score-col
+            const scoreCell = row.querySelector('.score-col');
+            if (scoreCell) {
+              const originalText = scoreCell.textContent;
+              // Store original value for counter animation
+              row.dataset.targetScore = originalText;
+            }
+          });
+
+          // Animate rows in sequence
+          rows.forEach((row, i) => {
+            setTimeout(() => {
+              row.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+              row.style.opacity = '1';
+              row.style.transform = 'translateY(0)';
+
+              // Animate counter for this row
+              const scoreCell = row.querySelector('.score-col');
+              if (scoreCell && row.dataset.targetScore) {
+                animateCounter(scoreCell, row.dataset.targetScore);
+              }
+            }, 150 + (i * 100)); // Staggered delay
+          });
+        });
+      }
+
+      // ---------- Animated counter ----------
+      function animateCounter(element, target) {
+        const targetValue = parseFloat(target);
+        if (isNaN(targetValue)) return;
+
+        // Store original text
+        const suffix = target.includes('%') ? '%' : '';
+        const duration = 1200;
+        const startTime = performance.now();
+
+        function updateCounter(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // Ease out cubic
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const currentValue = eased * targetValue;
+          element.textContent = currentValue.toFixed(2) + suffix;
+
+          if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            element.textContent = target;
+          }
+        }
+
+        requestAnimationFrame(updateCounter);
+      }
+
+      // ---------- Event listeners ----------
+      document.getElementById('nextSlide').addEventListener('click', nextSlide);
+      document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+      // Pause on hover
+      const wrapper = document.getElementById('slidesWrapper');
+      wrapper.addEventListener('mouseenter', () => {
+        if (autoPlayInterval) {
+          clearInterval(autoPlayInterval);
+          autoPlayInterval = null;
+        }
+        if (progressInterval) {
+          clearInterval(progressInterval);
+          progressInterval = null;
+        }
+      });
+      wrapper.addEventListener('mouseleave', resetAutoPlay);
+
+      // Keyboard
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') nextSlide();
+        if (e.key === 'ArrowLeft') prevSlide();
+      });
+
+      // ---------- Data loader ----------
+      function renderAgents(containerId, items) {
+        const container = document.getElementById(containerId);
+        if (!items || items.length === 0) {
+          container.innerHTML = `<div class="empty-state">No data available.</div>`;
+          return;
+        }
+
+        let html = `<table>
+          <thead><tr>
+            <th class="rank-col">RANK</th>
+            <th class="name-col">AGENT NAME</th>
+            <th>TEAM LEADER</th>
+            <th class="score-col">SIS</th>
+          </tr></thead><tbody>`;
+
+        items.forEach(item => {
+          const isFirst = item.rank === 1;
+          html += `<tr class="${isFirst ? 'top1' : ''}">
+            <td class="rank-col">${item.rank}</td>
+            <td class="name-col">${item.name}</td>
+            <td>${item.team || '—'}</td>
+            <td class="score-col">${item.score}</td>
+          </tr>`;
+        });
+
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+      }
+
+      function renderTeams(containerId, items) {
+        const container = document.getElementById(containerId);
+        if (!items || items.length === 0) {
+          container.innerHTML = `<div class="empty-state">No data available.</div>`;
+          return;
+        }
+
+        const firstCol = items.slice(0, 10);
+        const secondCol = items.slice(10);
+
+        let html = '';
+
+        html += `<table>
+          <thead><tr>
+            <th>#</th>
+            <th class="name-col">TEAM LEADER</th>
+            <th class="score-col">SIS</th>
+          </tr></thead><tbody>`;
+        firstCol.forEach(item => {
+          const isFirst = item.rank === 1;
+          html += `<tr class="${isFirst ? 'top1' : ''}">
+            <td class="rank-col">${item.rank}</td>
+            <td class="name-col">${item.name}</td>
+            <td class="score-col">${item.score}</td>
+          </tr>`;
+        });
+        html += `</tbody></table>`;
+
+        html += `<table>
+          <thead><tr>
+            <th>#</th>
+            <th class="name-col">TEAM LEADER</th>
+            <th class="score-col">SIS</th>
+          </tr></thead><tbody>`;
+        secondCol.forEach(item => {
+          html += `<tr>
+            <td class="rank-col">${item.rank}</td>
+            <td class="name-col">${item.name}</td>
+            <td class="score-col">${item.score}</td>
+          </tr>`;
+        });
+        html += `</tbody></table>`;
+
+        container.innerHTML = html;
+      }
+
+      async function loadData() {
+        try {
+          const res = await fetch('data.json?' + Date.now());
+          if (!res.ok) throw new Error('Failed to fetch');
+          const data = await res.json();
+
+          const weekText = data.week || 'Week of Jun 25 – Jul 01, 2026';
+          document.getElementById('agentsWeek').textContent = weekText;
+          document.getElementById('teamsWeek').textContent = weekText;
+
+          renderAgents('agentTableWrap', data.agents);
+          renderTeams('teamTableWrap', data.teams);
+
+          // Trigger animations after data loads
+          setTimeout(() => {
+            resetAnimations(currentIndex);
+            resetProgressBar();
+          }, 300);
+
+        } catch (e) {
+          document.getElementById('teamTableWrap').innerHTML =
+            '<div class="empty-state">⚠️ Could not load data. Refresh or try again later.</div>';
+          document.getElementById('agentTableWrap').innerHTML = '';
+        }
+      }
+
+      // ---------- Start ----------
+      loadData();
       resetAutoPlay();
-    }
+      resetProgressBar();
 
-    function nextSlide() { goToSlide(currentIndex + 1); }
-    function prevSlide() { goToSlide(currentIndex - 1); }
-
-    function resetAutoPlay() {
-      if (autoPlayInterval) clearInterval(autoPlayInterval);
-      autoPlayInterval = setInterval(nextSlide, AUTO_DELAY);
-    }
-
-    document.getElementById('nextSlide').addEventListener('click', nextSlide);
-    document.getElementById('prevSlide').addEventListener('click', prevSlide);
-
-    const wrapper = document.getElementById('slidesWrapper');
-    wrapper.addEventListener('mouseenter', () => {
-      if (autoPlayInterval) {
-        clearInterval(autoPlayInterval);
-        autoPlayInterval = null;
-      }
-    });
-    wrapper.addEventListener('mouseleave', resetAutoPlay);
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') nextSlide();
-      if (e.key === 'ArrowLeft') prevSlide();
-    });
-
-    // ---------- RENDER FUNCTIONS ----------
-    function renderAgents(containerId, items) {
-      const container = document.getElementById(containerId);
-      if (!items || items.length === 0) {
-        container.innerHTML = `<div class="empty-state">No data available.</div>`;
-        return;
-      }
-
-      let html = `<table>
-        <thead><tr>
-          <th class="rank-col">RANK</th>
-          <th class="name-col">AGENT NAME</th>
-          <th>TEAM LEADER</th>
-          <th class="score-col">SIS</th>
-        </tr></thead><tbody>`;
-
-      items.forEach(item => {
-        const isFirst = item.rank === 1;
-        html += `<tr class="${isFirst ? 'top1' : ''}">
-          <td class="rank-col">${item.rank}</td>
-          <td class="name-col">${item.name}</td>
-          <td>${item.team || '—'}</td>
-          <td class="score-col">${item.score}</td>
-        </tr>`;
+      // Re-trigger animations on slide change
+      const observer = new MutationObserver(() => {
+        // When slide changes, reset animations for the new slide
+        setTimeout(() => {
+          resetAnimations(currentIndex);
+          resetProgressBar();
+        }, 100);
       });
 
-      html += `</tbody></table>`;
-      container.innerHTML = html;
-    }
-
-    function renderTeams(containerId, items) {
-      const container = document.getElementById(containerId);
-      if (!items || items.length === 0) {
-        container.innerHTML = `<div class="empty-state">No data available.</div>`;
-        return;
-      }
-
-      const firstCol = items.slice(0, 10);
-      const secondCol = items.slice(10);
-
-      let html = '';
-
-      html += `<table>
-        <thead><tr>
-          <th>#</th>
-          <th class="name-col">TEAM LEADER</th>
-          <th class="score-col">SIS</th>
-        </tr></thead><tbody>`;
-      firstCol.forEach(item => {
-        const isFirst = item.rank === 1;
-        html += `<tr class="${isFirst ? 'top1' : ''}">
-          <td class="rank-col">${item.rank}</td>
-          <td class="name-col">${item.name}</td>
-          <td class="score-col">${item.score}</td>
-        </tr>`;
+      slides.forEach(slide => {
+        observer.observe(slide, { attributes: true, attributeFilter: ['class'] });
       });
-      html += `</tbody></table>`;
 
-      html += `<table>
-        <thead><tr>
-          <th>#</th>
-          <th class="name-col">TEAM LEADER</th>
-          <th class="score-col">SIS</th>
-        </tr></thead><tbody>`;
-      secondCol.forEach(item => {
-        html += `<tr>
-          <td class="rank-col">${item.rank}</td>
-          <td class="name-col">${item.name}</td>
-          <td class="score-col">${item.score}</td>
-        </tr>`;
-      });
-      html += `</tbody></table>`;
+      // Fix for slide transitions – re-trigger when active class added
+      const originalGoTo = goToSlide;
+      goToSlide = function(index) {
+        originalGoTo(index);
+        setTimeout(() => {
+          resetAnimations(currentIndex);
+          resetProgressBar();
+        }, 100);
+      };
 
-      container.innerHTML = html;
-    }
-
-    async function loadData() {
-      try {
-        const res = await fetch('data.json?' + Date.now());
-        if (!res.ok) throw new Error('Failed to fetch');
-        const data = await res.json();
-
-        const weekText = data.week || 'Week of Jun 25 – Jul 01, 2026';
-        document.getElementById('agentsWeek').textContent = weekText;
-        document.getElementById('teamsWeek').textContent = weekText;
-
-        renderAgents('agentTableWrap', data.agents);
-        renderTeams('teamTableWrap', data.teams);
-      } catch (e) {
-        document.getElementById('teamTableWrap').innerHTML =
-          '<div class="empty-state">⚠️ Could not load data. Refresh or try again later.</div>';
-        document.getElementById('agentTableWrap').innerHTML = '';
-      }
-    }
-
-    loadData();
-    resetAutoPlay();
+    })();
   </script>
 
 </body>
