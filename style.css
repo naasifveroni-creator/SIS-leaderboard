@@ -1,0 +1,219 @@
+/* style.css – Delta SIS Leaderboard · Navy · Red · Grey */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+}
+body {
+  background: #f0f3f8;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.container {
+  max-width: 1200px;
+  width: 100%;
+}
+
+/* ===== HEADER (navy) ===== */
+.header {
+  background: #0b1a33;
+  color: #fff;
+  padding: 1.2rem 2rem;
+  border-radius: 16px 16px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.logo-area svg {
+  height: 40px;
+  width: auto;
+}
+.logo-area h1 {
+  font-weight: 300;
+  font-size: 1.9rem;
+  letter-spacing: 0.5px;
+}
+.logo-area h1 span {
+  font-weight: 700;
+  color: #d32f2f; /* RED accent */
+}
+.week-badge {
+  background: rgba(255,255,255,0.10);
+  backdrop-filter: blur(4px);
+  padding: 0.4rem 1.4rem;
+  border-radius: 40px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.06);
+  white-space: nowrap;
+}
+
+/* ===== BEHAVIOR BAR (grey) ===== */
+.behavior-bar {
+  background: #e9edf4;
+  padding: 0.6rem 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.5rem;
+  border-bottom: 3px solid #0b1a33;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.3px;
+  color: #0b1a33;
+}
+.behavior-bar .pill {
+  background: #0b1a33;
+  color: #fff;
+  padding: 0.2rem 1rem;
+  border-radius: 30px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.behavior-bar .pill.red {
+  background: #d32f2f;
+  color: #fff;
+}
+.behavior-bar .pill.coach {
+  background: #2a4a7f;
+  color: #fff;
+}
+.behavior-divider {
+  color: #8a9bb0;
+  font-weight: 300;
+}
+
+/* ===== CARDS ===== */
+.card {
+  background: #ffffff;
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 8px 24px rgba(11,26,51,0.08);
+  margin-bottom: 2.5rem;
+  overflow: hidden;
+}
+.card-header {
+  background: #0b1a33;
+  color: #fff;
+  padding: 0.7rem 2rem;
+  font-weight: 600;
+  font-size: 1.15rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-header small {
+  font-weight: 300;
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin-left: 0.5rem;
+}
+.card-header .icon {
+  font-size: 1.3rem;
+}
+
+/* ===== TABLES ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+th {
+  background: #f5f7fc;
+  color: #1a2a4a;
+  font-weight: 600;
+  padding: 0.7rem 1.5rem;
+  text-align: left;
+  border-bottom: 2px solid #dce2ec;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+td {
+  padding: 0.65rem 1.5rem;
+  border-bottom: 1px solid #edf0f6;
+  vertical-align: middle;
+}
+tr:last-child td {
+  border-bottom: none;
+}
+.rank-col {
+  width: 60px;
+  color: #6b7f96;
+  font-weight: 600;
+}
+.name-col {
+  font-weight: 500;
+  color: #0b1a33;
+}
+.score-col {
+  font-weight: 700;
+  color: #0b1a33;
+  text-align: right;
+  width: 100px;
+}
+
+/* ===== TOP 1 – RED ACCENT ===== */
+tr.top1 td {
+  background: #fef0ee; /* light red tint */
+}
+tr.top1 .rank-col {
+  color: #d32f2f;
+  font-weight: 800;
+}
+tr.top1 .score-col {
+  color: #d32f2f;
+  font-size: 1.05rem;
+}
+
+tbody tr:hover td {
+  background: #f8faff;
+}
+
+/* ===== EMPTY / MISC ===== */
+.empty-state {
+  padding: 3rem;
+  text-align: center;
+  color: #8a9bb0;
+  font-size: 0.95rem;
+}
+.admin-link {
+  margin-top: 1rem;
+  text-align: right;
+  font-size: 0.8rem;
+}
+.admin-link a {
+  color: #0b1a33;
+  text-decoration: none;
+  border-bottom: 1px dashed #bcc8d8;
+  padding-bottom: 2px;
+}
+.admin-link a:hover {
+  border-bottom-color: #0b1a33;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 700px) {
+  body { padding: 1rem; }
+  .header { flex-direction: column; align-items: flex-start; }
+  .week-badge { white-space: normal; align-self: flex-start; }
+  .behavior-bar { font-size: 0.7rem; gap: 0.4rem 0.8rem; padding: 0.5rem 1rem; }
+  th, td { padding: 0.5rem 0.8rem; font-size: 0.82rem; }
+  .rank-col { width: 40px; }
+  .score-col { width: 70px; }
+  .logo-area h1 { font-size: 1.4rem; }
+}
+@media (max-width: 500px) {
+  th, td { padding: 0.4rem 0.5rem; font-size: 0.7rem; }
+  .card-header { font-size: 1rem; padding: 0.5rem 1rem; }
+}
