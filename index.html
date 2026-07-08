@@ -770,11 +770,13 @@
         return;
       }
 
+      // Split: first 10 rows, remaining rows
       const firstCol = items.slice(0, 10);
       const secondCol = items.slice(10);
 
       let html = '';
 
+      // First column (ranks 1-10)
       html += `<table>
         <thead><tr>
           <th>#</th>
@@ -791,6 +793,7 @@
       });
       html += `</tbody></table>`;
 
+      // Second column (ranks 11-17)
       html += `<table>
         <thead><tr>
           <th>#</th>
