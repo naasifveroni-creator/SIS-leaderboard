@@ -210,49 +210,432 @@
       showStatus('❌ Could not detect repo. Open this page from your GitHub Pages URL.', 'error');
       return;
     }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Δ SIS Performance · Delta</title>
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+    }
 
-    try {
-      // 1. Get current file SHA
-      const fileUrl = `https://api.github.com/repos/${repoPath}/contents/data.json`;
-      const headRes = await fetch(fileUrl, {
-        headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
-      });
-      if (!headRes.ok) throw new Error('Could not fetch data.json. Check token and repo path.');
-      const fileMeta = await headRes.json();
-      const sha = fileMeta.sha;
+    body {
+      background: #0b1a33;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
 
-      // 2. Commit new content
-      const commitRes = await fetch(fileUrl, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `token ${token}`,
-          'Content-Type': 'application/json',
-          'Accept': 'application/vnd.github.v3+json'
-        },
-        body: JSON.stringify({
-          message: `Update SIS leaderboard (${new Date().toLocaleString()})`,
-          content: content,
-          sha: sha
-        })
-      });
-      if (!commitRes.ok) {
-        const err = await commitRes.json();
-        throw new Error(err.message || 'Commit failed');
+    .slide-deck {
+      max-width: 1200px;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0b1a33;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ---------- SLIDES WRAPPER ---------- */
+    .slides-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 4% 6%;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+      display: flex;
+      flex-direction: column;
+      background: #0b1a33;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      position: relative;
+    }
+
+    /* ========== SLIDE 0: TITLE (your IMG-20260708-WA0002) ========== */
+    #slide0 {
+      background: url('IMG-20260708-WA0002_1559091135387095861.webp') center/cover no-repeat, #0b1a33;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* Hide the HTML text overlay – the image is perfect */
+    #slide0 .title-logo,
+    #slide0 .main-title,
+    #slide0 .sub-title,
+    #slide0 .week-display {
+      display: none;
+    }
+
+    /* ========== SLIDE 1 & 2: LEADERBOARD (your IMG-20260708-WA0001) ========== */
+    #slide1,
+    #slide2 {
+      background: url('IMG-20260708-WA0001_8033791242047932301.webp') center/cover no-repeat, #f0f3f8;
+      padding: 0;
+    }
+
+    /* Hide the header bar – the image already has it */
+    #slide1 .slide-header,
+    #slide2 .slide-header {
+      display: none;
+    }
+
+    /* Position the table overlay exactly over the table area in the image */
+    #slide1 .table-wrap,
+    #slide2 .table-wrap {
+      padding: 16% 6% 6% 6%;
+      background: transparent;
+      flex: 1;
+      overflow-x: auto;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Make the table readable over the image background */
+    #slide1 .table-wrap table,
+    #slide2 .table-wrap table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: clamp(0.7rem, 1vw, 0.95rem);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(2px);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+    }
+
+    #slide1 .table-wrap th,
+    #slide2 .table-wrap th {
+      background: #f5f7fc;
+      color: #1a2a4a;
+      font-weight: 600;
+      padding: 0.7rem 1.2rem;
+      text-align: left;
+      border-bottom: 2px solid #dce2ec;
+      font-size: clamp(0.6rem, 0.8vw, 0.75rem);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    #slide1 .table-wrap td,
+    #slide2 .table-wrap td {
+      padding: 0.6rem 1.2rem;
+      border-bottom: 1px solid #edf0f6;
+      vertical-align: middle;
+      color: #0b1a33;
+    }
+
+    #slide1 .table-wrap tr:last-child td,
+    #slide2 .table-wrap tr:last-child td {
+      border-bottom: none;
+    }
+
+    #slide1 .table-wrap .rank-col,
+    #slide2 .table-wrap .rank-col {
+      width: 12%;
+      color: #6b7f96;
+      font-weight: 600;
+    }
+
+    #slide1 .table-wrap .name-col,
+    #slide2 .table-wrap .name-col {
+      font-weight: 500;
+    }
+
+    #slide1 .table-wrap .score-col,
+    #slide2 .table-wrap .score-col {
+      font-weight: 700;
+      text-align: right;
+      width: 15%;
+      color: #0b1a33;
+    }
+
+    /* #1 rank – RED accent */
+    #slide1 .table-wrap tr.top1 td,
+    #slide2 .table-wrap tr.top1 td {
+      background: #fef0ee;
+    }
+
+    #slide1 .table-wrap tr.top1 .rank-col,
+    #slide2 .table-wrap tr.top1 .rank-col {
+      color: #d32f2f;
+      font-weight: 800;
+    }
+
+    #slide1 .table-wrap tr.top1 .score-col,
+    #slide2 .table-wrap tr.top1 .score-col {
+      color: #d32f2f;
+      font-size: 1.05em;
+    }
+
+    #slide1 .table-wrap .empty-state,
+    #slide2 .table-wrap .empty-state {
+      padding: 2rem;
+      text-align: center;
+      color: #8a9bb0;
+      background: rgba(255,255,255,0.8);
+      border-radius: 12px;
+      width: 100%;
+    }
+
+    /* ---------- NAVIGATION ---------- */
+    .nav-controls {
+      position: absolute;
+      bottom: 2%;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.2rem;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .nav-controls button,
+    .nav-controls .dot {
+      pointer-events: auto;
+    }
+
+    .arrow {
+      background: rgba(11, 26, 51, 0.6);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: 0.2s;
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .arrow:hover {
+      background: #d32f2f;
+      transform: scale(1.05);
+    }
+
+    .dots {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      border: none;
+      cursor: pointer;
+      transition: 0.25s;
+      padding: 0;
+    }
+
+    .dot.active {
+      background: #d32f2f;
+      transform: scale(1.3);
+    }
+
+    .dot:hover {
+      background: #fff;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 800px) {
+      #slide1 .table-wrap,
+      #slide2 .table-wrap {
+        padding: 14% 4% 4% 4%;
       }
-      showStatus('✅ Published! Live page will update in 1–2 minutes (GitHub cache).', 'success');
-    } catch (err) {
-      showStatus(`❌ Error: ${err.message}`, 'error');
+      #slide1 .table-wrap th,
+      #slide2 .table-wrap th,
+      #slide1 .table-wrap td,
+      #slide2 .table-wrap td {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.7rem;
+      }
+      .arrow { width: 30px; height: 30px; font-size: 0.9rem; }
     }
+
+    @media (max-width: 500px) {
+      body { padding: 0.5rem; }
+      .slide-deck { border-radius: 10px; }
+      #slide1 .table-wrap,
+      #slide2 .table-wrap {
+        padding: 20% 2% 2% 2%;
+      }
+      #slide1 .table-wrap th,
+      #slide2 .table-wrap th,
+      #slide1 .table-wrap td,
+      #slide2 .table-wrap td {
+        padding: 0.3rem 0.4rem;
+        font-size: 0.55rem;
+      }
+      .dot { width: 8px; height: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="slide-deck">
+  <div class="slides-wrapper" id="slidesWrapper">
+
+    <!-- ========== SLIDE 0: TITLE ========== -->
+    <div class="slide active" id="slide0" data-index="0">
+      <!-- The image is the background – no HTML content needed -->
+    </div>
+
+    <!-- ========== SLIDE 1: TEAMS ========== -->
+    <div class="slide" id="slide1" data-index="1">
+      <!-- The header is hidden – the image provides it -->
+      <div class="table-wrap" id="teamTableWrap">
+        <div class="empty-state">Loading teams…</div>
+      </div>
+    </div>
+
+    <!-- ========== SLIDE 2: AGENTS ========== -->
+    <div class="slide" id="slide2" data-index="2">
+      <div class="table-wrap" id="agentTableWrap">
+        <div class="empty-state">Loading agents…</div>
+      </div>
+    </div>
+
+    <!-- ========== NAVIGATION ========== -->
+    <div class="nav-controls">
+      <button class="arrow" id="prevSlide">‹</button>
+      <div class="dots" id="dotsContainer"></div>
+      <button class="arrow" id="nextSlide">›</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ---------- SLIDESHOW ENGINE ----------
+  const slides = document.querySelectorAll('.slide');
+  const dotsContainer = document.getElementById('dotsContainer');
+  let currentIndex = 0;
+  let autoPlayInterval = null;
+  const AUTO_DELAY = 5500;
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.dataset.index = i;
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsContainer.appendChild(dot);
+  });
+  const dots = dotsContainer.querySelectorAll('.dot');
+
+  function goToSlide(index) {
+    if (index === currentIndex) return;
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
+    slides[currentIndex].classList.remove('active');
+    dots[currentIndex].classList.remove('active');
+    currentIndex = index;
+    slides[currentIndex].classList.add('active');
+    dots[currentIndex].classList.add('active');
+    resetAutoPlay();
+  }
+
+  function nextSlide() { goToSlide(currentIndex + 1); }
+  function prevSlide() { goToSlide(currentIndex - 1); }
+
+  function resetAutoPlay() {
+    if (autoPlayInterval) clearInterval(autoPlayInterval);
+    autoPlayInterval = setInterval(nextSlide, AUTO_DELAY);
+  }
+
+  document.getElementById('nextSlide').addEventListener('click', nextSlide);
+  document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+  const wrapper = document.getElementById('slidesWrapper');
+  wrapper.addEventListener('mouseenter', () => {
+    if (autoPlayInterval) { clearInterval(autoPlayInterval); autoPlayInterval = null; }
+  });
+  wrapper.addEventListener('mouseleave', resetAutoPlay);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
   });
 
-  // ----- RESET TO SAMPLE -----
-  document.getElementById('resetBtn').addEventListener('click', () => {
-    if (confirm('Reset textarea to sample data?')) {
-      const sample = `1	Sinazo Nogaga	88.18%\n2	Zintle Daba	87.14%\n3	Mbono, Phelisa	86.22%\n4	Botshelo Manoko	85.71%\n5	Jesse Machelm	83.11%\n6	Justin Salisbury	83.00%\n7	Tina Barron	82.58%\n8	Waylon Alexander	81.43%\n9	Terrayn Moses	81.06%\n10	Dawood Thaaqib	80.86%\n11	Daniel Van Der Poel	79.46%\n12	Moegamat Naeem Abrahams	79.16%\n13	Fatima Becket	78.24%\n14	Claasen, Ryan	77.73%\n15	ETHEL ZANELE KARAWE	77.52%\n16	Saban, Mogamat Muaath	75.18%\n17	Ivewe Ncapayi	71.38%\n\n1	Abdul Abrahams	Moses Terrayn V	100.00%\n2	Stone Jade	Mbono, Phelisa	100.00%\n3	Alvino Februarie	Waylon Alexander	100.00%\n4	Shanseau Khabana	Waylon Alexander	100.00%\n5	Casey Williams	Tina Barron	100.00%\n6	Asavela Mkuyana	ETHEL ZANELE KARAWE	100.00%\n7	Gideon Muller	ETHEL ZANELE KARAWE	100.00%\n8	Hanton Kock	Waylon Alexander	100.00%\n9	Denica Williams	Fanti, Siphovuyo	100.00%\n10	Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%`;
-      document.getElementById('rawInput').value = sample;
-      showStatus('↺ Reset to sample data. Preview or publish when ready.', 'success');
+  // ---------- DATA LOADER ----------
+  function renderTable(containerId, items, type) {
+    const container = document.getElementById(containerId);
+    if (!items || items.length === 0) {
+      container.innerHTML = `<div class="empty-state">No data available.</div>`;
+      return;
     }
-  });
+
+    let html = `<table>
+      <thead><tr>
+        <th class="rank-col">#</th>
+        <th>${type === 'team' ? 'Team Leader' : 'Agent Name'}</th>
+        ${type === 'agent' ? '<th>Team Leader</th>' : ''}
+        <th class="score-col">SIS</th>
+      </tr></thead><tbody>`;
+
+    items.forEach(item => {
+      const isFirst = item.rank === 1;
+      html += `<tr class="${isFirst ? 'top1' : ''}">
+        <td class="rank-col">${item.rank}</td>
+        <td class="name-col">${item.name}</td>
+        ${type === 'agent' ? `<td>${item.team || '—'}</td>` : ''}
+        <td class="score-col">${item.score}</td>
+      </tr>`;
+    });
+
+    html += `</tbody></table>`;
+    container.innerHTML = html;
+  }
+
+  async function loadData() {
+    try {
+      const res = await fetch('data.json?' + Date.now());
+      if (!res.ok) throw new Error('Failed to fetch');
+      const data = await res.json();
+
+      // The week is already in the image, but if you want to overlay it dynamically, you can.
+      renderTable('teamTableWrap', data.teams, 'team');
+      renderTable('agentTableWrap', data.agents, 'agent');
+
+    } catch (e) {
+      document.getElementById('teamTableWrap').innerHTML = '<div class="empty-state">⚠️ Could not load data. Refresh or try again later.</div>';
+      document.getElementById('agentTableWrap').innerHTML = '';
+    }
+  }
+
+  loadData();
+  resetAutoPlay();
 </script>
+
 </body>
 </html>
