@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Δ SIS Performance · Delta</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="container" id="app">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-area">
+      <!-- Delta SVG – Red outer, Navy inner -->
+      <svg viewBox="0 0 60 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M30 2 L2 46 L58 46 L30 2Z" fill="#d32f2f" stroke="#d32f2f" stroke-width="2"/>
+        <path d="M30 10 L10 44 L50 44 L30 10Z" fill="#0b1a33" stroke="#0b1a33" stroke-width="1.5"/>
+        <text x="30" y="38" font-size="14" font-weight="700" fill="#d32f2f" text-anchor="middle" font-family="Segoe UI, sans-serif">Δ</text>
+      </svg>
+      <h1><span>DELTA</span> · SIS Performance</h1>
+    </div>
+    <div class="week-badge" id="weekDisplay">Loading…</div>
+  </div>
+
+  <!-- BEHAVIOR BAR -->
+  <div class="behavior-bar">
+    <span class="pill">GREET ME</span>
+    <span class="pill">RECOGNIZE ME</span>
+    <span class="pill">BE KIND TO ME</span>
+    <span class="pill">INFORM ME</span>
+    <span class="behavior-divider">|</span>
+    <span class="pill red">CONSISTENTLY EXECUTED</span>
+    <span class="pill coach">Leaders as Coaches</span>
+  </div>
+
+  <!-- TEAM BOARD -->
+  <div class="card">
+    <div class="card-header"><span class="icon">🏆</span> Top Performing Teams <small>SIS</small></div>
+    <div id="teamTableContainer"><div class="empty-state">Loading…</div></div>
+  </div>
+
+  <!-- AGENT BOARD -->
+  <div class="card">
+    <div class="card-header"><span class="icon">⭐</span> Top Performing Agents <small>SIS</small></div>
+    <div id="agentTableContainer"><div class="empty-state">Loading…</div></div>
+  </div>
+
+  <div class="admin-link"><a href="admin.html" target="_blank">✎ Update this board</a></div>
+</div>
+
+<script>
+  function renderTable(containerId, items, type) {
+    const container = document.getElementById(containerId);
+    if (!items || items.length === 0) {
+      container.innerHTML = `<div class="empty-state">No data available.</div>`;
+      return;
+    }
+    let html = `<table><thead><tr>
+      <th class="rank-col">#</th>
+      <th>${type === 'team' ? 'Team Leader' : 'Agent Name'}</th>
+      ${type === 'agent' ? '<th>Team Leader</th>' : ''}
+      <th class="score-col">SIS</th>
+    </tr></thead><tbody>`;
+    items.forEach(item => {
+      const isFirst = item.rank === 1;
+      html += `<tr class="${isFirst ? 'top1' : ''}">
+        <td class="rank-col">${item.rank}</td>
+        <td class="name-col">${item.name}</td>
+        ${type === 'agent' ? `<td>${item.team || '—'}</td>` : ''}
+        <td class="score-col">${item.score}</td>
+      </tr>`;
+    });
+    html += `</tbody></table>`;
+    container.innerHTML = html;
+  }
+
+  async function loadData() {
+    try {
+      const res = await fetch('data.json?' + Date.now());
+      if (!res.ok) throw new Error('Failed to load');
+      const data = await res.json();
+      document.getElementById('weekDisplay').textContent = data.week || 'Week of …';
+      renderTable('teamTableContainer', data.teams, 'team');
+      renderTable('agentTableContainer', data.agents, 'agent');
+    } catch (_) {
+      document.getElementById('teamTableContainer').innerHTML = '<div class="empty-state">⚠️ Could not load data. Refresh or try again later.</div>';
+    }
+  }
+  loadData();
+  setInterval(loadData, 60000); // auto-refresh every minute
+</script>
+</body>
+</html>
