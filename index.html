@@ -77,14 +77,14 @@
 
     .slide-header {
       background: #0b1a33;
-      padding: 0.5rem 2rem;
+      padding: 0.4rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 0.3rem 1rem;
+      gap: 0.2rem 1rem;
       flex-shrink: 0;
-      min-height: 60px;
+      min-height: 50px;
     }
 
     .slide-header .logo-area {
@@ -94,13 +94,13 @@
     }
 
     .slide-header .logo-area svg {
-      height: 28px;
+      height: 26px;
       width: auto;
     }
 
     .slide-header .logo-area h1 {
       font-weight: 300;
-      font-size: 1.1rem;
+      font-size: 1rem;
       letter-spacing: 1px;
       color: #fff;
     }
@@ -114,16 +114,16 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 0.2rem 0.6rem;
+      gap: 0.15rem 0.5rem;
       background: rgba(255, 255, 255, 0.06);
-      padding: 0.2rem 0.8rem;
+      padding: 0.15rem 0.6rem;
       border-radius: 40px;
       border: 1px solid rgba(255, 255, 255, 0.04);
     }
 
     .behavior-tags .tag {
       color: #fff;
-      font-size: 0.5rem;
+      font-size: 0.45rem;
       font-weight: 600;
       letter-spacing: 0.3px;
       text-transform: uppercase;
@@ -142,11 +142,11 @@
       color: #8a9bb0;
     }
 
-    /* TABLE CONTAINER - FILLS REMAINING SPACE */
+    /* ===== TABLE CONTAINER ===== */
     .table-wrap {
       flex: 1;
       overflow: hidden;
-      padding: 0.5rem 2rem 0.3rem;
+      padding: 0.3rem 2rem 0.2rem;
       background: #f0f3f8;
       display: flex;
       flex-direction: column;
@@ -167,20 +167,35 @@
       background: #f5f7fc;
       color: #1a2a4a;
       font-weight: 600;
-      padding: 0.3rem 0.8rem;
+      padding: 0.25rem 0.8rem;
       text-align: left;
       border-bottom: 2px solid #dce2ec;
-      font-size: 0.6rem;
+      font-size: 0.55rem;
       text-transform: uppercase;
       letter-spacing: 0.3px;
     }
 
-    .table-wrap td {
+    /* ===== AGENTS TABLE (10 rows) – normal size ===== */
+    #slide2 .table-wrap td {
       padding: 0.25rem 0.8rem;
       border-bottom: 1px solid #edf0f6;
       vertical-align: middle;
       color: #0b1a33;
       font-size: 0.7rem;
+    }
+
+    /* ===== TEAMS TABLE (17 rows) – SMALLER to fit ===== */
+    #slide3 .table-wrap td {
+      padding: 0.15rem 0.8rem;
+      border-bottom: 1px solid #edf0f6;
+      vertical-align: middle;
+      color: #0b1a33;
+      font-size: 0.6rem;
+    }
+
+    #slide3 .table-wrap th {
+      padding: 0.15rem 0.8rem;
+      font-size: 0.5rem;
     }
 
     .table-wrap tr:last-child td {
@@ -295,37 +310,45 @@
     /* ---------- RESPONSIVE ---------- */
     @media (max-width: 800px) {
       .slide-header {
-        padding: 0.3rem 1rem;
-        min-height: 45px;
+        padding: 0.2rem 1rem;
+        min-height: 38px;
       }
       .slide-header .logo-area h1 {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
       }
       .slide-header .logo-area svg {
-        height: 20px;
+        height: 18px;
       }
       .behavior-tags {
-        padding: 0.15rem 0.5rem;
-        gap: 0.15rem 0.3rem;
+        padding: 0.1rem 0.4rem;
+        gap: 0.1rem 0.3rem;
       }
       .behavior-tags .tag {
         font-size: 0.35rem;
       }
       .table-wrap {
-        padding: 0.3rem 0.8rem 0.2rem;
+        padding: 0.2rem 0.8rem 0.1rem;
       }
-      .table-wrap th {
-        font-size: 0.5rem;
-        padding: 0.2rem 0.5rem;
-      }
-      .table-wrap td {
+      #slide2 .table-wrap td {
         font-size: 0.55rem;
         padding: 0.15rem 0.5rem;
       }
+      #slide3 .table-wrap td {
+        font-size: 0.45rem;
+        padding: 0.1rem 0.5rem;
+      }
+      #slide2 .table-wrap th {
+        font-size: 0.45rem;
+        padding: 0.15rem 0.5rem;
+      }
+      #slide3 .table-wrap th {
+        font-size: 0.4rem;
+        padding: 0.1rem 0.5rem;
+      }
       .arrow {
-        width: 28px;
-        height: 28px;
-        font-size: 0.8rem;
+        width: 26px;
+        height: 26px;
+        font-size: 0.7rem;
       }
     }
 
@@ -339,19 +362,19 @@
       .slide-header {
         flex-direction: column;
         align-items: flex-start;
-        padding: 0.2rem 0.5rem;
-        min-height: 35px;
+        padding: 0.15rem 0.5rem;
+        min-height: 30px;
         gap: 0.1rem;
       }
       .slide-header .logo-area h1 {
-        font-size: 0.6rem;
+        font-size: 0.55rem;
       }
       .slide-header .logo-area svg {
-        height: 16px;
+        height: 14px;
       }
       .behavior-tags {
-        padding: 0.1rem 0.3rem;
-        gap: 0.1rem 0.2rem;
+        padding: 0.08rem 0.3rem;
+        gap: 0.08rem 0.2rem;
       }
       .behavior-tags .tag {
         font-size: 0.3rem;
@@ -360,15 +383,23 @@
         display: none;
       }
       .table-wrap {
-        padding: 0.2rem 0.3rem 0.1rem;
+        padding: 0.15rem 0.3rem 0.05rem;
       }
-      .table-wrap th {
-        font-size: 0.4rem;
-        padding: 0.15rem 0.3rem;
-      }
-      .table-wrap td {
+      #slide2 .table-wrap td {
         font-size: 0.45rem;
         padding: 0.1rem 0.3rem;
+      }
+      #slide3 .table-wrap td {
+        font-size: 0.35rem;
+        padding: 0.05rem 0.3rem;
+      }
+      #slide2 .table-wrap th {
+        font-size: 0.4rem;
+        padding: 0.1rem 0.3rem;
+      }
+      #slide3 .table-wrap th {
+        font-size: 0.35rem;
+        padding: 0.05rem 0.3rem;
       }
       .table-wrap .rank-col {
         width: 15%;
@@ -391,28 +422,36 @@
         max-height: 90vh;
       }
       .slide-header {
-        min-height: 80px;
+        min-height: 70px;
         padding: 0.8rem 3rem;
       }
       .slide-header .logo-area h1 {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
       }
       .slide-header .logo-area svg {
-        height: 40px;
+        height: 36px;
       }
       .behavior-tags .tag {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
       }
       .table-wrap {
-        padding: 0.8rem 3rem 0.5rem;
+        padding: 0.6rem 3rem 0.4rem;
       }
-      .table-wrap th {
-        font-size: 0.85rem;
-        padding: 0.6rem 1.2rem;
-      }
-      .table-wrap td {
-        font-size: 0.95rem;
+      #slide2 .table-wrap th {
+        font-size: 0.8rem;
         padding: 0.5rem 1.2rem;
+      }
+      #slide2 .table-wrap td {
+        font-size: 0.85rem;
+        padding: 0.4rem 1.2rem;
+      }
+      #slide3 .table-wrap th {
+        font-size: 0.7rem;
+        padding: 0.3rem 1.2rem;
+      }
+      #slide3 .table-wrap td {
+        font-size: 0.75rem;
+        padding: 0.25rem 1.2rem;
       }
     }
   </style>
