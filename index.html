@@ -792,53 +792,39 @@
     </div>
   </div>
 
-  <!-- ========== ADMIN ACCESS (hidden by default) ========== -->
-  <div id="adminAccess" style="position: fixed; bottom: 10vh; right: 2vw; z-index: 100; display: none;">
+  <!-- ========== ADMIN ACCESS – ULTRA-SUBTLE PERMANENT LINK ========== -->
+  <div id="adminAccess" style="position: fixed; bottom: 8vh; right: 1.5vw; z-index: 100;">
     <a href="#" id="adminLink" style="
-      background: rgba(11,26,51,0.8);
-      backdrop-filter: blur(12px);
-      color: #fdb913;
-      padding: 1vh 1.5vw;
-      border-radius: 30px;
+      color: rgba(255,255,255,0.15);
       text-decoration: none;
       font-size: 1.6vh;
-      font-weight: 600;
+      font-weight: 400;
       letter-spacing: 0.05em;
-      border: 1px solid rgba(253,185,19,0.3);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-      transition: all 0.3s ease;
-      display: inline-block;
       font-family: 'Inter', sans-serif;
-    ">🔐 ADMIN</a>
+      transition: all 0.3s ease;
+      padding: 0.3vh 0.5vw;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.02);
+    ">⚙ Admin</a>
   </div>
 
   <script>
     // =============================================
-    // ADMIN ACCESS – HIDDEN LINK (opens in new tab)
+    // ADMIN ACCESS – ULTRA-SUBTLE PERMANENT LINK
     // =============================================
 
     (function() {
-      const adminAccess = document.getElementById('adminAccess');
       const adminLink = document.getElementById('adminLink');
       const ADMIN_PASSWORD = 'delta2026'; // CHANGE THIS
 
-      let isVisible = false;
-
-      // ---- Keyboard shortcut: Ctrl+Shift+A ----
-      document.addEventListener('keydown', function(e) {
-        if (e.ctrlKey && e.shiftKey && (e.key === 'a' || e.key === 'A')) {
-          e.preventDefault();
-          isVisible = !isVisible;
-          adminAccess.style.display = isVisible ? 'block' : 'none';
-        }
+      // ---- Hover effect to make it visible ----
+      adminLink.addEventListener('mouseenter', function() {
+        this.style.color = 'rgba(255,215,0,0.6)';
+        this.style.background = 'rgba(255,255,255,0.06)';
       });
-
-      // ---- Auto-hide when full-screen ----
-      document.addEventListener('fullscreenchange', function() {
-        if (document.fullscreenElement) {
-          adminAccess.style.display = 'none';
-          isVisible = false;
-        }
+      adminLink.addEventListener('mouseleave', function() {
+        this.style.color = 'rgba(255,255,255,0.15)';
+        this.style.background = 'rgba(255,255,255,0.02)';
       });
 
       // ---- Password prompt then open in NEW TAB ----
@@ -852,15 +838,31 @@
         }
       });
 
-      // ---- Click outside to hide ----
-      document.addEventListener('click', function(e) {
-        if (isVisible && !adminAccess.contains(e.target)) {
-          adminAccess.style.display = 'none';
-          isVisible = false;
+      // ---- Auto-hide when full-screen (clean ops view) ----
+      document.addEventListener('fullscreenchange', function() {
+        if (document.fullscreenElement) {
+          adminLink.style.opacity = '0';
+          adminLink.style.pointerEvents = 'none';
+        } else {
+          adminLink.style.opacity = '1';
+          adminLink.style.pointerEvents = 'auto';
         }
       });
 
-      console.log('🔐 Admin access: Press Ctrl+Shift+A to show/hide');
+      // ---- Keyboard shortcut backup: Ctrl+Shift+A ----
+      document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.shiftKey && (e.key === 'a' || e.key === 'A')) {
+          e.preventDefault();
+          const entered = prompt('Enter admin password:');
+          if (entered === ADMIN_PASSWORD) {
+            window.open('admin.html', '_blank');
+          } else if (entered !== null) {
+            alert('Incorrect password. Access denied.');
+          }
+        }
+      });
+
+      console.log('🔐 Admin access: Click the "⚙ Admin" link in the bottom-right corner');
     })();
 
     // =============================================
