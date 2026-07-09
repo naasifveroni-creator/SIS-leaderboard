@@ -6,7 +6,6 @@
   <title>Δ SIS Performance · Delta</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    /* ========== RESET & BASE ========== */
     * {
       margin: 0;
       padding: 0;
@@ -44,7 +43,6 @@
       overflow: hidden;
     }
 
-    /* ========== FULLSCREEN TOGGLE ========== */
     .fullscreen-btn {
       position: absolute;
       top: 1.5vh;
@@ -78,7 +76,6 @@
       line-height: 1;
     }
 
-    /* ========== SLIDE BASE ========== */
     .slide {
       position: absolute;
       top: 0;
@@ -101,24 +98,20 @@
       transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s ease;
     }
 
-    /* ========== SLIDE 0: TITLE ========== */
     #slide0 {
       background: url('slide-title.webp.jpg') center/cover no-repeat, #0b1a33;
     }
 
-    /* ========== SLIDE 1: BEHAVIORS ========== */
     #slide1 {
       background: url('slide-data.webp.jpg') center/cover no-repeat, #0b1a33;
     }
 
-    /* ========== SLIDE 2 & 3: LEADERBOARD ========== */
     #slide2,
     #slide3 {
       background: linear-gradient(145deg, #f0f3f8 0%, #e8ecf4 100%);
       padding: 0;
     }
 
-    /* ---------- HEADER – PREMIUM RIBBON (Glass + Gold, Automated) ---------- */
     .slide-header {
       background: rgba(11, 26, 51, 0.65);
       backdrop-filter: blur(16px) saturate(180%);
@@ -139,7 +132,6 @@
       margin: 0 0.5vw;
     }
 
-    /* ---- Glass-morphism shimmer overlay (auto-loop) ---- */
     .slide-header::before {
       content: '';
       position: absolute;
@@ -166,7 +158,6 @@
       100% { left: 150%; }
     }
 
-    /* ---- Double bottom border (gold + red glow, auto-loop) ---- */
     .slide-header::after {
       content: '';
       position: absolute;
@@ -195,7 +186,6 @@
       50% { opacity: 1; }
     }
 
-    /* ---- Logo area ---- */
     .slide-header .logo-area {
       display: flex;
       align-items: center;
@@ -204,7 +194,6 @@
       z-index: 2;
     }
 
-    /* ---- Logo with heartbeat pulse (auto-loop) ---- */
     .slide-header .logo-area svg {
       height: 5vh;
       width: auto;
@@ -217,7 +206,6 @@
       50% { transform: scale(1.03); filter: drop-shadow(0 0 35px rgba(253, 185, 19, 0.6)) drop-shadow(0 0 60px rgba(253, 185, 19, 0.2)); }
     }
 
-    /* ---- "DELTA · SIS" with gold gradient (auto-loop) ---- */
     .slide-header .logo-area h1 {
       font-weight: 300;
       font-size: 2.5vh;
@@ -244,7 +232,6 @@
       background-clip: text;
     }
 
-    /* ---- Behavior tags – premium pill badges (no hover) ---- */
     .behavior-tags {
       display: flex;
       flex-wrap: wrap;
@@ -275,14 +262,12 @@
       transform: translateY(0);
     }
 
-    /* ---- Divider dots ---- */
     .behavior-tags .divider {
       color: rgba(255, 255, 255, 0.15);
       font-weight: 300;
       font-size: 1.2vh;
     }
 
-    /* ---- "CONSISTENTLY EXECUTED" – RED BADGE ---- */
     .behavior-tags .tag.red {
       color: #fff;
       background: linear-gradient(135deg, #d32f2f, #b71c1c);
@@ -297,7 +282,6 @@
       50% { box-shadow: 0 0 50px rgba(211, 47, 47, 0.35); }
     }
 
-    /* ---- "LEADERS AS COACHES" – BLUE BADGE ---- */
     .behavior-tags .tag.coach {
       color: #fff;
       background: linear-gradient(135deg, #2a4a7f, #1a3050);
@@ -305,7 +289,6 @@
       box-shadow: 0 0 20px rgba(42, 74, 127, 0.15);
     }
 
-    /* ---------- SLIDE INDICATOR ---------- */
     .slide-counter {
       position: absolute;
       top: 1.5vh;
@@ -322,7 +305,6 @@
       font-size: 2vh;
     }
 
-    /* ---------- TABLE CONTAINER ---------- */
     .table-wrap {
       flex: 1;
       overflow: hidden;
@@ -355,7 +337,6 @@
       border-radius: 10px;
     }
 
-    /* ===== DATE TEXT – WIDER PILL ===== */
     .slide-title .week-date {
       font-weight: 800;
       font-size: 2.6vh;
@@ -373,7 +354,6 @@
       min-width: 30vw;
     }
 
-    /* ---------- TEAMS: Two columns ---------- */
     .table-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -400,7 +380,6 @@
       transform: translateY(-2px);
     }
 
-    /* ---------- AGENTS: Single column ---------- */
     .table-single {
       flex: 1;
       min-height: 0;
@@ -425,7 +404,6 @@
       transform: translateY(-2px);
     }
 
-    /* ---------- TABLE STYLES ---------- */
     .table-wrap th {
       background: linear-gradient(135deg, #0b1a33 0%, #1a3050 100%);
       color: #fff;
@@ -487,7 +465,6 @@
       font-variant-numeric: tabular-nums;
     }
 
-    /* ===== #1 ROW – GLOW EFFECT + PULSE (GREEN) ===== */
     .table-wrap tr.top1 td {
       background: linear-gradient(90deg, rgba(27, 138, 78, 0.08), rgba(253, 185, 19, 0.04));
       position: relative;
@@ -535,7 +512,6 @@
       font-size: 2vh;
     }
 
-    /* ===== TEAMS TABLE – BIGGER FONTS ===== */
     #slide3 .table-wrap td {
       padding: 0.3vh 0.6vw;
       font-size: 1.7vh;
@@ -554,7 +530,6 @@
       font-size: 2.2vh;
     }
 
-    /* ---------- FOOTER ---------- */
     .slide-footer {
       display: flex;
       justify-content: center;
@@ -577,7 +552,6 @@
       transform: scale(1.05);
     }
 
-    /* ========== PROGRESS BAR ========== */
     .progress-container {
       position: absolute;
       bottom: 0;
@@ -604,7 +578,6 @@
       100% { background-position: 200% 50%; }
     }
 
-    /* ---------- NAVIGATION ---------- */
     .nav-controls {
       position: absolute;
       bottom: 3%;
@@ -678,7 +651,6 @@
       transform: scale(1.2);
     }
 
-    /* ========== RESPONSIVE ========== */
     @media (max-aspect-ratio: 16/9) {
       .slide-header .logo-area h1 { font-size: 2vh; }
       .behavior-tags .tag { font-size: 1.2vh; }
@@ -713,22 +685,18 @@
   <div class="slide-deck">
     <div class="slides-wrapper" id="slidesWrapper">
 
-      <!-- ========== FULLSCREEN TOGGLE ========== -->
       <button class="fullscreen-btn" id="fullscreenBtn">
         <span class="icon">⛶</span> FULL
       </button>
 
-      <!-- ========== SLIDE 0: TITLE ========== -->
       <div class="slide active" id="slide0" data-index="0" data-slide="1">
         <div class="slide-counter"><span class="current">1</span> / 4</div>
       </div>
 
-      <!-- ========== SLIDE 1: BEHAVIORS ========== -->
       <div class="slide" id="slide1" data-index="1" data-slide="2">
         <div class="slide-counter"><span class="current">2</span> / 4</div>
       </div>
 
-      <!-- ========== SLIDE 2: AGENTS ========== -->
       <div class="slide" id="slide2" data-index="2" data-slide="3">
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
@@ -772,7 +740,6 @@
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
       </div>
 
-      <!-- ========== SLIDE 3: TEAMS ========== -->
       <div class="slide" id="slide3" data-index="3" data-slide="4">
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
@@ -816,7 +783,6 @@
         <div class="progress-container"><div class="progress-bar" id="progressBar2"></div></div>
       </div>
 
-      <!-- ========== NAVIGATION ========== -->
       <div class="nav-controls">
         <button class="arrow" id="prevSlide">‹</button>
         <div class="dots" id="dotsContainer"></div>
@@ -826,7 +792,77 @@
     </div>
   </div>
 
+  <!-- ========== ADMIN ACCESS (hidden by default) ========== -->
+  <div id="adminAccess" style="position: fixed; bottom: 10vh; right: 2vw; z-index: 100; display: none;">
+    <a href="#" id="adminLink" style="
+      background: rgba(11,26,51,0.8);
+      backdrop-filter: blur(12px);
+      color: #fdb913;
+      padding: 1vh 1.5vw;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 1.6vh;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      border: 1px solid rgba(253,185,19,0.3);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+    ">🔐 ADMIN</a>
+  </div>
+
   <script>
+    // =============================================
+    // ADMIN ACCESS – HIDDEN LINK (opens in new tab)
+    // =============================================
+
+    (function() {
+      const adminAccess = document.getElementById('adminAccess');
+      const adminLink = document.getElementById('adminLink');
+      const ADMIN_PASSWORD = 'delta2026'; // CHANGE THIS
+
+      let isVisible = false;
+
+      // ---- Keyboard shortcut: Ctrl+Shift+A ----
+      document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.shiftKey && (e.key === 'a' || e.key === 'A')) {
+          e.preventDefault();
+          isVisible = !isVisible;
+          adminAccess.style.display = isVisible ? 'block' : 'none';
+        }
+      });
+
+      // ---- Auto-hide when full-screen ----
+      document.addEventListener('fullscreenchange', function() {
+        if (document.fullscreenElement) {
+          adminAccess.style.display = 'none';
+          isVisible = false;
+        }
+      });
+
+      // ---- Password prompt then open in NEW TAB ----
+      adminLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        const entered = prompt('Enter admin password:');
+        if (entered === ADMIN_PASSWORD) {
+          window.open('admin.html', '_blank');
+        } else if (entered !== null) {
+          alert('Incorrect password. Access denied.');
+        }
+      });
+
+      // ---- Click outside to hide ----
+      document.addEventListener('click', function(e) {
+        if (isVisible && !adminAccess.contains(e.target)) {
+          adminAccess.style.display = 'none';
+          isVisible = false;
+        }
+      });
+
+      console.log('🔐 Admin access: Press Ctrl+Shift+A to show/hide');
+    })();
+
     // =============================================
     // FULLSCREEN TOGGLE
     // =============================================
@@ -859,7 +895,7 @@
     })();
 
     // =============================================
-    // STAGGERED TAG ENTRANCE (automated)
+    // STAGGERED TAG ENTRANCE
     // =============================================
 
     (function() {
@@ -873,13 +909,11 @@
         });
       }
 
-      // Initial animation
       const tags1 = document.getElementById('tags1');
       const tags2 = document.getElementById('tags2');
       if (tags1) animateTags(tags1);
       if (tags2) animateTags(tags2);
 
-      // Re-trigger on slide change
       const observer = new MutationObserver(() => {
         document.querySelectorAll('.slide.active .behavior-tags').forEach((tags) => {
           tags.querySelectorAll('.tag').forEach((tag) => {
@@ -911,7 +945,6 @@
       const AUTO_DELAY = 5500;
       let isTransitioning = false;
 
-      // Build dots
       slides.forEach((_, i) => {
         const dot = document.createElement('button');
         dot.className = 'dot' + (i === 0 ? ' active' : '');
@@ -1055,7 +1088,6 @@
         if (e.key === 'ArrowLeft') prevSlide();
       });
 
-      // Data loader
       function renderAgents(containerId, items) {
         const container = document.getElementById(containerId);
         if (!items || items.length === 0) {
