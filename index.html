@@ -197,11 +197,11 @@
       font-size: 2vh;
     }
 
-    /* ---------- TABLE CONTAINER ---------- */
+    /* ---------- TABLE CONTAINER – REDUCED PADDING ========== */
     .table-wrap {
       flex: 1;
       overflow: hidden;
-      padding: 1vh 2vw 0.5vh;
+      padding: 1vh 1vw 0.5vh 1vw; /* was 2vw – now 1vw */
       background: transparent;
       display: flex;
       flex-direction: column;
@@ -230,7 +230,7 @@
       border-radius: 10px;
     }
 
-    /* ===== DATE TEXT – NOW DELTA BLUE + VISIBLE ===== */
+    /* ===== DATE TEXT – WIDER PILL ===== */
     .slide-title .week-date {
       font-weight: 800;
       font-size: 2.6vh;
@@ -240,18 +240,19 @@
       letter-spacing: 0.05em;
       text-shadow: 0 0 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.2);
       background: rgba(255, 255, 255, 0.3);
-      padding: 0.2vh 1.5vw;
+      padding: 0.2vh 2.5vw; /* wider pill */
       border-radius: 30px;
       margin-left: auto;
       margin-right: auto;
       backdrop-filter: blur(4px);
+      min-width: 30vw; /* ensures it spans across */
     }
 
-    /* ---------- TEAMS: Two columns ---------- */
+    /* ---------- TEAMS: Two columns – wider gap ---------- */
     .table-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1vw 2vw;
+      gap: 1vw 1.5vw; /* was 1vw 2vw – adjusted */
       flex: 1;
       min-height: 0;
       align-content: start;
@@ -259,6 +260,7 @@
 
     .table-grid table {
       width: 100%;
+      min-width: 0; /* prevents overflow */
       border-collapse: collapse;
       background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(8px);
@@ -283,6 +285,7 @@
 
     .table-single table {
       width: 100%;
+      min-width: 0;
       border-collapse: collapse;
       background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(8px);
@@ -297,7 +300,7 @@
       transform: translateY(-2px);
     }
 
-    /* ---------- TABLE STYLES ---------- */
+    /* ---------- TABLE STYLES – BIGGER FONTS ---------- */
     .table-wrap th {
       background: linear-gradient(135deg, #0b1a33 0%, #1a3050 100%);
       color: #fff;
@@ -305,7 +308,7 @@
       padding: 0.6vh 1vw;
       text-align: center;
       border-bottom: 3px solid #d32f2f;
-      font-size: 1.6vh;
+      font-size: 1.8vh; /* was 1.6vh */
       text-transform: uppercase;
       letter-spacing: 0.08em;
       position: sticky;
@@ -319,7 +322,7 @@
       vertical-align: middle;
       color: #0b1a33;
       text-align: center;
-      font-size: 1.8vh;
+      font-size: 2vh; /* was 1.8vh */
       font-weight: 500;
       transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
       position: relative;
@@ -341,13 +344,13 @@
       width: 10%;
       color: #6b7f96;
       font-weight: 600;
-      font-size: 1.6vh;
+      font-size: 1.8vh; /* was 1.6vh */
     }
 
     .table-wrap .name-col {
       font-weight: 500;
       text-align: left;
-      font-size: 1.7vh;
+      font-size: 1.9vh; /* was 1.7vh */
     }
 
     .table-wrap .score-col {
@@ -355,7 +358,7 @@
       text-align: right;
       width: 12%;
       color: #0b1a33;
-      font-size: 1.8vh;
+      font-size: 2vh; /* was 1.8vh */
       font-variant-numeric: tabular-nums;
     }
 
@@ -369,12 +372,12 @@
     .table-wrap tr.top1 .rank-col {
       color: #1b8a4e;
       font-weight: 900;
-      font-size: 2vh;
+      font-size: 2.2vh; /* was 2vh */
     }
 
     .table-wrap tr.top1 .score-col {
       color: #1b8a4e;
-      font-size: 2.2vh;
+      font-size: 2.4vh; /* was 2.2vh */
       font-weight: 800;
     }
 
@@ -408,15 +411,15 @@
       font-size: 2vh;
     }
 
-    /* ===== TEAMS TABLE - adjusted for 17 rows ===== */
+    /* ===== TEAMS TABLE – BIGGER FONTS ===== */
     #slide3 .table-wrap td {
       padding: 0.3vh 0.6vw;
-      font-size: 1.5vh;
+      font-size: 1.7vh; /* was 1.5vh */
     }
 
     #slide3 .table-wrap th {
       padding: 0.3vh 0.6vw;
-      font-size: 1.3vh;
+      font-size: 1.5vh; /* was 1.3vh */
     }
 
     #slide3 .slide-title {
@@ -557,13 +560,15 @@
       .behavior-tags .tag { font-size: 1.2vh; }
       .slide-title { font-size: 2.5vh; }
       .slide-title .week-date { font-size: 2.2vh; }
-      .table-wrap td { font-size: 1.5vh; }
-      #slide3 .table-wrap td { font-size: 1.2vh; }
+      .table-wrap td { font-size: 1.7vh; }
+      .table-wrap th { font-size: 1.5vh; }
+      #slide3 .table-wrap td { font-size: 1.4vh; }
+      #slide3 .table-wrap th { font-size: 1.2vh; }
     }
 
     @media (max-aspect-ratio: 4/3) {
       .table-grid { grid-template-columns: 1fr; gap: 0.5vh; }
-      #slide3 .table-wrap td { padding: 0.2vh 0.4vw; font-size: 1.2vh; }
+      #slide3 .table-wrap td { padding: 0.2vh 0.4vw; font-size: 1.4vh; }
     }
 
     @media (max-width: 768px) {
@@ -571,7 +576,7 @@
       .behavior-tags .divider { display: none; }
       .behavior-tags { gap: 0.2vh 0.4vw; }
       .behavior-tags .tag { font-size: 0.8vh; }
-      .slide-title .week-date { font-size: 1.8vh; padding: 0.1vh 1vw; }
+      .slide-title .week-date { font-size: 1.8vh; padding: 0.1vh 1vw; min-width: 50vw; }
     }
   </style>
 </head>
