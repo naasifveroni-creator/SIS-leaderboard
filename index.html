@@ -112,18 +112,19 @@
       padding: 0;
     }
 
+    /* ---------- HEADER – DARK NAVY ---------- */
     .slide-header {
       background: #0b1a33;
       backdrop-filter: blur(16px) saturate(180%);
       -webkit-backdrop-filter: blur(16px) saturate(180%);
-      padding: 1vh 2vw;
+      padding: 0.8vh 2vw;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 0.5vh 1vw;
+      gap: 0.3vh 1vw;
       flex-shrink: 0;
-      min-height: 9vh;
+      min-height: 10vh;
       border-bottom: 2px solid rgba(211, 47, 47, 0.3);
       position: relative;
       overflow: hidden;
@@ -184,6 +185,7 @@
       50% { opacity: 1; }
     }
 
+    /* ===== LOGO AREA – BIGGER ===== */
     .slide-header .logo-area {
       display: flex;
       align-items: center;
@@ -193,20 +195,20 @@
     }
 
     .slide-header .logo-area img {
-      height: 6.5vh;
+      height: 9vh;
       width: auto;
-      filter: drop-shadow(0 0 10px rgba(211, 47, 47, 0.3));
+      filter: drop-shadow(0 0 15px rgba(211, 47, 47, 0.3));
       animation: logoGlowRed 3s ease-in-out infinite;
     }
 
     @keyframes logoGlowRed {
-      0%, 100% { filter: drop-shadow(0 0 10px rgba(211, 47, 47, 0.3)); }
-      50% { filter: drop-shadow(0 0 20px rgba(211, 47, 47, 0.5)); }
+      0%, 100% { filter: drop-shadow(0 0 15px rgba(211, 47, 47, 0.3)); }
+      50% { filter: drop-shadow(0 0 30px rgba(211, 47, 47, 0.5)); }
     }
 
     .slide-header .logo-area h1 {
       font-weight: 300;
-      font-size: 2.8vh;
+      font-size: 3.2vh;
       letter-spacing: 0.1em;
       color: #fff;
       text-shadow: 0 0 20px rgba(211, 47, 47, 0.1);
@@ -228,7 +230,7 @@
 
     .behavior-tags .tag {
       color: #fff;
-      font-size: 1.4vh;
+      font-size: 1.6vh;
       font-weight: 600;
       letter-spacing: 0.05em;
       text-transform: uppercase;
@@ -306,10 +308,11 @@
       font-size: 2vh;
     }
 
+    /* ===== TABLE CONTAINER – REDUCED PADDING, BIGGER TABLES ===== */
     .table-wrap {
       flex: 1;
       overflow: hidden;
-      padding: 0.5vh 0.5vw 0.3vh 0.5vw;
+      padding: 0.3vh 0.5vw 0.3vh 0.5vw;
       background: transparent;
       display: flex;
       flex-direction: column;
@@ -318,11 +321,11 @@
     }
 
     .slide-title {
-      font-size: 3.2vh;
+      font-size: 3.5vh;
       font-weight: 800;
       color: #0b1a33;
       text-align: center;
-      padding-bottom: 0.3vh;
+      padding-bottom: 0.2vh;
       flex-shrink: 0;
       letter-spacing: -0.02em;
       position: relative;
@@ -340,7 +343,7 @@
 
     .slide-title .week-date {
       font-weight: 800;
-      font-size: 2.4vh;
+      font-size: 2.8vh;
       color: #0b1a33;
       display: inline-block;
       margin-top: 0.1vh;
@@ -356,7 +359,7 @@
     .table-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.8vw 1.5vw;
+      gap: 0.6vw 1.5vw;
       flex: 1;
       min-height: 0;
       align-content: start;
@@ -403,14 +406,15 @@
       transform: translateY(-2px);
     }
 
+    /* ===== TABLES – BIGGER FONTS ===== */
     .table-wrap th {
       background: linear-gradient(135deg, #0b1a33 0%, #1a3050 100%);
       color: #fff;
       font-weight: 700;
-      padding: 0.5vh 0.8vw;
+      padding: 0.6vh 1vw;
       text-align: center;
       border-bottom: 3px solid #d32f2f;
-      font-size: 1.6vh;
+      font-size: 1.8vh;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       position: sticky;
@@ -419,12 +423,12 @@
     }
 
     .table-wrap td {
-      padding: 0.4vh 0.6vw;
+      padding: 0.5vh 0.8vw;
       border-bottom: 1px solid rgba(237, 240, 246, 0.6);
       vertical-align: middle;
       color: #0b1a33;
       text-align: center;
-      font-size: 1.8vh;
+      font-size: 2vh;
       font-weight: 500;
       transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
       position: relative;
@@ -446,13 +450,13 @@
       width: 10%;
       color: #6b7f96;
       font-weight: 600;
-      font-size: 1.6vh;
+      font-size: 1.8vh;
     }
 
     .table-wrap .name-col {
       font-weight: 500;
       text-align: left;
-      font-size: 1.7vh;
+      font-size: 1.9vh;
     }
 
     .table-wrap .score-col {
@@ -460,7 +464,7 @@
       text-align: right;
       width: 12%;
       color: #0b1a33;
-      font-size: 1.8vh;
+      font-size: 2vh;
       font-variant-numeric: tabular-nums;
     }
 
@@ -473,12 +477,12 @@
     .table-wrap tr.top1 .rank-col {
       color: #1b8a4e;
       font-weight: 900;
-      font-size: 2vh;
+      font-size: 2.2vh;
     }
 
     .table-wrap tr.top1 .score-col {
       color: #1b8a4e;
-      font-size: 2.2vh;
+      font-size: 2.4vh;
       font-weight: 800;
     }
 
@@ -511,22 +515,23 @@
       font-size: 2vh;
     }
 
+    /* ===== TEAMS TABLE – ADJUSTED ===== */
     #slide3 .table-wrap td {
-      padding: 0.2vh 0.4vw;
-      font-size: 1.5vh;
+      padding: 0.3vh 0.6vw;
+      font-size: 1.6vh;
     }
 
     #slide3 .table-wrap th {
-      padding: 0.2vh 0.4vw;
-      font-size: 1.3vh;
+      padding: 0.3vh 0.6vw;
+      font-size: 1.5vh;
     }
 
     #slide3 .slide-title {
-      font-size: 2.5vh;
+      font-size: 2.8vh;
     }
 
     #slide3 .slide-title .week-date {
-      font-size: 2vh;
+      font-size: 2.2vh;
     }
 
     .slide-footer {
@@ -580,7 +585,7 @@
 
     .nav-controls {
       position: absolute;
-      bottom: 8%;
+      bottom: 6%;
       left: 0;
       right: 0;
       display: flex;
@@ -652,9 +657,10 @@
     }
 
     @media (max-aspect-ratio: 16/9) {
-      .slide-header .logo-area h1 { font-size: 2vh; }
+      .slide-header .logo-area h1 { font-size: 2.2vh; }
+      .slide-header .logo-area img { height: 7vh; }
       .behavior-tags .tag { font-size: 1.2vh; }
-      .slide-title { font-size: 2.5vh; }
+      .slide-title { font-size: 2.8vh; }
       .slide-title .week-date { font-size: 2.2vh; }
       .table-wrap td { font-size: 1.6vh; }
       .table-wrap th { font-size: 1.4vh; }
@@ -675,7 +681,7 @@
       .behavior-tags .tag { font-size: 0.8vh; padding: 0.2vh 0.6vw; }
       .slide-title .week-date { font-size: 1.8vh; padding: 0.1vh 1vw; }
       .slide-header .logo-area h1 { font-size: 1.6vh; }
-      .slide-header .logo-area img { height: 4vh; }
+      .slide-header .logo-area img { height: 5vh; }
       .fullscreen-btn { font-size: 1.2vh; padding: 0.2vh 0.5vw; top: 1vh; left: 1vw; }
       .nav-controls { bottom: 6%; }
       .arrow { width: 2.5vh; height: 2.5vh; font-size: 1.5vh; }
@@ -732,7 +738,7 @@
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=2" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=3" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags1">
@@ -762,7 +768,7 @@
         </div>
 
         <div class="slide-footer">
-          <img src="delta-logo.png?v=2" alt="Delta" class="footer-logo" />
+          <img src="delta-logo.png?v=3" alt="Delta" class="footer-logo" />
         </div>
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
       </div>
@@ -771,7 +777,7 @@
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=2" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=3" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags2">
@@ -801,7 +807,7 @@
         </div>
 
         <div class="slide-footer">
-          <img src="delta-logo.png?v=2" alt="Delta" class="footer-logo" />
+          <img src="delta-logo.png?v=3" alt="Delta" class="footer-logo" />
         </div>
         <div class="progress-container"><div class="progress-bar" id="progressBar2"></div></div>
       </div>
