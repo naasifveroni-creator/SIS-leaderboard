@@ -117,7 +117,7 @@
       background: #0b1a33;
       backdrop-filter: blur(16px) saturate(180%);
       -webkit-backdrop-filter: blur(16px) saturate(180%);
-      padding: 0.5vh 2vw;
+      padding: 0.3vh 2vw;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -307,7 +307,7 @@
       font-size: 2vh;
     }
 
-    /* ===== TABLE CONTAINER – STRETCHES TO FILL ===== */
+    /* ===== TABLE CONTAINER – FILLS EVERYTHING ===== */
     .table-wrap {
       flex: 1;
       overflow: hidden;
@@ -317,10 +317,11 @@
       flex-direction: column;
       min-height: 0;
       justify-content: center;
+      height: 100%;
     }
 
     .slide-title {
-      font-size: 3.2vh;
+      font-size: 3.5vh;
       font-weight: 800;
       color: #0b1a33;
       text-align: center;
@@ -342,7 +343,7 @@
 
     .slide-title .week-date {
       font-weight: 800;
-      font-size: 2.2vh;
+      font-size: 2.4vh;
       color: #0b1a33;
       display: inline-block;
       margin-top: 0.1vh;
@@ -359,10 +360,11 @@
     .table-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.5vw 1.2vw;
+      gap: 0.8vw 1.5vw;
       flex: 1;
       min-height: 0;
       align-content: center;
+      height: 100%;
     }
 
     .table-grid table {
@@ -383,6 +385,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      height: 100%;
     }
 
     .table-single table {
@@ -400,21 +403,21 @@
       background: linear-gradient(135deg, #0b1a33 0%, #1a3050 100%);
       color: #fff;
       font-weight: 700;
-      padding: 0.8vh 1vw;
+      padding: 1vh 1vw;
       text-align: center;
       border-bottom: 3px solid #d32f2f;
-      font-size: 1.8vh;
+      font-size: 2vh;
       text-transform: uppercase;
       letter-spacing: 0.08em;
     }
 
     .table-wrap td {
-      padding: 0.7vh 0.8vw;
+      padding: 0.9vh 0.8vw;
       border-bottom: 1px solid rgba(237, 240, 246, 0.6);
       vertical-align: middle;
       color: #0b1a33;
       text-align: center;
-      font-size: 2.2vh;
+      font-size: 2.4vh;
       font-weight: 500;
     }
 
@@ -427,13 +430,13 @@
       width: 10%;
       color: #6b7f96;
       font-weight: 600;
-      font-size: 2vh;
+      font-size: 2.2vh;
     }
 
     .table-wrap .name-col {
       font-weight: 500;
       text-align: left;
-      font-size: 2vh;
+      font-size: 2.2vh;
     }
 
     .table-wrap .score-col {
@@ -441,7 +444,7 @@
       text-align: right;
       width: 12%;
       color: #0b1a33;
-      font-size: 2.2vh;
+      font-size: 2.4vh;
     }
 
     /* --- TOP 1 ROW --- */
@@ -454,12 +457,12 @@
     .table-wrap tr.top1 .rank-col {
       color: #1b8a4e;
       font-weight: 900;
-      font-size: 2.4vh;
+      font-size: 2.6vh;
     }
 
     .table-wrap tr.top1 .score-col {
       color: #1b8a4e;
-      font-size: 2.6vh;
+      font-size: 2.8vh;
       font-weight: 800;
     }
 
@@ -494,37 +497,37 @@
 
     /* --- TEAMS SPECIFIC --- */
     #slide3 .table-wrap td {
-      padding: 0.5vh 0.6vw;
-      font-size: 1.9vh;
-    }
-
-    #slide3 .table-wrap th {
-      padding: 0.5vh 0.6vw;
-      font-size: 1.6vh;
-    }
-
-    #slide3 .slide-title {
-      font-size: 2.8vh;
-    }
-
-    #slide3 .slide-title .week-date {
+      padding: 0.6vh 0.6vw;
       font-size: 2vh;
     }
 
-    /* ===== FOOTER – BIG LOGO ===== */
+    #slide3 .table-wrap th {
+      padding: 0.6vh 0.6vw;
+      font-size: 1.8vh;
+    }
+
+    #slide3 .slide-title {
+      font-size: 3vh;
+    }
+
+    #slide3 .slide-title .week-date {
+      font-size: 2.2vh;
+    }
+
+    /* ===== FOOTER – MASSIVE LOGO ===== */
     .slide-footer {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 1vh 2vw 1.5vh;
+      padding: 0.5vh 2vw 1vh;
       flex-shrink: 0;
       background: transparent;
-      border-top: 1px solid rgba(224, 229, 236, 0.2);
-      min-height: 12vh;
+      border-top: 1px solid rgba(224, 229, 236, 0.15);
+      min-height: 18vh;
     }
 
     .slide-footer .footer-logo {
-      height: 10vh;
+      height: 16vh;
       width: auto;
       display: block;
       filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.15));
@@ -630,20 +633,20 @@
       .slide-header .logo-area h1 { font-size: 2vh; }
       .slide-header .logo-area img { height: 6vh; }
       .behavior-tags .tag { font-size: 1vh; }
-      .slide-title { font-size: 2.6vh; }
+      .slide-title { font-size: 2.8vh; }
       .slide-title .week-date { font-size: 2vh; }
-      .table-wrap td { font-size: 1.8vh; }
-      .table-wrap th { font-size: 1.4vh; }
-      #slide3 .table-wrap td { font-size: 1.5vh; }
-      #slide3 .table-wrap th { font-size: 1.2vh; }
+      .table-wrap td { font-size: 2vh; }
+      .table-wrap th { font-size: 1.6vh; }
+      #slide3 .table-wrap td { font-size: 1.6vh; }
+      #slide3 .table-wrap th { font-size: 1.4vh; }
       .fullscreen-btn { font-size: 1.2vh; padding: 0.3vh 0.6vw; }
-      .slide-footer .footer-logo { height: 8vh; }
-      .slide-footer { min-height: 8vh; }
+      .slide-footer .footer-logo { height: 12vh; }
+      .slide-footer { min-height: 14vh; }
     }
 
     @media (max-aspect-ratio: 4/3) {
       .table-grid { grid-template-columns: 1fr; gap: 0.5vh; }
-      #slide3 .table-wrap td { padding: 0.3vh 0.4vw; font-size: 1.4vh; }
+      #slide3 .table-wrap td { padding: 0.4vh 0.4vw; font-size: 1.4vh; }
     }
 
     @media (max-width: 768px) {
@@ -655,8 +658,8 @@
       .slide-title .week-date { font-size: 1.6vh; }
       .table-wrap td { font-size: 1.4vh; }
       .table-wrap th { font-size: 1.2vh; }
-      .slide-footer .footer-logo { height: 5vh; }
-      .slide-footer { min-height: 6vh; }
+      .slide-footer .footer-logo { height: 8vh; }
+      .slide-footer { min-height: 10vh; }
       .nav-controls { bottom: 0.5%; }
       .arrow { width: 2vh; height: 2vh; font-size: 1.2vh; }
       .dot { width: 0.6vh; height: 0.6vh; }
@@ -712,7 +715,7 @@
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=6" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=7" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags1">
@@ -742,7 +745,7 @@
         </div>
 
         <div class="slide-footer">
-          <img src="delta-logo.png?v=6" alt="Delta" class="footer-logo" />
+          <img src="delta-logo.png?v=7" alt="Delta" class="footer-logo" />
         </div>
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
       </div>
@@ -751,7 +754,7 @@
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=6" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=7" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags2">
@@ -781,7 +784,7 @@
         </div>
 
         <div class="slide-footer">
-          <img src="delta-logo.png?v=6" alt="Delta" class="footer-logo" />
+          <img src="delta-logo.png?v=7" alt="Delta" class="footer-logo" />
         </div>
         <div class="progress-container"><div class="progress-bar" id="progressBar2"></div></div>
       </div>
