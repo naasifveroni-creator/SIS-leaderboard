@@ -43,10 +43,11 @@
       overflow: hidden;
     }
 
+    /* ========== FULLSCREEN TOGGLE – MOVED TOP-LEFT ========== */
     .fullscreen-btn {
       position: absolute;
       top: 1.5vh;
-      right: 1.5vw;
+      left: 1.5vw;
       z-index: 50;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -112,9 +113,9 @@
       padding: 0;
     }
 
-    /* ---------- HEADER – PREMIUM RIBBON (Red/Blue/White) ---------- */
+    /* ========== HEADER – DARK NAVY (not grey) ========== */
     .slide-header {
-      background: rgba(11, 26, 51, 0.65);
+      background: #0b1a33;
       backdrop-filter: blur(16px) saturate(180%);
       -webkit-backdrop-filter: blur(16px) saturate(180%);
       padding: 1vh 2vw;
@@ -124,7 +125,7 @@
       flex-wrap: wrap;
       gap: 0.5vh 1vw;
       flex-shrink: 0;
-      min-height: 8vh;
+      min-height: 9vh;
       border-bottom: 2px solid rgba(211, 47, 47, 0.3);
       position: relative;
       overflow: hidden;
@@ -159,7 +160,7 @@
       100% { left: 150%; }
     }
 
-    /* ---- Bottom border – clean red (no gold) ---- */
+    /* ---- Bottom border – clean red ---- */
     .slide-header::after {
       content: '';
       position: absolute;
@@ -187,7 +188,7 @@
       50% { opacity: 1; }
     }
 
-    /* ---- Logo area ---- */
+    /* ===== LOGO AREA – BIGGER ===== */
     .slide-header .logo-area {
       display: flex;
       align-items: center;
@@ -196,9 +197,8 @@
       z-index: 2;
     }
 
-    /* ---- Logo with red glow (no gold) ---- */
     .slide-header .logo-area img {
-      height: 5vh;
+      height: 6.5vh;
       width: auto;
       filter: drop-shadow(0 0 10px rgba(211, 47, 47, 0.3));
       animation: logoGlowRed 3s ease-in-out infinite;
@@ -209,10 +209,9 @@
       50% { filter: drop-shadow(0 0 20px rgba(211, 47, 47, 0.5)); }
     }
 
-    /* ---- "DELTA · SIS" – White + Red (no gold) ---- */
     .slide-header .logo-area h1 {
       font-weight: 300;
-      font-size: 2.5vh;
+      font-size: 2.8vh;
       letter-spacing: 0.1em;
       color: #fff;
       text-shadow: 0 0 20px rgba(211, 47, 47, 0.1);
@@ -223,7 +222,7 @@
       color: #d32f2f;
     }
 
-    /* ---- Behavior tags – pill badges (Red/Blue/White) ---- */
+    /* ===== BEHAVIOR TAGS ===== */
     .behavior-tags {
       display: flex;
       flex-wrap: wrap;
@@ -260,14 +259,12 @@
       border-color: rgba(211, 47, 47, 0.2);
     }
 
-    /* ---- Divider dots ---- */
     .behavior-tags .divider {
       color: rgba(255, 255, 255, 0.15);
       font-weight: 300;
       font-size: 1.2vh;
     }
 
-    /* ---- "CONSISTENTLY EXECUTED" – RED BADGE (no gold) ---- */
     .behavior-tags .tag.red {
       color: #fff;
       background: linear-gradient(135deg, #d32f2f, #b71c1c);
@@ -287,7 +284,6 @@
       50% { box-shadow: 0 0 35px rgba(211, 47, 47, 0.35); }
     }
 
-    /* ---- "LEADERS AS COACHES" – BLUE BADGE ---- */
     .behavior-tags .tag.coach {
       color: #fff;
       background: linear-gradient(135deg, #2a4a7f, #1a3050);
@@ -300,11 +296,11 @@
       transform: translateY(-2px) scale(1.02);
     }
 
-    /* ---------- SLIDE INDICATOR ---------- */
+    /* ===== SLIDE INDICATOR ===== */
     .slide-counter {
       position: absolute;
       top: 1.5vh;
-      right: 6vw;
+      right: 2vw;
       color: rgba(255, 255, 255, 0.3);
       font-size: 1.4vh;
       font-weight: 600;
@@ -317,11 +313,11 @@
       font-size: 2vh;
     }
 
-    /* ---------- TABLE CONTAINER ---------- */
+    /* ===== TABLE CONTAINER – FILLS WHITE SPACE ===== */
     .table-wrap {
       flex: 1;
       overflow: hidden;
-      padding: 1vh 1vw 0.5vh 1vw;
+      padding: 0.5vh 0.5vw 0.3vh 0.5vw;
       background: transparent;
       display: flex;
       flex-direction: column;
@@ -330,11 +326,11 @@
     }
 
     .slide-title {
-      font-size: 3vh;
+      font-size: 3.2vh;
       font-weight: 800;
       color: #0b1a33;
       text-align: center;
-      padding-bottom: 0.5vh;
+      padding-bottom: 0.3vh;
       flex-shrink: 0;
       letter-spacing: -0.02em;
       position: relative;
@@ -345,32 +341,31 @@
       display: block;
       width: 80px;
       height: 3px;
-      background: linear-gradient(90deg, #d32f2f, #fdb913);
-      margin: 0.3vh auto 0;
+      background: linear-gradient(90deg, #d32f2f, #d32f2f);
+      margin: 0.2vh auto 0;
       border-radius: 10px;
     }
 
     .slide-title .week-date {
       font-weight: 800;
-      font-size: 2.6vh;
+      font-size: 2.4vh;
       color: #0b1a33;
       display: inline-block;
-      margin-top: 0.2vh;
+      margin-top: 0.1vh;
       letter-spacing: 0.05em;
-      text-shadow: 0 0 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.3);
-      padding: 0.2vh 2.5vw;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.1vh 2vw;
       border-radius: 30px;
       margin-left: auto;
       margin-right: auto;
       backdrop-filter: blur(4px);
-      min-width: 30vw;
     }
 
+    /* ===== TABLES – WIDER TO FILL SPACE ===== */
     .table-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1vw 1.5vw;
+      gap: 0.8vw 1.5vw;
       flex: 1;
       min-height: 0;
       align-content: start;
@@ -421,10 +416,10 @@
       background: linear-gradient(135deg, #0b1a33 0%, #1a3050 100%);
       color: #fff;
       font-weight: 700;
-      padding: 0.6vh 1vw;
+      padding: 0.5vh 0.8vw;
       text-align: center;
       border-bottom: 3px solid #d32f2f;
-      font-size: 1.8vh;
+      font-size: 1.6vh;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       position: sticky;
@@ -433,12 +428,12 @@
     }
 
     .table-wrap td {
-      padding: 0.5vh 0.8vw;
+      padding: 0.4vh 0.6vw;
       border-bottom: 1px solid rgba(237, 240, 246, 0.6);
       vertical-align: middle;
       color: #0b1a33;
       text-align: center;
-      font-size: 2vh;
+      font-size: 1.8vh;
       font-weight: 500;
       transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
       position: relative;
@@ -460,13 +455,13 @@
       width: 10%;
       color: #6b7f96;
       font-weight: 600;
-      font-size: 1.8vh;
+      font-size: 1.6vh;
     }
 
     .table-wrap .name-col {
       font-weight: 500;
       text-align: left;
-      font-size: 1.9vh;
+      font-size: 1.7vh;
     }
 
     .table-wrap .score-col {
@@ -474,12 +469,12 @@
       text-align: right;
       width: 12%;
       color: #0b1a33;
-      font-size: 2vh;
+      font-size: 1.8vh;
       font-variant-numeric: tabular-nums;
     }
 
     .table-wrap tr.top1 td {
-      background: linear-gradient(90deg, rgba(27, 138, 78, 0.08), rgba(253, 185, 19, 0.04));
+      background: linear-gradient(90deg, rgba(27, 138, 78, 0.08), rgba(211, 47, 47, 0.04));
       position: relative;
       border-left: 4px solid #1b8a4e;
     }
@@ -487,12 +482,12 @@
     .table-wrap tr.top1 .rank-col {
       color: #1b8a4e;
       font-weight: 900;
-      font-size: 2.2vh;
+      font-size: 2vh;
     }
 
     .table-wrap tr.top1 .score-col {
       color: #1b8a4e;
-      font-size: 2.4vh;
+      font-size: 2.2vh;
       font-weight: 800;
     }
 
@@ -526,13 +521,13 @@
     }
 
     #slide3 .table-wrap td {
-      padding: 0.3vh 0.6vw;
-      font-size: 1.7vh;
+      padding: 0.2vh 0.4vw;
+      font-size: 1.5vh;
     }
 
     #slide3 .table-wrap th {
-      padding: 0.3vh 0.6vw;
-      font-size: 1.5vh;
+      padding: 0.2vh 0.4vw;
+      font-size: 1.3vh;
     }
 
     #slide3 .slide-title {
@@ -540,21 +535,21 @@
     }
 
     #slide3 .slide-title .week-date {
-      font-size: 2.2vh;
+      font-size: 2vh;
     }
 
     .slide-footer {
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 0.3vh 2vw 0.6vh;
+      padding: 0.2vh 2vw 0.4vh;
       flex-shrink: 0;
       background: transparent;
       border-top: 1px solid rgba(224, 229, 236, 0.3);
     }
 
     .slide-footer .footer-logo {
-      height: 6vh;
+      height: 5vh;
       width: auto;
       display: block;
       filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
@@ -570,7 +565,7 @@
       bottom: 0;
       left: 0;
       right: 0;
-      height: 4px;
+      height: 3px;
       background: rgba(255, 255, 255, 0.1);
       z-index: 30;
       overflow: hidden;
@@ -579,7 +574,7 @@
     .progress-bar {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #d32f2f, #d32f2f);
+      background: #d32f2f;
       animation: progressPulse 1.5s ease-in-out infinite;
       border-radius: 0 4px 4px 0;
       transition: width 0.1s linear;
@@ -668,16 +663,16 @@
       .behavior-tags .tag { font-size: 1.2vh; }
       .slide-title { font-size: 2.5vh; }
       .slide-title .week-date { font-size: 2.2vh; }
-      .table-wrap td { font-size: 1.7vh; }
-      .table-wrap th { font-size: 1.5vh; }
-      #slide3 .table-wrap td { font-size: 1.4vh; }
-      #slide3 .table-wrap th { font-size: 1.2vh; }
+      .table-wrap td { font-size: 1.6vh; }
+      .table-wrap th { font-size: 1.4vh; }
+      #slide3 .table-wrap td { font-size: 1.3vh; }
+      #slide3 .table-wrap th { font-size: 1.1vh; }
       .fullscreen-btn { font-size: 1.4vh; padding: 0.3vh 0.6vw; }
     }
 
     @media (max-aspect-ratio: 4/3) {
       .table-grid { grid-template-columns: 1fr; gap: 0.5vh; }
-      #slide3 .table-wrap td { padding: 0.2vh 0.4vw; font-size: 1.4vh; }
+      #slide3 .table-wrap td { padding: 0.2vh 0.4vw; font-size: 1.3vh; }
     }
 
     @media (max-width: 768px) {
@@ -685,10 +680,39 @@
       .behavior-tags .divider { display: none; }
       .behavior-tags { gap: 0.2vh 0.4vw; }
       .behavior-tags .tag { font-size: 0.8vh; padding: 0.2vh 0.6vw; }
-      .slide-title .week-date { font-size: 1.8vh; padding: 0.1vh 1vw; min-width: 50vw; }
+      .slide-title .week-date { font-size: 1.8vh; padding: 0.1vh 1vw; }
       .slide-header .logo-area h1 { font-size: 1.6vh; }
-      .slide-header .logo-area img { height: 3.5vh; }
-      .fullscreen-btn { font-size: 1.2vh; padding: 0.2vh 0.5vw; top: 1vh; right: 1vw; }
+      .slide-header .logo-area img { height: 4vh; }
+      .fullscreen-btn { font-size: 1.2vh; padding: 0.2vh 0.5vw; top: 1vh; left: 1vw; }
+    }
+
+    /* ===== ADMIN LINK – ALWAYS VISIBLE ===== */
+    #adminAccess {
+      position: fixed;
+      bottom: 2vh;
+      right: 1.5vw;
+      z-index: 100;
+    }
+
+    #adminAccess a {
+      color: rgba(255, 255, 255, 0.5);
+      text-decoration: none;
+      font-size: 1.6vh;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s ease;
+      padding: 0.3vh 0.6vw;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    #adminAccess a:hover {
+      color: #fdb913;
+      background: rgba(0, 0, 0, 0.4);
+      border-color: rgba(255, 215, 0, 0.2);
     }
   </style>
 </head>
@@ -697,23 +721,26 @@
   <div class="slide-deck">
     <div class="slides-wrapper" id="slidesWrapper">
 
+      <!-- ========== FULLSCREEN TOGGLE – TOP-LEFT ========== -->
       <button class="fullscreen-btn" id="fullscreenBtn">
         <span class="icon">⛶</span> FULL
       </button>
 
+      <!-- ========== SLIDE 0: TITLE ========== -->
       <div class="slide active" id="slide0" data-index="0" data-slide="1">
         <div class="slide-counter"><span class="current">1</span> / 4</div>
       </div>
 
+      <!-- ========== SLIDE 1: BEHAVIORS ========== -->
       <div class="slide" id="slide1" data-index="1" data-slide="2">
         <div class="slide-counter"><span class="current">2</span> / 4</div>
       </div>
 
+      <!-- ========== SLIDE 2: AGENTS ========== -->
       <div class="slide" id="slide2" data-index="2" data-slide="3">
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <!-- PNG LOGO – upload "delta-logo-ribbon.png" to your repo -->
             <img src="delta-logo-ribbon.png" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
@@ -744,11 +771,12 @@
         </div>
 
         <div class="slide-footer">
-          <img src="delta-logo.png" alt="Delta" class="footer-logo" />
+          <img src="delta - logo.png" alt="Delta" class="footer-logo" />
         </div>
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
       </div>
 
+      <!-- ========== SLIDE 3: TEAMS ========== -->
       <div class="slide" id="slide3" data-index="3" data-slide="4">
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
@@ -783,11 +811,12 @@
         </div>
 
         <div class="slide-footer">
-          <img src="delta-logo.png" alt="Delta" class="footer-logo" />
+          <img src="delta - logo.png" alt="Delta" class="footer-logo" />
         </div>
         <div class="progress-container"><div class="progress-bar" id="progressBar2"></div></div>
       </div>
 
+      <!-- ========== NAVIGATION ========== -->
       <div class="nav-controls">
         <button class="arrow" id="prevSlide">‹</button>
         <div class="dots" id="dotsContainer"></div>
@@ -797,39 +826,19 @@
     </div>
   </div>
 
-  <!-- ========== ADMIN ACCESS – ULTRA-SUBTLE PERMANENT LINK ========== -->
-  <div id="adminAccess" style="position: fixed; bottom: 8vh; right: 1.5vw; z-index: 100;">
-    <a href="#" id="adminLink" style="
-      color: rgba(255,255,255,0.15);
-      text-decoration: none;
-      font-size: 1.6vh;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      font-family: 'Inter', sans-serif;
-      transition: all 0.3s ease;
-      padding: 0.3vh 0.5vw;
-      border-radius: 4px;
-      background: rgba(255,255,255,0.02);
-    ">⚙ Admin</a>
+  <!-- ========== ADMIN ACCESS – ALWAYS VISIBLE ========== -->
+  <div id="adminAccess">
+    <a href="#" id="adminLink">🔐 Admin</a>
   </div>
 
   <script>
     // =============================================
-    // ADMIN ACCESS – ULTRA-SUBTLE PERMANENT LINK
+    // ADMIN ACCESS – ALWAYS VISIBLE
     // =============================================
 
     (function() {
       const adminLink = document.getElementById('adminLink');
       const ADMIN_PASSWORD = 'delta2026'; // CHANGE THIS
-
-      adminLink.addEventListener('mouseenter', function() {
-        this.style.color = 'rgba(211,47,47,0.7)';
-        this.style.background = 'rgba(255,255,255,0.06)';
-      });
-      adminLink.addEventListener('mouseleave', function() {
-        this.style.color = 'rgba(255,255,255,0.15)';
-        this.style.background = 'rgba(255,255,255,0.02)';
-      });
 
       adminLink.addEventListener('click', function(e) {
         e.preventDefault();
@@ -841,16 +850,7 @@
         }
       });
 
-      document.addEventListener('fullscreenchange', function() {
-        if (document.fullscreenElement) {
-          adminLink.style.opacity = '0';
-          adminLink.style.pointerEvents = 'none';
-        } else {
-          adminLink.style.opacity = '1';
-          adminLink.style.pointerEvents = 'auto';
-        }
-      });
-
+      // ---- Keyboard shortcut backup: Ctrl+Shift+A ----
       document.addEventListener('keydown', function(e) {
         if (e.ctrlKey && e.shiftKey && (e.key === 'a' || e.key === 'A')) {
           e.preventDefault();
@@ -863,7 +863,7 @@
         }
       });
 
-      console.log('🔐 Admin access: Click the "⚙ Admin" link in the bottom-right corner');
+      console.log('🔐 Admin access: Click the "🔐 Admin" link in the bottom-right corner');
     })();
 
     // =============================================
