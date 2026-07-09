@@ -84,7 +84,7 @@
       padding: 0;
     }
 
-    /* ---------- HEADER ---------- */
+    /* ---------- HEADER – PREMIUM RIBBON ---------- */
     .slide-header {
       background: linear-gradient(135deg, #0b1a33 0%, #1a3050 100%);
       padding: 1vh 2vw;
@@ -100,6 +100,33 @@
       overflow: hidden;
     }
 
+    /* ---- Animated shimmer overlay ---- */
+    .slide-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.03) 25%,
+        rgba(255, 255, 255, 0.08) 50%,
+        rgba(255, 255, 255, 0.03) 75%,
+        transparent 100%
+      );
+      animation: shimmerSweep 8s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes shimmerSweep {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    /* ---- Bottom border animated line ---- */
     .slide-header::after {
       content: '';
       position: absolute;
@@ -109,6 +136,7 @@
       height: 3px;
       background: linear-gradient(90deg, transparent, #d32f2f, #fdb913, #d32f2f, transparent);
       animation: shimmer 3s ease-in-out infinite;
+      z-index: 1;
     }
 
     @keyframes shimmer {
@@ -116,40 +144,51 @@
       100% { left: 100%; }
     }
 
+    /* ---- Logo area (z-index to sit above shimmer) ---- */
     .slide-header .logo-area {
       display: flex;
       align-items: center;
       gap: 0.8vw;
+      position: relative;
+      z-index: 1;
     }
 
+    /* ---- Logo with pulse glow ---- */
     .slide-header .logo-area svg {
       height: 5vh;
       width: auto;
       filter: drop-shadow(0 0 10px rgba(211, 47, 47, 0.3));
+      animation: logoPulse 3s ease-in-out infinite;
     }
 
+    @keyframes logoPulse {
+      0%, 100% { filter: drop-shadow(0 0 10px rgba(211, 47, 47, 0.3)); }
+      50% { filter: drop-shadow(0 0 25px rgba(211, 47, 47, 0.6)); }
+    }
+
+    /* ---- "DELTA · SIS" with gold drop shadow ---- */
     .slide-header .logo-area h1 {
       font-weight: 300;
       font-size: 2.5vh;
       letter-spacing: 0.1em;
       color: #fff;
+      text-shadow: 0 2px 20px rgba(253, 185, 19, 0.15);
     }
 
     .slide-header .logo-area h1 span {
       font-weight: 800;
       color: #d32f2f;
+      text-shadow: 0 0 30px rgba(211, 47, 47, 0.2);
     }
 
+    /* ---- Behavior tags – pill badges ---- */
     .behavior-tags {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 0.3vh 0.8vw;
-      background: rgba(255, 255, 255, 0.06);
-      padding: 0.3vh 1vw;
-      border-radius: 40px;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(4px);
+      gap: 0.3vh 0.5vw;
+      position: relative;
+      z-index: 1;
     }
 
     .behavior-tags .tag {
@@ -158,26 +197,52 @@
       font-weight: 600;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      transition: color 0.3s;
+      padding: 0.4vh 1vw;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.3s ease;
+      cursor: default;
     }
 
     .behavior-tags .tag:hover {
-      color: #fdb913;
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
 
+    /* ---- Divider dots ---- */
     .behavior-tags .divider {
-      color: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.15);
       font-weight: 300;
       font-size: 1.2vh;
     }
 
+    /* ---- "CONSISTENTLY EXECUTED" – RED BADGE ---- */
     .behavior-tags .tag.red {
-      color: #d32f2f;
+      color: #fff;
+      background: linear-gradient(135deg, #d32f2f, #b71c1c);
+      border-color: #d32f2f;
+      box-shadow: 0 0 30px rgba(211, 47, 47, 0.15);
       font-weight: 700;
     }
 
+    .behavior-tags .tag.red:hover {
+      box-shadow: 0 0 50px rgba(211, 47, 47, 0.3);
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    /* ---- "LEADERS AS COACHES" – BLUE BADGE ---- */
     .behavior-tags .tag.coach {
-      color: #8a9bb0;
+      color: #fff;
+      background: linear-gradient(135deg, #2a4a7f, #1a3050);
+      border-color: #2a4a7f;
+      box-shadow: 0 0 20px rgba(42, 74, 127, 0.15);
+    }
+
+    .behavior-tags .tag.coach:hover {
+      box-shadow: 0 0 40px rgba(42, 74, 127, 0.3);
+      transform: translateY(-2px) scale(1.02);
     }
 
     /* ---------- SLIDE INDICATOR ---------- */
@@ -197,11 +262,11 @@
       font-size: 2vh;
     }
 
-    /* ---------- TABLE CONTAINER – REDUCED PADDING ========== */
+    /* ---------- TABLE CONTAINER – REDUCED PADDING ---------- */
     .table-wrap {
       flex: 1;
       overflow: hidden;
-      padding: 1vh 1vw 0.5vh 1vw; /* was 2vw – now 1vw */
+      padding: 1vh 1vw 0.5vh 1vw;
       background: transparent;
       display: flex;
       flex-direction: column;
@@ -240,19 +305,19 @@
       letter-spacing: 0.05em;
       text-shadow: 0 0 30px rgba(255, 255, 255, 0.5), 0 0 60px rgba(255, 255, 255, 0.2);
       background: rgba(255, 255, 255, 0.3);
-      padding: 0.2vh 2.5vw; /* wider pill */
+      padding: 0.2vh 2.5vw;
       border-radius: 30px;
       margin-left: auto;
       margin-right: auto;
       backdrop-filter: blur(4px);
-      min-width: 30vw; /* ensures it spans across */
+      min-width: 30vw;
     }
 
     /* ---------- TEAMS: Two columns – wider gap ---------- */
     .table-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1vw 1.5vw; /* was 1vw 2vw – adjusted */
+      gap: 1vw 1.5vw;
       flex: 1;
       min-height: 0;
       align-content: start;
@@ -260,7 +325,7 @@
 
     .table-grid table {
       width: 100%;
-      min-width: 0; /* prevents overflow */
+      min-width: 0;
       border-collapse: collapse;
       background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(8px);
@@ -308,7 +373,7 @@
       padding: 0.6vh 1vw;
       text-align: center;
       border-bottom: 3px solid #d32f2f;
-      font-size: 1.8vh; /* was 1.6vh */
+      font-size: 1.8vh;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       position: sticky;
@@ -322,7 +387,7 @@
       vertical-align: middle;
       color: #0b1a33;
       text-align: center;
-      font-size: 2vh; /* was 1.8vh */
+      font-size: 2vh;
       font-weight: 500;
       transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
       position: relative;
@@ -344,13 +409,13 @@
       width: 10%;
       color: #6b7f96;
       font-weight: 600;
-      font-size: 1.8vh; /* was 1.6vh */
+      font-size: 1.8vh;
     }
 
     .table-wrap .name-col {
       font-weight: 500;
       text-align: left;
-      font-size: 1.9vh; /* was 1.7vh */
+      font-size: 1.9vh;
     }
 
     .table-wrap .score-col {
@@ -358,7 +423,7 @@
       text-align: right;
       width: 12%;
       color: #0b1a33;
-      font-size: 2vh; /* was 1.8vh */
+      font-size: 2vh;
       font-variant-numeric: tabular-nums;
     }
 
@@ -372,12 +437,12 @@
     .table-wrap tr.top1 .rank-col {
       color: #1b8a4e;
       font-weight: 900;
-      font-size: 2.2vh; /* was 2vh */
+      font-size: 2.2vh;
     }
 
     .table-wrap tr.top1 .score-col {
       color: #1b8a4e;
-      font-size: 2.4vh; /* was 2.2vh */
+      font-size: 2.4vh;
       font-weight: 800;
     }
 
@@ -414,12 +479,12 @@
     /* ===== TEAMS TABLE – BIGGER FONTS ===== */
     #slide3 .table-wrap td {
       padding: 0.3vh 0.6vw;
-      font-size: 1.7vh; /* was 1.5vh */
+      font-size: 1.7vh;
     }
 
     #slide3 .table-wrap th {
       padding: 0.3vh 0.6vw;
-      font-size: 1.5vh; /* was 1.3vh */
+      font-size: 1.5vh;
     }
 
     #slide3 .slide-title {
@@ -575,8 +640,10 @@
       .slide-counter { display: none; }
       .behavior-tags .divider { display: none; }
       .behavior-tags { gap: 0.2vh 0.4vw; }
-      .behavior-tags .tag { font-size: 0.8vh; }
+      .behavior-tags .tag { font-size: 0.8vh; padding: 0.2vh 0.6vw; }
       .slide-title .week-date { font-size: 1.8vh; padding: 0.1vh 1vw; min-width: 50vw; }
+      .slide-header .logo-area h1 { font-size: 1.6vh; }
+      .slide-header .logo-area svg { height: 3.5vh; }
     }
   </style>
 </head>
@@ -609,15 +676,15 @@
           </div>
           <div class="behavior-tags">
             <span class="tag">GREET ME</span>
-            <span class="divider">|</span>
+            <span class="divider">•</span>
             <span class="tag">RECOGNIZE ME</span>
-            <span class="divider">|</span>
+            <span class="divider">•</span>
             <span class="tag">BE KIND TO ME</span>
-            <span class="divider">|</span>
+            <span class="divider">•</span>
             <span class="tag">INFORM ME</span>
-            <span class="divider">|</span>
+            <span class="divider">•</span>
             <span class="tag red">CONSISTENTLY EXECUTED</span>
-            <span class="divider">|</span>
+            <span class="divider">•</span>
             <span class="tag coach">LEADERS AS COACHES</span>
           </div>
         </div>
@@ -652,15 +719,15 @@
           </div>
           <div class="behavior-tags">
             <span class="tag">GREET ME</span>
-            <span class="divider">|</span>
+            <span class="divider">•</span>
             <span class="tag">RECOGNIZE ME</span>
-            <span class="divider">|</span>
+            <span class="divider">•</span>
             <span class="tag">BE KIND TO ME</span>
-            <span class="divider">|</span>
+            <span class="divider">•</span>
             <span class="tag">INFORM ME</span>
-            <span class="divider">|</span>
+            <span class="divider">•</span>
             <span class="tag red">CONSISTENTLY EXECUTED</span>
-            <span class="divider">|</span>
+            <span class="divider">•</span>
             <span class="tag coach">LEADERS AS COACHES</span>
           </div>
         </div>
