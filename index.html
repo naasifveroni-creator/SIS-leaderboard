@@ -112,6 +112,7 @@
       padding: 0;
     }
 
+    /* ---------- HEADER – PREMIUM RIBBON (Red/Blue/White) ---------- */
     .slide-header {
       background: rgba(11, 26, 51, 0.65);
       backdrop-filter: blur(16px) saturate(180%);
@@ -124,7 +125,7 @@
       gap: 0.5vh 1vw;
       flex-shrink: 0;
       min-height: 8vh;
-      border-bottom: 2px solid rgba(253, 185, 19, 0.3);
+      border-bottom: 2px solid rgba(211, 47, 47, 0.3);
       position: relative;
       overflow: hidden;
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
@@ -132,6 +133,7 @@
       margin: 0 0.5vw;
     }
 
+    /* ---- Subtle white shimmer (no gold) ---- */
     .slide-header::before {
       content: '';
       position: absolute;
@@ -142,50 +144,50 @@
       background: linear-gradient(
         90deg,
         transparent 0%,
-        rgba(255, 215, 0, 0.05) 20%,
-        rgba(255, 215, 0, 0.15) 40%,
-        rgba(255, 255, 255, 0.1) 60%,
-        rgba(255, 215, 0, 0.05) 80%,
+        rgba(255, 255, 255, 0.02) 20%,
+        rgba(255, 255, 255, 0.06) 40%,
+        rgba(255, 255, 255, 0.02) 60%,
         transparent 100%
       );
-      animation: shimmerGold 8s ease-in-out infinite;
+      animation: shimmerWhite 10s ease-in-out infinite;
       pointer-events: none;
       z-index: 0;
     }
 
-    @keyframes shimmerGold {
+    @keyframes shimmerWhite {
       0% { left: -150%; }
       100% { left: 150%; }
     }
 
+    /* ---- Bottom border – clean red (no gold) ---- */
     .slide-header::after {
       content: '';
       position: absolute;
       bottom: -2px;
       left: 5%;
       width: 90%;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, #fdb913, #d32f2f, #fdb913, transparent);
-      filter: blur(2px);
-      animation: borderGlow 3s ease-in-out infinite;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #d32f2f, transparent);
+      animation: borderGlowRed 3s ease-in-out infinite;
       z-index: 1;
     }
 
     .slide-header .border-line {
       position: absolute;
-      bottom: -6px;
-      left: 10%;
-      width: 80%;
+      bottom: -5px;
+      left: 15%;
+      width: 70%;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(253, 185, 19, 0.2), transparent);
+      background: rgba(211, 47, 47, 0.15);
       z-index: 1;
     }
 
-    @keyframes borderGlow {
-      0%, 100% { opacity: 0.4; }
+    @keyframes borderGlowRed {
+      0%, 100% { opacity: 0.3; }
       50% { opacity: 1; }
     }
 
+    /* ---- Logo area ---- */
     .slide-header .logo-area {
       display: flex;
       align-items: center;
@@ -194,44 +196,34 @@
       z-index: 2;
     }
 
-    .slide-header .logo-area svg {
+    /* ---- Logo with red glow (no gold) ---- */
+    .slide-header .logo-area img {
       height: 5vh;
       width: auto;
-      filter: drop-shadow(0 0 20px rgba(253, 185, 19, 0.4)) drop-shadow(0 0 40px rgba(253, 185, 19, 0.1));
-      animation: logoHeartbeat 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 10px rgba(211, 47, 47, 0.3));
+      animation: logoGlowRed 3s ease-in-out infinite;
     }
 
-    @keyframes logoHeartbeat {
-      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(253, 185, 19, 0.4)) drop-shadow(0 0 40px rgba(253, 185, 19, 0.1)); }
-      50% { transform: scale(1.03); filter: drop-shadow(0 0 35px rgba(253, 185, 19, 0.6)) drop-shadow(0 0 60px rgba(253, 185, 19, 0.2)); }
+    @keyframes logoGlowRed {
+      0%, 100% { filter: drop-shadow(0 0 10px rgba(211, 47, 47, 0.3)); }
+      50% { filter: drop-shadow(0 0 20px rgba(211, 47, 47, 0.5)); }
     }
 
+    /* ---- "DELTA · SIS" – White + Red (no gold) ---- */
     .slide-header .logo-area h1 {
       font-weight: 300;
       font-size: 2.5vh;
       letter-spacing: 0.1em;
-      background: linear-gradient(135deg, #fff 0%, #fdb913 50%, #fff 100%);
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: goldShine 4s ease-in-out infinite;
-      text-shadow: 0 0 30px rgba(253, 185, 19, 0.15);
-    }
-
-    @keyframes goldShine {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+      color: #fff;
+      text-shadow: 0 0 20px rgba(211, 47, 47, 0.1);
     }
 
     .slide-header .logo-area h1 span {
       font-weight: 800;
-      background: linear-gradient(135deg, #d32f2f, #ff6b6b);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #d32f2f;
     }
 
+    /* ---- Behavior tags – pill badges (Red/Blue/White) ---- */
     .behavior-tags {
       display: flex;
       flex-wrap: wrap;
@@ -251,7 +243,7 @@
       border-radius: 30px;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       opacity: 0;
       transform: translateY(15px);
       white-space: nowrap;
@@ -262,33 +254,53 @@
       transform: translateY(0);
     }
 
+    .behavior-tags .tag:hover {
+      transform: translateY(-2px);
+      background: rgba(211, 47, 47, 0.15);
+      border-color: rgba(211, 47, 47, 0.2);
+    }
+
+    /* ---- Divider dots ---- */
     .behavior-tags .divider {
       color: rgba(255, 255, 255, 0.15);
       font-weight: 300;
       font-size: 1.2vh;
     }
 
+    /* ---- "CONSISTENTLY EXECUTED" – RED BADGE (no gold) ---- */
     .behavior-tags .tag.red {
       color: #fff;
       background: linear-gradient(135deg, #d32f2f, #b71c1c);
       border-color: rgba(211, 47, 47, 0.4);
-      box-shadow: 0 0 30px rgba(211, 47, 47, 0.15);
+      box-shadow: 0 0 20px rgba(211, 47, 47, 0.2);
       font-weight: 700;
       animation: redPulse 2.5s ease-in-out infinite;
     }
 
-    @keyframes redPulse {
-      0%, 100% { box-shadow: 0 0 30px rgba(211, 47, 47, 0.15); }
-      50% { box-shadow: 0 0 50px rgba(211, 47, 47, 0.35); }
+    .behavior-tags .tag.red:hover {
+      box-shadow: 0 0 40px rgba(211, 47, 47, 0.35);
+      transform: translateY(-2px) scale(1.02);
     }
 
+    @keyframes redPulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(211, 47, 47, 0.2); }
+      50% { box-shadow: 0 0 35px rgba(211, 47, 47, 0.35); }
+    }
+
+    /* ---- "LEADERS AS COACHES" – BLUE BADGE ---- */
     .behavior-tags .tag.coach {
       color: #fff;
       background: linear-gradient(135deg, #2a4a7f, #1a3050);
       border-color: rgba(42, 74, 127, 0.4);
-      box-shadow: 0 0 20px rgba(42, 74, 127, 0.15);
+      box-shadow: 0 0 15px rgba(42, 74, 127, 0.15);
     }
 
+    .behavior-tags .tag.coach:hover {
+      box-shadow: 0 0 30px rgba(42, 74, 127, 0.25);
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    /* ---------- SLIDE INDICATOR ---------- */
     .slide-counter {
       position: absolute;
       top: 1.5vh;
@@ -305,6 +317,7 @@
       font-size: 2vh;
     }
 
+    /* ---------- TABLE CONTAINER ---------- */
     .table-wrap {
       flex: 1;
       overflow: hidden;
@@ -566,16 +579,15 @@
     .progress-bar {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #d32f2f, #fdb913, #d32f2f);
-      background-size: 200% 100%;
-      animation: progressGradient 1.5s ease-in-out infinite;
+      background: linear-gradient(90deg, #d32f2f, #d32f2f);
+      animation: progressPulse 1.5s ease-in-out infinite;
       border-radius: 0 4px 4px 0;
       transition: width 0.1s linear;
     }
 
-    @keyframes progressGradient {
-      0% { background-position: 0% 50%; }
-      100% { background-position: 200% 50%; }
+    @keyframes progressPulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
     }
 
     .nav-controls {
@@ -675,7 +687,7 @@
       .behavior-tags .tag { font-size: 0.8vh; padding: 0.2vh 0.6vw; }
       .slide-title .week-date { font-size: 1.8vh; padding: 0.1vh 1vw; min-width: 50vw; }
       .slide-header .logo-area h1 { font-size: 1.6vh; }
-      .slide-header .logo-area svg { height: 3.5vh; }
+      .slide-header .logo-area img { height: 3.5vh; }
       .fullscreen-btn { font-size: 1.2vh; padding: 0.2vh 0.5vw; top: 1vh; right: 1vw; }
     }
   </style>
@@ -701,11 +713,8 @@
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <svg viewBox="0 0 60 50" fill="none" width="34" height="28">
-              <path d="M30 2 L2 46 L58 46 L30 2Z" fill="#d32f2f" stroke="#d32f2f" stroke-width="2"/>
-              <path d="M30 10 L10 44 L50 44 L30 10Z" fill="#0b1a33" stroke="#0b1a33" stroke-width="1.5"/>
-              <text x="30" y="38" font-size="14" font-weight="700" fill="#d32f2f" text-anchor="middle">Δ</text>
-            </svg>
+            <!-- PNG LOGO – upload "delta-logo-ribbon.png" to your repo -->
+            <img src="delta-logo-ribbon.png" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags1">
@@ -744,11 +753,7 @@
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <svg viewBox="0 0 60 50" fill="none" width="34" height="28">
-              <path d="M30 2 L2 46 L58 46 L30 2Z" fill="#d32f2f" stroke="#d32f2f" stroke-width="2"/>
-              <path d="M30 10 L10 44 L50 44 L30 10Z" fill="#0b1a33" stroke="#0b1a33" stroke-width="1.5"/>
-              <text x="30" y="38" font-size="14" font-weight="700" fill="#d32f2f" text-anchor="middle">Δ</text>
-            </svg>
+            <img src="delta-logo-ribbon.png" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags2">
@@ -817,9 +822,8 @@
       const adminLink = document.getElementById('adminLink');
       const ADMIN_PASSWORD = 'delta2026'; // CHANGE THIS
 
-      // ---- Hover effect to make it visible ----
       adminLink.addEventListener('mouseenter', function() {
-        this.style.color = 'rgba(255,215,0,0.6)';
+        this.style.color = 'rgba(211,47,47,0.7)';
         this.style.background = 'rgba(255,255,255,0.06)';
       });
       adminLink.addEventListener('mouseleave', function() {
@@ -827,7 +831,6 @@
         this.style.background = 'rgba(255,255,255,0.02)';
       });
 
-      // ---- Password prompt then open in NEW TAB ----
       adminLink.addEventListener('click', function(e) {
         e.preventDefault();
         const entered = prompt('Enter admin password:');
@@ -838,7 +841,6 @@
         }
       });
 
-      // ---- Auto-hide when full-screen (clean ops view) ----
       document.addEventListener('fullscreenchange', function() {
         if (document.fullscreenElement) {
           adminLink.style.opacity = '0';
@@ -849,7 +851,6 @@
         }
       });
 
-      // ---- Keyboard shortcut backup: Ctrl+Shift+A ----
       document.addEventListener('keydown', function(e) {
         if (e.ctrlKey && e.shiftKey && (e.key === 'a' || e.key === 'A')) {
           e.preventDefault();
