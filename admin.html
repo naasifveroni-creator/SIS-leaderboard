@@ -4,859 +4,428 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Δ Update SIS Data</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
-    body { background: #f0f3f8; padding: 2rem; display: block; }
-    .admin-box {
-      max-width: 960px; margin: 0 auto; background: #fff;
-      border-radius: 20px; box-shadow: 0 10px 40px rgba(11,26,51,0.10);
-      padding: 2rem 2.5rem;
-    }
-    .header-mini {
-      display: flex; align-items: center; gap: 0.8rem;
-      border-bottom: 2px solid #e9edf4; padding-bottom: 1rem; margin-bottom: 1.5rem;
-    }
-    .header-mini svg { height: 36px; }
-    .header-mini h1 { font-weight: 300; color: #0b1a33; font-size: 1.8rem; }
-    .header-mini h1 span { font-weight: 700; color: #d32f2f; }
-    .info-box {
-      background: #f5f8fe; padding: 1rem 1.5rem; border-radius: 14px;
-      margin-bottom: 1.5rem; border-left: 4px solid #d32f2f;
-      font-size: 0.95rem; color: #1a2a4a; line-height: 1.6;
-    }
-    .info-box strong { color: #0b1a33; }
-    .info-box code { background: #e9edf4; padding: 0.1rem 0.5rem; border-radius: 6px; font-size: 0.85rem; }
-    textarea {
-      width: 100%; height: 360px; padding: 1.2rem;
-      border: 1px solid #d0d7e2; border-radius: 14px;
-      font-family: 'Courier New', monospace; font-size: 0.88rem; line-height: 1.7;
-      resize: vertical; background: #fafcff;
-    }
-    textarea:focus {
-      border-color: #0b1a33; box-shadow: 0 0 0 4px rgba(11,26,51,0.06);
-      outline: none;
-    }
-    .actions {
-      display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1.5rem 0 1rem;
-    }
-    .btn {
-      background: #0b1a33; color: #fff; border: none;
-      padding: 0.7rem 2rem; border-radius: 40px; font-weight: 600;
-      font-size: 0.95rem; cursor: pointer; transition: 0.2s;
-      display: inline-flex; align-items: center; gap: 0.5rem;
-    }
-    .btn:hover { background: #1a3050; }
-    .btn.red {
-      background: #d32f2f; color: #fff;
-    }
-    .btn.red:hover { background: #b71c1c; }
-    .btn.secondary {
-      background: #e9edf4; color: #0b1a33;
-    }
-    .btn.secondary:hover { background: #d5dce8; }
-    .token-input {
-      margin: 1rem 0 0.5rem;
-      display: flex; flex-wrap: wrap; gap: 0.8rem;
-      align-items: center;
-    }
-    .token-input label { font-weight: 600; color: #0b1a33; font-size: 0.9rem; }
-    .token-input input {
-      flex: 1; min-width: 200px; padding: 0.5rem 1rem;
-      border: 1px solid #d0d7e2; border-radius: 30px;
-      font-size: 0.85rem;
-    }
-    #status {
-      margin-top: 1rem; padding: 0.8rem 1.2rem; border-radius: 12px;
-      display: none; font-weight: 500;
-    }
-    #status.success { background: #e1f5e8; color: #1a5a3a; display: block; }
-    #status.error { background: #fde8e8; color: #a13a3a; display: block; }
-    .preview-link { margin-top: 1.8rem; text-align: right; border-top: 1px solid #edf0f6; padding-top: 1.2rem; }
-    .preview-link a { color: #0b1a33; text-decoration: none; font-weight: 500; border-bottom: 1px dashed #b0bcca; }
-    .preview-link a:hover { border-bottom-color: #0b1a33; }
-    @media (max-width: 600px) {
-      .admin-box { padding: 1.2rem; }
-      .header-mini h1 { font-size: 1.3rem; }
-      textarea { height: 240px; }
-    }
-  </style>
-</head>
-<body>
-<div class="admin-box">
-  <div class="header-mini">
-    <svg viewBox="0 0 60 50" fill="none">
-      <path d="M30 2 L2 46 L58 46 L30 2Z" fill="#d32f2f" stroke="#d32f2f" stroke-width="2"/>
-      <path d="M30 10 L10 44 L50 44 L30 10Z" fill="#0b1a33" stroke="#0b1a33" stroke-width="1.5"/>
-      <text x="30" y="38" font-size="14" font-weight="700" fill="#d32f2f" text-anchor="middle">Δ</text>
-    </svg>
-    <h1><span>DELTA</span> · Update SIS Data</h1>
-  </div>
-
-  <div class="info-box">
-    <strong>📋 Paste your new weekly table</strong> – tab or multiple spaces between columns.<br />
-    Teams: <code>Rank  Name  SIS%</code> &nbsp;|&nbsp; Agents: <code>Rank  Name  TeamLeader  SIS%</code><br />
-    <span style="background:#fef0ee; padding:0.1rem 0.6rem; border-radius:6px; font-size:0.85rem; color:#b71c1c;">
-      ⚠️ You need a GitHub token with <code>repo</code> scope to publish.
-    </span>
-  </div>
-
-  <textarea id="rawInput" spellcheck="false">1	Sinazo Nogaga	88.18%
-2	Zintle Daba	87.14%
-3	Mbono, Phelisa	86.22%
-4	Botshelo Manoko	85.71%
-5	Jesse Machelm	83.11%
-6	Justin Salisbury	83.00%
-7	Tina Barron	82.58%
-8	Waylon Alexander	81.43%
-9	Terrayn Moses	81.06%
-10	Dawood Thaaqib	80.86%
-11	Daniel Van Der Poel	79.46%
-12	Moegamat Naeem Abrahams	79.16%
-13	Fatima Becket	78.24%
-14	Claasen, Ryan	77.73%
-15	ETHEL ZANELE KARAWE	77.52%
-16	Saban, Mogamat Muaath	75.18%
-17	Ivewe Ncapayi	71.38%
-
-1	Abdul Abrahams	Moses Terrayn V	100.00%
-2	Stone Jade	Mbono, Phelisa	100.00%
-3	Alvino Februarie	Waylon Alexander	100.00%
-4	Shanseau Khabana	Waylon Alexander	100.00%
-5	Casey Williams	Tina Barron	100.00%
-6	Asavela Mkuyana	ETHEL ZANELE KARAWE	100.00%
-7	Gideon Muller	ETHEL ZANELE KARAWE	100.00%
-8	Hanton Kock	Waylon Alexander	100.00%
-9	Denica Williams	Fanti, Siphovuyo	100.00%
-10	Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%</textarea>
-
-  <div class="token-input">
-    <label for="tokenField">🔑 GitHub Token:</label>
-    <input type="password" id="tokenField" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
-    <span style="font-size:0.75rem; color:#6b7f96;">(stored only in your browser)</span>
-  </div>
-
-  <div class="actions">
-    <button class="btn secondary" id="previewBtn">👁 Preview</button>
-    <button class="btn red" id="publishBtn">🚀 Publish to GitHub</button>
-    <button class="btn secondary" id="resetBtn">↺ Reset to sample</button>
-  </div>
-
-  <div id="status"></div>
-  <div class="preview-link"><a href="index.html" target="_blank">📊 View live board</a></div>
-</div>
-
-<script>
-  // ----- PARSER -----
-  function parseText(text) {
-    const blocks = text.split(/\n\s*\n/).filter(b => b.trim().length > 0);
-    let allTeams = [], allAgents = [];
-    blocks.forEach(block => {
-      const lines = block.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-      const rows = lines.map(l => l.split(/\t| {2,}/).filter(s => s.length > 0));
-      if (rows.length === 0) return;
-      const has4 = rows.some(r => r.length >= 4);
-      const parsed = rows.map(r => {
-        if (has4 && r.length >= 4) {
-          return { rank: parseInt(r[0]), name: r[1], team: r[2], score: r[3] };
-        } else {
-          return { rank: parseInt(r[0]), name: r[1], score: r[2] };
-        }
-      });
-      if (has4) allAgents = allAgents.concat(parsed);
-      else allTeams = allTeams.concat(parsed);
-    });
-    return { teams: allTeams, agents: allAgents };
-  }
-
-  const statusEl = document.getElementById('status');
-  function showStatus(msg, type) {
-    statusEl.textContent = msg;
-    statusEl.className = type;
-  }
-
-  // ----- PREVIEW -----
-  document.getElementById('previewBtn').addEventListener('click', () => {
-    const raw = document.getElementById('rawInput').value;
-    const parsed = parseText(raw);
-    if (!parsed || (parsed.teams.length === 0 && parsed.agents.length === 0)) {
-      showStatus('❌ Could not parse. Use tabs or multiple spaces.', 'error');
-      return;
-    }
-    showStatus(`✅ Parsed OK — Teams: ${parsed.teams.length}, Agents: ${parsed.agents.length}`, 'success');
-  });
-
-  // ----- PUBLISH via GitHub API -----
-  document.getElementById('publishBtn').addEventListener('click', async () => {
-    const token = document.getElementById('tokenField').value.trim();
-    if (!token) {
-      showStatus('❌ Please enter your GitHub token.', 'error');
-      return;
-    }
-    const raw = document.getElementById('rawInput').value;
-    const parsed = parseText(raw);
-    if (!parsed || (parsed.teams.length === 0 && parsed.agents.length === 0)) {
-      showStatus('❌ Invalid data format. Preview first.', 'error');
-      return;
-    }
-
-    // Build the new data.json object
-    const week = 'Week of ' + new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    const newData = { week, teams: parsed.teams, agents: parsed.agents };
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
-
-    // Get repo info from the current URL
-    const repoPath = window.location.pathname.split('/').slice(1, 3).join('/'); // e.g. "username/repo"
-    if (!repoPath || repoPath.includes('admin.html')) {
-      showStatus('❌ Could not detect repo. Open this page from your GitHub Pages URL.', 'error');
-      return;
-    }
-
-    try {
-      // 1. Get current file SHA
-      const fileUrl = `https://api.github.com/repos/${repoPath}/contents/data.json`;
-      const headRes = await fetch(fileUrl, {
-        headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
-      });
-      if (!headRes.ok) throw new Error('Could not fetch data.json. Check token and repo path.');
-      const fileMeta = await headRes.json();
-      const sha = fileMeta.sha;
-
-      // 2. Commit new content
-      const commitRes = await fetch(fileUrl, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `token ${token}`,
-          'Content-Type': 'application/json',
-          'Accept': 'application/vnd.github.v3+json'
-        },
-        body: JSON.stringify({
-          message: `Update SIS leaderboard (${new Date().toLocaleString()})`,
-          content: content,
-          sha: sha
-        })
-      });
-      if (!commitRes.ok) {
-        const err = await commitRes.json();
-        throw new Error(err.message || 'Commit failed');
-      }
-      showStatus('✅ Published! Live page will update in 1–2 minutes (GitHub cache).', 'success');
-    } catch (err) {
-      showStatus(`❌ Error: ${err.message}`, 'error');
-    }
-  });
-
-  // ----- RESET TO SAMPLE -----
-  document.getElementById('resetBtn').addEventListener('click', () => {
-    if (confirm('Reset textarea to sample data?')) {
-      const sample = `1	Sinazo Nogaga	88.18%\n2	Zintle Daba	87.14%\n3	Mbono, Phelisa	86.22%\n4	Botshelo Manoko	85.71%\n5	Jesse Machelm	83.11%\n6	Justin Salisbury	83.00%\n7	Tina Barron	82.58%\n8	Waylon Alexander	81.43%\n9	Terrayn Moses	81.06%\n10	Dawood Thaaqib	80.86%\n11	Daniel Van Der Poel	79.46%\n12	Moegamat Naeem Abrahams	79.16%\n13	Fatima Becket	78.24%\n14	Claasen, Ryan	77.73%\n15	ETHEL ZANELE KARAWE	77.52%\n16	Saban, Mogamat Muaath	75.18%\n17	Ivewe Ncapayi	71.38%\n\n1	Abdul Abrahams	Moses Terrayn V	100.00%\n2	Stone Jade	Mbono, Phelisa	100.00%\n3	Alvino Februarie	Waylon Alexander	100.00%\n4	Shanseau Khabana	Waylon Alexander	100.00%\n5	Casey Williams	Tina Barron	100.00%\n6	Asavela Mkuyana	ETHEL ZANELE KARAWE	100.00%\n7	Gideon Muller	ETHEL ZANELE KARAWE	100.00%\n8	Hanton Kock	Waylon Alexander	100.00%\n9	Denica Williams	Fanti, Siphovuyo	100.00%\n10	Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%`;
-      document.getElementById('rawInput').value = sample;
-      showStatus('↺ Reset to sample data. Preview or publish when ready.', 'success');
-    }
-  });
-</script>
-</body>
-</html>      outline: none;
-    }
-    .actions {
-      display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1.5rem 0 1rem;
-    }
-    .btn {
-      background: #0b1a33; color: #fff; border: none;
-      padding: 0.7rem 2rem; border-radius: 40px; font-weight: 600;
-      font-size: 0.95rem; cursor: pointer; transition: 0.2s;
-      display: inline-flex; align-items: center; gap: 0.5rem;
-    }
-    .btn:hover { background: #1a3050; }
-    .btn.red {
-      background: #d32f2f; color: #fff;
-    }
-    .btn.red:hover { background: #b71c1c; }
-    .btn.secondary {
-      background: #e9edf4; color: #0b1a33;
-    }
-    .btn.secondary:hover { background: #d5dce8; }
-    .token-input {
-      margin: 1rem 0 0.5rem;
-      display: flex; flex-wrap: wrap; gap: 0.8rem;
-      align-items: center;
-    }
-    .token-input label { font-weight: 600; color: #0b1a33; font-size: 0.9rem; }
-    .token-input input {
-      flex: 1; min-width: 200px; padding: 0.5rem 1rem;
-      border: 1px solid #d0d7e2; border-radius: 30px;
-      font-size: 0.85rem;
-    }
-    #status {
-      margin-top: 1rem; padding: 0.8rem 1.2rem; border-radius: 12px;
-      display: none; font-weight: 500;
-    }
-    #status.success { background: #e1f5e8; color: #1a5a3a; display: block; }
-    #status.error { background: #fde8e8; color: #a13a3a; display: block; }
-    .preview-link { margin-top: 1.8rem; text-align: right; border-top: 1px solid #edf0f6; padding-top: 1.2rem; }
-    .preview-link a { color: #0b1a33; text-decoration: none; font-weight: 500; border-bottom: 1px dashed #b0bcca; }
-    .preview-link a:hover { border-bottom-color: #0b1a33; }
-    @media (max-width: 600px) {
-      .admin-box { padding: 1.2rem; }
-      .header-mini h1 { font-size: 1.3rem; }
-      textarea { height: 240px; }
-    }
-  </style>
-</head>
-<body>
-<div class="admin-box">
-  <div class="header-mini">
-    <svg viewBox="0 0 60 50" fill="none">
-      <path d="M30 2 L2 46 L58 46 L30 2Z" fill="#d32f2f" stroke="#d32f2f" stroke-width="2"/>
-      <path d="M30 10 L10 44 L50 44 L30 10Z" fill="#0b1a33" stroke="#0b1a33" stroke-width="1.5"/>
-      <text x="30" y="38" font-size="14" font-weight="700" fill="#d32f2f" text-anchor="middle">Δ</text>
-    </svg>
-    <h1><span>DELTA</span> · Update SIS Data</h1>
-  </div>
-
-  <div class="info-box">
-    <strong>📋 Paste your new weekly table</strong> – tab or multiple spaces between columns.<br />
-    Teams: <code>Rank  Name  SIS%</code> &nbsp;|&nbsp; Agents: <code>Rank  Name  TeamLeader  SIS%</code><br />
-    <span style="background:#fef0ee; padding:0.1rem 0.6rem; border-radius:6px; font-size:0.85rem; color:#b71c1c;">
-      ⚠️ You need a GitHub token with <code>repo</code> scope to publish.
-    </span>
-  </div>
-
-  <textarea id="rawInput" spellcheck="false">1	Sinazo Nogaga	88.18%
-2	Zintle Daba	87.14%
-3	Mbono, Phelisa	86.22%
-4	Botshelo Manoko	85.71%
-5	Jesse Machelm	83.11%
-6	Justin Salisbury	83.00%
-7	Tina Barron	82.58%
-8	Waylon Alexander	81.43%
-9	Terrayn Moses	81.06%
-10	Dawood Thaaqib	80.86%
-11	Daniel Van Der Poel	79.46%
-12	Moegamat Naeem Abrahams	79.16%
-13	Fatima Becket	78.24%
-14	Claasen, Ryan	77.73%
-15	ETHEL ZANELE KARAWE	77.52%
-16	Saban, Mogamat Muaath	75.18%
-17	Ivewe Ncapayi	71.38%
-
-1	Abdul Abrahams	Moses Terrayn V	100.00%
-2	Stone Jade	Mbono, Phelisa	100.00%
-3	Alvino Februarie	Waylon Alexander	100.00%
-4	Shanseau Khabana	Waylon Alexander	100.00%
-5	Casey Williams	Tina Barron	100.00%
-6	Asavela Mkuyana	ETHEL ZANELE KARAWE	100.00%
-7	Gideon Muller	ETHEL ZANELE KARAWE	100.00%
-8	Hanton Kock	Waylon Alexander	100.00%
-9	Denica Williams	Fanti, Siphovuyo	100.00%
-10	Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%</textarea>
-
-  <div class="token-input">
-    <label for="tokenField">🔑 GitHub Token:</label>
-    <input type="password" id="tokenField" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
-    <span style="font-size:0.75rem; color:#6b7f96;">(stored only in your browser)</span>
-  </div>
-
-  <div class="actions">
-    <button class="btn secondary" id="previewBtn">👁 Preview</button>
-    <button class="btn red" id="publishBtn">🚀 Publish to GitHub</button>
-    <button class="btn secondary" id="resetBtn">↺ Reset to sample</button>
-  </div>
-
-  <div id="status"></div>
-  <div class="preview-link"><a href="index.html" target="_blank">📊 View live board</a></div>
-</div>
-
-<script>
-  // ----- PARSER -----
-  function parseText(text) {
-    const blocks = text.split(/\n\s*\n/).filter(b => b.trim().length > 0);
-    let allTeams = [], allAgents = [];
-    blocks.forEach(block => {
-      const lines = block.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-      const rows = lines.map(l => l.split(/\t| {2,}/).filter(s => s.length > 0));
-      if (rows.length === 0) return;
-      const has4 = rows.some(r => r.length >= 4);
-      const parsed = rows.map(r => {
-        if (has4 && r.length >= 4) {
-          return { rank: parseInt(r[0]), name: r[1], team: r[2], score: r[3] };
-        } else {
-          return { rank: parseInt(r[0]), name: r[1], score: r[2] };
-        }
-      });
-      if (has4) allAgents = allAgents.concat(parsed);
-      else allTeams = allTeams.concat(parsed);
-    });
-    return { teams: allTeams, agents: allAgents };
-  }
-
-  const statusEl = document.getElementById('status');
-  function showStatus(msg, type) {
-    statusEl.textContent = msg;
-    statusEl.className = type;
-  }
-
-  // ----- PREVIEW -----
-  document.getElementById('previewBtn').addEventListener('click', () => {
-    const raw = document.getElementById('rawInput').value;
-    const parsed = parseText(raw);
-    if (!parsed || (parsed.teams.length === 0 && parsed.agents.length === 0)) {
-      showStatus('❌ Could not parse. Use tabs or multiple spaces.', 'error');
-      return;
-    }
-    showStatus(`✅ Parsed OK — Teams: ${parsed.teams.length}, Agents: ${parsed.agents.length}`, 'success');
-  });
-
-  // ----- PUBLISH via GitHub API -----
-  document.getElementById('publishBtn').addEventListener('click', async () => {
-    const token = document.getElementById('tokenField').value.trim();
-    if (!token) {
-      showStatus('❌ Please enter your GitHub token.', 'error');
-      return;
-    }
-    const raw = document.getElementById('rawInput').value;
-    const parsed = parseText(raw);
-    if (!parsed || (parsed.teams.length === 0 && parsed.agents.length === 0)) {
-      showStatus('❌ Invalid data format. Preview first.', 'error');
-      return;
-    }
-
-    // Build the new data.json object
-    const week = 'Week of ' + new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    const newData = { week, teams: parsed.teams, agents: parsed.agents };
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
-
-    // Get repo info from the current URL
-    const repoPath = window.location.pathname.split('/').slice(1, 3).join('/'); // e.g. "username/repo"
-    if (!repoPath || repoPath.includes('admin.html')) {
-      showStatus('❌ Could not detect repo. Open this page from your GitHub Pages URL.', 'error');
-      return;
-    }
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Δ SIS Performance · Delta</title>
-  <style>
-    /* ---------- RESET & BASE ---------- */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
     }
 
     body {
-      background: #0b1a33;
+      background: #f0f3f8;
+      padding: 2rem;
       display: flex;
       justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 1.5rem;
     }
 
-    .slide-deck {
-      max-width: 1200px;
+    .admin-box {
+      max-width: 960px;
       width: 100%;
-      aspect-ratio: 16 / 9;
-      background: #0b1a33;
-      border-radius: 16px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-      overflow: hidden;
-      position: relative;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(11, 26, 51, 0.10);
+      padding: 2rem 2.5rem;
     }
 
-    /* ---------- SLIDES WRAPPER ---------- */
-    .slides-wrapper {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }
-
-    .slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      padding: 4% 6%;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.6s ease, visibility 0.6s ease;
-      display: flex;
-      flex-direction: column;
-      background: #0b1a33;
-    }
-
-    .slide.active {
-      opacity: 1;
-      visibility: visible;
-      position: relative;
-    }
-
-    /* ========== SLIDE 0: TITLE (your IMG-20260708-WA0002) ========== */
-    #slide0 {
-      background: url('IMG-20260708-WA0002_1559091135387095861.webp') center/cover no-repeat, #0b1a33;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    /* Hide the HTML text overlay – the image is perfect */
-    #slide0 .title-logo,
-    #slide0 .main-title,
-    #slide0 .sub-title,
-    #slide0 .week-display {
-      display: none;
-    }
-
-    /* ========== SLIDE 1 & 2: LEADERBOARD (your IMG-20260708-WA0001) ========== */
-    #slide1,
-    #slide2 {
-      background: url('IMG-20260708-WA0001_8033791242047932301.webp') center/cover no-repeat, #f0f3f8;
-      padding: 0;
-    }
-
-    /* Hide the header bar – the image already has it */
-    #slide1 .slide-header,
-    #slide2 .slide-header {
-      display: none;
-    }
-
-    /* Position the table overlay exactly over the table area in the image */
-    #slide1 .table-wrap,
-    #slide2 .table-wrap {
-      padding: 16% 6% 6% 6%;
-      background: transparent;
-      flex: 1;
-      overflow-x: auto;
+    .header-mini {
       display: flex;
       align-items: center;
+      gap: 0.8rem;
+      border-bottom: 2px solid #e9edf4;
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
 
-    /* Make the table readable over the image background */
-    #slide1 .table-wrap table,
-    #slide2 .table-wrap table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: clamp(0.7rem, 1vw, 0.95rem);
-      background: rgba(255, 255, 255, 0.88);
-      backdrop-filter: blur(2px);
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-      overflow: hidden;
+    .header-mini svg {
+      height: 36px;
     }
 
-    #slide1 .table-wrap th,
-    #slide2 .table-wrap th {
-      background: #f5f7fc;
+    .header-mini h1 {
+      font-weight: 300;
+      color: #0b1a33;
+      font-size: 1.8rem;
+    }
+
+    .header-mini h1 span {
+      font-weight: 700;
+      color: #d32f2f;
+    }
+
+    .info-box {
+      background: #f5f8fe;
+      padding: 1rem 1.5rem;
+      border-radius: 14px;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #d32f2f;
+      font-size: 0.95rem;
       color: #1a2a4a;
-      font-weight: 600;
-      padding: 0.7rem 1.2rem;
-      text-align: left;
-      border-bottom: 2px solid #dce2ec;
-      font-size: clamp(0.6rem, 0.8vw, 0.75rem);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      line-height: 1.6;
     }
 
-    #slide1 .table-wrap td,
-    #slide2 .table-wrap td {
-      padding: 0.6rem 1.2rem;
-      border-bottom: 1px solid #edf0f6;
-      vertical-align: middle;
+    .info-box strong {
       color: #0b1a33;
     }
 
-    #slide1 .table-wrap tr:last-child td,
-    #slide2 .table-wrap tr:last-child td {
-      border-bottom: none;
+    .info-box code {
+      background: #e9edf4;
+      padding: 0.1rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
     }
 
-    #slide1 .table-wrap .rank-col,
-    #slide2 .table-wrap .rank-col {
-      width: 12%;
-      color: #6b7f96;
+    .info-box .warning {
+      background: #fef0ee;
+      padding: 0.1rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: #b71c1c;
+    }
+
+    textarea {
+      width: 100%;
+      height: 360px;
+      padding: 1.2rem;
+      border: 1px solid #d0d7e2;
+      border-radius: 14px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      resize: vertical;
+      background: #fafcff;
+    }
+
+    textarea:focus {
+      border-color: #0b1a33;
+      box-shadow: 0 0 0 4px rgba(11, 26, 51, 0.06);
+      outline: none;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin: 1.5rem 0 1rem;
+    }
+
+    .btn {
+      background: #0b1a33;
+      color: #fff;
+      border: none;
+      padding: 0.7rem 2rem;
+      border-radius: 40px;
       font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    #slide1 .table-wrap .name-col,
-    #slide2 .table-wrap .name-col {
+    .btn:hover {
+      background: #1a3050;
+    }
+
+    .btn.red {
+      background: #d32f2f;
+      color: #fff;
+    }
+
+    .btn.red:hover {
+      background: #b71c1c;
+    }
+
+    .btn.secondary {
+      background: #e9edf4;
+      color: #0b1a33;
+    }
+
+    .btn.secondary:hover {
+      background: #d5dce8;
+    }
+
+    .token-input {
+      margin: 1rem 0 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .token-input label {
+      font-weight: 600;
+      color: #0b1a33;
+      font-size: 0.9rem;
+    }
+
+    .token-input input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.5rem 1rem;
+      border: 1px solid #d0d7e2;
+      border-radius: 30px;
+      font-size: 0.85rem;
+    }
+
+    #status {
+      margin-top: 1rem;
+      padding: 0.8rem 1.2rem;
+      border-radius: 12px;
+      display: none;
       font-weight: 500;
     }
 
-    #slide1 .table-wrap .score-col,
-    #slide2 .table-wrap .score-col {
-      font-weight: 700;
+    #status.success {
+      background: #e1f5e8;
+      color: #1a5a3a;
+      display: block;
+    }
+
+    #status.error {
+      background: #fde8e8;
+      color: #a13a3a;
+      display: block;
+    }
+
+    .preview-link {
+      margin-top: 1.8rem;
       text-align: right;
-      width: 15%;
+      border-top: 1px solid #edf0f6;
+      padding-top: 1.2rem;
+    }
+
+    .preview-link a {
       color: #0b1a33;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px dashed #b0bcca;
     }
 
-    /* #1 rank – RED accent */
-    #slide1 .table-wrap tr.top1 td,
-    #slide2 .table-wrap tr.top1 td {
-      background: #fef0ee;
+    .preview-link a:hover {
+      border-bottom-color: #0b1a33;
     }
 
-    #slide1 .table-wrap tr.top1 .rank-col,
-    #slide2 .table-wrap tr.top1 .rank-col {
-      color: #d32f2f;
-      font-weight: 800;
-    }
-
-    #slide1 .table-wrap tr.top1 .score-col,
-    #slide2 .table-wrap tr.top1 .score-col {
-      color: #d32f2f;
-      font-size: 1.05em;
-    }
-
-    #slide1 .table-wrap .empty-state,
-    #slide2 .table-wrap .empty-state {
-      padding: 2rem;
-      text-align: center;
-      color: #8a9bb0;
-      background: rgba(255,255,255,0.8);
-      border-radius: 12px;
-      width: 100%;
-    }
-
-    /* ---------- NAVIGATION ---------- */
-    .nav-controls {
-      position: absolute;
-      bottom: 2%;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1.2rem;
-      z-index: 20;
-      pointer-events: none;
-    }
-
-    .nav-controls button,
-    .nav-controls .dot {
-      pointer-events: auto;
-    }
-
-    .arrow {
-      background: rgba(11, 26, 51, 0.6);
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 38px;
-      height: 38px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: 0.2s;
-      backdrop-filter: blur(4px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .arrow:hover {
-      background: #d32f2f;
-      transform: scale(1.05);
-    }
-
-    .dots {
-      display: flex;
-      gap: 0.6rem;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
-      border: none;
-      cursor: pointer;
-      transition: 0.25s;
-      padding: 0;
-    }
-
-    .dot.active {
-      background: #d32f2f;
-      transform: scale(1.3);
-    }
-
-    .dot:hover {
-      background: #fff;
-    }
-
-    /* ---------- RESPONSIVE ---------- */
-    @media (max-width: 800px) {
-      #slide1 .table-wrap,
-      #slide2 .table-wrap {
-        padding: 14% 4% 4% 4%;
+    @media (max-width: 600px) {
+      .admin-box {
+        padding: 1.2rem;
       }
-      #slide1 .table-wrap th,
-      #slide2 .table-wrap th,
-      #slide1 .table-wrap td,
-      #slide2 .table-wrap td {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.7rem;
+      .header-mini h1 {
+        font-size: 1.3rem;
       }
-      .arrow { width: 30px; height: 30px; font-size: 0.9rem; }
-    }
-
-    @media (max-width: 500px) {
-      body { padding: 0.5rem; }
-      .slide-deck { border-radius: 10px; }
-      #slide1 .table-wrap,
-      #slide2 .table-wrap {
-        padding: 20% 2% 2% 2%;
+      textarea {
+        height: 240px;
       }
-      #slide1 .table-wrap th,
-      #slide2 .table-wrap th,
-      #slide1 .table-wrap td,
-      #slide2 .table-wrap td {
-        padding: 0.3rem 0.4rem;
-        font-size: 0.55rem;
-      }
-      .dot { width: 8px; height: 8px; }
     }
   </style>
 </head>
 <body>
 
-<div class="slide-deck">
-  <div class="slides-wrapper" id="slidesWrapper">
-
-    <!-- ========== SLIDE 0: TITLE ========== -->
-    <div class="slide active" id="slide0" data-index="0">
-      <!-- The image is the background – no HTML content needed -->
+  <div class="admin-box">
+    <div class="header-mini">
+      <svg viewBox="0 0 60 50" fill="none" width="40" height="34">
+        <path d="M30 2 L2 46 L58 46 L30 2Z" fill="#d32f2f" stroke="#d32f2f" stroke-width="2"/>
+        <path d="M30 10 L10 44 L50 44 L30 10Z" fill="#0b1a33" stroke="#0b1a33" stroke-width="1.5"/>
+        <text x="30" y="38" font-size="14" font-weight="700" fill="#d32f2f" text-anchor="middle" font-family="Segoe UI, sans-serif">Δ</text>
+      </svg>
+      <h1><span>DELTA</span> · Update SIS Data</h1>
     </div>
 
-    <!-- ========== SLIDE 1: TEAMS ========== -->
-    <div class="slide" id="slide1" data-index="1">
-      <!-- The header is hidden – the image provides it -->
-      <div class="table-wrap" id="teamTableWrap">
-        <div class="empty-state">Loading teams…</div>
-      </div>
+    <div class="info-box">
+      <strong>📋 Paste your new weekly table</strong> – copy from your slides or spreadsheet.<br />
+      Use <strong>tab</strong> or <strong>multiple spaces</strong> between columns.<br />
+      <code>Teams: Rank  Name  SIS%</code> &nbsp;|&nbsp; <code>Agents: Rank  Name  TeamLeader  SIS%</code><br />
+      <span class="warning">⚠️ You need a GitHub token with <code>repo</code> scope to publish.</span>
     </div>
 
-    <!-- ========== SLIDE 2: AGENTS ========== -->
-    <div class="slide" id="slide2" data-index="2">
-      <div class="table-wrap" id="agentTableWrap">
-        <div class="empty-state">Loading agents…</div>
-      </div>
+    <textarea id="rawInput" spellcheck="false">1	Sinazo Nogaga	88.18%
+2	Zintle Daba	87.14%
+3	Mbono, Phelisa	86.22%
+4	Botshelo Manoko	85.71%
+5	Jesse Machelm	83.11%
+6	Justin Salisbury	83.00%
+7	Tina Barron	82.58%
+8	Waylon Alexander	81.43%
+9	Terrayn Moses	81.06%
+10	Dawood Thaaqib	80.86%
+11	Daniel Van Der Poel	79.46%
+12	Moegamat Naeem Abrahams	79.16%
+13	Fatima Becket	78.24%
+14	Claasen, Ryan	77.73%
+15	ETHEL ZANELE KARAWE	77.52%
+16	Saban, Mogamat Muaath	75.18%
+17	Ivewe Ncapayi	71.38%
+
+1	Abdul Abrahams	Moses Terrayn V	100.00%
+2	Stone Jade	Mbono, Phelisa	100.00%
+3	Alvino Februarie	Waylon Alexander	100.00%
+4	Shanseau Khabana	Waylon Alexander	100.00%
+5	Casey Williams	Tina Barron	100.00%
+6	Asavela Mkuyana	ETHEL ZANELE KARAWE	100.00%
+7	Gideon Muller	ETHEL ZANELE KARAWE	100.00%
+8	Hanton Kock	Waylon Alexander	100.00%
+9	Denica Williams	Fanti, Siphovuyo	100.00%
+10	Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%</textarea>
+
+    <div class="token-input">
+      <label for="tokenField">🔑 GitHub Token:</label>
+      <input type="password" id="tokenField" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
+      <span style="font-size:0.75rem; color:#6b7f96;">(stored only in your browser)</span>
     </div>
 
-    <!-- ========== NAVIGATION ========== -->
-    <div class="nav-controls">
-      <button class="arrow" id="prevSlide">‹</button>
-      <div class="dots" id="dotsContainer"></div>
-      <button class="arrow" id="nextSlide">›</button>
+    <div class="actions">
+      <button class="btn secondary" id="previewBtn">👁 Preview</button>
+      <button class="btn red" id="publishBtn">🚀 Publish to GitHub</button>
+      <button class="btn secondary" id="resetBtn">↺ Reset to sample</button>
     </div>
 
+    <div id="status"></div>
+
+    <div class="preview-link">
+      <a href="index.html" target="_blank">📊 View live board</a>
+    </div>
   </div>
-</div>
 
-<script>
-  // ---------- SLIDESHOW ENGINE ----------
-  const slides = document.querySelectorAll('.slide');
-  const dotsContainer = document.getElementById('dotsContainer');
-  let currentIndex = 0;
-  let autoPlayInterval = null;
-  const AUTO_DELAY = 5500;
+  <script>
+    // =============================================
+    // ADMIN PAGE – FULLY WORKING
+    // =============================================
 
-  // Build dots
-  slides.forEach((_, i) => {
-    const dot = document.createElement('button');
-    dot.className = 'dot' + (i === 0 ? ' active' : '');
-    dot.dataset.index = i;
-    dot.addEventListener('click', () => goToSlide(i));
-    dotsContainer.appendChild(dot);
-  });
-  const dots = dotsContainer.querySelectorAll('.dot');
+    const DEFAULT_DATA = {
+      week: 'Week of Jun 25 – Jul 01, 2026',
+      teams: [
+        { rank: 1, name: 'Sinazo Nogaga', score: '88.18%' },
+        { rank: 2, name: 'Zintle Daba', score: '87.14%' },
+        { rank: 3, name: 'Mbono, Phelisa', score: '86.22%' },
+        { rank: 4, name: 'Botshelo Manoko', score: '85.71%' },
+        { rank: 5, name: 'Jesse Machelm', score: '83.11%' },
+        { rank: 6, name: 'Justin Salisbury', score: '83.00%' },
+        { rank: 7, name: 'Tina Barron', score: '82.58%' },
+        { rank: 8, name: 'Waylon Alexander', score: '81.43%' },
+        { rank: 9, name: 'Terrayn Moses', score: '81.06%' },
+        { rank: 10, name: 'Dawood Thaaqib', score: '80.86%' },
+        { rank: 11, name: 'Daniel Van Der Poel', score: '79.46%' },
+        { rank: 12, name: 'Moegamat Naeem Abrahams', score: '79.16%' },
+        { rank: 13, name: 'Fatima Becket', score: '78.24%' },
+        { rank: 14, name: 'Claasen, Ryan', score: '77.73%' },
+        { rank: 15, name: 'ETHEL ZANELE KARAWE', score: '77.52%' },
+        { rank: 16, name: 'Saban, Mogamat Muaath', score: '75.18%' },
+        { rank: 17, name: 'Ivewe Ncapayi', score: '71.38%' }
+      ],
+      agents: [
+        { rank: 1, name: 'Abdul Abrahams', team: 'Moses Terrayn V', score: '100.00%' },
+        { rank: 2, name: 'Stone Jade', team: 'Mbono, Phelisa', score: '100.00%' },
+        { rank: 3, name: 'Alvino Februarie', team: 'Waylon Alexander', score: '100.00%' },
+        { rank: 4, name: 'Shanseau Khabana', team: 'Waylon Alexander', score: '100.00%' },
+        { rank: 5, name: 'Casey Williams', team: 'Tina Barron', score: '100.00%' },
+        { rank: 6, name: 'Asavela Mkuyana', team: 'ETHEL ZANELE KARAWE', score: '100.00%' },
+        { rank: 7, name: 'Gideon Muller', team: 'ETHEL ZANELE KARAWE', score: '100.00%' },
+        { rank: 8, name: 'Hanton Kock', team: 'Waylon Alexander', score: '100.00%' },
+        { rank: 9, name: 'Denica Williams', team: 'Fanti, Siphovuyo', score: '100.00%' },
+        { rank: 10, name: 'Sihle Mdedetyana', team: 'Moegamat Naeem Abrahams', score: '100.00%' }
+      ]
+    };
 
-  function goToSlide(index) {
-    if (index === currentIndex) return;
-    if (index < 0) index = slides.length - 1;
-    if (index >= slides.length) index = 0;
-    slides[currentIndex].classList.remove('active');
-    dots[currentIndex].classList.remove('active');
-    currentIndex = index;
-    slides[currentIndex].classList.add('active');
-    dots[currentIndex].classList.add('active');
-    resetAutoPlay();
-  }
-
-  function nextSlide() { goToSlide(currentIndex + 1); }
-  function prevSlide() { goToSlide(currentIndex - 1); }
-
-  function resetAutoPlay() {
-    if (autoPlayInterval) clearInterval(autoPlayInterval);
-    autoPlayInterval = setInterval(nextSlide, AUTO_DELAY);
-  }
-
-  document.getElementById('nextSlide').addEventListener('click', nextSlide);
-  document.getElementById('prevSlide').addEventListener('click', prevSlide);
-
-  const wrapper = document.getElementById('slidesWrapper');
-  wrapper.addEventListener('mouseenter', () => {
-    if (autoPlayInterval) { clearInterval(autoPlayInterval); autoPlayInterval = null; }
-  });
-  wrapper.addEventListener('mouseleave', resetAutoPlay);
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') nextSlide();
-    if (e.key === 'ArrowLeft') prevSlide();
-  });
-
-  // ---------- DATA LOADER ----------
-  function renderTable(containerId, items, type) {
-    const container = document.getElementById(containerId);
-    if (!items || items.length === 0) {
-      container.innerHTML = `<div class="empty-state">No data available.</div>`;
-      return;
+    function parseText(text) {
+      const blocks = text.split(/\n\s*\n/).filter(b => b.trim().length > 0);
+      let allTeams = [], allAgents = [];
+      blocks.forEach(block => {
+        const lines = block.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+        const rows = lines.map(l => l.split(/\t| {2,}/).filter(s => s.length > 0));
+        if (rows.length === 0) return;
+        const has4 = rows.some(r => r.length >= 4);
+        const parsed = rows.map(r => {
+          if (has4 && r.length >= 4) {
+            return { rank: parseInt(r[0]), name: r[1], team: r[2], score: r[3] };
+          } else {
+            return { rank: parseInt(r[0]), name: r[1], score: r[2] };
+          }
+        });
+        if (has4) allAgents = allAgents.concat(parsed);
+        else allTeams = allTeams.concat(parsed);
+      });
+      return { teams: allTeams, agents: allAgents };
     }
 
-    let html = `<table>
-      <thead><tr>
-        <th class="rank-col">#</th>
-        <th>${type === 'team' ? 'Team Leader' : 'Agent Name'}</th>
-        ${type === 'agent' ? '<th>Team Leader</th>' : ''}
-        <th class="score-col">SIS</th>
-      </tr></thead><tbody>`;
+    const statusEl = document.getElementById('status');
+    function showStatus(msg, type) {
+      statusEl.textContent = msg;
+      statusEl.className = type;
+    }
 
-    items.forEach(item => {
-      const isFirst = item.rank === 1;
-      html += `<tr class="${isFirst ? 'top1' : ''}">
-        <td class="rank-col">${item.rank}</td>
-        <td class="name-col">${item.name}</td>
-        ${type === 'agent' ? `<td>${item.team || '—'}</td>` : ''}
-        <td class="score-col">${item.score}</td>
-      </tr>`;
+    document.getElementById('previewBtn').addEventListener('click', () => {
+      const raw = document.getElementById('rawInput').value;
+      const parsed = parseText(raw);
+      if (!parsed || (parsed.teams.length === 0 && parsed.agents.length === 0)) {
+        showStatus('❌ Could not parse. Use tabs or multiple spaces.', 'error');
+        return;
+      }
+      showStatus(`✅ Parsed OK — Teams: ${parsed.teams.length}, Agents: ${parsed.agents.length}`, 'success');
     });
 
-    html += `</tbody></table>`;
-    container.innerHTML = html;
-  }
+    document.getElementById('publishBtn').addEventListener('click', async () => {
+      const token = document.getElementById('tokenField').value.trim();
+      if (!token) {
+        showStatus('❌ Please enter your GitHub token.', 'error');
+        return;
+      }
+      const raw = document.getElementById('rawInput').value;
+      const parsed = parseText(raw);
+      if (!parsed || (parsed.teams.length === 0 && parsed.agents.length === 0)) {
+        showStatus('❌ Invalid data format. Preview first.', 'error');
+        return;
+      }
 
-  async function loadData() {
-    try {
-      const res = await fetch('data.json?' + Date.now());
-      if (!res.ok) throw new Error('Failed to fetch');
-      const data = await res.json();
+      const week = 'Week of ' + new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      const newData = { week, teams: parsed.teams, agents: parsed.agents };
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
 
-      // The week is already in the image, but if you want to overlay it dynamically, you can.
-      renderTable('teamTableWrap', data.teams, 'team');
-      renderTable('agentTableWrap', data.agents, 'agent');
+      const repoPath = window.location.pathname.split('/').slice(1, 3).join('/');
+      if (!repoPath || repoPath.includes('admin.html')) {
+        showStatus('❌ Could not detect repo. Open this page from your GitHub Pages URL.', 'error');
+        return;
+      }
 
-    } catch (e) {
-      document.getElementById('teamTableWrap').innerHTML = '<div class="empty-state">⚠️ Could not load data. Refresh or try again later.</div>';
-      document.getElementById('agentTableWrap').innerHTML = '';
-    }
-  }
+      try {
+        const fileUrl = `https://api.github.com/repos/${repoPath}/contents/data.json`;
+        const headRes = await fetch(fileUrl, {
+          headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+        });
+        if (!headRes.ok) throw new Error('Could not fetch data.json. Check token and repo path.');
+        const fileMeta = await headRes.json();
+        const sha = fileMeta.sha;
 
-  loadData();
-  resetAutoPlay();
-</script>
+        const commitRes = await fetch(fileUrl, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.github.v3+json'
+          },
+          body: JSON.stringify({
+            message: `Update SIS leaderboard (${new Date().toLocaleString()})`,
+            content: content,
+            sha: sha
+          })
+        });
+        if (!commitRes.ok) {
+          const err = await commitRes.json();
+          throw new Error(err.message || 'Commit failed');
+        }
+        showStatus('✅ Published! Live page will update in 1–2 minutes (GitHub cache).', 'success');
+      } catch (err) {
+        showStatus(`❌ Error: ${err.message}`, 'error');
+      }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      if (confirm('Reset textarea to sample data?')) {
+        const sample = `1	Sinazo Nogaga	88.18%\n2	Zintle Daba	87.14%\n3	Mbono, Phelisa	86.22%\n4	Botshelo Manoko	85.71%\n5	Jesse Machelm	83.11%\n6	Justin Salisbury	83.00%\n7	Tina Barron	82.58%\n8	Waylon Alexander	81.43%\n9	Terrayn Moses	81.06%\n10	Dawood Thaaqib	80.86%\n11	Daniel Van Der Poel	79.46%\n12	Moegamat Naeem Abrahams	79.16%\n13	Fatima Becket	78.24%\n14	Claasen, Ryan	77.73%\n15	ETHEL ZANELE KARAWE	77.52%\n16	Saban, Mogamat Muaath	75.18%\n17	Ivewe Ncapayi	71.38%\n\n1	Abdul Abrahams	Moses Terrayn V	100.00%\n2	Stone Jade	Mbono, Phelisa	100.00%\n3	Alvino Februarie	Waylon Alexander	100.00%\n4	Shanseau Khabana	Waylon Alexander	100.00%\n5	Casey Williams	Tina Barron	100.00%\n6	Asavela Mkuyana	ETHEL ZANELE KARAWE	100.00%\n7	Gideon Muller	ETHEL ZANELE KARAWE	100.00%\n8	Hanton Kock	Waylon Alexander	100.00%\n9	Denica Williams	Fanti, Siphovuyo	100.00%\n10	Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%`;
+        document.getElementById('rawInput').value = sample;
+        showStatus('↺ Reset to sample data. Preview or publish when ready.', 'success');
+      }
+    });
+  </script>
 
 </body>
 </html>
