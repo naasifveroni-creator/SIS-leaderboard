@@ -44,6 +44,40 @@
       overflow: hidden;
     }
 
+    /* ========== FULLSCREEN TOGGLE ========== */
+    .fullscreen-btn {
+      position: absolute;
+      top: 1.5vh;
+      right: 1.5vw;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.5);
+      border-radius: 8px;
+      padding: 0.5vh 0.8vw;
+      font-size: 1.8vh;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      gap: 0.4vw;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    .fullscreen-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    .fullscreen-btn .icon {
+      font-size: 2vh;
+      line-height: 1;
+    }
+
     /* ========== SLIDE BASE ========== */
     .slide {
       position: absolute;
@@ -84,7 +118,7 @@
       padding: 0;
     }
 
-    /* ---------- HEADER – PREMIUM RIBBON (Glass + Gold + JS) ---------- */
+    /* ---------- HEADER – PREMIUM RIBBON (Glass + Gold, Automated) ---------- */
     .slide-header {
       background: rgba(11, 26, 51, 0.65);
       backdrop-filter: blur(16px) saturate(180%);
@@ -105,7 +139,7 @@
       margin: 0 0.5vw;
     }
 
-    /* ---- Glass-morphism glow overlay ---- */
+    /* ---- Glass-morphism shimmer overlay (auto-loop) ---- */
     .slide-header::before {
       content: '';
       position: absolute;
@@ -122,7 +156,7 @@
         rgba(255, 215, 0, 0.05) 80%,
         transparent 100%
       );
-      animation: shimmerGold 10s ease-in-out infinite;
+      animation: shimmerGold 8s ease-in-out infinite;
       pointer-events: none;
       z-index: 0;
     }
@@ -132,7 +166,7 @@
       100% { left: 150%; }
     }
 
-    /* ---- Double bottom border (gold + red glow) ---- */
+    /* ---- Double bottom border (gold + red glow, auto-loop) ---- */
     .slide-header::after {
       content: '';
       position: absolute;
@@ -146,12 +180,22 @@
       z-index: 1;
     }
 
+    .slide-header .border-line {
+      position: absolute;
+      bottom: -6px;
+      left: 10%;
+      width: 80%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(253, 185, 19, 0.2), transparent);
+      z-index: 1;
+    }
+
     @keyframes borderGlow {
       0%, 100% { opacity: 0.4; }
       50% { opacity: 1; }
     }
 
-    /* ---- Logo area (z-index to sit above shimmer) ---- */
+    /* ---- Logo area ---- */
     .slide-header .logo-area {
       display: flex;
       align-items: center;
@@ -160,15 +204,20 @@
       z-index: 2;
     }
 
-    /* ---- Logo with golden aura (JS heartbeat enhanced) ---- */
+    /* ---- Logo with heartbeat pulse (auto-loop) ---- */
     .slide-header .logo-area svg {
       height: 5vh;
       width: auto;
       filter: drop-shadow(0 0 20px rgba(253, 185, 19, 0.4)) drop-shadow(0 0 40px rgba(253, 185, 19, 0.1));
-      transition: filter 0.3s ease;
+      animation: logoHeartbeat 3s ease-in-out infinite;
     }
 
-    /* ---- "DELTA · SIS" with gold gradient ---- */
+    @keyframes logoHeartbeat {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(253, 185, 19, 0.4)) drop-shadow(0 0 40px rgba(253, 185, 19, 0.1)); }
+      50% { transform: scale(1.03); filter: drop-shadow(0 0 35px rgba(253, 185, 19, 0.6)) drop-shadow(0 0 60px rgba(253, 185, 19, 0.2)); }
+    }
+
+    /* ---- "DELTA · SIS" with gold gradient (auto-loop) ---- */
     .slide-header .logo-area h1 {
       font-weight: 300;
       font-size: 2.5vh;
@@ -195,7 +244,7 @@
       background-clip: text;
     }
 
-    /* ---- Behavior tags – premium pill badges ---- */
+    /* ---- Behavior tags – premium pill badges (no hover) ---- */
     .behavior-tags {
       display: flex;
       flex-wrap: wrap;
@@ -215,25 +264,15 @@
       border-radius: 30px;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      cursor: default;
-      position: relative;
-      overflow: hidden;
+      transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       opacity: 0;
       transform: translateY(15px);
+      white-space: nowrap;
     }
 
     .behavior-tags .tag.visible {
       opacity: 1;
       transform: translateY(0);
-    }
-
-    /* ---- Tag hover glow (JS-enhanced) ---- */
-    .behavior-tags .tag:hover {
-      transform: translateY(-3px) scale(1.05);
-      background: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-      border-color: rgba(255, 215, 0, 0.3);
     }
 
     /* ---- Divider dots ---- */
@@ -250,11 +289,12 @@
       border-color: rgba(211, 47, 47, 0.4);
       box-shadow: 0 0 30px rgba(211, 47, 47, 0.15);
       font-weight: 700;
+      animation: redPulse 2.5s ease-in-out infinite;
     }
 
-    .behavior-tags .tag.red:hover {
-      box-shadow: 0 0 60px rgba(211, 47, 47, 0.4);
-      transform: translateY(-3px) scale(1.05);
+    @keyframes redPulse {
+      0%, 100% { box-shadow: 0 0 30px rgba(211, 47, 47, 0.15); }
+      50% { box-shadow: 0 0 50px rgba(211, 47, 47, 0.35); }
     }
 
     /* ---- "LEADERS AS COACHES" – BLUE BADGE ---- */
@@ -265,53 +305,11 @@
       box-shadow: 0 0 20px rgba(42, 74, 127, 0.15);
     }
 
-    .behavior-tags .tag.coach:hover {
-      box-shadow: 0 0 40px rgba(42, 74, 127, 0.3);
-      transform: translateY(-3px) scale(1.05);
-    }
-
-    /* ---- Mouse glow overlay (JS controlled) ---- */
-    .slide-header .mouse-glow {
-      position: absolute;
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(253, 185, 19, 0.08), transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-      transform: translate(-50%, -50%);
-      opacity: 0;
-      transition: opacity 0.6s ease;
-    }
-
-    .slide-header .mouse-glow.active {
-      opacity: 1;
-    }
-
-    /* ---- Ripple effect on hover (JS controlled) ---- */
-    .behavior-tags .tag .ripple {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255, 215, 0, 0.3);
-      transform: scale(0);
-      animation: rippleAnim 0.8s ease-out forwards;
-      pointer-events: none;
-      width: 100px;
-      height: 100px;
-      margin-left: -50px;
-      margin-top: -50px;
-    }
-
-    @keyframes rippleAnim {
-      0% { transform: scale(0); opacity: 0.8; }
-      100% { transform: scale(4); opacity: 0; }
-    }
-
     /* ---------- SLIDE INDICATOR ---------- */
     .slide-counter {
       position: absolute;
       top: 1.5vh;
-      right: 2vw;
+      right: 6vw;
       color: rgba(255, 255, 255, 0.3);
       font-size: 1.4vh;
       font-weight: 600;
@@ -324,7 +322,7 @@
       font-size: 2vh;
     }
 
-    /* ---------- TABLE CONTAINER – REDUCED PADDING ---------- */
+    /* ---------- TABLE CONTAINER ---------- */
     .table-wrap {
       flex: 1;
       overflow: hidden;
@@ -375,7 +373,7 @@
       min-width: 30vw;
     }
 
-    /* ---------- TEAMS: Two columns – wider gap ---------- */
+    /* ---------- TEAMS: Two columns ---------- */
     .table-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -427,7 +425,7 @@
       transform: translateY(-2px);
     }
 
-    /* ---------- TABLE STYLES – BIGGER FONTS ---------- */
+    /* ---------- TABLE STYLES ---------- */
     .table-wrap th {
       background: linear-gradient(135deg, #0b1a33 0%, #1a3050 100%);
       color: #fff;
@@ -508,7 +506,6 @@
       font-weight: 800;
     }
 
-    /* Glow ring around #1 row – GREEN */
     .table-wrap tr.top1 td::before {
       content: '';
       position: absolute;
@@ -691,6 +688,7 @@
       .table-wrap th { font-size: 1.5vh; }
       #slide3 .table-wrap td { font-size: 1.4vh; }
       #slide3 .table-wrap th { font-size: 1.2vh; }
+      .fullscreen-btn { font-size: 1.4vh; padding: 0.3vh 0.6vw; }
     }
 
     @media (max-aspect-ratio: 4/3) {
@@ -706,6 +704,7 @@
       .slide-title .week-date { font-size: 1.8vh; padding: 0.1vh 1vw; min-width: 50vw; }
       .slide-header .logo-area h1 { font-size: 1.6vh; }
       .slide-header .logo-area svg { height: 3.5vh; }
+      .fullscreen-btn { font-size: 1.2vh; padding: 0.2vh 0.5vw; top: 1vh; right: 1vw; }
     }
   </style>
 </head>
@@ -713,6 +712,11 @@
 
   <div class="slide-deck">
     <div class="slides-wrapper" id="slidesWrapper">
+
+      <!-- ========== FULLSCREEN TOGGLE ========== -->
+      <button class="fullscreen-btn" id="fullscreenBtn">
+        <span class="icon">⛶</span> FULL
+      </button>
 
       <!-- ========== SLIDE 0: TITLE ========== -->
       <div class="slide active" id="slide0" data-index="0" data-slide="1">
@@ -727,8 +731,7 @@
       <!-- ========== SLIDE 2: AGENTS ========== -->
       <div class="slide" id="slide2" data-index="2" data-slide="3">
         <div class="slide-counter"><span class="current">3</span> / 4</div>
-        <div class="slide-header" id="ribbon1">
-          <div class="mouse-glow" id="glow1"></div>
+        <div class="slide-header">
           <div class="logo-area">
             <svg viewBox="0 0 60 50" fill="none" width="34" height="28">
               <path d="M30 2 L2 46 L58 46 L30 2Z" fill="#d32f2f" stroke="#d32f2f" stroke-width="2"/>
@@ -772,8 +775,7 @@
       <!-- ========== SLIDE 3: TEAMS ========== -->
       <div class="slide" id="slide3" data-index="3" data-slide="4">
         <div class="slide-counter"><span class="current">4</span> / 4</div>
-        <div class="slide-header" id="ribbon2">
-          <div class="mouse-glow" id="glow2"></div>
+        <div class="slide-header">
           <div class="logo-area">
             <svg viewBox="0 0 60 50" fill="none" width="34" height="28">
               <path d="M30 2 L2 46 L58 46 L30 2Z" fill="#d32f2f" stroke="#d32f2f" stroke-width="2"/>
@@ -826,39 +828,41 @@
 
   <script>
     // =============================================
-    // PREMIUM RIBBON – JS ENHANCEMENTS
+    // FULLSCREEN TOGGLE
     // =============================================
 
     (function() {
-      'use strict';
+      const btn = document.getElementById('fullscreenBtn');
+      if (!btn) return;
 
-      // ---------- 1. Mouse-tracking glow ----------
-      const ribbons = document.querySelectorAll('.slide-header');
-      const glows = {
-        glow1: document.getElementById('glow1'),
-        glow2: document.getElementById('glow2')
-      };
-
-      ribbons.forEach((ribbon, index) => {
-        const glowKey = index === 0 ? 'glow1' : 'glow2';
-        const glow = glows[glowKey];
-        if (!glow) return;
-
-        ribbon.addEventListener('mousemove', (e) => {
-          const rect = ribbon.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          glow.style.left = x + 'px';
-          glow.style.top = y + 'px';
-          glow.classList.add('active');
-        });
-
-        ribbon.addEventListener('mouseleave', () => {
-          glow.classList.remove('active');
-        });
+      btn.addEventListener('click', function() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen?.() ||
+          document.documentElement.webkitRequestFullscreen?.() ||
+          document.documentElement.msRequestFullscreen?.();
+          btn.innerHTML = '<span class="icon">⛶</span> EXIT';
+        } else {
+          document.exitFullscreen?.() ||
+          document.webkitExitFullscreen?.() ||
+          document.msExitFullscreen?.();
+          btn.innerHTML = '<span class="icon">⛶</span> FULL';
+        }
       });
 
-      // ---------- 2. Staggered entrance animations ----------
+      document.addEventListener('fullscreenchange', function() {
+        if (document.fullscreenElement) {
+          btn.innerHTML = '<span class="icon">⛶</span> EXIT';
+        } else {
+          btn.innerHTML = '<span class="icon">⛶</span> FULL';
+        }
+      });
+    })();
+
+    // =============================================
+    // STAGGERED TAG ENTRANCE (automated)
+    // =============================================
+
+    (function() {
       function animateTags(tagsContainer) {
         const tags = tagsContainer.querySelectorAll('.tag');
         tags.forEach((tag) => {
@@ -869,69 +873,18 @@
         });
       }
 
-      // Initial animation for visible slides
+      // Initial animation
       const tags1 = document.getElementById('tags1');
       const tags2 = document.getElementById('tags2');
       if (tags1) animateTags(tags1);
       if (tags2) animateTags(tags2);
 
-      // ---------- 3. Pulse on hover (ripple effect) ----------
-      document.querySelectorAll('.behavior-tags .tag').forEach((tag) => {
-        tag.addEventListener('mouseenter', (e) => {
-          const rect = tag.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          const ripple = document.createElement('span');
-          ripple.className = 'ripple';
-          ripple.style.left = x + 'px';
-          ripple.style.top = y + 'px';
-          tag.appendChild(ripple);
-          setTimeout(() => {
-            ripple.remove();
-          }, 800);
-        });
-      });
-
-      // ---------- 4. Logo heartbeat ----------
-      const logos = document.querySelectorAll('.slide-header .logo-area svg');
-      let heartbeatPhase = 0;
-      setInterval(() => {
-        heartbeatPhase += 0.1;
-        const scale = 1 + 0.03 * Math.sin(heartbeatPhase);
-        const glowIntensity = 0.4 + 0.15 * Math.sin(heartbeatPhase);
-        logos.forEach((logo) => {
-          logo.style.transform = `scale(${scale})`;
-          logo.style.filter = `drop-shadow(0 0 ${20 + 20 * glowIntensity}px rgba(253, 185, 19, ${glowIntensity})) drop-shadow(0 0 ${40 + 20 * glowIntensity}px rgba(253, 185, 19, ${glowIntensity * 0.5}))`;
-        });
-      }, 200);
-
-      // ---------- 5. Dynamic shimmer direction ----------
-      ribbons.forEach((ribbon) => {
-        ribbon.addEventListener('mousemove', (e) => {
-          const rect = ribbon.getBoundingClientRect();
-          const x = (e.clientX - rect.left) / rect.width;
-          const direction = x > 0.5 ? 'to right' : 'to left';
-          ribbon.style.setProperty('--shimmer-dir', direction);
-        });
-      });
-
-      // Update shimmer animation to use dynamic direction
-      const styleSheet = document.createElement('style');
-      styleSheet.textContent = `
-        .slide-header::before {
-          animation-direction: var(--shimmer-dir, normal) !important;
-        }
-      `;
-      document.head.appendChild(styleSheet);
-
-      // ---------- Re-trigger animations on slide change ----------
+      // Re-trigger on slide change
       const observer = new MutationObserver(() => {
         document.querySelectorAll('.slide.active .behavior-tags').forEach((tags) => {
-          // Reset tags
           tags.querySelectorAll('.tag').forEach((tag) => {
             tag.classList.remove('visible');
           });
-          // Re-animate with delay
           setTimeout(() => {
             animateTags(tags);
           }, 300);
@@ -941,17 +894,13 @@
       document.querySelectorAll('.slide').forEach((slide) => {
         observer.observe(slide, { attributes: true, attributeFilter: ['class'] });
       });
-
     })();
 
     // =============================================
-    // SLIDESHOW ENGINE + ENHANCEMENTS
+    // SLIDESHOW ENGINE
     // =============================================
 
     (function() {
-      'use strict';
-
-      // ---------- DOM refs ----------
       const slides = document.querySelectorAll('.slide');
       const dotsContainer = document.getElementById('dotsContainer');
       const progressBars = document.querySelectorAll('.progress-bar');
@@ -962,7 +911,7 @@
       const AUTO_DELAY = 5500;
       let isTransitioning = false;
 
-      // ---------- Build dots ----------
+      // Build dots
       slides.forEach((_, i) => {
         const dot = document.createElement('button');
         dot.className = 'dot' + (i === 0 ? ' active' : '');
@@ -972,7 +921,6 @@
       });
       const dots = dotsContainer.querySelectorAll('.dot');
 
-      // ---------- Slide navigation ----------
       function goToSlide(index) {
         if (isTransitioning || index === currentIndex) return;
         if (index < 0) index = slides.length - 1;
@@ -1001,7 +949,6 @@
       function nextSlide() { goToSlide(currentIndex + 1); }
       function prevSlide() { goToSlide(currentIndex - 1); }
 
-      // ---------- Auto-play ----------
       function resetAutoPlay() {
         if (autoPlayInterval) {
           clearInterval(autoPlayInterval);
@@ -1011,7 +958,6 @@
         resetProgressBar();
       }
 
-      // ---------- Progress bar ----------
       function resetProgressBar() {
         if (progressInterval) {
           clearInterval(progressInterval);
@@ -1032,7 +978,6 @@
         }, 50);
       }
 
-      // ---------- Reset animations for slide ----------
       function resetAnimations(index) {
         const activeSlide = slides[index];
         const tables = activeSlide.querySelectorAll('table');
@@ -1064,7 +1009,6 @@
         });
       }
 
-      // ---------- Animated counter ----------
       function animateCounter(element, target) {
         const targetValue = parseFloat(target);
         if (isNaN(targetValue)) return;
@@ -1090,7 +1034,6 @@
         requestAnimationFrame(updateCounter);
       }
 
-      // ---------- Event listeners ----------
       document.getElementById('nextSlide').addEventListener('click', nextSlide);
       document.getElementById('prevSlide').addEventListener('click', prevSlide);
 
@@ -1112,7 +1055,7 @@
         if (e.key === 'ArrowLeft') prevSlide();
       });
 
-      // ---------- Data loader ----------
+      // Data loader
       function renderAgents(containerId, items) {
         const container = document.getElementById(containerId);
         if (!items || items.length === 0) {
@@ -1213,7 +1156,6 @@
         }
       }
 
-      // ---------- Start ----------
       loadData();
       resetAutoPlay();
       resetProgressBar();
@@ -1237,7 +1179,6 @@
           resetProgressBar();
         }, 100);
       };
-
     })();
   </script>
 
