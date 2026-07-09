@@ -84,9 +84,11 @@
       padding: 0;
     }
 
-    /* ---------- HEADER – PREMIUM RIBBON ---------- */
+    /* ---------- HEADER – PREMIUM RIBBON (Glass + Gold + JS) ---------- */
     .slide-header {
-      background: linear-gradient(135deg, #0b1a33 0%, #1a3050 100%);
+      background: rgba(11, 26, 51, 0.65);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
       padding: 1vh 2vw;
       display: flex;
       justify-content: space-between;
@@ -95,53 +97,58 @@
       gap: 0.5vh 1vw;
       flex-shrink: 0;
       min-height: 8vh;
-      border-bottom: 3px solid #d32f2f;
+      border-bottom: 2px solid rgba(253, 185, 19, 0.3);
       position: relative;
       overflow: hidden;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+      border-radius: 0 0 12px 12px;
+      margin: 0 0.5vw;
     }
 
-    /* ---- Animated shimmer overlay ---- */
+    /* ---- Glass-morphism glow overlay ---- */
     .slide-header::before {
       content: '';
       position: absolute;
       top: 0;
-      left: -100%;
-      width: 200%;
+      left: -150%;
+      width: 300%;
       height: 100%;
       background: linear-gradient(
         90deg,
         transparent 0%,
-        rgba(255, 255, 255, 0.03) 25%,
-        rgba(255, 255, 255, 0.08) 50%,
-        rgba(255, 255, 255, 0.03) 75%,
+        rgba(255, 215, 0, 0.05) 20%,
+        rgba(255, 215, 0, 0.15) 40%,
+        rgba(255, 255, 255, 0.1) 60%,
+        rgba(255, 215, 0, 0.05) 80%,
         transparent 100%
       );
-      animation: shimmerSweep 8s ease-in-out infinite;
+      animation: shimmerGold 10s ease-in-out infinite;
       pointer-events: none;
       z-index: 0;
     }
 
-    @keyframes shimmerSweep {
-      0% { left: -100%; }
-      100% { left: 100%; }
+    @keyframes shimmerGold {
+      0% { left: -150%; }
+      100% { left: 150%; }
     }
 
-    /* ---- Bottom border animated line ---- */
+    /* ---- Double bottom border (gold + red glow) ---- */
     .slide-header::after {
       content: '';
       position: absolute;
-      bottom: -3px;
-      left: -100%;
-      width: 100%;
+      bottom: -2px;
+      left: 5%;
+      width: 90%;
       height: 3px;
-      background: linear-gradient(90deg, transparent, #d32f2f, #fdb913, #d32f2f, transparent);
-      animation: shimmer 3s ease-in-out infinite;
+      background: linear-gradient(90deg, transparent, #fdb913, #d32f2f, #fdb913, transparent);
+      filter: blur(2px);
+      animation: borderGlow 3s ease-in-out infinite;
       z-index: 1;
     }
 
-    @keyframes shimmer {
-      0% { left: -100%; }
-      100% { left: 100%; }
+    @keyframes borderGlow {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
     }
 
     /* ---- Logo area (z-index to sit above shimmer) ---- */
@@ -150,45 +157,52 @@
       align-items: center;
       gap: 0.8vw;
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
 
-    /* ---- Logo with pulse glow ---- */
+    /* ---- Logo with golden aura (JS heartbeat enhanced) ---- */
     .slide-header .logo-area svg {
       height: 5vh;
       width: auto;
-      filter: drop-shadow(0 0 10px rgba(211, 47, 47, 0.3));
-      animation: logoPulse 3s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(253, 185, 19, 0.4)) drop-shadow(0 0 40px rgba(253, 185, 19, 0.1));
+      transition: filter 0.3s ease;
     }
 
-    @keyframes logoPulse {
-      0%, 100% { filter: drop-shadow(0 0 10px rgba(211, 47, 47, 0.3)); }
-      50% { filter: drop-shadow(0 0 25px rgba(211, 47, 47, 0.6)); }
-    }
-
-    /* ---- "DELTA · SIS" with gold drop shadow ---- */
+    /* ---- "DELTA · SIS" with gold gradient ---- */
     .slide-header .logo-area h1 {
       font-weight: 300;
       font-size: 2.5vh;
       letter-spacing: 0.1em;
-      color: #fff;
-      text-shadow: 0 2px 20px rgba(253, 185, 19, 0.15);
+      background: linear-gradient(135deg, #fff 0%, #fdb913 50%, #fff 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: goldShine 4s ease-in-out infinite;
+      text-shadow: 0 0 30px rgba(253, 185, 19, 0.15);
+    }
+
+    @keyframes goldShine {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
     }
 
     .slide-header .logo-area h1 span {
       font-weight: 800;
-      color: #d32f2f;
-      text-shadow: 0 0 30px rgba(211, 47, 47, 0.2);
+      background: linear-gradient(135deg, #d32f2f, #ff6b6b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    /* ---- Behavior tags – pill badges ---- */
+    /* ---- Behavior tags – premium pill badges ---- */
     .behavior-tags {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       gap: 0.3vh 0.5vw;
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
 
     .behavior-tags .tag {
@@ -200,15 +214,26 @@
       padding: 0.4vh 1vw;
       border-radius: 30px;
       background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       cursor: default;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(15px);
     }
 
+    .behavior-tags .tag.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---- Tag hover glow (JS-enhanced) ---- */
     .behavior-tags .tag:hover {
-      transform: translateY(-2px);
-      background: rgba(255, 255, 255, 0.12);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      transform: translateY(-3px) scale(1.05);
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 215, 0, 0.3);
     }
 
     /* ---- Divider dots ---- */
@@ -222,27 +247,64 @@
     .behavior-tags .tag.red {
       color: #fff;
       background: linear-gradient(135deg, #d32f2f, #b71c1c);
-      border-color: #d32f2f;
+      border-color: rgba(211, 47, 47, 0.4);
       box-shadow: 0 0 30px rgba(211, 47, 47, 0.15);
       font-weight: 700;
     }
 
     .behavior-tags .tag.red:hover {
-      box-shadow: 0 0 50px rgba(211, 47, 47, 0.3);
-      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 60px rgba(211, 47, 47, 0.4);
+      transform: translateY(-3px) scale(1.05);
     }
 
     /* ---- "LEADERS AS COACHES" – BLUE BADGE ---- */
     .behavior-tags .tag.coach {
       color: #fff;
       background: linear-gradient(135deg, #2a4a7f, #1a3050);
-      border-color: #2a4a7f;
+      border-color: rgba(42, 74, 127, 0.4);
       box-shadow: 0 0 20px rgba(42, 74, 127, 0.15);
     }
 
     .behavior-tags .tag.coach:hover {
       box-shadow: 0 0 40px rgba(42, 74, 127, 0.3);
-      transform: translateY(-2px) scale(1.02);
+      transform: translateY(-3px) scale(1.05);
+    }
+
+    /* ---- Mouse glow overlay (JS controlled) ---- */
+    .slide-header .mouse-glow {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(253, 185, 19, 0.08), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .slide-header .mouse-glow.active {
+      opacity: 1;
+    }
+
+    /* ---- Ripple effect on hover (JS controlled) ---- */
+    .behavior-tags .tag .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 215, 0, 0.3);
+      transform: scale(0);
+      animation: rippleAnim 0.8s ease-out forwards;
+      pointer-events: none;
+      width: 100px;
+      height: 100px;
+      margin-left: -50px;
+      margin-top: -50px;
+    }
+
+    @keyframes rippleAnim {
+      0% { transform: scale(0); opacity: 0.8; }
+      100% { transform: scale(4); opacity: 0; }
     }
 
     /* ---------- SLIDE INDICATOR ---------- */
@@ -665,7 +727,8 @@
       <!-- ========== SLIDE 2: AGENTS ========== -->
       <div class="slide" id="slide2" data-index="2" data-slide="3">
         <div class="slide-counter"><span class="current">3</span> / 4</div>
-        <div class="slide-header">
+        <div class="slide-header" id="ribbon1">
+          <div class="mouse-glow" id="glow1"></div>
           <div class="logo-area">
             <svg viewBox="0 0 60 50" fill="none" width="34" height="28">
               <path d="M30 2 L2 46 L58 46 L30 2Z" fill="#d32f2f" stroke="#d32f2f" stroke-width="2"/>
@@ -674,19 +737,20 @@
             </svg>
             <h1><span>DELTA</span> · SIS</h1>
           </div>
-          <div class="behavior-tags">
-            <span class="tag">GREET ME</span>
+          <div class="behavior-tags" id="tags1">
+            <span class="tag" data-delay="0">GREET ME</span>
             <span class="divider">•</span>
-            <span class="tag">RECOGNIZE ME</span>
+            <span class="tag" data-delay="100">RECOGNIZE ME</span>
             <span class="divider">•</span>
-            <span class="tag">BE KIND TO ME</span>
+            <span class="tag" data-delay="200">BE KIND TO ME</span>
             <span class="divider">•</span>
-            <span class="tag">INFORM ME</span>
+            <span class="tag" data-delay="300">INFORM ME</span>
             <span class="divider">•</span>
-            <span class="tag red">CONSISTENTLY EXECUTED</span>
+            <span class="tag red" data-delay="400">CONSISTENTLY EXECUTED</span>
             <span class="divider">•</span>
-            <span class="tag coach">LEADERS AS COACHES</span>
+            <span class="tag coach" data-delay="500">LEADERS AS COACHES</span>
           </div>
+          <div class="border-line"></div>
         </div>
 
         <div class="table-wrap">
@@ -708,7 +772,8 @@
       <!-- ========== SLIDE 3: TEAMS ========== -->
       <div class="slide" id="slide3" data-index="3" data-slide="4">
         <div class="slide-counter"><span class="current">4</span> / 4</div>
-        <div class="slide-header">
+        <div class="slide-header" id="ribbon2">
+          <div class="mouse-glow" id="glow2"></div>
           <div class="logo-area">
             <svg viewBox="0 0 60 50" fill="none" width="34" height="28">
               <path d="M30 2 L2 46 L58 46 L30 2Z" fill="#d32f2f" stroke="#d32f2f" stroke-width="2"/>
@@ -717,19 +782,20 @@
             </svg>
             <h1><span>DELTA</span> · SIS</h1>
           </div>
-          <div class="behavior-tags">
-            <span class="tag">GREET ME</span>
+          <div class="behavior-tags" id="tags2">
+            <span class="tag" data-delay="0">GREET ME</span>
             <span class="divider">•</span>
-            <span class="tag">RECOGNIZE ME</span>
+            <span class="tag" data-delay="100">RECOGNIZE ME</span>
             <span class="divider">•</span>
-            <span class="tag">BE KIND TO ME</span>
+            <span class="tag" data-delay="200">BE KIND TO ME</span>
             <span class="divider">•</span>
-            <span class="tag">INFORM ME</span>
+            <span class="tag" data-delay="300">INFORM ME</span>
             <span class="divider">•</span>
-            <span class="tag red">CONSISTENTLY EXECUTED</span>
+            <span class="tag red" data-delay="400">CONSISTENTLY EXECUTED</span>
             <span class="divider">•</span>
-            <span class="tag coach">LEADERS AS COACHES</span>
+            <span class="tag coach" data-delay="500">LEADERS AS COACHES</span>
           </div>
+          <div class="border-line"></div>
         </div>
 
         <div class="table-wrap">
@@ -759,6 +825,125 @@
   </div>
 
   <script>
+    // =============================================
+    // PREMIUM RIBBON – JS ENHANCEMENTS
+    // =============================================
+
+    (function() {
+      'use strict';
+
+      // ---------- 1. Mouse-tracking glow ----------
+      const ribbons = document.querySelectorAll('.slide-header');
+      const glows = {
+        glow1: document.getElementById('glow1'),
+        glow2: document.getElementById('glow2')
+      };
+
+      ribbons.forEach((ribbon, index) => {
+        const glowKey = index === 0 ? 'glow1' : 'glow2';
+        const glow = glows[glowKey];
+        if (!glow) return;
+
+        ribbon.addEventListener('mousemove', (e) => {
+          const rect = ribbon.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          glow.style.left = x + 'px';
+          glow.style.top = y + 'px';
+          glow.classList.add('active');
+        });
+
+        ribbon.addEventListener('mouseleave', () => {
+          glow.classList.remove('active');
+        });
+      });
+
+      // ---------- 2. Staggered entrance animations ----------
+      function animateTags(tagsContainer) {
+        const tags = tagsContainer.querySelectorAll('.tag');
+        tags.forEach((tag) => {
+          const delay = parseInt(tag.dataset.delay) || 0;
+          setTimeout(() => {
+            tag.classList.add('visible');
+          }, delay + 300);
+        });
+      }
+
+      // Initial animation for visible slides
+      const tags1 = document.getElementById('tags1');
+      const tags2 = document.getElementById('tags2');
+      if (tags1) animateTags(tags1);
+      if (tags2) animateTags(tags2);
+
+      // ---------- 3. Pulse on hover (ripple effect) ----------
+      document.querySelectorAll('.behavior-tags .tag').forEach((tag) => {
+        tag.addEventListener('mouseenter', (e) => {
+          const rect = tag.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const ripple = document.createElement('span');
+          ripple.className = 'ripple';
+          ripple.style.left = x + 'px';
+          ripple.style.top = y + 'px';
+          tag.appendChild(ripple);
+          setTimeout(() => {
+            ripple.remove();
+          }, 800);
+        });
+      });
+
+      // ---------- 4. Logo heartbeat ----------
+      const logos = document.querySelectorAll('.slide-header .logo-area svg');
+      let heartbeatPhase = 0;
+      setInterval(() => {
+        heartbeatPhase += 0.1;
+        const scale = 1 + 0.03 * Math.sin(heartbeatPhase);
+        const glowIntensity = 0.4 + 0.15 * Math.sin(heartbeatPhase);
+        logos.forEach((logo) => {
+          logo.style.transform = `scale(${scale})`;
+          logo.style.filter = `drop-shadow(0 0 ${20 + 20 * glowIntensity}px rgba(253, 185, 19, ${glowIntensity})) drop-shadow(0 0 ${40 + 20 * glowIntensity}px rgba(253, 185, 19, ${glowIntensity * 0.5}))`;
+        });
+      }, 200);
+
+      // ---------- 5. Dynamic shimmer direction ----------
+      ribbons.forEach((ribbon) => {
+        ribbon.addEventListener('mousemove', (e) => {
+          const rect = ribbon.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width;
+          const direction = x > 0.5 ? 'to right' : 'to left';
+          ribbon.style.setProperty('--shimmer-dir', direction);
+        });
+      });
+
+      // Update shimmer animation to use dynamic direction
+      const styleSheet = document.createElement('style');
+      styleSheet.textContent = `
+        .slide-header::before {
+          animation-direction: var(--shimmer-dir, normal) !important;
+        }
+      `;
+      document.head.appendChild(styleSheet);
+
+      // ---------- Re-trigger animations on slide change ----------
+      const observer = new MutationObserver(() => {
+        document.querySelectorAll('.slide.active .behavior-tags').forEach((tags) => {
+          // Reset tags
+          tags.querySelectorAll('.tag').forEach((tag) => {
+            tag.classList.remove('visible');
+          });
+          // Re-animate with delay
+          setTimeout(() => {
+            animateTags(tags);
+          }, 300);
+        });
+      });
+
+      document.querySelectorAll('.slide').forEach((slide) => {
+        observer.observe(slide, { attributes: true, attributeFilter: ['class'] });
+      });
+
+    })();
+
     // =============================================
     // SLIDESHOW ENGINE + ENHANCEMENTS
     // =============================================
@@ -1033,7 +1218,7 @@
       resetAutoPlay();
       resetProgressBar();
 
-      const observer = new MutationObserver(() => {
+      const slideObserver = new MutationObserver(() => {
         setTimeout(() => {
           resetAnimations(currentIndex);
           resetProgressBar();
@@ -1041,7 +1226,7 @@
       });
 
       slides.forEach(slide => {
-        observer.observe(slide, { attributes: true, attributeFilter: ['class'] });
+        slideObserver.observe(slide, { attributes: true, attributeFilter: ['class'] });
       });
 
       const originalGoTo = goToSlide;
