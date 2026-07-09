@@ -43,7 +43,7 @@
       overflow: hidden;
     }
 
-    /* ========== FULLSCREEN TOGGLE – MOVED TOP-LEFT ========== */
+    /* ========== FULLSCREEN TOGGLE – TOP-LEFT ========== */
     .fullscreen-btn {
       position: absolute;
       top: 1.5vh;
@@ -113,7 +113,7 @@
       padding: 0;
     }
 
-    /* ========== HEADER – DARK NAVY (not grey) ========== */
+    /* ========== HEADER – DARK NAVY (fixed) ========== */
     .slide-header {
       background: #0b1a33;
       backdrop-filter: blur(16px) saturate(180%);
@@ -134,7 +134,7 @@
       margin: 0 0.5vw;
     }
 
-    /* ---- Subtle white shimmer (no gold) ---- */
+    /* ---- Subtle white shimmer ---- */
     .slide-header::before {
       content: '';
       position: absolute;
@@ -585,9 +585,10 @@
       50% { opacity: 1; }
     }
 
+    /* ========== NAVIGATION – MOVED UP (bottom: 8%) ========== */
     .nav-controls {
       position: absolute;
-      bottom: 3%;
+      bottom: 8%;
       left: 0;
       right: 0;
       display: flex;
@@ -603,14 +604,15 @@
       pointer-events: auto;
     }
 
+    /* ===== SMALLER ARROWS (3vh) ===== */
     .arrow {
       background: rgba(11, 26, 51, 0.5);
       color: #fff;
       border: 2px solid rgba(255, 255, 255, 0.1);
       border-radius: 50%;
-      width: 4vh;
-      height: 4vh;
-      font-size: 2.5vh;
+      width: 3vh;
+      height: 3vh;
+      font-size: 2vh;
       cursor: pointer;
       transition: all 0.3s ease;
       backdrop-filter: blur(8px);
@@ -630,14 +632,15 @@
       transform: scale(0.95);
     }
 
+    /* ===== SMALLER DOTS (1vh) ===== */
     .dots {
       display: flex;
       gap: 0.8vw;
     }
 
     .dot {
-      width: 1.2vh;
-      height: 1.2vh;
+      width: 1vh;
+      height: 1vh;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.2);
       border: none;
@@ -684,6 +687,9 @@
       .slide-header .logo-area h1 { font-size: 1.6vh; }
       .slide-header .logo-area img { height: 4vh; }
       .fullscreen-btn { font-size: 1.2vh; padding: 0.2vh 0.5vw; top: 1vh; left: 1vw; }
+      .nav-controls { bottom: 6%; }
+      .arrow { width: 2.5vh; height: 2.5vh; font-size: 1.5vh; }
+      .dot { width: 0.8vh; height: 0.8vh; }
     }
 
     /* ===== ADMIN LINK – ALWAYS VISIBLE ===== */
@@ -850,7 +856,6 @@
         }
       });
 
-      // ---- Keyboard shortcut backup: Ctrl+Shift+A ----
       document.addEventListener('keydown', function(e) {
         if (e.ctrlKey && e.shiftKey && (e.key === 'a' || e.key === 'A')) {
           e.preventDefault();
