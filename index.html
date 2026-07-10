@@ -6,7 +6,6 @@
   <title>Δ SIS Performance · Delta</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    /* (same CSS as before) */
     * {
       margin: 0;
       padding: 0;
@@ -485,8 +484,9 @@
       font-size: 2.6vh;
     }
 
+    /* ===== GREEN ROW STYLE (Current top1 style) ===== */
     .table-wrap tr.top1 td {
-      background: linear-gradient(90deg, rgba(27, 138, 78, 0.08), rgba(211, 47, 47, 0.04));
+      background: linear-gradient(90deg, rgba(27, 138, 78, 0.08), rgba(253, 185, 19, 0.04));
       position: relative;
       border-left: 4px solid #1b8a4e;
     }
@@ -518,6 +518,44 @@
     }
 
     @keyframes pulseGlowGreen {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.02); }
+    }
+
+    /* ===== AMBER ROW STYLE (Same as top1, but amber) ===== */
+    .table-wrap tr.amber td {
+      background: linear-gradient(90deg, rgba(230, 126, 34, 0.08), rgba(253, 185, 19, 0.04));
+      position: relative;
+      border-left: 4px solid #e67e22;
+    }
+
+    .table-wrap tr.amber .rank-col {
+      color: #e67e22;
+      font-weight: 900;
+      font-size: 2.8vh;
+    }
+
+    .table-wrap tr.amber .score-col {
+      color: #e67e22;
+      font-size: 3vh;
+      font-weight: 800;
+    }
+
+    .table-wrap tr.amber td::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: radial-gradient(ellipse at center, rgba(230, 126, 34, 0.15), transparent 70%);
+      z-index: -1;
+      border-radius: 4px;
+      animation: pulseAmber 2.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes pulseAmber {
       0%, 100% { opacity: 0.4; transform: scale(1); }
       50% { opacity: 1; transform: scale(1.02); }
     }
@@ -701,7 +739,7 @@
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=12" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=13" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags1">
@@ -731,7 +769,7 @@
         </div>
 
         <div class="slide-footer">
-          <img src="delta-logo.png?v=12" alt="Delta" class="footer-logo" />
+          <img src="delta-logo.png?v=13" alt="Delta" class="footer-logo" />
         </div>
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
       </div>
@@ -740,7 +778,7 @@
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=12" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=13" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags2">
@@ -770,7 +808,7 @@
         </div>
 
         <div class="slide-footer">
-          <img src="delta-logo.png?v=12" alt="Delta" class="footer-logo" />
+          <img src="delta-logo.png?v=13" alt="Delta" class="footer-logo" />
         </div>
         <div class="progress-container"><div class="progress-bar" id="progressBar2"></div></div>
       </div>
@@ -790,7 +828,7 @@
 
   <script>
     // =============================================
-    // ADMIN ACCESS – ALWAYS VISIBLE
+    // ADMIN ACCESS
     // =============================================
 
     (function() {
@@ -890,7 +928,7 @@
     })();
 
     // =============================================
-    // SLIDESHOW ENGINE – CLEAN LOOP
+    // SLIDESHOW ENGINE
     // =============================================
 
     (function() {
@@ -909,7 +947,6 @@
         return 5500;
       }
 
-      // Build dots
       slides.forEach((_, i) => {
         const dot = document.createElement('button');
         dot.className = 'dot' + (i === 0 ? ' active' : '');
@@ -919,7 +956,6 @@
       });
       const dots = dotsContainer.querySelectorAll('.dot');
 
-      // ---- Clean progress bar ----
       function startProgressBar(duration) {
         if (progressTimer) clearInterval(progressTimer);
         const startTime = Date.now();
@@ -935,7 +971,6 @@
         }, 50);
       }
 
-      // ---- Main slide change ----
       function goToSlide(index) {
         if (isTransitioning || index === currentIndex) return;
         if (index < 0) index = slides.length - 1;
@@ -943,23 +978,18 @@
 
         isTransitioning = true;
 
-        // Remove active from current
         slides[currentIndex].classList.remove('active');
         dots[currentIndex].classList.remove('active');
 
-        // Set new active
         currentIndex = index;
         slides[currentIndex].classList.add('active');
         dots[currentIndex].classList.add('active');
 
-        // Reset animations
         resetAnimations(currentIndex);
 
-        // Clear old timers
         if (timer) clearTimeout(timer);
         if (progressTimer) clearInterval(progressTimer);
 
-        // Start new timers
         const duration = getSlideDuration(slides[currentIndex]);
         startProgressBar(duration);
         timer = setTimeout(() => {
@@ -974,7 +1004,6 @@
       function nextSlide() { goToSlide(currentIndex + 1); }
       function prevSlide() { goToSlide(currentIndex - 1); }
 
-      // ---- Reset animations (row fade-in) ----
       function resetAnimations(index) {
         const activeSlide = slides[index];
         const tables = activeSlide.querySelectorAll('table');
@@ -1024,7 +1053,6 @@
         requestAnimationFrame(updateCounter);
       }
 
-      // ---- Event listeners ----
       document.getElementById('nextSlide').addEventListener('click', nextSlide);
       document.getElementById('prevSlide').addEventListener('click', prevSlide);
 
@@ -1046,7 +1074,9 @@
         if (e.key === 'ArrowLeft') prevSlide();
       });
 
-      // ---- Data loading ----
+      // ---- Data loading with conditional row styling ----
+      const TARGET_THRESHOLD = 86.30;
+
       function renderAgents(containerId, items) {
         const container = document.getElementById(containerId);
         if (!items || items.length === 0) {
@@ -1061,15 +1091,23 @@
             <th>TEAM LEADER</th>
             <th class="score-col">SIS</th>
           </tr></thead><tbody>`;
+
         doubled.forEach(item => {
-          const isFirst = item.rank === 1;
-          html += `<tr class="${isFirst ? 'top1' : ''}">
+          const scoreVal = parseFloat(item.score);
+          let rowClass = '';
+          if (scoreVal >= TARGET_THRESHOLD) {
+            rowClass = 'top1';
+          } else {
+            rowClass = 'amber';
+          }
+          html += `<tr class="${rowClass}">
             <td class="rank-col">${item.rank}</td>
             <td class="name-col">${item.name}</td>
             <td>${item.team || '—'}</td>
             <td class="score-col">${item.score}</td>
           </tr>`;
         });
+
         html += `</tbody></table>`;
         container.innerHTML = html;
       }
@@ -1094,8 +1132,14 @@
             <th class="score-col">SIS</th>
           </tr></thead><tbody>`;
         firstDoubled.forEach(item => {
-          const isFirst = item.rank === 1;
-          html += `<tr class="${isFirst ? 'top1' : ''}">
+          const scoreVal = parseFloat(item.score);
+          let rowClass = '';
+          if (scoreVal >= TARGET_THRESHOLD) {
+            rowClass = 'top1';
+          } else {
+            rowClass = 'amber';
+          }
+          html += `<tr class="${rowClass}">
             <td class="rank-col">${item.rank}</td>
             <td class="name-col">${item.name}</td>
             <td class="score-col">${item.score}</td>
@@ -1112,7 +1156,14 @@
             <th class="score-col">SIS</th>
           </tr></thead><tbody>`;
         secondDoubled.forEach(item => {
-          html += `<tr>
+          const scoreVal = parseFloat(item.score);
+          let rowClass = '';
+          if (scoreVal >= TARGET_THRESHOLD) {
+            rowClass = 'top1';
+          } else {
+            rowClass = 'amber';
+          }
+          html += `<tr class="${rowClass}">
             <td class="rank-col">${item.rank}</td>
             <td class="name-col">${item.name}</td>
             <td class="score-col">${item.score}</td>
@@ -1138,6 +1189,7 @@
             resetAnimations(currentIndex);
             const duration = getSlideDuration(slides[currentIndex]);
             startProgressBar(duration);
+            if (timer) clearTimeout(timer);
             timer = setTimeout(() => {
               nextSlide();
             }, duration);
@@ -1149,7 +1201,6 @@
         }
       }
 
-      // ---- Start ----
       loadData();
 
       const slideObserver = new MutationObserver(() => {
