@@ -399,8 +399,8 @@
 16	Saban, Mogamat Muaath	75.18%
 17	Ivewe Ncapayi	71.38%</textarea>
         <div class="portal-actions">
-          <button class="btn-sm" data-target="teams">👁 Preview Teams</button>
-          <button class="btn-sm green" data-reset="teams">↺ Reset Teams</button>
+          <button class="btn-sm" id="previewTeamsBtn">👁 Preview Teams</button>
+          <button class="btn-sm green" id="resetTeamsBtn">↺ Reset Teams</button>
         </div>
         <div class="portal-status" id="teamsStatus"></div>
       </div>
@@ -422,15 +422,15 @@
 9	Denica Williams	Fanti, Siphovuyo	100.00%
 10	Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%</textarea>
         <div class="portal-actions">
-          <button class="btn-sm" data-target="agents">👁 Preview Agents</button>
-          <button class="btn-sm green" data-reset="agents">↺ Reset Agents</button>
+          <button class="btn-sm" id="previewAgentsBtn">👁 Preview Agents</button>
+          <button class="btn-sm green" id="resetAgentsBtn">↺ Reset Agents</button>
         </div>
         <div class="portal-status" id="agentsStatus"></div>
       </div>
 
     </div>
 
-    <!-- ===== TOKEN & REPO PATH (auto-detected, now forces lowercase) ===== -->
+    <!-- ===== TOKEN & REPO PATH ===== -->
     <div class="token-section">
       <div class="token-input">
         <label for="tokenField">🔑 GitHub Token:</label>
@@ -438,11 +438,10 @@
         <span style="font-size:0.75rem; color:#6b7f96;">(stored only in your browser)</span>
       </div>
 
-      <!-- === REPO PATH (auto-filled, read-only, lowercase forced) === -->
       <div class="repo-input" id="repoSection">
         <label for="repoField">📁 Repo Path:</label>
         <input type="text" id="repoField" readonly style="background:#f0f3f8; cursor:default;" />
-        <span class="hint">Auto-detected from your URL (always lowercase) – no need to change</span>
+        <span class="hint">Auto-detected from your URL – no need to change</span>
       </div>
 
       <div class="publish-actions">
@@ -460,7 +459,7 @@
 
   <script>
     // =============================================
-    // ADMIN PAGE – AUTO REPO DETECTION (FORCES LOWERCASE)
+    // ADMIN PAGE – FIXED PREVIEW + PUBLISH
     // =============================================
 
     // ---- Auto-detect repo path and force lowercase ----
@@ -473,21 +472,18 @@
       } else if (host.endsWith('.github.dev')) {
         username = host.replace('.github.dev', '');
       } else {
-        // fallback: try to get from path
         const parts = path.split('/').filter(s => s.length > 0);
         if (parts.length >= 2) {
           username = parts[0];
-          var repo = parts[1].toLowerCase(); // force lowercase
+          var repo = parts[1].toLowerCase();
           return username + '/' + repo;
         }
         return null;
       }
-      // Extract repo name from path: /sis-leaderboard/admin.html -> sis-leaderboard
       const pathSegments = path.split('/').filter(s => s.length > 0);
       let repo = '';
       if (pathSegments.length > 0) {
-        // The first segment is the repo name
-        repo = pathSegments[0].toLowerCase(); // force lowercase
+        repo = pathSegments[0].toLowerCase();
       }
       if (username && repo) {
         return username + '/' + repo;
@@ -557,7 +553,7 @@
     }
 
     // ---- Preview Teams ----
-    document.querySelector('[data-target="teams"]').addEventListener('click', function() {
+    document.getElementById('previewTeamsBtn').addEventListener('click', function() {
       const raw = document.getElementById('teamsInput').value;
       try {
         const parsed = parseTeams(raw);
@@ -569,7 +565,7 @@
     });
 
     // ---- Preview Agents ----
-    document.querySelector('[data-target="agents"]').addEventListener('click', function() {
+    document.getElementById('previewAgentsBtn').addEventListener('click', function() {
       const raw = document.getElementById('agentsInput').value;
       try {
         const parsed = parseAgents(raw);
@@ -581,13 +577,13 @@
     });
 
     // ---- Reset Teams ----
-    document.querySelector('[data-reset="teams"]').addEventListener('click', function() {
+    document.getElementById('resetTeamsBtn').addEventListener('click', function() {
       document.getElementById('teamsInput').value = DEFAULT_TEAMS;
       showPortalStatus('teamsStatus', '↺ Reset to sample teams', 'success');
     });
 
     // ---- Reset Agents ----
-    document.querySelector('[data-reset="agents"]').addEventListener('click', function() {
+    document.getElementById('resetAgentsBtn').addEventListener('click', function() {
       document.getElementById('agentsInput').value = DEFAULT_AGENTS;
       showPortalStatus('agentsStatus', '↺ Reset to sample agents', 'success');
     });
@@ -612,14 +608,12 @@
         return;
       }
 
-      // Get repo path from the read-only field (already lowercase)
       let repoPath = document.getElementById('repoField').value.trim();
       if (!repoPath || repoPath.includes('Could not detect')) {
         showStatus('❌ Repo path not detected. Please open this page from your GitHub Pages URL.', 'error');
         return;
       }
 
-      // Remove trailing slash if present
       repoPath = repoPath.replace(/\/$/, '');
 
       const teamsRaw = document.getElementById('teamsInput').value;
@@ -688,9 +682,6 @@
       el.textContent = msg;
       el.className = type;
     }
-
-    // ---- Auto-detect and pre-fill repo path on load ----
-    // (already done above)
   </script>
 
 </body>
