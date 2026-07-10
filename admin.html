@@ -246,6 +246,8 @@
       border-radius: 30px;
       font-size: 0.85rem;
       background: #fff;
+      cursor: default;
+      background: #f0f3f8;
     }
 
     .repo-input .hint {
@@ -440,8 +442,8 @@
 
       <div class="repo-input" id="repoSection">
         <label for="repoField">📁 Repo Path:</label>
-        <input type="text" id="repoField" placeholder="e.g. username/repo-name" style="background:#fff;" />
-        <span class="hint">Auto-detected – edit only if it's wrong</span>
+        <input type="text" id="repoField" readonly />
+        <span class="hint">Auto-detected – you never need to type this</span>
       </div>
 
       <div class="publish-actions">
@@ -459,7 +461,7 @@
 
   <script>
     // =============================================
-    // ADMIN PAGE – MANUAL OVERRIDE FOR REPO PATH
+    // ADMIN PAGE – FULLY AUTOMATIC (no typing needed)
     // =============================================
 
     // ---- Auto-detect repo path and force lowercase ----
@@ -467,11 +469,13 @@
       const host = window.location.hostname;
       const path = window.location.pathname;
       let username = '';
+      
       if (host.endsWith('.github.io')) {
         username = host.replace('.github.io', '');
       } else if (host.endsWith('.github.dev')) {
         username = host.replace('.github.dev', '');
       } else {
+        // fallback: try to get from path
         const parts = path.split('/').filter(s => s.length > 0);
         if (parts.length >= 2) {
           username = parts[0];
@@ -480,24 +484,26 @@
         }
         return null;
       }
+      
       const pathSegments = path.split('/').filter(s => s.length > 0);
       let repo = '';
       if (pathSegments.length > 0) {
         repo = pathSegments[0].toLowerCase();
       }
+      
       if (username && repo) {
         return username + '/' + repo;
       }
       return null;
     }
 
-    // ---- Fill the repo field (editable for manual override) ----
+    // ---- Fill the repo field (read-only, automatic) ----
     const repoField = document.getElementById('repoField');
     const detected = detectRepoPath();
     if (detected) {
       repoField.value = detected;
     } else {
-      repoField.placeholder = 'Could not detect – enter manually (e.g. username/repo)';
+      repoField.value = 'naasifveroni-creator/sis-leaderboard';
     }
 
     const DEFAULT_TEAMS = `1	Sinazo Nogaga	88.18%
@@ -607,14 +613,13 @@
         return;
       }
 
-      // Get repo path from the editable field
+      // Get repo path from read-only field
       let repoPath = document.getElementById('repoField').value.trim();
       if (!repoPath) {
-        showStatus('❌ Please enter your repo path (e.g. username/repo-name).', 'error');
+        showStatus('❌ Repo path not detected. Please open this page from your GitHub Pages URL.', 'error');
         return;
       }
 
-      // Remove trailing slash if present
       repoPath = repoPath.replace(/\/$/, '');
 
       const teamsRaw = document.getElementById('teamsInput').value;
