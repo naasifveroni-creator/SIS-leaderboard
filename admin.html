@@ -82,7 +82,6 @@
       color: #b71c1c;
     }
 
-    /* ---- NEW: Date section ---- */
     .date-section {
       display: flex;
       flex-wrap: wrap;
@@ -116,6 +115,40 @@
       font-size: 0.75rem;
       color: #6b7f96;
       margin-left: 0.5rem;
+    }
+
+    /* ===== NEW: ALERT TOGGLES ===== */
+    .alert-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem 2.5rem;
+      align-items: center;
+      padding: 0.8rem 1.2rem;
+      background: #f5f8fe;
+      border-radius: 12px;
+      border: 1px solid #e9edf4;
+      margin-bottom: 1.5rem;
+    }
+
+    .alert-section .alert-label {
+      font-weight: 600;
+      color: #0b1a33;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .alert-section input[type="checkbox"] {
+      width: 1.2rem;
+      height: 1.2rem;
+      accent-color: #d32f2f;
+      cursor: pointer;
+    }
+
+    .alert-section .alert-hint {
+      font-size: 0.75rem;
+      color: #6b7f96;
     }
 
     .portal-grid {
@@ -381,6 +414,11 @@
         flex-direction: column;
         align-items: stretch;
       }
+      .alert-section {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+      }
     }
 
     @media (max-width: 600px) {
@@ -414,7 +452,7 @@
       <span class="warning">⚠️ You need a GitHub token with <code>repo</code> scope to publish.</span>
     </div>
 
-    <!-- ===== NEW: DATE PICKER ===== -->
+    <!-- ===== DATE PICKER ===== -->
     <div class="date-section">
       <label>
         📅 Week Start
@@ -425,6 +463,21 @@
         <input type="date" id="weekEnd" />
       </label>
       <span class="date-hint">Auto‑fills to current week – change if needed</span>
+    </div>
+
+    <!-- ===== ALERT TOGGLES ===== -->
+    <div class="alert-section" id="alertSection">
+      <span class="alert-label">🔔 Alerts</span>
+      <label>
+        <input type="checkbox" id="alertFlash" checked /> 💡 100% Flash
+      </label>
+      <label>
+        <input type="checkbox" id="alertPopup" checked /> 🔥 New #1 Pop‑up
+      </label>
+      <label>
+        <input type="checkbox" id="alertBanner" checked /> 🎉 Milestone Banner
+      </label>
+      <span class="alert-hint">Saved automatically in your browser</span>
     </div>
 
     <!-- ===== TWO PORTALS ===== -->
@@ -514,11 +567,12 @@
 
   <script>
     // =============================================
-    // ADMIN PAGE – WITH DATE PICKER
+    // ADMIN PAGE – WITH ALERT TOGGLES
     // =============================================
 
-    // ---- HARDCODED REPO PATH ----
+    // ---- Hardcoded repo path ----
     const REPO_PATH = 'naasifveroni-creator/sis-leaderboard';
+    document.getElementById('repoField').value = REPO_PATH;
 
     // ---- DOM refs ----
     const weekStartInput = document.getElementById('weekStart');
@@ -527,8 +581,8 @@
     // ---- Auto-fill current week (Monday – Sunday) ----
     function setCurrentWeek() {
       const now = new Date();
-      const day = now.getDay(); // 0=Sun, 1=Mon, ...
-      const diffToMonday = (day === 0 ? 6 : day - 1); // days to go back to Monday
+      const day = now.getDay();
+      const diffToMonday = (day === 0 ? 6 : day - 1);
       const monday = new Date(now);
       monday.setDate(now.getDate() - diffToMonday);
       const sunday = new Date(monday);
@@ -547,15 +601,42 @@
 
     setCurrentWeek();
 
-    // ---- Format date for display ----
     function formatDisplayDate(dateStr) {
       const parts = dateStr.split('-');
       const date = new Date(parts[0], parts[1] - 1, parts[2]);
       return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     }
 
-    // ---- Fill the repo field ----
-    document.getElementById('repoField').value = REPO_PATH;
+    // ---- Alert toggles ----
+    function saveAlertSettings() {
+      const settings = {
+        flash: document.getElementById('alertFlash').checked,
+        popup: document.getElementById('alertPopup').checked,
+        banner: document.getElementById('alertBanner').checked,
+      };
+      try {
+        localStorage.setItem('deltaAlertSettings', JSON.stringify(settings));
+      } catch (_) {}
+    }
+
+    function loadAlertSettings() {
+      try {
+        const raw = localStorage.getItem('deltaAlertSettings');
+        if (raw) {
+          const settings = JSON.parse(raw);
+          document.getElementById('alertFlash').checked = settings.flash !== undefined ? settings.flash : true;
+          document.getElementById('alertPopup').checked = settings.popup !== undefined ? settings.popup : true;
+          document.getElementById('alertBanner').checked = settings.banner !== undefined ? settings.banner : true;
+        }
+      } catch (_) {}
+    }
+
+    // ---- Save settings on change ----
+    document.querySelectorAll('#alertSection input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', saveAlertSettings);
+    });
+
+    loadAlertSettings();
 
     // ---- Helpers ----
     function $(id) { return document.getElementById(id); }
@@ -670,7 +751,6 @@
         return;
       }
 
-      // ---- Get the dates from the picker ----
       const start = weekStartInput.value;
       const end = weekEndInput.value;
       if (!start || !end) {
@@ -751,7 +831,7 @@
       }
     });
 
-    console.log('✅ Admin page loaded with date picker.');
+    console.log('✅ Admin page loaded with date picker and alert toggles.');
   </script>
 
 </body>
