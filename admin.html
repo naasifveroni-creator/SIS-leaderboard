@@ -440,8 +440,8 @@
 
       <div class="repo-input" id="repoSection">
         <label for="repoField">📁 Repo Path:</label>
-        <input type="text" id="repoField" readonly style="background:#f0f3f8; cursor:default;" />
-        <span class="hint">Auto-detected from your URL – no need to change</span>
+        <input type="text" id="repoField" placeholder="e.g. username/repo-name" style="background:#fff;" />
+        <span class="hint">Auto-detected – edit only if it's wrong</span>
       </div>
 
       <div class="publish-actions">
@@ -459,7 +459,7 @@
 
   <script>
     // =============================================
-    // ADMIN PAGE – FIXED PREVIEW + PUBLISH
+    // ADMIN PAGE – MANUAL OVERRIDE FOR REPO PATH
     // =============================================
 
     // ---- Auto-detect repo path and force lowercase ----
@@ -491,14 +491,13 @@
       return null;
     }
 
-    // ---- Fill the repo field ----
+    // ---- Fill the repo field (editable for manual override) ----
     const repoField = document.getElementById('repoField');
     const detected = detectRepoPath();
     if (detected) {
       repoField.value = detected;
     } else {
-      repoField.value = 'Could not detect – open from GitHub Pages URL';
-      repoField.style.color = '#a13a3a';
+      repoField.placeholder = 'Could not detect – enter manually (e.g. username/repo)';
     }
 
     const DEFAULT_TEAMS = `1	Sinazo Nogaga	88.18%
@@ -608,12 +607,14 @@
         return;
       }
 
+      // Get repo path from the editable field
       let repoPath = document.getElementById('repoField').value.trim();
-      if (!repoPath || repoPath.includes('Could not detect')) {
-        showStatus('❌ Repo path not detected. Please open this page from your GitHub Pages URL.', 'error');
+      if (!repoPath) {
+        showStatus('❌ Please enter your repo path (e.g. username/repo-name).', 'error');
         return;
       }
 
+      // Remove trailing slash if present
       repoPath = repoPath.replace(/\/$/, '');
 
       const teamsRaw = document.getElementById('teamsInput').value;
@@ -645,7 +646,10 @@
         const headRes = await fetch(fileUrl, {
           headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
         });
-        if (!headRes.ok) throw new Error('Could not fetch data.json. Check token and repo path.');
+        if (!headRes.ok) {
+          const err = await headRes.json();
+          throw new Error(err.message || 'Could not fetch data.json. Check token and repo path.');
+        }
         const fileMeta = await headRes.json();
         const sha = fileMeta.sha;
 
