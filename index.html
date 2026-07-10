@@ -104,7 +104,6 @@
       border-color: rgba(255, 215, 0, 0.15);
     }
 
-    /* ========== SLIDE BASE ========== */
     .slide {
       position: absolute;
       top: 0;
@@ -527,32 +526,16 @@
     }
 
     .trend-arrow.up {
-      color: #fdb913;
+      color: #2ecc71; /* bright green */
     }
 
     .trend-arrow.down {
-      color: #8a9bb0;
+      color: #d32f2f; /* Delta red */
     }
 
     .trend-arrow.neutral {
       opacity: 0;
       transform: translateX(0);
-    }
-
-    .table-wrap tr.top1 .score-col .trend-arrow.up {
-      color: #fdb913;
-    }
-
-    .table-wrap tr.top1 .score-col .trend-arrow.down {
-      color: #8a9bb0;
-    }
-
-    .table-wrap tr.amber .score-col .trend-arrow.up {
-      color: #fdb913;
-    }
-
-    .table-wrap tr.amber .score-col .trend-arrow.down {
-      color: #8a9bb0;
     }
 
     /* ---- GREEN ROW ---- */
@@ -881,7 +864,7 @@
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=19" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=20" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags1">
@@ -935,7 +918,7 @@
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=19" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=20" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags2">
@@ -1199,7 +1182,6 @@
               if (scoreCell && row.dataset.targetScore) {
                 animateCounter(scoreCell, row.dataset.targetScore);
               }
-              // Show trend arrows after row appears
               const arrow = row.querySelector('.trend-arrow');
               if (arrow) {
                 setTimeout(() => {
@@ -1293,7 +1275,6 @@
             rowClass = 'amber';
           }
 
-          // Find previous score by name
           let prevScore = undefined;
           if (previousData && previousData.agents) {
             const prevItem = previousData.agents.find(a => a.name === item.name);
@@ -1365,7 +1346,6 @@
         container.innerHTML = html;
       }
 
-      // ---- Store and compare data ----
       function storeSnapshot(data) {
         try {
           localStorage.setItem('deltaPreviousData', JSON.stringify(data));
@@ -1396,7 +1376,6 @@
           renderAgents('agentTableInner', data.agents, prevData);
           renderTeams('teamTableWrap', data.teams, prevData);
 
-          // Store current data for future comparison
           storeSnapshot(data);
 
           setTimeout(() => {
@@ -1417,7 +1396,6 @@
 
       loadData();
 
-      // ---- Auto-refresh data (every 60 seconds) ----
       setInterval(loadData, 60000);
 
       const slideObserver = new MutationObserver(() => {
