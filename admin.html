@@ -82,7 +82,6 @@
       color: #b71c1c;
     }
 
-    /* ===== TWO PORTALS ===== */
     .portal-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -193,7 +192,6 @@
       display: block;
     }
 
-    /* ===== TOKEN & PUBLISH ===== */
     .token-section {
       margin: 1.5rem 0 1rem;
       padding-top: 1rem;
@@ -220,6 +218,39 @@
       border: 1px solid #d0d7e2;
       border-radius: 30px;
       font-size: 0.85rem;
+    }
+
+    .repo-input {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+      margin-top: 0.5rem;
+      padding: 0.5rem 0.8rem;
+      background: #f5f8fe;
+      border-radius: 10px;
+      border: 1px solid #e9edf4;
+    }
+
+    .repo-input label {
+      font-weight: 600;
+      color: #0b1a33;
+      font-size: 0.9rem;
+    }
+
+    .repo-input input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.4rem 0.8rem;
+      border: 1px solid #d0d7e2;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      background: #fff;
+    }
+
+    .repo-input .hint {
+      font-size: 0.7rem;
+      color: #6b7f96;
     }
 
     .publish-actions {
@@ -344,7 +375,6 @@
     <!-- ===== TWO PORTALS ===== -->
     <div class="portal-grid">
 
-      <!-- PORTAL 1: TEAMS -->
       <div class="portal" id="teamsPortal">
         <div class="portal-title">
           🏆 Top Performing Teams
@@ -375,7 +405,6 @@
         <div class="portal-status" id="teamsStatus"></div>
       </div>
 
-      <!-- PORTAL 2: AGENTS -->
       <div class="portal" id="agentsPortal">
         <div class="portal-title">
           ⭐ Top Performing Agents
@@ -401,12 +430,19 @@
 
     </div>
 
-    <!-- ===== TOKEN & PUBLISH ===== -->
+    <!-- ===== TOKEN & REPO PATH ===== -->
     <div class="token-section">
       <div class="token-input">
         <label for="tokenField">🔑 GitHub Token:</label>
         <input type="password" id="tokenField" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
         <span style="font-size:0.75rem; color:#6b7f96;">(stored only in your browser)</span>
+      </div>
+
+      <!-- === REPO PATH (manual override) === -->
+      <div class="repo-input" id="repoSection">
+        <label for="repoField">📁 Repo Path:</label>
+        <input type="text" id="repoField" placeholder="username/repo-name (e.g. naasifveroni-creator/sis-leaderboard)" />
+        <span class="hint">Your GitHub username / repository name</span>
       </div>
 
       <div class="publish-actions">
@@ -424,7 +460,7 @@
 
   <script>
     // =============================================
-    // TWO PORTALS – ADMIN PAGE
+    // ADMIN PAGE – TWO PORTALS + REPO PATH FIX
     // =============================================
 
     const DEFAULT_TEAMS = `1	Sinazo Nogaga	88.18%
@@ -526,13 +562,30 @@
       }
     });
 
-    // ---- Publish Both ----
+    // ---- Publish Both (with manual repo path) ----
     document.getElementById('publishBtn').addEventListener('click', async function() {
       const token = document.getElementById('tokenField').value.trim();
       if (!token) {
         showStatus('❌ Please enter your GitHub token.', 'error');
         return;
       }
+
+      // Get repo path from input (manual override)
+      let repoPath = document.getElementById('repoField').value.trim();
+      if (!repoPath) {
+        // Fallback: try to auto-detect from URL
+        const autoPath = window.location.pathname.split('/').slice(1, 3).join('/');
+        if (autoPath && autoPath.includes('/')) {
+          repoPath = autoPath;
+          document.getElementById('repoField').value = autoPath;
+        } else {
+          showStatus('❌ Please enter your repo path (e.g. username/repo-name).', 'error');
+          return;
+        }
+      }
+
+      // Remove trailing slash if present
+      repoPath = repoPath.replace(/\/$/, '');
 
       const teamsRaw = document.getElementById('teamsInput').value;
       const agentsRaw = document.getElementById('agentsInput').value;
@@ -557,12 +610,6 @@
       const week = 'Week of ' + new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       const newData = { week, teams, agents };
       const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
-
-      const repoPath = window.location.pathname.split('/').slice(1, 3).join('/');
-      if (!repoPath || repoPath.includes('admin.html')) {
-        showStatus('❌ Could not detect repo. Open this page from your GitHub Pages URL.', 'error');
-        return;
-      }
 
       try {
         const fileUrl = `https://api.github.com/repos/${repoPath}/contents/data.json`;
@@ -606,6 +653,14 @@
       el.textContent = msg;
       el.className = type;
     }
+
+    // ---- Auto-detect and pre-fill repo path on load ----
+    (function() {
+      const autoPath = window.location.pathname.split('/').slice(1, 3).join('/');
+      if (autoPath && autoPath.includes('/')) {
+        document.getElementById('repoField').value = autoPath;
+      }
+    })();
   </script>
 
 </body>
