@@ -6,7 +6,7 @@
   <title>Δ SIS Performance · Delta</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    /* (same CSS as before, but with updated positions for admin and fullscreen) */
+    /* (same CSS as before) */
     * {
       margin: 0;
       padding: 0;
@@ -44,7 +44,6 @@
       overflow: hidden;
     }
 
-    /* ---- FULLSCREEN TOGGLE – BOTTOM RIGHT (far right) ---- */
     .fullscreen-btn {
       position: absolute;
       bottom: 2vh;
@@ -78,7 +77,6 @@
       line-height: 1;
     }
 
-    /* ---- ADMIN ACCESS – next to fullscreen, on the left ---- */
     #adminAccess {
       position: fixed;
       bottom: 2vh;
@@ -107,7 +105,6 @@
       border-color: rgba(255, 215, 0, 0.15);
     }
 
-    /* ---- rest of the styles (same as before) ---- */
     .slide {
       position: absolute;
       top: 0;
@@ -704,7 +701,7 @@
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=11" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=12" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags1">
@@ -734,7 +731,7 @@
         </div>
 
         <div class="slide-footer">
-          <img src="delta-logo.png?v=11" alt="Delta" class="footer-logo" />
+          <img src="delta-logo.png?v=12" alt="Delta" class="footer-logo" />
         </div>
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
       </div>
@@ -743,7 +740,7 @@
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=11" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=12" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags2">
@@ -773,7 +770,7 @@
         </div>
 
         <div class="slide-footer">
-          <img src="delta-logo.png?v=11" alt="Delta" class="footer-logo" />
+          <img src="delta-logo.png?v=12" alt="Delta" class="footer-logo" />
         </div>
         <div class="progress-container"><div class="progress-bar" id="progressBar2"></div></div>
       </div>
@@ -787,7 +784,6 @@
     </div>
   </div>
 
-  <!-- ===== ADMIN ACCESS – now positioned to the left of fullscreen ===== -->
   <div id="adminAccess">
     <a href="#" id="adminLink">🔐 Admin</a>
   </div>
@@ -894,7 +890,7 @@
     })();
 
     // =============================================
-    // SLIDESHOW ENGINE – LOOP FIXED
+    // SLIDESHOW ENGINE – CLEAN LOOP
     // =============================================
 
     (function() {
@@ -903,8 +899,8 @@
       const progressBars = document.querySelectorAll('.progress-bar');
 
       let currentIndex = 0;
-      let autoPlayInterval = null;
-      let progressInterval = null;
+      let timer = null;
+      let progressTimer = null;
       let isTransitioning = false;
 
       function getSlideDuration(slide) {
@@ -913,6 +909,7 @@
         return 5500;
       }
 
+      // Build dots
       slides.forEach((_, i) => {
         const dot = document.createElement('button');
         dot.className = 'dot' + (i === 0 ? ' active' : '');
@@ -922,6 +919,23 @@
       });
       const dots = dotsContainer.querySelectorAll('.dot');
 
+      // ---- Clean progress bar ----
+      function startProgressBar(duration) {
+        if (progressTimer) clearInterval(progressTimer);
+        const startTime = Date.now();
+        progressBars.forEach(bar => { bar.style.width = '0%'; });
+        progressTimer = setInterval(() => {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min((elapsed / duration) * 100, 100);
+          progressBars.forEach(bar => { bar.style.width = progress + '%'; });
+          if (progress >= 100) {
+            clearInterval(progressTimer);
+            progressTimer = null;
+          }
+        }, 50);
+      }
+
+      // ---- Main slide change ----
       function goToSlide(index) {
         if (isTransitioning || index === currentIndex) return;
         if (index < 0) index = slides.length - 1;
@@ -929,58 +943,38 @@
 
         isTransitioning = true;
 
+        // Remove active from current
         slides[currentIndex].classList.remove('active');
         dots[currentIndex].classList.remove('active');
 
+        // Set new active
         currentIndex = index;
-
         slides[currentIndex].classList.add('active');
         dots[currentIndex].classList.add('active');
 
+        // Reset animations
         resetAnimations(currentIndex);
-        resetProgressBar();
+
+        // Clear old timers
+        if (timer) clearTimeout(timer);
+        if (progressTimer) clearInterval(progressTimer);
+
+        // Start new timers
+        const duration = getSlideDuration(slides[currentIndex]);
+        startProgressBar(duration);
+        timer = setTimeout(() => {
+          nextSlide();
+        }, duration);
 
         setTimeout(() => {
           isTransitioning = false;
         }, 800);
-
-        resetAutoPlay();
       }
 
       function nextSlide() { goToSlide(currentIndex + 1); }
       function prevSlide() { goToSlide(currentIndex - 1); }
 
-      function resetAutoPlay() {
-        if (autoPlayInterval) {
-          clearInterval(autoPlayInterval);
-          autoPlayInterval = null;
-        }
-        const duration = getSlideDuration(slides[currentIndex]);
-        autoPlayInterval = setInterval(nextSlide, duration);
-        resetProgressBar(duration);
-      }
-
-      function resetProgressBar(duration) {
-        if (progressInterval) {
-          clearInterval(progressInterval);
-          progressInterval = null;
-        }
-        const autoDelay = duration || getSlideDuration(slides[currentIndex]);
-        progressBars.forEach(bar => { bar.style.width = '0%'; });
-        let startTime = Date.now();
-        progressInterval = setInterval(() => {
-          const elapsed = Date.now() - startTime;
-          const progress = Math.min((elapsed / autoDelay) * 100, 100);
-          progressBars.forEach(bar => { bar.style.width = progress + '%'; });
-          if (progress >= 100) {
-            clearInterval(progressInterval);
-            progressInterval = null;
-            // ===== LOOP FIX: trigger next slide when progress bar completes =====
-            nextSlide();
-          }
-        }, 50);
-      }
-
+      // ---- Reset animations (row fade-in) ----
       function resetAnimations(index) {
         const activeSlide = slides[index];
         const tables = activeSlide.querySelectorAll('table');
@@ -1030,26 +1024,29 @@
         requestAnimationFrame(updateCounter);
       }
 
+      // ---- Event listeners ----
       document.getElementById('nextSlide').addEventListener('click', nextSlide);
       document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
       const wrapper = document.getElementById('slidesWrapper');
       wrapper.addEventListener('mouseenter', () => {
-        if (autoPlayInterval) {
-          clearInterval(autoPlayInterval);
-          autoPlayInterval = null;
-        }
-        if (progressInterval) {
-          clearInterval(progressInterval);
-          progressInterval = null;
-        }
+        if (timer) clearTimeout(timer);
+        if (progressTimer) clearInterval(progressTimer);
       });
-      wrapper.addEventListener('mouseleave', resetAutoPlay);
+      wrapper.addEventListener('mouseleave', () => {
+        const duration = getSlideDuration(slides[currentIndex]);
+        startProgressBar(duration);
+        timer = setTimeout(() => {
+          nextSlide();
+        }, duration);
+      });
+
       document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight') nextSlide();
         if (e.key === 'ArrowLeft') prevSlide();
       });
 
-      // ---- Data loading with duplicate rows for seamless scroll ----
+      // ---- Data loading ----
       function renderAgents(containerId, items) {
         const container = document.getElementById(containerId);
         if (!items || items.length === 0) {
@@ -1139,7 +1136,11 @@
           renderTeams('teamTableWrap', data.teams);
           setTimeout(() => {
             resetAnimations(currentIndex);
-            resetProgressBar();
+            const duration = getSlideDuration(slides[currentIndex]);
+            startProgressBar(duration);
+            timer = setTimeout(() => {
+              nextSlide();
+            }, duration);
           }, 300);
         } catch (e) {
           document.getElementById('teamTableWrap').innerHTML =
@@ -1148,16 +1149,21 @@
         }
       }
 
+      // ---- Start ----
       loadData();
-      resetAutoPlay();
-      resetProgressBar();
 
       const slideObserver = new MutationObserver(() => {
         setTimeout(() => {
           resetAnimations(currentIndex);
-          resetProgressBar();
+          const duration = getSlideDuration(slides[currentIndex]);
+          startProgressBar(duration);
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(() => {
+            nextSlide();
+          }, duration);
         }, 100);
       });
+
       slides.forEach(slide => {
         slideObserver.observe(slide, { attributes: true, attributeFilter: ['class'] });
       });
@@ -1167,7 +1173,12 @@
         originalGoTo(index);
         setTimeout(() => {
           resetAnimations(currentIndex);
-          resetProgressBar();
+          const duration = getSlideDuration(slides[currentIndex]);
+          startProgressBar(duration);
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(() => {
+            nextSlide();
+          }, duration);
         }, 100);
       };
     })();
