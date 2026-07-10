@@ -44,7 +44,6 @@
       overflow: hidden;
     }
 
-    /* ========== FULLSCREEN TOGGLE ========== */
     .fullscreen-btn {
       position: absolute;
       bottom: 2vh;
@@ -78,7 +77,6 @@
       line-height: 1;
     }
 
-    /* ========== ADMIN ACCESS ========== */
     #adminAccess {
       position: fixed;
       bottom: 2vh;
@@ -107,6 +105,88 @@
       border-color: rgba(255, 215, 0, 0.15);
     }
 
+    /* ========== ALERT OVERLAYS ========== */
+    .alert-flash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 200;
+      background: radial-gradient(circle, rgba(27, 138, 78, 0.4), rgba(253, 185, 19, 0.2));
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      border-radius: 0;
+    }
+
+    .alert-flash.active {
+      opacity: 1;
+    }
+
+    .alert-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      z-index: 210;
+      background: rgba(11, 26, 51, 0.85);
+      backdrop-filter: blur(16px);
+      padding: 2vh 4vw;
+      border-radius: 20px;
+      border: 2px solid #fdb913;
+      box-shadow: 0 0 60px rgba(253, 185, 19, 0.3);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+      text-align: center;
+    }
+
+    .alert-popup.active {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .alert-popup .popup-title {
+      font-size: 4vh;
+      font-weight: 800;
+      color: #fdb913;
+    }
+
+    .alert-popup .popup-sub {
+      font-size: 2vh;
+      color: #fff;
+      opacity: 0.7;
+      margin-top: 0.5vh;
+    }
+
+    .alert-banner {
+      position: fixed;
+      top: 10vh;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 205;
+      background: rgba(11, 26, 51, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 1.2vh 3vw;
+      border-radius: 60px;
+      border: 1px solid rgba(253, 185, 19, 0.3);
+      box-shadow: 0 0 40px rgba(253, 185, 19, 0.15);
+      opacity: 0;
+      transition: all 0.5s ease;
+      pointer-events: none;
+      text-align: center;
+      font-size: 2.8vh;
+      font-weight: 700;
+      color: #fdb913;
+      white-space: nowrap;
+    }
+
+    .alert-banner.active {
+      opacity: 1;
+      top: 12vh;
+    }
+
     /* ========== SLIDE BASE ========== */
     .slide {
       position: absolute;
@@ -130,7 +210,6 @@
       transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s ease;
     }
 
-    /* ========== SLIDE 0 & 1 ========== */
     #slide0 {
       background: url('slide-title.webp.jpg') center/cover no-repeat, #0b1a33;
     }
@@ -139,14 +218,12 @@
       background: url('slide-data.webp.jpg') center/cover no-repeat, #0b1a33;
     }
 
-    /* ========== SLIDE 2 & 3 ========== */
     #slide2,
     #slide3 {
       background: linear-gradient(145deg, #f0f3f8 0%, #e8ecf4 100%);
       padding: 0;
     }
 
-    /* ---------- HEADER – ORIGINAL NAVY (solid) ---------- */
     .slide-header {
       background: #0b1a33;
       backdrop-filter: blur(16px) saturate(180%);
@@ -341,7 +418,6 @@
       font-size: 2vh;
     }
 
-    /* ========== TABLE CONTAINER ========== */
     .table-wrap {
       flex: 1;
       overflow: hidden;
@@ -355,7 +431,6 @@
       position: relative;
     }
 
-    /* ---- Glass-morphism table container ---- */
     .table-wrap::before {
       content: '';
       position: absolute;
@@ -407,7 +482,6 @@
       backdrop-filter: blur(4px);
     }
 
-    /* ---- Scrolling container ---- */
     .scroll-container {
       flex: 1;
       overflow: hidden;
@@ -434,7 +508,6 @@
       100% { transform: translateY(-50%); }
     }
 
-    /* ---- Glass-morphism table (Teams) ---- */
     .table-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -464,7 +537,6 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    /* ---- Table styles ---- */
     .table-wrap th {
       background: linear-gradient(135deg, #0b1a33 0%, #1a3050 100%);
       color: #fff;
@@ -516,7 +588,6 @@
       font-size: 2.6vh;
     }
 
-    /* ---- GREEN ROW (Top performer style) ---- */
     .table-wrap tr.top1 td {
       background: linear-gradient(90deg, rgba(27, 138, 78, 0.12), rgba(211, 47, 47, 0.06));
       position: relative;
@@ -554,7 +625,6 @@
       50% { opacity: 1; transform: scale(1.02); }
     }
 
-    /* ---- AMBER ROW ---- */
     .table-wrap tr.amber td {
       background: linear-gradient(90deg, rgba(230, 126, 34, 0.12), rgba(211, 47, 47, 0.06));
       position: relative;
@@ -602,7 +672,6 @@
       font-size: 2vh;
     }
 
-    /* ========== FOOTER – SKYWRITING ========== */
     .slide-footer {
       flex-shrink: 0;
       min-height: 14vh;
@@ -690,7 +759,6 @@
       100% { left: calc(100% + 20px); }
     }
 
-    /* ========== PROGRESS BAR ========== */
     .progress-container {
       position: absolute;
       bottom: 0;
@@ -716,7 +784,6 @@
       50% { opacity: 1; }
     }
 
-    /* ========== NAVIGATION ========== */
     .nav-controls {
       position: absolute;
       bottom: 1%;
@@ -780,7 +847,6 @@
       box-shadow: 0 0 20px rgba(211, 47, 47, 0.5);
     }
 
-    /* ========== RESPONSIVE ========== */
     @media (max-aspect-ratio: 16/9) {
       .slide-header .logo-area h1 { font-size: 2vh; }
       .slide-header .logo-area img { height: 6vh; }
@@ -793,6 +859,8 @@
       .spray-text { font-size: 6vh; letter-spacing: 1vw; }
       .plane { width: 55px; height: 40px; }
       .slide-footer { min-height: 12vh; }
+      .alert-popup .popup-title { font-size: 3vh; }
+      .alert-banner { font-size: 2vh; }
     }
 
     @media (max-aspect-ratio: 4/3) {
@@ -819,6 +887,8 @@
       .spray-text { font-size: 4vh; letter-spacing: 2vw; }
       .plane { width: 30px; height: 22px; left: -40px; }
       .slide-footer { min-height: 8vh; }
+      .alert-popup .popup-title { font-size: 2.5vh; }
+      .alert-banner { font-size: 1.6vh; white-space: normal; padding: 1vh 2vw; }
     }
   </style>
 </head>
@@ -830,6 +900,14 @@
       <button class="fullscreen-btn" id="fullscreenBtn">
         <span class="icon">⛶</span> FULL
       </button>
+
+      <!-- ========== ALERT ELEMENTS ========== -->
+      <div class="alert-flash" id="alertFlash"></div>
+      <div class="alert-popup" id="alertPopup">
+        <div class="popup-title" id="popupTitle">🔥 New Top Performer!</div>
+        <div class="popup-sub" id="popupSub"></div>
+      </div>
+      <div class="alert-banner" id="alertBanner"></div>
 
       <div class="slide active" id="slide0" data-index="0" data-slide="1">
         <div class="slide-counter"><span class="current">1</span> / 4</div>
@@ -843,7 +921,7 @@
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=17" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=18" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags1">
@@ -897,7 +975,7 @@
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=17" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=18" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags2">
@@ -1023,6 +1101,121 @@
           btn.innerHTML = '<span class="icon">⛶</span> FULL';
         }
       });
+    })();
+
+    // =============================================
+    // ALERTS ENGINE
+    // =============================================
+
+    (function() {
+      // ---- DOM refs ----
+      const flash = document.getElementById('alertFlash');
+      const popup = document.getElementById('alertPopup');
+      const popupTitle = document.getElementById('popupTitle');
+      const popupSub = document.getElementById('popupSub');
+      const banner = document.getElementById('alertBanner');
+
+      // ---- State ----
+      let previousTopPerformer = null;
+      let alertTimers = [];
+
+      function clearTimers() {
+        alertTimers.forEach(t => clearTimeout(t));
+        alertTimers = [];
+      }
+
+      function getAlertSettings() {
+        try {
+          const raw = localStorage.getItem('deltaAlertSettings');
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            return {
+              flash: parsed.flash !== undefined ? parsed.flash : true,
+              popup: parsed.popup !== undefined ? parsed.popup : true,
+              banner: parsed.banner !== undefined ? parsed.banner : true,
+            };
+          }
+        } catch (_) {}
+        return { flash: true, popup: true, banner: true };
+      }
+
+      // ---- Trigger Flash ----
+      function triggerFlash() {
+        const settings = getAlertSettings();
+        if (!settings.flash) return;
+        clearTimers();
+        flash.classList.add('active');
+        const t = setTimeout(() => {
+          flash.classList.remove('active');
+        }, 800);
+        alertTimers.push(t);
+      }
+
+      // ---- Trigger Popup ----
+      function triggerPopup(title, sub) {
+        const settings = getAlertSettings();
+        if (!settings.popup) return;
+        clearTimers();
+        popupTitle.textContent = title;
+        popupSub.textContent = sub || '';
+        popup.classList.add('active');
+        const t = setTimeout(() => {
+          popup.classList.remove('active');
+        }, 2500);
+        alertTimers.push(t);
+      }
+
+      // ---- Trigger Banner ----
+      function triggerBanner(message) {
+        const settings = getAlertSettings();
+        if (!settings.banner) return;
+        clearTimers();
+        banner.textContent = message;
+        banner.classList.add('active');
+        const t = setTimeout(() => {
+          banner.classList.remove('active');
+        }, 4000);
+        alertTimers.push(t);
+      }
+
+      // ---- Check for alerts ----
+      function checkAlerts(agents) {
+        if (!agents || agents.length === 0) return;
+
+        // 1. Check for 100% flash
+        const hasPerfect = agents.some(a => parseFloat(a.score) === 100.00);
+        if (hasPerfect) {
+          triggerFlash();
+        }
+
+        // 2. Check for new #1
+        const top = agents[0];
+        if (top && top.name) {
+          if (previousTopPerformer && previousTopPerformer !== top.name) {
+            triggerPopup('🔥 New Top Performer!', top.name + ' takes the lead!');
+          }
+          previousTopPerformer = top.name;
+        }
+
+        // 3. Check for 5+ agents at 100%
+        const perfectCount = agents.filter(a => parseFloat(a.score) === 100.00).length;
+        if (perfectCount >= 5) {
+          triggerBanner(`🎉 ${perfectCount} agents hit 100% this week!`);
+        } else if (perfectCount >= 3) {
+          triggerBanner(`🔥 ${perfectCount} agents at 100%!`);
+        }
+      }
+
+      // ---- Expose to main engine ----
+      window.__deltaAlerts = {
+        checkAlerts: checkAlerts,
+        triggerFlash: triggerFlash,
+        triggerPopup: triggerPopup,
+        triggerBanner: triggerBanner,
+        getSettings: getAlertSettings,
+      };
+
+      console.log('🔔 Alert engine loaded.');
     })();
 
     // =============================================
@@ -1319,6 +1512,12 @@
           document.getElementById('teamsWeek').textContent = weekText;
           renderAgents('agentTableInner', data.agents);
           renderTeams('teamTableWrap', data.teams);
+
+          // ---- Trigger alerts on the agents data ----
+          if (window.__deltaAlerts && data.agents) {
+            window.__deltaAlerts.checkAlerts(data.agents);
+          }
+
           setTimeout(() => {
             resetAnimations(currentIndex);
             const duration = getSlideDuration(slides[currentIndex]);
@@ -1336,6 +1535,9 @@
       }
 
       loadData();
+
+      // ---- Auto-refresh data (every 60 seconds) ----
+      setInterval(loadData, 60000);
 
       const slideObserver = new MutationObserver(() => {
         setTimeout(() => {
