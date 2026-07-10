@@ -6,6 +6,7 @@
   <title>Δ SIS Performance · Delta</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
+    /* (same CSS as before – no changes needed) */
     * {
       margin: 0;
       padding: 0;
@@ -43,7 +44,6 @@
       overflow: hidden;
     }
 
-    /* ===== FULLSCREEN TOGGLE – BOTTOM RIGHT ===== */
     .fullscreen-btn {
       position: absolute;
       bottom: 2.5vh;
@@ -113,7 +113,6 @@
       padding: 0;
     }
 
-    /* ---------- HEADER – COMPACT ---------- */
     .slide-header {
       background: #0b1a33;
       backdrop-filter: blur(16px) saturate(180%);
@@ -308,7 +307,6 @@
       font-size: 2vh;
     }
 
-    /* ===== TABLE CONTAINER – FILLS EVERYTHING ===== */
     .table-wrap {
       flex: 1;
       overflow: hidden;
@@ -357,7 +355,6 @@
       backdrop-filter: blur(4px);
     }
 
-    /* ===== SCROLLING TABLE – MASKED ===== */
     .scroll-container {
       flex: 1;
       overflow: hidden;
@@ -382,7 +379,6 @@
       100% { transform: translateY(-50%); }
     }
 
-    /* ---- TEAMS SCROLL (two columns) ---- */
     .table-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -411,7 +407,6 @@
       animation: scrollTable 30s linear infinite;
     }
 
-    /* ---- TABLE STYLES ---- */
     .table-wrap th {
       background: linear-gradient(135deg, #0b1a33 0%, #1a3050 100%);
       color: #fff;
@@ -462,7 +457,6 @@
       font-size: 2.6vh;
     }
 
-    /* --- TOP 1 ROW --- */
     .table-wrap tr.top1 td {
       background: linear-gradient(90deg, rgba(27, 138, 78, 0.08), rgba(211, 47, 47, 0.04));
       position: relative;
@@ -510,7 +504,6 @@
       font-size: 2vh;
     }
 
-    /* ===== FOOTER – MASSIVE LOGO ===== */
     .slide-footer {
       display: flex;
       justify-content: center;
@@ -559,7 +552,6 @@
       50% { opacity: 1; }
     }
 
-    /* ===== NAVIGATION – EXTREME BOTTOM ===== */
     .nav-controls {
       position: absolute;
       bottom: 1%;
@@ -623,7 +615,6 @@
       box-shadow: 0 0 20px rgba(211, 47, 47, 0.5);
     }
 
-    /* --- RESPONSIVE --- */
     @media (max-aspect-ratio: 16/9) {
       .slide-header .logo-area h1 { font-size: 2vh; }
       .slide-header .logo-area img { height: 6vh; }
@@ -692,7 +683,6 @@
   <div class="slide-deck">
     <div class="slides-wrapper" id="slidesWrapper">
 
-      <!-- ===== FULLSCREEN TOGGLE – BOTTOM RIGHT ===== -->
       <button class="fullscreen-btn" id="fullscreenBtn">
         <span class="icon">⛶</span> FULL
       </button>
@@ -705,12 +695,11 @@
         <div class="slide-counter"><span class="current">2</span> / 4</div>
       </div>
 
-      <!-- ===== SLIDE 2: AGENTS (16 seconds) ===== -->
       <div class="slide" id="slide2" data-index="2" data-slide="3" data-duration="16000">
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=9" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=10" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags1">
@@ -740,17 +729,16 @@
         </div>
 
         <div class="slide-footer">
-          <img src="delta-logo.png?v=9" alt="Delta" class="footer-logo" />
+          <img src="delta-logo.png?v=10" alt="Delta" class="footer-logo" />
         </div>
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
       </div>
 
-      <!-- ===== SLIDE 3: TEAMS (16 seconds) ===== -->
       <div class="slide" id="slide3" data-index="3" data-slide="4" data-duration="16000">
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=9" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=10" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags2">
@@ -780,7 +768,7 @@
         </div>
 
         <div class="slide-footer">
-          <img src="delta-logo.png?v=9" alt="Delta" class="footer-logo" />
+          <img src="delta-logo.png?v=10" alt="Delta" class="footer-logo" />
         </div>
         <div class="progress-container"><div class="progress-bar" id="progressBar2"></div></div>
       </div>
@@ -833,7 +821,7 @@
     })();
 
     // =============================================
-    // FULLSCREEN TOGGLE (now at bottom-right)
+    // FULLSCREEN TOGGLE
     // =============================================
 
     (function() {
@@ -900,7 +888,7 @@
     })();
 
     // =============================================
-    // SLIDESHOW ENGINE – with custom durations
+    // SLIDESHOW ENGINE – LOOP FIXED
     // =============================================
 
     (function() {
@@ -981,6 +969,8 @@
           if (progress >= 100) {
             clearInterval(progressInterval);
             progressInterval = null;
+            // ===== LOOP FIX: trigger next slide when progress bar completes =====
+            nextSlide();
           }
         }, 50);
       }
@@ -1060,7 +1050,6 @@
           container.innerHTML = `<div class="empty-state">No data available.</div>`;
           return;
         }
-        // duplicate rows for seamless scroll
         const doubled = [...items, ...items];
         let html = `<table>
           <thead><tr>
@@ -1090,12 +1079,10 @@
         }
         const firstCol = items.slice(0, 10);
         const secondCol = items.slice(10);
-        // duplicate each column for seamless scroll
         const firstDoubled = [...firstCol, ...firstCol];
         const secondDoubled = [...secondCol, ...secondCol];
 
         let html = '';
-        // first column
         html += `<div class="scroll-container">`;
         html += `<table>
           <thead><tr>
@@ -1114,7 +1101,6 @@
         html += `</tbody></table>`;
         html += `</div>`;
 
-        // second column
         html += `<div class="scroll-container">`;
         html += `<table>
           <thead><tr>
