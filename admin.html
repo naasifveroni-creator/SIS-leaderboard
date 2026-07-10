@@ -401,8 +401,8 @@
 16	Saban, Mogamat Muaath	75.18%
 17	Ivewe Ncapayi	71.38%</textarea>
         <div class="portal-actions">
-          <button class="btn-sm" id="previewTeamsBtn">👁 Preview Teams</button>
-          <button class="btn-sm green" id="resetTeamsBtn">↺ Reset Teams</button>
+          <button class="btn-sm" onclick="previewTeams()">👁 Preview Teams</button>
+          <button class="btn-sm green" onclick="resetTeams()">↺ Reset Teams</button>
         </div>
         <div class="portal-status" id="teamsStatus"></div>
       </div>
@@ -424,8 +424,8 @@
 9	Denica Williams	Fanti, Siphovuyo	100.00%
 10	Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%</textarea>
         <div class="portal-actions">
-          <button class="btn-sm" id="previewAgentsBtn">👁 Preview Agents</button>
-          <button class="btn-sm green" id="resetAgentsBtn">↺ Reset Agents</button>
+          <button class="btn-sm" onclick="previewAgents()">👁 Preview Agents</button>
+          <button class="btn-sm green" onclick="resetAgents()">↺ Reset Agents</button>
         </div>
         <div class="portal-status" id="agentsStatus"></div>
       </div>
@@ -447,8 +447,8 @@
       </div>
 
       <div class="publish-actions">
-        <button class="btn red" id="publishBtn">🚀 Publish Both to GitHub</button>
-        <button class="btn secondary" id="resetAllBtn">↺ Reset All to Sample</button>
+        <button class="btn red" onclick="publishBoth()">🚀 Publish Both to GitHub</button>
+        <button class="btn secondary" onclick="resetAll()">↺ Reset All to Sample</button>
       </div>
     </div>
 
@@ -461,7 +461,7 @@
 
   <script>
     // =============================================
-    // ADMIN PAGE – FULLY AUTOMATIC (no typing needed)
+    // ADMIN PAGE – INLINE onCLICK (guaranteed to work)
     // =============================================
 
     // ---- Auto-detect repo path and force lowercase ----
@@ -475,7 +475,6 @@
       } else if (host.endsWith('.github.dev')) {
         username = host.replace('.github.dev', '');
       } else {
-        // fallback: try to get from path
         const parts = path.split('/').filter(s => s.length > 0);
         if (parts.length >= 2) {
           username = parts[0];
@@ -497,44 +496,36 @@
       return null;
     }
 
-    // ---- Fill the repo field (read-only, automatic) ----
-    const repoField = document.getElementById('repoField');
-    const detected = detectRepoPath();
-    if (detected) {
-      repoField.value = detected;
-    } else {
-      repoField.value = 'naasifveroni-creator/sis-leaderboard';
+    // ---- Fill the repo field ----
+    (function() {
+      const repoField = document.getElementById('repoField');
+      const detected = detectRepoPath();
+      if (detected) {
+        repoField.value = detected;
+      } else {
+        repoField.value = 'naasifveroni-creator/sis-leaderboard';
+      }
+    })();
+
+    // ---- Helpers ----
+    function getTeamsInput() { return document.getElementById('teamsInput').value; }
+    function getAgentsInput() { return document.getElementById('agentsInput').value; }
+    function setTeamsInput(val) { document.getElementById('teamsInput').value = val; }
+    function setAgentsInput(val) { document.getElementById('agentsInput').value = val; }
+
+    function showPortalStatus(id, msg, type) {
+      const el = document.getElementById(id);
+      el.textContent = msg;
+      el.className = 'portal-status ' + type;
     }
 
-    const DEFAULT_TEAMS = `1	Sinazo Nogaga	88.18%
-2	Zintle Daba	87.14%
-3	Mbono, Phelisa	86.22%
-4	Botshelo Manoko	85.71%
-5	Jesse Machelm	83.11%
-6	Justin Salisbury	83.00%
-7	Tina Barron	82.58%
-8	Waylon Alexander	81.43%
-9	Terrayn Moses	81.06%
-10	Dawood Thaaqib	80.86%
-11	Daniel Van Der Poel	79.46%
-12	Moegamat Naeem Abrahams	79.16%
-13	Fatima Becket	78.24%
-14	Claasen, Ryan	77.73%
-15	ETHEL ZANELE KARAWE	77.52%
-16	Saban, Mogamat Muaath	75.18%
-17	Ivewe Ncapayi	71.38%`;
+    function showStatus(msg, type) {
+      const el = document.getElementById('status');
+      el.textContent = msg;
+      el.className = type;
+    }
 
-    const DEFAULT_AGENTS = `1	Abdul Abrahams	Moses Terrayn V	100.00%
-2	Stone Jade	Mbono, Phelisa	100.00%
-3	Alvino Februarie	Waylon Alexander	100.00%
-4	Shanseau Khabana	Waylon Alexander	100.00%
-5	Casey Williams	Tina Barron	100.00%
-6	Asavela Mkuyana	ETHEL ZANELE KARAWE	100.00%
-7	Gideon Muller	ETHEL ZANELE KARAWE	100.00%
-8	Hanton Kock	Waylon Alexander	100.00%
-9	Denica Williams	Fanti, Siphovuyo	100.00%
-10	Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%`;
-
+    // ---- Parse functions ----
     function parseTeams(text) {
       const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
       return lines.map(line => {
@@ -551,15 +542,9 @@
       });
     }
 
-    function showPortalStatus(id, msg, type) {
-      const el = document.getElementById(id);
-      el.textContent = msg;
-      el.className = 'portal-status ' + type;
-    }
-
-    // ---- Preview Teams ----
-    document.getElementById('previewTeamsBtn').addEventListener('click', function() {
-      const raw = document.getElementById('teamsInput').value;
+    // ---- Global functions for onclick ----
+    window.previewTeams = function() {
+      const raw = getTeamsInput();
       try {
         const parsed = parseTeams(raw);
         if (!parsed || parsed.length === 0) throw new Error('No data');
@@ -567,11 +552,10 @@
       } catch (e) {
         showPortalStatus('teamsStatus', '❌ Invalid format. Use: Rank, Name, SIS%', 'error');
       }
-    });
+    };
 
-    // ---- Preview Agents ----
-    document.getElementById('previewAgentsBtn').addEventListener('click', function() {
-      const raw = document.getElementById('agentsInput').value;
+    window.previewAgents = function() {
+      const raw = getAgentsInput();
       try {
         const parsed = parseAgents(raw);
         if (!parsed || parsed.length === 0) throw new Error('No data');
@@ -579,51 +563,69 @@
       } catch (e) {
         showPortalStatus('agentsStatus', '❌ Invalid format. Use: Rank, Name, TeamLeader, SIS%', 'error');
       }
-    });
+    };
 
-    // ---- Reset Teams ----
-    document.getElementById('resetTeamsBtn').addEventListener('click', function() {
-      document.getElementById('teamsInput').value = DEFAULT_TEAMS;
+    window.resetTeams = function() {
+      const DEFAULT_TEAMS = `1	Sinazo Nogaga	88.18%
+2	Zintle Daba	87.14%
+3	Mbono, Phelisa	86.22%
+4	Botshelo Manoko	85.71%
+5	Jesse Machelm	83.11%
+6	Justin Salisbury	83.00%
+7	Tina Barron	82.58%
+8	Waylon Alexander	81.43%
+9	Terrayn Moses	81.06%
+10	Dawood Thaaqib	80.86%
+11	Daniel Van Der Poel	79.46%
+12	Moegamat Naeem Abrahams	79.16%
+13	Fatima Becket	78.24%
+14	Claasen, Ryan	77.73%
+15	ETHEL ZANELE KARAWE	77.52%
+16	Saban, Mogamat Muaath	75.18%
+17	Ivewe Ncapayi	71.38%`;
+      setTeamsInput(DEFAULT_TEAMS);
       showPortalStatus('teamsStatus', '↺ Reset to sample teams', 'success');
-    });
+    };
 
-    // ---- Reset Agents ----
-    document.getElementById('resetAgentsBtn').addEventListener('click', function() {
-      document.getElementById('agentsInput').value = DEFAULT_AGENTS;
+    window.resetAgents = function() {
+      const DEFAULT_AGENTS = `1	Abdul Abrahams	Moses Terrayn V	100.00%
+2	Stone Jade	Mbono, Phelisa	100.00%
+3	Alvino Februarie	Waylon Alexander	100.00%
+4	Shanseau Khabana	Waylon Alexander	100.00%
+5	Casey Williams	Tina Barron	100.00%
+6	Asavela Mkuyana	ETHEL ZANELE KARAWE	100.00%
+7	Gideon Muller	ETHEL ZANELE KARAWE	100.00%
+8	Hanton Kock	Waylon Alexander	100.00%
+9	Denica Williams	Fanti, Siphovuyo	100.00%
+10	Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%`;
+      setAgentsInput(DEFAULT_AGENTS);
       showPortalStatus('agentsStatus', '↺ Reset to sample agents', 'success');
-    });
+    };
 
-    // ---- Reset All ----
-    document.getElementById('resetAllBtn').addEventListener('click', function() {
+    window.resetAll = function() {
       if (confirm('Reset both portals to sample data?')) {
-        document.getElementById('teamsInput').value = DEFAULT_TEAMS;
-        document.getElementById('agentsInput').value = DEFAULT_AGENTS;
-        showPortalStatus('teamsStatus', '↺ Reset to sample', 'success');
-        showPortalStatus('agentsStatus', '↺ Reset to sample', 'success');
+        window.resetTeams();
+        window.resetAgents();
         document.getElementById('status').className = '';
         document.getElementById('status').textContent = '';
       }
-    });
+    };
 
-    // ---- Publish Both ----
-    document.getElementById('publishBtn').addEventListener('click', async function() {
+    window.publishBoth = async function() {
       const token = document.getElementById('tokenField').value.trim();
       if (!token) {
         showStatus('❌ Please enter your GitHub token.', 'error');
         return;
       }
 
-      // Get repo path from read-only field
-      let repoPath = document.getElementById('repoField').value.trim();
+      const repoPath = document.getElementById('repoField').value.trim();
       if (!repoPath) {
-        showStatus('❌ Repo path not detected. Please open this page from your GitHub Pages URL.', 'error');
+        showStatus('❌ Repo path not detected.', 'error');
         return;
       }
 
-      repoPath = repoPath.replace(/\/$/, '');
-
-      const teamsRaw = document.getElementById('teamsInput').value;
-      const agentsRaw = document.getElementById('agentsInput').value;
+      const teamsRaw = getTeamsInput();
+      const agentsRaw = getAgentsInput();
 
       let teams, agents;
       try {
@@ -684,13 +686,7 @@
       } catch (err) {
         showStatus(`❌ Error: ${err.message}`, 'error');
       }
-    });
-
-    function showStatus(msg, type) {
-      const el = document.getElementById('status');
-      el.textContent = msg;
-      el.className = type;
-    }
+    };
   </script>
 
 </body>
