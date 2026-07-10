@@ -1,100 +1,90 @@
 {
-  "week": "Week of Jul 10, 2026",
+  "week": "Week of Jul 2, 2026 – Jul 8, 2026",
   "teams": [
     {
       "rank": 1,
-      "name": "Zintle Daba",
-      "score": "92.27%"
+      "name": "Sinazo Nogaga",
+      "score": "88.18%"
     },
     {
       "rank": 2,
-      "name": "Sinazo Nogaga",
-      "score": "90.12%"
+      "name": "Zintle Daba",
+      "score": "87.14%"
     },
     {
       "rank": 3,
-      "name": "Justin Salisbury",
-      "score": "88.96%"
+      "name": "Mbono, Phelisa",
+      "score": "86.22%"
     },
     {
       "rank": 4,
-      "name": "Waylon Alexander",
-      "score": "84.60%"
+      "name": "Botshelo Manoko",
+      "score": "85.71%"
     },
     {
       "rank": 5,
-      "name": "Tina Barron",
-      "score": "83.20%"
+      "name": "Jesse Machelm",
+      "score": "83.11%"
     },
     {
       "rank": 6,
-      "name": "Moses Terrayn V",
-      "score": "81.91%"
+      "name": "Justin Salisbury",
+      "score": "83.00%"
     },
     {
       "rank": 7,
-      "name": "Manoko Botshelo",
-      "score": "81.82%"
+      "name": "Tina Barron",
+      "score": "82.58%"
     },
     {
       "rank": 8,
-      "name": "Claasen, Ryan",
-      "score": "81.07%"
+      "name": "Waylon Alexander",
+      "score": "81.43%"
     },
     {
       "rank": 9,
-      "name": "Dawood Thaaqib",
-      "score": "80.17%"
+      "name": "Terrayn Moses",
+      "score": "81.06%"
     },
     {
       "rank": 10,
-      "name": "Mbono, Phelisa",
-      "score": "79.88%"
+      "name": "Dawood Thaaqib",
+      "score": "80.86%"
     },
     {
       "rank": 11,
-      "name": "Fatima Beckett",
-      "score": "79.84%"
+      "name": "Daniel Van Der Poel",
+      "score": "79.46%"
     },
     {
       "rank": 12,
-      "name": "Daniel Van Der Poel",
-      "score": "79.34%"
+      "name": "Moegamat Naeem Abrahams",
+      "score": "79.16%"
     },
     {
       "rank": 13,
-      "name": "Jesse Machelm",
-      "score": "79.19%"
+      "name": "Fatima Becket",
+      "score": "78.24%"
     },
     {
       "rank": 14,
-      "name": "Magnolia Smidt",
-      "score": "77.75%"
+      "name": "Claasen, Ryan",
+      "score": "77.73%"
     },
     {
       "rank": 15,
+      "name": "ETHEL ZANELE KARAWE",
+      "score": "77.52%"
+    },
+    {
+      "rank": 16,
       "name": "Saban, Mogamat Muaath",
-      "score": "77.18%"
-    },
-    {
-      "rank": 15,
-      "name": "Fanti, Siphovuyo",
-      "score": "76.57%"
+      "score": "75.18%"
     },
     {
       "rank": 17,
-      "name": "Moegamat Naeem Abrahams",
-      "score": "74.55%"
-    },
-    {
-      "rank": 18,
-      "name": "ETHEL ZANELE KARAWE",
-      "score": "72.22%"
-    },
-    {
-      "rank": 19,
-      "name": "Ncapayi, Iviwe",
-      "score": "69.75%"
+      "name": "Ivewe Ncapayi",
+      "score": "71.38%"
     }
   ],
   "agents": [
