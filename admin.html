@@ -430,7 +430,7 @@
 
     </div>
 
-    <!-- ===== TOKEN & REPO PATH ===== -->
+    <!-- ===== TOKEN & REPO PATH (auto-detected) ===== -->
     <div class="token-section">
       <div class="token-input">
         <label for="tokenField">🔑 GitHub Token:</label>
@@ -438,11 +438,11 @@
         <span style="font-size:0.75rem; color:#6b7f96;">(stored only in your browser)</span>
       </div>
 
-      <!-- === REPO PATH (manual override) === -->
+      <!-- === REPO PATH (auto-filled, no editing needed) === -->
       <div class="repo-input" id="repoSection">
         <label for="repoField">📁 Repo Path:</label>
-        <input type="text" id="repoField" placeholder="username/repo-name (e.g. naasifveroni-creator/sis-leaderboard)" />
-        <span class="hint">Your GitHub username / repository name</span>
+        <input type="text" id="repoField" readonly style="background:#f0f3f8; cursor:default;" />
+        <span class="hint">Auto-detected from your URL – no need to change</span>
       </div>
 
       <div class="publish-actions">
@@ -460,8 +460,55 @@
 
   <script>
     // =============================================
-    // ADMIN PAGE – TWO PORTALS + REPO PATH FIX
+    // ADMIN PAGE – AUTO REPO DETECTION (FIXED)
     // =============================================
+
+    // ---- Auto-detect repo path correctly ----
+    function detectRepoPath() {
+      const host = window.location.hostname;
+      const path = window.location.pathname;
+      // Extract username from subdomain: naasifveroni-creator.github.io -> naasifveroni-creator
+      let username = '';
+      if (host.endsWith('.github.io')) {
+        username = host.replace('.github.io', '');
+      } else if (host.endsWith('.github.dev')) {
+        username = host.replace('.github.dev', '');
+      } else {
+        // fallback: try to get from path? but we'll rely on the path for repo.
+        username = '';
+      }
+      // Extract repo name from path: /sis-leaderboard/admin.html -> sis-leaderboard
+      const pathSegments = path.split('/').filter(s => s.length > 0);
+      let repo = '';
+      if (pathSegments.length > 0) {
+        // The first segment is the repo name
+        repo = pathSegments[0];
+      }
+      // If username is empty, try to get it from the path (e.g., if it's a user page)
+      if (!username && pathSegments.length > 1) {
+        // Could be username/repo structure, but GitHub Pages usually doesn't.
+        // We'll just use the first two segments.
+        if (pathSegments.length >= 2) {
+          username = pathSegments[0];
+          repo = pathSegments[1];
+        }
+      }
+      if (username && repo) {
+        return username + '/' + repo;
+      }
+      return null;
+    }
+
+    // ---- Fill the repo field ----
+    const repoField = document.getElementById('repoField');
+    const detected = detectRepoPath();
+    if (detected) {
+      repoField.value = detected;
+    } else {
+      // If detection fails, fallback to showing the path from the URL as a hint
+      repoField.value = window.location.hostname + window.location.pathname;
+      repoField.style.color = '#a13a3a';
+    }
 
     const DEFAULT_TEAMS = `1	Sinazo Nogaga	88.18%
 2	Zintle Daba	87.14%
@@ -562,7 +609,7 @@
       }
     });
 
-    // ---- Publish Both (with manual repo path) ----
+    // ---- Publish Both ----
     document.getElementById('publishBtn').addEventListener('click', async function() {
       const token = document.getElementById('tokenField').value.trim();
       if (!token) {
@@ -570,18 +617,11 @@
         return;
       }
 
-      // Get repo path from input (manual override)
+      // Get repo path from the read-only field
       let repoPath = document.getElementById('repoField').value.trim();
       if (!repoPath) {
-        // Fallback: try to auto-detect from URL
-        const autoPath = window.location.pathname.split('/').slice(1, 3).join('/');
-        if (autoPath && autoPath.includes('/')) {
-          repoPath = autoPath;
-          document.getElementById('repoField').value = autoPath;
-        } else {
-          showStatus('❌ Please enter your repo path (e.g. username/repo-name).', 'error');
-          return;
-        }
+        showStatus('❌ Repo path not detected. Please open this page from your GitHub Pages URL.', 'error');
+        return;
       }
 
       // Remove trailing slash if present
@@ -655,12 +695,7 @@
     }
 
     // ---- Auto-detect and pre-fill repo path on load ----
-    (function() {
-      const autoPath = window.location.pathname.split('/').slice(1, 3).join('/');
-      if (autoPath && autoPath.includes('/')) {
-        document.getElementById('repoField').value = autoPath;
-      }
-    })();
+    // (already done above)
   </script>
 
 </body>
