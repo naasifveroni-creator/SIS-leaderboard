@@ -570,7 +570,7 @@
       font-size: 2vh;
     }
 
-    /* ===== NEW FOOTER – PLANE + "DELTA" REVEAL ===== */
+    /* ===== NEW FOOTER – PLANE + SPRAY REVEAL ===== */
     .slide-footer {
       flex-shrink: 0;
       min-height: 14vh;
@@ -592,72 +592,76 @@
       align-items: center;
       justify-content: center;
       position: relative;
+      overflow: hidden;
     }
 
-    /* ---- Plane SVG ---- */
+    /* ---- The "spray" paint (behind the text) ---- */
+    .spray-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #d32f2f 0%, #0b1a33 50%, #d32f2f 100%);
+      filter: blur(12px) brightness(1.2);
+      opacity: 0.8;
+      animation: sprayWidth 8s ease-in-out infinite;
+      z-index: 1;
+      border-radius: 4px;
+    }
+
+    @keyframes sprayWidth {
+      0% { width: 0%; opacity: 0; }
+      10% { opacity: 0.8; }
+      100% { width: 100%; opacity: 0.8; }
+    }
+
+    /* ---- The revealed text (clip-path follows the spray) ---- */
+    .spray-text {
+      font-size: 8vh;
+      font-weight: 900;
+      letter-spacing: 1.2vw;
+      color: #0b1a33; /* fallback */
+      background: linear-gradient(90deg, #d32f2f 0%, #0b1a33 50%, #d32f2f 100%);
+      background-size: 100% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-family: 'Inter', sans-serif;
+      position: relative;
+      z-index: 3;
+      white-space: nowrap;
+      clip-path: inset(0 100% 0 0);
+      animation: textReveal 8s ease-in-out infinite;
+      text-shadow: none;
+      filter: drop-shadow(0 0 20px rgba(211, 47, 47, 0.1));
+    }
+
+    @keyframes textReveal {
+      0% { clip-path: inset(0 100% 0 0); }
+      100% { clip-path: inset(0 0% 0 0); }
+    }
+
+    /* ---- The Plane ---- */
     .plane {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
       left: -80px;
-      width: 60px;
-      height: 60px;
-      fill: #d32f2f;
-      animation: fly 8s ease-in-out infinite;
+      width: 70px;
+      height: 50px;
       z-index: 5;
-      filter: drop-shadow(0 0 12px rgba(211, 47, 47, 0.4));
+      animation: flyPlane 8s ease-in-out infinite;
+      filter: drop-shadow(0 0 15px rgba(211, 47, 47, 0.6));
     }
 
-    @keyframes fly {
+    @keyframes flyPlane {
       0% { left: -80px; }
-      50% { left: calc(100% + 20px); }
+      50% { left: calc(100% - 40px); }
       100% { left: calc(100% + 20px); }
     }
 
-    /* ---- Spray trail (reveals "DELTA") ---- */
-    .spray-text {
-      font-size: 8vh;
-      font-weight: 900;
-      letter-spacing: 1.2vw;
-      color: transparent;
-      background: linear-gradient(90deg, #d32f2f, #d32f2f 30%, #0b1a33 50%, #0b1a33 70%, #d32f2f 100%);
-      background-size: 300% 100%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      animation: sprayReveal 8s ease-in-out infinite;
-      font-family: 'Inter', sans-serif;
-      text-shadow: none;
-      position: relative;
-      z-index: 2;
-      opacity: 1;
-      white-space: nowrap;
-    }
-
-    @keyframes sprayReveal {
-      0% { background-position: 0% 50%; opacity: 0.3; }
-      20% { opacity: 0.6; }
-      50% { background-position: 100% 50%; opacity: 1; }
-      100% { background-position: 100% 50%; opacity: 1; }
-    }
-
-    /* ---- Subtle glow behind the text ---- */
-    .spray-text::after {
-      content: 'DELTA';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      font-size: 8vh;
-      font-weight: 900;
-      letter-spacing: 1.2vw;
-      color: transparent;
-      -webkit-text-stroke: 2px rgba(211, 47, 47, 0.1);
-      z-index: -1;
-      opacity: 0.5;
-    }
-
-    /* ---- Progress bar stays at bottom ---- */
+    /* ---- Progress bar ---- */
     .progress-container {
       position: absolute;
       bottom: 0;
@@ -755,15 +759,15 @@
       .table-wrap td { font-size: 2.2vh; }
       .table-wrap th { font-size: 1.6vh; }
       .fullscreen-btn { font-size: 1.2vh; padding: 0.3vh 0.6vw; }
-      .spray-text { font-size: 6vh; }
-      .plane { width: 45px; height: 45px; }
+      .spray-text { font-size: 6vh; letter-spacing: 1vw; }
+      .plane { width: 55px; height: 40px; }
       .slide-footer { min-height: 12vh; }
     }
 
     @media (max-aspect-ratio: 4/3) {
       .table-grid { grid-template-columns: 1fr; gap: 0.5vh; }
       .spray-text { font-size: 5vh; letter-spacing: 1.5vw; }
-      .plane { width: 35px; height: 35px; }
+      .plane { width: 45px; height: 32px; }
     }
 
     @media (max-width: 768px) {
@@ -782,7 +786,7 @@
       #adminAccess { right: 10vw; bottom: 1.5vh; }
       #adminAccess a { font-size: 1.2vh; padding: 0.2vh 0.5vw; }
       .spray-text { font-size: 4vh; letter-spacing: 2vw; }
-      .plane { width: 25px; height: 25px; left: -40px; }
+      .plane { width: 30px; height: 22px; left: -40px; }
       .slide-footer { min-height: 8vh; }
     }
   </style>
@@ -808,7 +812,7 @@
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=14" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=15" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags1">
@@ -839,11 +843,32 @@
 
         <div class="slide-footer">
           <div class="footer-animation">
-            <svg class="plane" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M21 16L14 12L21 8V16Z" fill="#d32f2f" stroke="#d32f2f" stroke-width="0.5"/>
-              <path d="M14 12L10 6H8L11 10H9L7 8H6L8 12L6 16H7L9 14H11L8 18H10L14 12Z" fill="#d32f2f"/>
-              <circle cx="17" cy="12" r="2" fill="#fdb913"/>
+            <!-- Spray fill -->
+            <div class="spray-fill"></div>
+            
+            <!-- Plane SVG -->
+            <svg class="plane" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Fuselage -->
+              <path d="M15 25 L70 20 L80 25 L70 30 L15 25Z" fill="#d32f2f" stroke="#b71c1c" stroke-width="1"/>
+              <!-- Top Wing -->
+              <path d="M45 22 L60 10 L68 15 L52 25 L45 22Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/>
+              <!-- Bottom Wing -->
+              <path d="M45 28 L60 40 L68 35 L52 25 L45 28Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/>
+              <!-- Tail vertical -->
+              <path d="M15 25 L5 15 L15 20 L15 25Z" fill="#d32f2f"/>
+              <path d="M15 25 L5 35 L15 30 L15 25Z" fill="#d32f2f"/>
+              <!-- Tail horizontal -->
+              <path d="M15 23 L8 18 L15 22 L15 23Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/>
+              <path d="M15 27 L8 32 L15 28 L15 27Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/>
+              <!-- Propeller Spinner -->
+              <circle cx="78" cy="25" r="3" fill="#fdb913"/>
+              <!-- Propeller Blades -->
+              <ellipse cx="82" cy="25" rx="8" ry="2" fill="#fdb913" opacity="0.8"/>
+              <!-- Cockpit Window -->
+              <path d="M65 23 Q72 23 68 27 Q65 27 65 23Z" fill="#0b1a33" opacity="0.6"/>
             </svg>
+
+            <!-- The text being painted -->
             <div class="spray-text">DELTA</div>
           </div>
         </div>
@@ -854,7 +879,7 @@
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=14" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=15" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags2">
@@ -885,10 +910,18 @@
 
         <div class="slide-footer">
           <div class="footer-animation">
-            <svg class="plane" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M21 16L14 12L21 8V16Z" fill="#d32f2f" stroke="#d32f2f" stroke-width="0.5"/>
-              <path d="M14 12L10 6H8L11 10H9L7 8H6L8 12L6 16H7L9 14H11L8 18H10L14 12Z" fill="#d32f2f"/>
-              <circle cx="17" cy="12" r="2" fill="#fdb913"/>
+            <div class="spray-fill"></div>
+            <svg class="plane" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15 25 L70 20 L80 25 L70 30 L15 25Z" fill="#d32f2f" stroke="#b71c1c" stroke-width="1"/>
+              <path d="M45 22 L60 10 L68 15 L52 25 L45 22Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/>
+              <path d="M45 28 L60 40 L68 35 L52 25 L45 28Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/>
+              <path d="M15 25 L5 15 L15 20 L15 25Z" fill="#d32f2f"/>
+              <path d="M15 25 L5 35 L15 30 L15 25Z" fill="#d32f2f"/>
+              <path d="M15 23 L8 18 L15 22 L15 23Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/>
+              <path d="M15 27 L8 32 L15 28 L15 27Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/>
+              <circle cx="78" cy="25" r="3" fill="#fdb913"/>
+              <ellipse cx="82" cy="25" rx="8" ry="2" fill="#fdb913" opacity="0.8"/>
+              <path d="M65 23 Q72 23 68 27 Q65 27 65 23Z" fill="#0b1a33" opacity="0.6"/>
             </svg>
             <div class="spray-text">DELTA</div>
           </div>
