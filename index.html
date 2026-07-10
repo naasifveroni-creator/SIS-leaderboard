@@ -43,11 +43,12 @@
       overflow: hidden;
     }
 
+    /* ===== FULLSCREEN TOGGLE – BOTTOM RIGHT ===== */
     .fullscreen-btn {
       position: absolute;
-      top: 1.5vh;
-      left: 1.5vw;
-      z-index: 50;
+      bottom: 2.5vh;
+      right: 1.5vw;
+      z-index: 100;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.1);
       color: rgba(255, 255, 255, 0.5);
@@ -376,9 +377,10 @@
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(11, 26, 51, 0.10);
       height: fit-content;
+      animation: scrollTable 20s linear infinite;
     }
 
-    /* --- AGENTS TABLE --- */
+    /* --- AGENTS TABLE – SELF-SCROLL --- */
     .table-single {
       flex: 1;
       min-height: 0;
@@ -386,9 +388,19 @@
       flex-direction: column;
       justify-content: center;
       height: 100%;
+      overflow: hidden;
+      position: relative;
     }
 
-    .table-single table {
+    .table-single .scroll-wrapper {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+      mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+    }
+
+    .table-single .scroll-wrapper table {
       width: 100%;
       border-collapse: collapse;
       background: rgba(255, 255, 255, 0.92);
@@ -396,6 +408,17 @@
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(11, 26, 51, 0.10);
+      animation: scrollTable 25s linear infinite;
+    }
+
+    /* --- TEAMS TABLE – SELF-SCROLL --- */
+    #slide3 .table-grid table {
+      animation: scrollTable 30s linear infinite;
+    }
+
+    @keyframes scrollTable {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
     }
 
     /* --- TABLE STYLES --- */
@@ -409,15 +432,18 @@
       font-size: 2vh;
       text-transform: uppercase;
       letter-spacing: 0.08em;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     .table-wrap td {
-      padding: 0.9vh 0.8vw;
+      padding: 1.2vh 1vw;
       border-bottom: 1px solid rgba(237, 240, 246, 0.6);
       vertical-align: middle;
       color: #0b1a33;
       text-align: center;
-      font-size: 2.4vh;
+      font-size: 2.6vh;
       font-weight: 500;
     }
 
@@ -430,13 +456,13 @@
       width: 10%;
       color: #6b7f96;
       font-weight: 600;
-      font-size: 2.2vh;
+      font-size: 2.4vh;
     }
 
     .table-wrap .name-col {
       font-weight: 500;
       text-align: left;
-      font-size: 2.2vh;
+      font-size: 2.4vh;
     }
 
     .table-wrap .score-col {
@@ -444,7 +470,7 @@
       text-align: right;
       width: 12%;
       color: #0b1a33;
-      font-size: 2.4vh;
+      font-size: 2.6vh;
     }
 
     /* --- TOP 1 ROW --- */
@@ -457,12 +483,12 @@
     .table-wrap tr.top1 .rank-col {
       color: #1b8a4e;
       font-weight: 900;
-      font-size: 2.6vh;
+      font-size: 2.8vh;
     }
 
     .table-wrap tr.top1 .score-col {
       color: #1b8a4e;
-      font-size: 2.8vh;
+      font-size: 3vh;
       font-weight: 800;
     }
 
@@ -497,12 +523,12 @@
 
     /* --- TEAMS SPECIFIC --- */
     #slide3 .table-wrap td {
-      padding: 0.6vh 0.6vw;
-      font-size: 2vh;
+      padding: 0.8vh 0.8vw;
+      font-size: 2.2vh;
     }
 
     #slide3 .table-wrap th {
-      padding: 0.6vh 0.6vw;
+      padding: 0.8vh 0.8vw;
       font-size: 1.8vh;
     }
 
@@ -635,9 +661,9 @@
       .behavior-tags .tag { font-size: 1vh; }
       .slide-title { font-size: 2.8vh; }
       .slide-title .week-date { font-size: 2vh; }
-      .table-wrap td { font-size: 2vh; }
+      .table-wrap td { font-size: 2.2vh; }
       .table-wrap th { font-size: 1.6vh; }
-      #slide3 .table-wrap td { font-size: 1.6vh; }
+      #slide3 .table-wrap td { font-size: 1.8vh; }
       #slide3 .table-wrap th { font-size: 1.4vh; }
       .fullscreen-btn { font-size: 1.2vh; padding: 0.3vh 0.6vw; }
       .slide-footer .footer-logo { height: 12vh; }
@@ -663,6 +689,7 @@
       .nav-controls { bottom: 0.5%; }
       .arrow { width: 2vh; height: 2vh; font-size: 1.2vh; }
       .dot { width: 0.6vh; height: 0.6vh; }
+      .fullscreen-btn { bottom: 1.5vh; right: 1vw; font-size: 1.2vh; padding: 0.3vh 0.5vw; }
     }
 
     #adminAccess {
@@ -699,6 +726,7 @@
   <div class="slide-deck">
     <div class="slides-wrapper" id="slidesWrapper">
 
+      <!-- ===== FULLSCREEN TOGGLE – BOTTOM RIGHT ===== -->
       <button class="fullscreen-btn" id="fullscreenBtn">
         <span class="icon">⛶</span> FULL
       </button>
@@ -711,11 +739,12 @@
         <div class="slide-counter"><span class="current">2</span> / 4</div>
       </div>
 
-      <div class="slide" id="slide2" data-index="2" data-slide="3">
+      <!-- ===== SLIDE 2: AGENTS (16 seconds) ===== -->
+      <div class="slide" id="slide2" data-index="2" data-slide="3" data-duration="16000">
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=7" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=8" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags1">
@@ -740,21 +769,24 @@
             <span class="week-date" id="agentsWeek">Week of Jun 25 – Jul 01, 2026</span>
           </div>
           <div class="table-single" id="agentTableWrap">
-            <div class="empty-state">Loading agents…</div>
+            <div class="scroll-wrapper">
+              <div id="agentTableInner"></div>
+            </div>
           </div>
         </div>
 
         <div class="slide-footer">
-          <img src="delta-logo.png?v=7" alt="Delta" class="footer-logo" />
+          <img src="delta-logo.png?v=8" alt="Delta" class="footer-logo" />
         </div>
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
       </div>
 
-      <div class="slide" id="slide3" data-index="3" data-slide="4">
+      <!-- ===== SLIDE 3: TEAMS (16 seconds) ===== -->
+      <div class="slide" id="slide3" data-index="3" data-slide="4" data-duration="16000">
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=7" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=8" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags2">
@@ -784,7 +816,7 @@
         </div>
 
         <div class="slide-footer">
-          <img src="delta-logo.png?v=7" alt="Delta" class="footer-logo" />
+          <img src="delta-logo.png?v=8" alt="Delta" class="footer-logo" />
         </div>
         <div class="progress-container"><div class="progress-bar" id="progressBar2"></div></div>
       </div>
@@ -837,7 +869,7 @@
     })();
 
     // =============================================
-    // FULLSCREEN TOGGLE
+    // FULLSCREEN TOGGLE (now at bottom-right)
     // =============================================
 
     (function() {
@@ -904,7 +936,7 @@
     })();
 
     // =============================================
-    // SLIDESHOW ENGINE
+    // SLIDESHOW ENGINE – with custom durations
     // =============================================
 
     (function() {
@@ -915,9 +947,16 @@
       let currentIndex = 0;
       let autoPlayInterval = null;
       let progressInterval = null;
-      const AUTO_DELAY = 5500;
       let isTransitioning = false;
 
+      // ---- Get duration for each slide ----
+      function getSlideDuration(slide) {
+        const custom = parseInt(slide.dataset.duration);
+        if (!isNaN(custom) && custom > 0) return custom;
+        return 5500; // default 5.5s for slides 0 & 1
+      }
+
+      // ---- Build dots ----
       slides.forEach((_, i) => {
         const dot = document.createElement('button');
         dot.className = 'dot' + (i === 0 ? ' active' : '');
@@ -960,22 +999,25 @@
           clearInterval(autoPlayInterval);
           autoPlayInterval = null;
         }
-        autoPlayInterval = setInterval(nextSlide, AUTO_DELAY);
-        resetProgressBar();
+        const duration = getSlideDuration(slides[currentIndex]);
+        autoPlayInterval = setInterval(nextSlide, duration);
+        resetProgressBar(duration);
       }
 
-      function resetProgressBar() {
+      function resetProgressBar(duration) {
         if (progressInterval) {
           clearInterval(progressInterval);
           progressInterval = null;
         }
+
+        const autoDelay = duration || getSlideDuration(slides[currentIndex]);
 
         progressBars.forEach(bar => { bar.style.width = '0%'; });
 
         let startTime = Date.now();
         progressInterval = setInterval(() => {
           const elapsed = Date.now() - startTime;
-          const progress = Math.min((elapsed / AUTO_DELAY) * 100, 100);
+          const progress = Math.min((elapsed / autoDelay) * 100, 100);
           progressBars.forEach(bar => { bar.style.width = progress + '%'; });
           if (progress >= 100) {
             clearInterval(progressInterval);
@@ -984,6 +1026,7 @@
         }, 50);
       }
 
+      // ---- Reset animations (for row fade-in) ----
       function resetAnimations(index) {
         const activeSlide = slides[index];
         const tables = activeSlide.querySelectorAll('table');
@@ -1040,6 +1083,7 @@
         requestAnimationFrame(updateCounter);
       }
 
+      // ---- Event listeners ----
       document.getElementById('nextSlide').addEventListener('click', nextSlide);
       document.getElementById('prevSlide').addEventListener('click', prevSlide);
 
@@ -1061,6 +1105,7 @@
         if (e.key === 'ArrowLeft') prevSlide();
       });
 
+      // ---- Data loader ----
       function renderAgents(containerId, items) {
         const container = document.getElementById(containerId);
         if (!items || items.length === 0) {
@@ -1076,7 +1121,9 @@
             <th class="score-col">SIS</th>
           </tr></thead><tbody>`;
 
-        items.forEach(item => {
+        // Duplicate rows for seamless scroll (clone once)
+        const doubled = [...items, ...items];
+        doubled.forEach(item => {
           const isFirst = item.rank === 1;
           html += `<tr class="${isFirst ? 'top1' : ''}">
             <td class="rank-col">${item.rank}</td>
@@ -1100,6 +1147,10 @@
         const firstCol = items.slice(0, 10);
         const secondCol = items.slice(10);
 
+        // Duplicate each column for seamless scroll
+        const firstDoubled = [...firstCol, ...firstCol];
+        const secondDoubled = [...secondCol, ...secondCol];
+
         let html = '';
 
         html += `<table>
@@ -1108,7 +1159,7 @@
             <th class="name-col">TEAM LEADER</th>
             <th class="score-col">SIS</th>
           </tr></thead><tbody>`;
-        firstCol.forEach(item => {
+        firstDoubled.forEach(item => {
           const isFirst = item.rank === 1;
           html += `<tr class="${isFirst ? 'top1' : ''}">
             <td class="rank-col">${item.rank}</td>
@@ -1124,7 +1175,7 @@
             <th class="name-col">TEAM LEADER</th>
             <th class="score-col">SIS</th>
           </tr></thead><tbody>`;
-        secondCol.forEach(item => {
+        secondDoubled.forEach(item => {
           html += `<tr>
             <td class="rank-col">${item.rank}</td>
             <td class="name-col">${item.name}</td>
@@ -1146,7 +1197,7 @@
           document.getElementById('agentsWeek').textContent = weekText;
           document.getElementById('teamsWeek').textContent = weekText;
 
-          renderAgents('agentTableWrap', data.agents);
+          renderAgents('agentTableInner', data.agents);
           renderTeams('teamTableWrap', data.teams);
 
           setTimeout(() => {
@@ -1157,7 +1208,7 @@
         } catch (e) {
           document.getElementById('teamTableWrap').innerHTML =
             '<div class="empty-state">⚠️ Could not load data. Refresh or try again later.</div>';
-          document.getElementById('agentTableWrap').innerHTML = '';
+          document.getElementById('agentTableInner').innerHTML = '';
         }
       }
 
