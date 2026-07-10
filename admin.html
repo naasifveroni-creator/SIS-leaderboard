@@ -401,8 +401,8 @@
 16	Saban, Mogamat Muaath	75.18%
 17	Ivewe Ncapayi	71.38%</textarea>
         <div class="portal-actions">
-          <button class="btn-sm" onclick="previewTeams()">👁 Preview Teams</button>
-          <button class="btn-sm green" onclick="resetTeams()">↺ Reset Teams</button>
+          <button class="btn-sm" id="previewTeamsBtn">👁 Preview Teams</button>
+          <button class="btn-sm green" id="resetTeamsBtn">↺ Reset Teams</button>
         </div>
         <div class="portal-status" id="teamsStatus"></div>
       </div>
@@ -424,8 +424,8 @@
 9	Denica Williams	Fanti, Siphovuyo	100.00%
 10	Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%</textarea>
         <div class="portal-actions">
-          <button class="btn-sm" onclick="previewAgents()">👁 Preview Agents</button>
-          <button class="btn-sm green" onclick="resetAgents()">↺ Reset Agents</button>
+          <button class="btn-sm" id="previewAgentsBtn">👁 Preview Agents</button>
+          <button class="btn-sm green" id="resetAgentsBtn">↺ Reset Agents</button>
         </div>
         <div class="portal-status" id="agentsStatus"></div>
       </div>
@@ -447,8 +447,8 @@
       </div>
 
       <div class="publish-actions">
-        <button class="btn red" onclick="publishBoth()">🚀 Publish Both to GitHub</button>
-        <button class="btn secondary" onclick="resetAll()">↺ Reset All to Sample</button>
+        <button class="btn red" id="publishBtn">🚀 Publish Both to GitHub</button>
+        <button class="btn secondary" id="resetAllBtn">↺ Reset All to Sample</button>
       </div>
     </div>
 
@@ -461,66 +461,26 @@
 
   <script>
     // =============================================
-    // ADMIN PAGE – INLINE onCLICK (guaranteed to work)
+    // ADMIN PAGE – SIMPLE, RELIABLE
     // =============================================
 
-    // ---- Auto-detect repo path and force lowercase ----
-    function detectRepoPath() {
-      const host = window.location.hostname;
-      const path = window.location.pathname;
-      let username = '';
-      
-      if (host.endsWith('.github.io')) {
-        username = host.replace('.github.io', '');
-      } else if (host.endsWith('.github.dev')) {
-        username = host.replace('.github.dev', '');
-      } else {
-        const parts = path.split('/').filter(s => s.length > 0);
-        if (parts.length >= 2) {
-          username = parts[0];
-          var repo = parts[1].toLowerCase();
-          return username + '/' + repo;
-        }
-        return null;
-      }
-      
-      const pathSegments = path.split('/').filter(s => s.length > 0);
-      let repo = '';
-      if (pathSegments.length > 0) {
-        repo = pathSegments[0].toLowerCase();
-      }
-      
-      if (username && repo) {
-        return username + '/' + repo;
-      }
-      return null;
-    }
+    // ---- HARDCODED (but auto-detects if available) ----
+    const REPO_PATH = 'naasifveroni-creator/sis-leaderboard';
 
     // ---- Fill the repo field ----
-    (function() {
-      const repoField = document.getElementById('repoField');
-      const detected = detectRepoPath();
-      if (detected) {
-        repoField.value = detected;
-      } else {
-        repoField.value = 'naasifveroni-creator/sis-leaderboard';
-      }
-    })();
+    document.getElementById('repoField').value = REPO_PATH;
 
     // ---- Helpers ----
-    function getTeamsInput() { return document.getElementById('teamsInput').value; }
-    function getAgentsInput() { return document.getElementById('agentsInput').value; }
-    function setTeamsInput(val) { document.getElementById('teamsInput').value = val; }
-    function setAgentsInput(val) { document.getElementById('agentsInput').value = val; }
+    function $(id) { return document.getElementById(id); }
 
-    function showPortalStatus(id, msg, type) {
-      const el = document.getElementById(id);
+    function showStatus(id, msg, type) {
+      const el = $(id);
       el.textContent = msg;
       el.className = 'portal-status ' + type;
     }
 
-    function showStatus(msg, type) {
-      const el = document.getElementById('status');
+    function showMainStatus(msg, type) {
+      const el = $('status');
       el.textContent = msg;
       el.className = type;
     }
@@ -542,31 +502,33 @@
       });
     }
 
-    // ---- Global functions for onclick ----
-    window.previewTeams = function() {
-      const raw = getTeamsInput();
+    // ---- Preview Teams ----
+    $('previewTeamsBtn').addEventListener('click', function() {
+      const raw = $('teamsInput').value;
       try {
         const parsed = parseTeams(raw);
         if (!parsed || parsed.length === 0) throw new Error('No data');
-        showPortalStatus('teamsStatus', `✅ ${parsed.length} teams parsed`, 'success');
+        showStatus('teamsStatus', '✅ ' + parsed.length + ' teams parsed', 'success');
       } catch (e) {
-        showPortalStatus('teamsStatus', '❌ Invalid format. Use: Rank, Name, SIS%', 'error');
+        showStatus('teamsStatus', '❌ Invalid format. Use: Rank, Name, SIS%', 'error');
       }
-    };
+    });
 
-    window.previewAgents = function() {
-      const raw = getAgentsInput();
+    // ---- Preview Agents ----
+    $('previewAgentsBtn').addEventListener('click', function() {
+      const raw = $('agentsInput').value;
       try {
         const parsed = parseAgents(raw);
         if (!parsed || parsed.length === 0) throw new Error('No data');
-        showPortalStatus('agentsStatus', `✅ ${parsed.length} agents parsed`, 'success');
+        showStatus('agentsStatus', '✅ ' + parsed.length + ' agents parsed', 'success');
       } catch (e) {
-        showPortalStatus('agentsStatus', '❌ Invalid format. Use: Rank, Name, TeamLeader, SIS%', 'error');
+        showStatus('agentsStatus', '❌ Invalid format. Use: Rank, Name, TeamLeader, SIS%', 'error');
       }
-    };
+    });
 
-    window.resetTeams = function() {
-      const DEFAULT_TEAMS = `1	Sinazo Nogaga	88.18%
+    // ---- Reset Teams ----
+    $('resetTeamsBtn').addEventListener('click', function() {
+      const DEFAULT = `1	Sinazo Nogaga	88.18%
 2	Zintle Daba	87.14%
 3	Mbono, Phelisa	86.22%
 4	Botshelo Manoko	85.71%
@@ -583,12 +545,13 @@
 15	ETHEL ZANELE KARAWE	77.52%
 16	Saban, Mogamat Muaath	75.18%
 17	Ivewe Ncapayi	71.38%`;
-      setTeamsInput(DEFAULT_TEAMS);
-      showPortalStatus('teamsStatus', '↺ Reset to sample teams', 'success');
-    };
+      $('teamsInput').value = DEFAULT;
+      showStatus('teamsStatus', '↺ Reset to sample teams', 'success');
+    });
 
-    window.resetAgents = function() {
-      const DEFAULT_AGENTS = `1	Abdul Abrahams	Moses Terrayn V	100.00%
+    // ---- Reset Agents ----
+    $('resetAgentsBtn').addEventListener('click', function() {
+      const DEFAULT = `1	Abdul Abrahams	Moses Terrayn V	100.00%
 2	Stone Jade	Mbono, Phelisa	100.00%
 3	Alvino Februarie	Waylon Alexander	100.00%
 4	Shanseau Khabana	Waylon Alexander	100.00%
@@ -598,41 +561,43 @@
 8	Hanton Kock	Waylon Alexander	100.00%
 9	Denica Williams	Fanti, Siphovuyo	100.00%
 10	Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%`;
-      setAgentsInput(DEFAULT_AGENTS);
-      showPortalStatus('agentsStatus', '↺ Reset to sample agents', 'success');
-    };
+      $('agentsInput').value = DEFAULT;
+      showStatus('agentsStatus', '↺ Reset to sample agents', 'success');
+    });
 
-    window.resetAll = function() {
+    // ---- Reset All ----
+    $('resetAllBtn').addEventListener('click', function() {
       if (confirm('Reset both portals to sample data?')) {
-        window.resetTeams();
-        window.resetAgents();
-        document.getElementById('status').className = '';
-        document.getElementById('status').textContent = '';
+        $('resetTeamsBtn').click();
+        $('resetAgentsBtn').click();
+        $('status').className = '';
+        $('status').textContent = '';
       }
-    };
+    });
 
-    window.publishBoth = async function() {
-      const token = document.getElementById('tokenField').value.trim();
+    // ---- Publish Both ----
+    $('publishBtn').addEventListener('click', async function() {
+      const token = $('tokenField').value.trim();
       if (!token) {
-        showStatus('❌ Please enter your GitHub token.', 'error');
+        showMainStatus('❌ Please enter your GitHub token.', 'error');
         return;
       }
 
-      const repoPath = document.getElementById('repoField').value.trim();
+      const repoPath = $('repoField').value.trim();
       if (!repoPath) {
-        showStatus('❌ Repo path not detected.', 'error');
+        showMainStatus('❌ Repo path not detected.', 'error');
         return;
       }
 
-      const teamsRaw = getTeamsInput();
-      const agentsRaw = getAgentsInput();
+      const teamsRaw = $('teamsInput').value;
+      const agentsRaw = $('agentsInput').value;
 
       let teams, agents;
       try {
         teams = parseTeams(teamsRaw);
         if (!teams || teams.length === 0) throw new Error('Teams data is empty or invalid');
       } catch (e) {
-        showStatus('❌ Teams data is invalid. Preview first.', 'error');
+        showMainStatus('❌ Teams data is invalid. Preview first.', 'error');
         return;
       }
 
@@ -640,7 +605,7 @@
         agents = parseAgents(agentsRaw);
         if (!agents || agents.length === 0) throw new Error('Agents data is empty or invalid');
       } catch (e) {
-        showStatus('❌ Agents data is invalid. Preview first.', 'error');
+        showMainStatus('❌ Agents data is invalid. Preview first.', 'error');
         return;
       }
 
@@ -679,14 +644,16 @@
           throw new Error(err.message || 'Commit failed');
         }
 
-        showStatus('✅ Published! Live page will update in 1–2 minutes.', 'success');
-        showPortalStatus('teamsStatus', '✅ Published', 'success');
-        showPortalStatus('agentsStatus', '✅ Published', 'success');
+        showMainStatus('✅ Published! Live page will update in 1–2 minutes.', 'success');
+        showStatus('teamsStatus', '✅ Published', 'success');
+        showStatus('agentsStatus', '✅ Published', 'success');
 
       } catch (err) {
-        showStatus(`❌ Error: ${err.message}`, 'error');
+        showMainStatus('❌ Error: ' + err.message, 'error');
       }
-    };
+    });
+
+    console.log('✅ Admin page loaded successfully.');
   </script>
 
 </body>
