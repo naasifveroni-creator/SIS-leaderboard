@@ -6,7 +6,7 @@
   <title>Δ SIS Performance · Delta</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    /* (same CSS as before – no changes needed) */
+    /* (same CSS as before, but with updated positions for admin and fullscreen) */
     * {
       margin: 0;
       padding: 0;
@@ -44,9 +44,10 @@
       overflow: hidden;
     }
 
+    /* ---- FULLSCREEN TOGGLE – BOTTOM RIGHT (far right) ---- */
     .fullscreen-btn {
       position: absolute;
-      bottom: 2.5vh;
+      bottom: 2vh;
       right: 1.5vw;
       z-index: 100;
       background: rgba(255, 255, 255, 0.06);
@@ -77,6 +78,36 @@
       line-height: 1;
     }
 
+    /* ---- ADMIN ACCESS – next to fullscreen, on the left ---- */
+    #adminAccess {
+      position: fixed;
+      bottom: 2vh;
+      right: 8vw;
+      z-index: 100;
+    }
+
+    #adminAccess a {
+      color: rgba(255, 255, 255, 0.4);
+      text-decoration: none;
+      font-size: 1.4vh;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s ease;
+      padding: 0.3vh 0.6vw;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    #adminAccess a:hover {
+      color: #fdb913;
+      background: rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 215, 0, 0.15);
+    }
+
+    /* ---- rest of the styles (same as before) ---- */
     .slide {
       position: absolute;
       top: 0;
@@ -647,34 +678,8 @@
       .arrow { width: 2vh; height: 2vh; font-size: 1.2vh; }
       .dot { width: 0.6vh; height: 0.6vh; }
       .fullscreen-btn { bottom: 1.5vh; right: 1vw; font-size: 1.2vh; padding: 0.3vh 0.5vw; }
-    }
-
-    #adminAccess {
-      position: fixed;
-      bottom: 2vh;
-      right: 1.5vw;
-      z-index: 100;
-    }
-
-    #adminAccess a {
-      color: rgba(255, 255, 255, 0.4);
-      text-decoration: none;
-      font-size: 1.4vh;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      font-family: 'Inter', sans-serif;
-      transition: all 0.3s ease;
-      padding: 0.3vh 0.6vw;
-      border-radius: 4px;
-      background: rgba(0, 0, 0, 0.15);
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    #adminAccess a:hover {
-      color: #fdb913;
-      background: rgba(0, 0, 0, 0.3);
-      border-color: rgba(255, 215, 0, 0.15);
+      #adminAccess { right: 10vw; bottom: 1.5vh; }
+      #adminAccess a { font-size: 1.2vh; padding: 0.2vh 0.5vw; }
     }
   </style>
 </head>
@@ -699,7 +704,7 @@
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=10" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=11" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags1">
@@ -729,7 +734,7 @@
         </div>
 
         <div class="slide-footer">
-          <img src="delta-logo.png?v=10" alt="Delta" class="footer-logo" />
+          <img src="delta-logo.png?v=11" alt="Delta" class="footer-logo" />
         </div>
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
       </div>
@@ -738,7 +743,7 @@
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=10" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=11" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags2">
@@ -768,7 +773,7 @@
         </div>
 
         <div class="slide-footer">
-          <img src="delta-logo.png?v=10" alt="Delta" class="footer-logo" />
+          <img src="delta-logo.png?v=11" alt="Delta" class="footer-logo" />
         </div>
         <div class="progress-container"><div class="progress-bar" id="progressBar2"></div></div>
       </div>
@@ -782,6 +787,7 @@
     </div>
   </div>
 
+  <!-- ===== ADMIN ACCESS – now positioned to the left of fullscreen ===== -->
   <div id="adminAccess">
     <a href="#" id="adminLink">🔐 Admin</a>
   </div>
