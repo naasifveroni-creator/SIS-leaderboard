@@ -82,6 +82,42 @@
       color: #b71c1c;
     }
 
+    /* ---- NEW: Date section ---- */
+    .date-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      align-items: center;
+      padding: 0.8rem 1.2rem;
+      background: #f5f8fe;
+      border-radius: 12px;
+      border: 1px solid #e9edf4;
+      margin-bottom: 1.5rem;
+    }
+
+    .date-section label {
+      font-weight: 600;
+      color: #0b1a33;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .date-section input[type="date"] {
+      padding: 0.3rem 0.8rem;
+      border: 1px solid #d0d7e2;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      background: #fff;
+    }
+
+    .date-section .date-hint {
+      font-size: 0.75rem;
+      color: #6b7f96;
+      margin-left: 0.5rem;
+    }
+
     .portal-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -341,6 +377,10 @@
       .portal-grid {
         grid-template-columns: 1fr;
       }
+      .date-section {
+        flex-direction: column;
+        align-items: stretch;
+      }
     }
 
     @media (max-width: 600px) {
@@ -372,6 +412,19 @@
       <strong>📋 Two separate upload portals</strong> – paste each table into its own section.<br />
       <code>Teams: Rank  Name  SIS%</code> &nbsp;|&nbsp; <code>Agents: Rank  Name  TeamLeader  SIS%</code><br />
       <span class="warning">⚠️ You need a GitHub token with <code>repo</code> scope to publish.</span>
+    </div>
+
+    <!-- ===== NEW: DATE PICKER ===== -->
+    <div class="date-section">
+      <label>
+        📅 Week Start
+        <input type="date" id="weekStart" />
+      </label>
+      <label>
+        📅 Week End
+        <input type="date" id="weekEnd" />
+      </label>
+      <span class="date-hint">Auto‑fills to current week – change if needed</span>
     </div>
 
     <!-- ===== TWO PORTALS ===== -->
@@ -461,11 +514,45 @@
 
   <script>
     // =============================================
-    // ADMIN PAGE – SIMPLE, RELIABLE
+    // ADMIN PAGE – WITH DATE PICKER
     // =============================================
 
-    // ---- HARDCODED (but auto-detects if available) ----
+    // ---- HARDCODED REPO PATH ----
     const REPO_PATH = 'naasifveroni-creator/sis-leaderboard';
+
+    // ---- DOM refs ----
+    const weekStartInput = document.getElementById('weekStart');
+    const weekEndInput = document.getElementById('weekEnd');
+
+    // ---- Auto-fill current week (Monday – Sunday) ----
+    function setCurrentWeek() {
+      const now = new Date();
+      const day = now.getDay(); // 0=Sun, 1=Mon, ...
+      const diffToMonday = (day === 0 ? 6 : day - 1); // days to go back to Monday
+      const monday = new Date(now);
+      monday.setDate(now.getDate() - diffToMonday);
+      const sunday = new Date(monday);
+      sunday.setDate(monday.getDate() + 6);
+
+      const formatDate = (date) => {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, '0');
+        const d = String(date.getDate()).padStart(2, '0');
+        return `${y}-${m}-${d}`;
+      };
+
+      weekStartInput.value = formatDate(monday);
+      weekEndInput.value = formatDate(sunday);
+    }
+
+    setCurrentWeek();
+
+    // ---- Format date for display ----
+    function formatDisplayDate(dateStr) {
+      const parts = dateStr.split('-');
+      const date = new Date(parts[0], parts[1] - 1, parts[2]);
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
 
     // ---- Fill the repo field ----
     document.getElementById('repoField').value = REPO_PATH;
@@ -583,6 +670,18 @@
         return;
       }
 
+      // ---- Get the dates from the picker ----
+      const start = weekStartInput.value;
+      const end = weekEndInput.value;
+      if (!start || !end) {
+        showMainStatus('❌ Please set both week start and end dates.', 'error');
+        return;
+      }
+
+      const startDisplay = formatDisplayDate(start);
+      const endDisplay = formatDisplayDate(end);
+      const weekText = `Week of ${startDisplay} – ${endDisplay}`;
+
       const repoPath = $('repoField').value.trim();
       if (!repoPath) {
         showMainStatus('❌ Repo path not detected.', 'error');
@@ -609,8 +708,7 @@
         return;
       }
 
-      const week = 'Week of ' + new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      const newData = { week, teams, agents };
+      const newData = { week: weekText, teams, agents };
       const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
 
       try {
@@ -633,7 +731,7 @@
             'Accept': 'application/vnd.github.v3+json'
           },
           body: JSON.stringify({
-            message: `Update SIS leaderboard (${new Date().toLocaleString()})`,
+            message: `Update SIS leaderboard (${weekText})`,
             content: content,
             sha: sha
           })
@@ -653,7 +751,7 @@
       }
     });
 
-    console.log('✅ Admin page loaded successfully.');
+    console.log('✅ Admin page loaded with date picker.');
   </script>
 
 </body>
