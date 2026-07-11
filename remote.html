@@ -83,7 +83,7 @@
 
   <script>
     // =============================================
-    // CROSS-DEVICE REMOTE (GitHub API)
+    // CROSS-DEVICE REMOTE – NO SHA ERRORS
     // =============================================
 
     const REPO_OWNER = 'naasifveroni-creator';
@@ -111,7 +111,7 @@
       if (type) {
         setTimeout(() => {
           statusMsg.className = 'status-msg';
-        }, 3000);
+        }, 4000);
       }
     }
 
@@ -124,28 +124,32 @@
 
       const timestamp = Date.now();
       const payload = { command, timestamp };
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
 
       try {
-        // 1. Get the current file SHA
         const fileUrl = `https://api.github.com/repos/${getRepoPath()}/contents/${COMMAND_FILE}`;
-        const headRes = await fetch(fileUrl, {
-          headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
-        });
 
+        // Step 1: Get the current SHA (required for updating)
         let sha = null;
-        if (headRes.ok) {
-          const fileMeta = await headRes.json();
-          sha = fileMeta.sha;
-        } else if (headRes.status === 404) {
-          // File doesn't exist – we'll create it with an empty json first? The user should create it.
-          showStatus('❌ command.json not found. Create it with {}', 'error');
+        try {
+          const headRes = await fetch(fileUrl, {
+            headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+          });
+          if (headRes.ok) {
+            const fileMeta = await headRes.json();
+            sha = fileMeta.sha;
+          } else if (headRes.status === 404) {
+            showStatus('❌ command.json not found. Create it with {}', 'error');
+            return;
+          } else {
+            throw new Error('Failed to fetch file info');
+          }
+        } catch (e) {
+          showStatus('❌ Error fetching file: ' + e.message, 'error');
           return;
-        } else {
-          throw new Error('Failed to fetch command.json');
         }
 
-        const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
-
+        // Step 2: Update the file
         const commitRes = await fetch(fileUrl, {
           method: 'PUT',
           headers: {
@@ -162,6 +166,34 @@
 
         if (!commitRes.ok) {
           const err = await commitRes.json();
+          // If the error is about SHA mismatch, fetch the latest SHA and retry once
+          if (err.message && err.message.includes('sha')) {
+            // Retry: fetch the latest SHA and try again
+            const retryRes = await fetch(fileUrl, {
+              headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+            });
+            if (retryRes.ok) {
+              const fileMeta = await retryRes.json();
+              const retrySha = fileMeta.sha;
+              const retryCommit = await fetch(fileUrl, {
+                method: 'PUT',
+                headers: {
+                  'Authorization': `token ${token}`,
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/vnd.github.v3+json'
+                },
+                body: JSON.stringify({
+                  message: `Remote command: ${command}`,
+                  content: content,
+                  sha: retrySha
+                })
+              });
+              if (retryCommit.ok) {
+                showStatus(`✅ Command sent: ${command}`, 'success');
+                return;
+              }
+            }
+          }
           throw new Error(err.message || 'Commit failed');
         }
 
@@ -205,7 +237,7 @@
       if (navigator.vibrate) navigator.vibrate(20);
     });
 
-    // ---- Keyboard shortcuts (for testing) ----
+    // ---- Keyboard shortcuts ----
     document.addEventListener('keydown', function(e) {
       if (e.key === 'ArrowRight') { sendCommand('next'); e.preventDefault(); }
       if (e.key === 'ArrowLeft') { sendCommand('prev'); e.preventDefault(); }
