@@ -508,7 +508,6 @@
       gap: 0.4vw;
     }
 
-    /* ===== TREND ARROW STYLING ===== */
     .trend-arrow {
       display: inline-block;
       font-size: 2vh;
@@ -526,11 +525,11 @@
     }
 
     .trend-arrow.up {
-      color: #2ecc71; /* bright green */
+      color: #2ecc71;
     }
 
     .trend-arrow.down {
-      color: #d32f2f; /* Delta red */
+      color: #d32f2f;
     }
 
     .trend-arrow.neutral {
@@ -538,7 +537,6 @@
       transform: translateX(0);
     }
 
-    /* ---- GREEN ROW ---- */
     .table-wrap tr.top1 td {
       background: linear-gradient(90deg, rgba(27, 138, 78, 0.12), rgba(211, 47, 47, 0.06));
       position: relative;
@@ -576,7 +574,6 @@
       50% { opacity: 1; transform: scale(1.02); }
     }
 
-    /* ---- AMBER ROW ---- */
     .table-wrap tr.amber td {
       background: linear-gradient(90deg, rgba(230, 126, 34, 0.12), rgba(211, 47, 47, 0.06));
       position: relative;
@@ -624,7 +621,6 @@
       font-size: 2vh;
     }
 
-    /* ========== FOOTER – SKYWRITING ========== */
     .slide-footer {
       flex-shrink: 0;
       min-height: 14vh;
@@ -864,7 +860,7 @@
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=20" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=21" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags1">
@@ -918,7 +914,7 @@
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=20" alt="Delta" />
+            <img src="delta-logo-ribbon.png?v=21" alt="Delta" />
             <h1><span>DELTA</span> · SIS</h1>
           </div>
           <div class="behavior-tags" id="tags2">
@@ -1159,6 +1155,30 @@
       function nextSlide() { goToSlide(currentIndex + 1); }
       function prevSlide() { goToSlide(currentIndex - 1); }
 
+      // ---- Expose controls globally for remote ----
+      window.nextSlide = nextSlide;
+      window.prevSlide = prevSlide;
+      window.goToSlide = goToSlide;
+      window.getSlideCount = function() { return slides.length; };
+      window.getCurrentIndex = function() { return currentIndex; };
+      window._slides = slides; // Expose slides for remote to check counts
+
+      function pauseSlideshow() {
+        if (timer) { clearTimeout(timer); timer = null; }
+        if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
+        if (window._autoPlayInterval) { clearInterval(window._autoPlayInterval); window._autoPlayInterval = null; }
+      }
+
+      function resumeSlideshow() {
+        const duration = getSlideDuration(slides[currentIndex]);
+        startProgressBar(duration);
+        timer = setTimeout(() => { nextSlide(); }, duration);
+      }
+
+      window.pauseSlideshow = pauseSlideshow;
+      window.resumeSlideshow = resumeSlideshow;
+
+      // ---- resetAnimations ----
       function resetAnimations(index) {
         const activeSlide = slides[index];
         const tables = activeSlide.querySelectorAll('table');
@@ -1225,9 +1245,7 @@
       wrapper.addEventListener('mouseleave', () => {
         const duration = getSlideDuration(slides[currentIndex]);
         startProgressBar(duration);
-        timer = setTimeout(() => {
-          nextSlide();
-        }, duration);
+        timer = setTimeout(() => { nextSlide(); }, duration);
       });
 
       document.addEventListener('keydown', (e) => {
@@ -1383,9 +1401,7 @@
             const duration = getSlideDuration(slides[currentIndex]);
             startProgressBar(duration);
             if (timer) clearTimeout(timer);
-            timer = setTimeout(() => {
-              nextSlide();
-            }, duration);
+            timer = setTimeout(() => { nextSlide(); }, duration);
           }, 300);
         } catch (e) {
           document.getElementById('teamTableWrap').innerHTML =
@@ -1404,9 +1420,7 @@
           const duration = getSlideDuration(slides[currentIndex]);
           startProgressBar(duration);
           if (timer) clearTimeout(timer);
-          timer = setTimeout(() => {
-            nextSlide();
-          }, duration);
+          timer = setTimeout(() => { nextSlide(); }, duration);
         }, 100);
       });
 
@@ -1422,11 +1436,76 @@
           const duration = getSlideDuration(slides[currentIndex]);
           startProgressBar(duration);
           if (timer) clearTimeout(timer);
-          timer = setTimeout(() => {
-            nextSlide();
-          }, duration);
+          timer = setTimeout(() => { nextSlide(); }, duration);
         }, 100);
       };
+    })();
+
+    // =============================================
+    // REMOTE CONTROL LISTENER
+    // =============================================
+
+    (function() {
+      let processingCommand = false;
+
+      function handleRemoteCommand() {
+        if (processingCommand) return;
+        const hash = window.location.hash;
+        if (!hash || hash === '#') return;
+
+        processingCommand = true;
+        const parts = hash.replace('#', '').split('=');
+        const command = parts[0];
+        const value = parts[1] || '';
+
+        console.log('📡 Remote command received:', command, value);
+
+        if (command === 'slide') {
+          if (value === 'next') {
+            if (typeof window.nextSlide === 'function') window.nextSlide();
+          } else if (value === 'prev') {
+            if (typeof window.prevSlide === 'function') window.prevSlide();
+          } else {
+            const index = parseInt(value);
+            if (!isNaN(index) && index >= 0 && index < window.getSlideCount()) {
+              if (typeof window.goToSlide === 'function') window.goToSlide(index);
+            }
+          }
+        }
+
+        if (command === 'action') {
+          if (value === 'fullscreen') {
+            const btn = document.getElementById('fullscreenBtn');
+            if (btn) btn.click();
+          }
+          if (value === 'refresh') {
+            window.location.reload();
+          }
+          if (value === 'play') {
+            if (typeof window.resumeSlideshow === 'function') window.resumeSlideshow();
+          }
+          if (value === 'pause') {
+            if (typeof window.pauseSlideshow === 'function') window.pauseSlideshow();
+          }
+        }
+
+        setTimeout(() => {
+          if (window.location.hash === hash) {
+            window.location.hash = '';
+          }
+          processingCommand = false;
+        }, 200);
+      }
+
+      window.addEventListener('hashchange', function() {
+        setTimeout(handleRemoteCommand, 50);
+      });
+
+      window.addEventListener('load', function() {
+        setTimeout(handleRemoteCommand, 500);
+      });
+
+      console.log('📡 Remote control listener ready.');
     })();
   </script>
 
