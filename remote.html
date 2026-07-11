@@ -83,17 +83,16 @@
 
   <script>
     // =============================================
-    // CROSS-DEVICE REMOTE – NO SHA ERRORS
+    // CROSS-DEVICE REMOTE – SIMPLE TEXT FILE
     // =============================================
 
     const REPO_OWNER = 'naasifveroni-creator';
     const REPO_NAME = 'sis-leaderboard';
-    const COMMAND_FILE = 'command.json';
+    const COMMAND_FILE = 'command.txt';
 
     const statusMsg = document.getElementById('statusMsg');
     const tokenField = document.getElementById('tokenField');
 
-    // Load token from localStorage
     if (localStorage.getItem('deltaRemoteToken')) {
       tokenField.value = localStorage.getItem('deltaRemoteToken');
     }
@@ -122,14 +121,12 @@
         return;
       }
 
-      const timestamp = Date.now();
-      const payload = { command, timestamp };
-      const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+      const content = command; // plain text, no JSON
 
       try {
         const fileUrl = `https://api.github.com/repos/${getRepoPath()}/contents/${COMMAND_FILE}`;
 
-        // Step 1: Get the current SHA (required for updating)
+        // Get current SHA
         let sha = null;
         try {
           const headRes = await fetch(fileUrl, {
@@ -139,17 +136,17 @@
             const fileMeta = await headRes.json();
             sha = fileMeta.sha;
           } else if (headRes.status === 404) {
-            showStatus('❌ command.json not found. Create it with {}', 'error');
+            showStatus('❌ command.txt not found. Create it with "none"', 'error');
             return;
           } else {
-            throw new Error('Failed to fetch file info');
+            throw new Error('Failed to fetch file');
           }
         } catch (e) {
           showStatus('❌ Error fetching file: ' + e.message, 'error');
           return;
         }
 
-        // Step 2: Update the file
+        // Write the command
         const commitRes = await fetch(fileUrl, {
           method: 'PUT',
           headers: {
@@ -159,22 +156,21 @@
           },
           body: JSON.stringify({
             message: `Remote command: ${command}`,
-            content: content,
+            content: btoa(unescape(encodeURIComponent(content))),
             sha: sha
           })
         });
 
         if (!commitRes.ok) {
           const err = await commitRes.json();
-          // If the error is about SHA mismatch, fetch the latest SHA and retry once
+          // If SHA mismatch, retry once
           if (err.message && err.message.includes('sha')) {
-            // Retry: fetch the latest SHA and try again
+            // Get the latest SHA and retry
             const retryRes = await fetch(fileUrl, {
               headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
             });
             if (retryRes.ok) {
               const fileMeta = await retryRes.json();
-              const retrySha = fileMeta.sha;
               const retryCommit = await fetch(fileUrl, {
                 method: 'PUT',
                 headers: {
@@ -184,12 +180,14 @@
                 },
                 body: JSON.stringify({
                   message: `Remote command: ${command}`,
-                  content: content,
-                  sha: retrySha
+                  content: btoa(unescape(encodeURIComponent(content))),
+                  sha: fileMeta.sha
                 })
               });
               if (retryCommit.ok) {
                 showStatus(`✅ Command sent: ${command}`, 'success');
+                // Clear the command after 2 seconds
+                setTimeout(() => clearCommand(token), 2000);
                 return;
               }
             }
@@ -198,10 +196,38 @@
         }
 
         showStatus(`✅ Command sent: ${command}`, 'success');
+        // Clear the command after 2 seconds
+        setTimeout(() => clearCommand(token), 2000);
 
       } catch (e) {
         showStatus(`❌ Error: ${e.message}`, 'error');
       }
+    }
+
+    // ---- Clear the command after execution ----
+    async function clearCommand(token) {
+      try {
+        const fileUrl = `https://api.github.com/repos/${getRepoPath()}/contents/${COMMAND_FILE}`;
+        const headRes = await fetch(fileUrl, {
+          headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+        });
+        if (headRes.ok) {
+          const fileMeta = await headRes.json();
+          await fetch(fileUrl, {
+            method: 'PUT',
+            headers: {
+              'Authorization': `token ${token}`,
+              'Content-Type': 'application/json',
+              'Accept': 'application/vnd.github.v3+json'
+            },
+            body: JSON.stringify({
+              message: 'Clear command',
+              content: btoa(unescape(encodeURIComponent('none'))),
+              sha: fileMeta.sha
+            })
+          });
+        }
+      } catch (_) {}
     }
 
     // ---- Button handlers ----
@@ -247,7 +273,7 @@
       if (e.key >= '1' && e.key <= '4') { const idx = parseInt(e.key) - 1; sendCommand('slide:' + idx); e.preventDefault(); }
     });
 
-    console.log('🌐 Cross-device remote ready.');
+    console.log('🌐 Cross-device remote ready (command.txt).');
   </script>
 </body>
 </html>
