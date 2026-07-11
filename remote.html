@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Δ Remote · SIS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: #0b1a33;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .remote-container {
+      max-width: 420px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(20px);
+      border-radius: 32px;
+      padding: 2rem 1.5rem 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .remote-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .remote-header .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .remote-header .logo svg {
+      height: 32px;
+      width: auto;
+    }
+
+    .remote-header .logo h1 {
+      color: #fff;
+      font-weight: 300;
+      font-size: 1.4rem;
+      letter-spacing: 0.05em;
+    }
+
+    .remote-header .logo h1 span {
+      font-weight: 700;
+      color: #d32f2f;
+    }
+
+    .remote-header .status {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.7rem;
+      margin-top: 0.3rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* ---- Navigation arrows ---- */
+    .nav-row {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 60px;
+      padding: 1rem 2rem;
+      color: #fff;
+      font-size: 2.4rem;
+      font-weight: 300;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      min-width: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(4px);
+      touch-action: manipulation;
+    }
+
+    .nav-btn:active {
+      transform: scale(0.92);
+      background: rgba(211, 47, 47, 0.2);
+      border-color: rgba(211, 47, 47, 0.3);
+    }
+
+    /* ---- Slide numbers ---- */
+    .slide-numbers {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .slide-number {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 0.8rem 0;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: center;
+      touch-action: manipulation;
+    }
+
+    .slide-number:active {
+      transform: scale(0.92);
+      background: rgba(211, 47, 47, 0.15);
+      border-color: rgba(211, 47, 47, 0.3);
+      color: #fff;
+    }
+
+    .slide-number.active-slide {
+      background: rgba(211, 47, 47, 0.15);
+      border-color: rgba(211, 47, 47, 0.3);
+      color: #fff;
+    }
+
+    /* ---- Action buttons ---- */
+    .action-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .action-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 0.8rem 0.5rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: center;
+      touch-action: manipulation;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .action-btn:active {
+      transform: scale(0.92);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .action-btn.fullscreen {
+      border-color: rgba(253, 185, 19, 0.2);
+      color: #fdb913;
+    }
+
+    .action-btn.fullscreen:active {
+      background: rgba(253, 185, 19, 0.1);
+    }
+
+    .action-btn.refresh {
+      border-color: rgba(46, 204, 113, 0.2);
+      color: #2ecc71;
+    }
+
+    .action-btn.refresh:active {
+      background: rgba(46, 204, 113, 0.1);
+    }
+
+    .action-btn.playpause {
+      border-color: rgba(211, 47, 47, 0.2);
+      color: #d32f2f;
+    }
+
+    .action-btn.playpause:active {
+      background: rgba(211, 47, 47, 0.1);
+    }
+
+    /* ---- Target URL display ---- */
+    .target-url {
+      margin-top: 1.5rem;
+      padding: 0.6rem 0.8rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .target-url .label {
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+    }
+
+    .target-url .url {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.65rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-family: monospace;
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 400px) {
+      .remote-container { padding: 1.5rem 1rem 2rem; }
+      .nav-btn { font-size: 2rem; padding: 0.8rem 1.2rem; min-width: 60px; }
+      .slide-number { font-size: 1rem; padding: 0.6rem 0; }
+      .action-btn { font-size: 0.75rem; padding: 0.6rem 0.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="remote-container">
+    <div class="remote-header">
+      <div class="logo">
+        <svg viewBox="0 0 60 50" fill="none" width="32" height="28">
+          <path d="M30 2 L2 46 L58 46 L30 2Z" fill="#d32f2f" stroke="#d32f2f" stroke-width="2"/>
+          <path d="M30 10 L10 44 L50 44 L30 10Z" fill="#0b1a33" stroke="#0b1a33" stroke-width="1.5"/>
+          <text x="30" y="38" font-size="14" font-weight="700" fill="#d32f2f" text-anchor="middle" font-family="Segoe UI, sans-serif">Δ</text>
+        </svg>
+        <h1><span>DELTA</span> · SIS</h1>
+      </div>
+      <div class="status">Remote Control · TV Sync</div>
+    </div>
+
+    <!-- ===== NAVIGATION ARROWS ===== -->
+    <div class="nav-row">
+      <button class="nav-btn" id="prevBtn">◀</button>
+      <button class="nav-btn" id="nextBtn">▶</button>
+    </div>
+
+    <!-- ===== SLIDE NUMBERS ===== -->
+    <div class="slide-numbers">
+      <button class="slide-number" data-slide="0">1</button>
+      <button class="slide-number" data-slide="1">2</button>
+      <button class="slide-number" data-slide="2">3</button>
+      <button class="slide-number" data-slide="3">4</button>
+    </div>
+
+    <!-- ===== ACTION BUTTONS ===== -->
+    <div class="action-row">
+      <button class="action-btn fullscreen" id="fullscreenBtn">⛶ FULL</button>
+      <button class="action-btn playpause" id="playPauseBtn">▶ PLAY</button>
+    </div>
+    <div class="action-row" style="grid-template-columns: 1fr;">
+      <button class="action-btn refresh" id="refreshBtn">🔄 REFRESH TV</button>
+    </div>
+
+    <!-- ===== TARGET URL ===== -->
+    <div class="target-url">
+      <span class="label">📺</span>
+      <span class="url" id="targetUrlDisplay">—</span>
+    </div>
+  </div>
+
+  <script>
+    // =============================================
+    // REMOTE CONTROL – FULL FUNCTIONALITY
+    // =============================================
+
+    // ---- Detect the TV URL ----
+    function detectTVUrl() {
+      // If this remote is loaded from the same domain as the TV,
+      // we can auto-detect the index.html URL.
+      const current = window.location.href;
+      const base = current.replace(/remote\.html.*$/, '');
+      // Check if index.html exists at the base
+      return base + 'index.html';
+    }
+
+    const TV_URL = detectTVUrl();
+    document.getElementById('targetUrlDisplay').textContent = TV_URL;
+
+    // ---- Send command to TV via URL hash ----
+    function sendCommand(command) {
+      // Open the TV in a new window if it's not already open
+      // We use window.open to get a reference to the TV window
+      let tvWindow = window._tvWindow;
+
+      // If we don't have a reference or it's closed, open it
+      if (!tvWindow || tvWindow.closed) {
+        tvWindow = window.open(TV_URL, 'sis_tv');
+        window._tvWindow = tvWindow;
+        // Wait a moment for the TV to load, then send the command
+        setTimeout(() => {
+          if (tvWindow && !tvWindow.closed) {
+            tvWindow.location.hash = command;
+          }
+        }, 500);
+        return;
+      }
+
+      // If the TV window is already open, just send the command
+      try {
+        tvWindow.location.hash = command;
+      } catch (e) {
+        // If we can't access the window (cross-origin), fallback to opening it
+        tvWindow = window.open(TV_URL, 'sis_tv');
+        window._tvWindow = tvWindow;
+        setTimeout(() => {
+          if (tvWindow && !tvWindow.closed) {
+            tvWindow.location.hash = command;
+          }
+        }, 500);
+      }
+    }
+
+    // ---- Button handlers ----
+    // Prev
+    document.getElementById('prevBtn').addEventListener('click', function() {
+      sendCommand('#slide=prev');
+      // Haptic feedback on mobile (vibrate if supported)
+      if (navigator.vibrate) navigator.vibrate(10);
+    });
+
+    // Next
+    document.getElementById('nextBtn').addEventListener('click', function() {
+      sendCommand('#slide=next');
+      if (navigator.vibrate) navigator.vibrate(10);
+    });
+
+    // Slide numbers
+    document.querySelectorAll('.slide-number').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        const slideIndex = parseInt(this.dataset.slide);
+        sendCommand('#slide=' + slideIndex);
+        if (navigator.vibrate) navigator.vibrate(10);
+      });
+    });
+
+    // Fullscreen
+    document.getElementById('fullscreenBtn').addEventListener('click', function() {
+      sendCommand('#action=fullscreen');
+      if (navigator.vibrate) navigator.vibrate(10);
+    });
+
+    // Play/Pause
+    let isPlaying = true;
+    document.getElementById('playPauseBtn').addEventListener('click', function() {
+      isPlaying = !isPlaying;
+      this.textContent = isPlaying ? '▶ PLAY' : '⏸ PAUSE';
+      sendCommand('#action=' + (isPlaying ? 'play' : 'pause'));
+      if (navigator.vibrate) navigator.vibrate(10);
+    });
+
+    // Refresh
+    document.getElementById('refreshBtn').addEventListener('click', function() {
+      sendCommand('#action=refresh');
+      if (navigator.vibrate) navigator.vibrate(20);
+    });
+
+    // ---- Keyboard shortcuts (for testing on PC) ----
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowRight') { sendCommand('#slide=next'); e.preventDefault(); }
+      if (e.key === 'ArrowLeft') { sendCommand('#slide=prev'); e.preventDefault(); }
+      if (e.key === 'f') { sendCommand('#action=fullscreen'); e.preventDefault(); }
+      if (e.key === 'r') { sendCommand('#action=refresh'); e.preventDefault(); }
+      if (e.key === ' ') { 
+        document.getElementById('playPauseBtn').click();
+        e.preventDefault();
+      }
+      if (e.key >= '1' && e.key <= '4') {
+        const idx = parseInt(e.key) - 1;
+        sendCommand('#slide=' + idx);
+        e.preventDefault();
+      }
+    });
+
+    console.log('🔗 Remote control ready. TV URL: ' + TV_URL);
+    console.log('📱 Keyboard shortcuts: Arrow keys, 1-4, F (fullscreen), R (refresh), Space (play/pause)');
+  </script>
+
+</body>
+</html>
