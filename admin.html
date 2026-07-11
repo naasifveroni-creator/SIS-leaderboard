@@ -117,7 +117,6 @@
       margin-left: 0.5rem;
     }
 
-    /* ===== NEW: ALERT TOGGLES ===== */
     .alert-section {
       display: flex;
       flex-wrap: wrap;
@@ -393,6 +392,10 @@
       text-align: right;
       border-top: 1px solid #edf0f6;
       padding-top: 1.2rem;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1.2rem;
+      flex-wrap: wrap;
     }
 
     .preview-link a {
@@ -430,6 +433,11 @@
       }
       .portal textarea {
         height: 150px;
+      }
+      .preview-link {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.5rem;
       }
     }
   </style>
@@ -560,14 +568,16 @@
 
     <div id="status"></div>
 
+    <!-- ===== LINKS: View Board + Remote Control ===== -->
     <div class="preview-link">
       <a href="index.html" target="_blank">📊 View live board</a>
+      <a href="remote.html" target="_blank">📱 Remote Control</a>
     </div>
   </div>
 
   <script>
     // =============================================
-    // ADMIN PAGE – WITH ALERT TOGGLES
+    // ADMIN PAGE – WITH DATE PICKER & ALERT TOGGLES
     // =============================================
 
     // ---- Hardcoded repo path ----
@@ -631,7 +641,6 @@
       } catch (_) {}
     }
 
-    // ---- Save settings on change ----
     document.querySelectorAll('#alertSection input[type="checkbox"]').forEach(cb => {
       cb.addEventListener('change', saveAlertSettings);
     });
@@ -831,7 +840,7 @@
       }
     });
 
-    console.log('✅ Admin page loaded with date picker and alert toggles.');
+    console.log('✅ Admin page loaded with date picker, alert toggles, and remote link.');
   </script>
 
 </body>
