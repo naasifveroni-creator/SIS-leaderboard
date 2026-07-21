@@ -103,14 +103,14 @@
     #slide2 .table-wrap .name-col { width: 60%; }
     #slide2 .table-wrap .score-col { width: 30%; text-align: right; }
 
-    /* ===== FIX: Teams table – RANK COLUMN SMALLER (8%) ===== */
+    /* ===== FIX: Teams table – wider score column (prevents clipping) ===== */
     #slide3 .table-grid .scroll-container table { width: 100%; table-layout: fixed; }
     #slide3 .table-grid .scroll-container th.rank-col,
-    #slide3 .table-grid .scroll-container td.rank-col { width: 8%; }
+    #slide3 .table-grid .scroll-container td.rank-col { width: 10%; }
     #slide3 .table-grid .scroll-container th.name-col,
-    #slide3 .table-grid .scroll-container td.name-col { width: 62%; }
+    #slide3 .table-grid .scroll-container td.name-col { width: 40%; }
     #slide3 .table-grid .scroll-container th.score-col,
-    #slide3 .table-grid .scroll-container td.score-col { width: 30%; text-align: right; }
+    #slide3 .table-grid .scroll-container td.score-col { width: 50%; text-align: right; white-space: nowrap; padding-right: 0.3vw; }
 
     @media (max-aspect-ratio: 16/9) {
       .slide-header .logo-area h1 { font-size: 2vh; }
