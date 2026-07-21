@@ -3,11 +3,13 @@
   "teams": [
     {
       "rank": 1,
-      "name": "Sinazo Nogaga 89.48%"
+      "name": "Sinazo Nogaga",
+      "score": "89.48%"
     },
     {
       "rank": 2,
-      "name": "Zintle Daba 88.77%"
+      "name": "Zintle Daba",
+      "score": "88.77%"
     },
     {
       "rank": 3,
@@ -21,35 +23,43 @@
     },
     {
       "rank": 5,
-      "name": "Tina Barron 83.92%"
+      "name": "Tina Barron",
+      "score": "83.92%"
     },
     {
       "rank": 6,
-      "name": "Mbono, Phelisa 81.88%"
+      "name": "Mbono, Phelisa",
+      "score": "81.88%"
     },
     {
       "rank": 7,
-      "name": "Arendse, Dylan C 81.04%"
+      "name": "Arendse, Dylan C",
+      "score": "81.04%"
     },
     {
       "rank": 8,
-      "name": "Dawood Thaaqib 80.54%"
+      "name": "Dawood Thaaqib",
+      "score": "80.54%"
     },
     {
       "rank": 9,
-      "name": "Daniel Van Der Poel 80.10%"
+      "name": "Daniel Van Der Poel",
+      "score": "80.10%"
     },
     {
       "rank": 10,
-      "name": "Jesse Machelm 79.75%"
+      "name": "Jesse Machelm",
+      "score": "79.75%"
     },
     {
       "rank": 11,
-      "name": "Shaquel Bux 79.68%"
+      "name": "Shaquel Bux",
+      "score": "79.68%"
     },
     {
       "rank": 12,
-      "name": "Justin Salisbury 79.34%"
+      "name": "Justin Salisbury",
+      "score": "79.34%"
     },
     {
       "rank": 13,
@@ -63,11 +73,13 @@
     },
     {
       "rank": 15,
-      "name": "Waylon Alexander 78.92%"
+      "name": "Waylon Alexander",
+      "score": "78.92%"
     },
     {
       "rank": 16,
-      "name": "Magnolia Smidt 78.47%"
+      "name": "Magnolia Smidt",
+      "score": "78.47%"
     },
     {
       "rank": 17,
@@ -106,15 +118,18 @@
     },
     {
       "rank": 24,
-      "name": "Beaulique Golding 75.82%"
+      "name": "Beaulique Golding",
+      "score": "75.82%"
     },
     {
       "rank": 25,
-      "name": "Seth Wegewarth 75.76%"
+      "name": "Seth Wegewarth",
+      "score": "75.76%"
     },
     {
       "rank": 26,
-      "name": "Axola Zicina 74.88%"
+      "name": "Axola Zicina",
+      "score": "74.88%"
     },
     {
       "rank": 27,
@@ -128,27 +143,33 @@
     },
     {
       "rank": 29,
-      "name": "Fanti, Siphovuyo 73.45%"
+      "name": "Fanti, Siphovuyo",
+      "score": "73.45%"
     },
     {
       "rank": 30,
-      "name": "ETHEL ZANELE KARAWE 73.03%"
+      "name": "ETHEL ZANELE KARAWE",
+      "score": "73.03%"
     },
     {
       "rank": 31,
-      "name": "alton 72.24%"
+      "name": "alton",
+      "score": "72.24%"
     },
     {
       "rank": 32,
-      "name": "Farouk Wilson 71.46%"
+      "name": "Farouk Wilson",
+      "score": "71.46%"
     },
     {
       "rank": 33,
-      "name": "Kezia Davids 68.16%"
+      "name": "Kezia Davids",
+      "score": "68.16%"
     },
     {
       "rank": 34,
-      "name": "Sbabalwe Mqina 68.12%"
+      "name": "Sbabalwe Mqina",
+      "score": "68.12%"
     }
   ],
   "agents": [
