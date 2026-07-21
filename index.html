@@ -6,7 +6,6 @@
   <title>Δ SIS Performance · Delta</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    /* ========== RESET & BASE ========== */
     * {
       margin: 0;
       padding: 0;
@@ -813,23 +812,25 @@
       text-align: right;
     }
 
-    /* ===== FIX: Teams table – SCORE COLUMN WIDER ===== */
+    /* ===== FIX: Teams table – SCORE COLUMN WIDER (with arrow as separate column) ===== */
     #slide3 .table-grid .scroll-container table {
       width: 100%;
       table-layout: fixed;
     }
-    #slide3 .table-grid .scroll-container th.rank-col,
-    #slide3 .table-grid .scroll-container td.rank-col {
-      width: 10%;
+    #slide3 .table-grid .scroll-container .rank-col {
+      width: 8%;
     }
-    #slide3 .table-grid .scroll-container th.name-col,
-    #slide3 .table-grid .scroll-container td.name-col {
-      width: 60%;
+    #slide3 .table-grid .scroll-container .name-col {
+      width: 55%;
     }
-    #slide3 .table-grid .scroll-container th.score-col,
-    #slide3 .table-grid .scroll-container td.score-col {
-      width: 30%;
+    #slide3 .table-grid .scroll-container .score-col {
+      width: 22%;
       text-align: right;
+    }
+    #slide3 .table-grid .scroll-container .trend-arrow {
+      width: 5%;
+      text-align: left;
+      margin-left: 0.2vw;
     }
 
     @media (max-aspect-ratio: 16/9) {
@@ -885,7 +886,7 @@
       <div class="slide" id="slide2" data-index="2" data-slide="3" data-duration="16000">
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
-          <div class="logo-area"><img src="delta-logo-ribbon.png?v=35" alt="Delta" /><h1><span>DELTA</span> · SIS</h1></div>
+          <div class="logo-area"><img src="delta-logo-ribbon.png?v=36" alt="Delta" /><h1><span>DELTA</span> · SIS</h1></div>
           <div class="behavior-tags" id="tags1">
             <span class="tag" data-delay="0">GREET ME</span><span class="divider">•</span>
             <span class="tag" data-delay="100">RECOGNIZE ME</span><span class="divider">•</span>
@@ -906,7 +907,7 @@
       <div class="slide" id="slide3" data-index="3" data-slide="4" data-duration="16000">
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
-          <div class="logo-area"><img src="delta-logo-ribbon.png?v=35" alt="Delta" /><h1><span>DELTA</span> · SIS</h1></div>
+          <div class="logo-area"><img src="delta-logo-ribbon.png?v=36" alt="Delta" /><h1><span>DELTA</span> · SIS</h1></div>
           <div class="behavior-tags" id="tags2">
             <span class="tag" data-delay="0">GREET ME</span><span class="divider">•</span>
             <span class="tag" data-delay="100">RECOGNIZE ME</span><span class="divider">•</span>
@@ -1236,7 +1237,7 @@
             }
             const arrowHtml = buildTrendArrow(scoreVal, prevScore);
             const formattedScore = formatScore(item.score);
-            html += `<tr class="${rowClass}"><td class="rank-col">${item.rank}</td><td class="name-col">${item.name}</td><td class="score-col">${formattedScore} ${arrowHtml}</td></tr>`;
+            html += `<tr class="${rowClass}"><td class="rank-col">${item.rank}</td><td class="name-col">${item.name}</td><td class="score-col">${formattedScore}</td><td class="trend-arrow">${arrowHtml}</td></tr>`;
           });
           html += `</tbody></table>`;
           return html;
