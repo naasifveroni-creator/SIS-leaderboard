@@ -3,275 +3,173 @@
   "teams": [
     {
       "rank": 1,
-      "name": "Sinazo Nogaga"
+      "name": "Sinazo Nogaga",
+      "score": "89.48%"
     },
     {
       "rank": 2,
-      "name": "89.48%"
+      "name": "Zintle Daba",
+      "score": "88.77%"
     },
     {
       "rank": 3,
-      "name": "Zintle Daba"
+      "name": "Maghmoed galant",
+      "score": "85.68%"
     },
     {
       "rank": 4,
-      "name": "88.77%"
+      "name": "Manoko Botshelo",
+      "score": "85.18%"
     },
     {
       "rank": 5,
-      "name": "Maghmoed galant"
+      "name": "Tina Barron",
+      "score": "83.92%"
     },
     {
       "rank": 6,
-      "name": "85.68%"
+      "name": "Mbono, Phelisa",
+      "score": "81.88%"
     },
     {
       "rank": 7,
-      "name": "Manoko Botshelo"
+      "name": "Arendse, Dylan C",
+      "score": "81.04%"
     },
     {
       "rank": 8,
-      "name": "85.18%"
+      "name": "Dawood Thaaqib",
+      "score": "80.54%"
     },
     {
       "rank": 9,
-      "name": "Tina Barron"
+      "name": "Daniel Van Der Poel",
+      "score": "80.10%"
     },
     {
       "rank": 10,
-      "name": "83.92%"
+      "name": "Jesse Machelm",
+      "score": "79.75%"
     },
     {
       "rank": 11,
-      "name": "Mbono, Phelisa"
+      "name": "Shaquel Bux",
+      "score": "79.68%"
     },
     {
       "rank": 12,
-      "name": "81.88%"
+      "name": "Justin Salisbury",
+      "score": "79.34%"
     },
     {
       "rank": 13,
-      "name": "Arendse, Dylan C"
+      "name": "Logan Valentine",
+      "score": "79.18%"
     },
     {
       "rank": 14,
-      "name": "81.04%"
+      "name": "Moses Terrayn V",
+      "score": "79.07%"
     },
     {
       "rank": 15,
-      "name": "Dawood Thaaqib"
+      "name": "Waylon Alexander",
+      "score": "78.92%"
     },
     {
       "rank": 16,
-      "name": "80.54%"
+      "name": "Magnolia Smidt",
+      "score": "78.47%"
     },
     {
       "rank": 17,
-      "name": "Daniel Van Der Poel"
+      "name": "Cassidy Hindley",
+      "score": "78.31%"
     },
     {
       "rank": 18,
-      "name": "80.10%"
+      "name": "Moegamat Naeem Abrahams",
+      "score": "77.50%"
     },
     {
       "rank": 19,
-      "name": "Jesse Machelm"
+      "name": "Jo-Dien Martin",
+      "score": "77.50%"
     },
     {
       "rank": 20,
-      "name": "79.75%"
+      "name": "Saban, Mogamat Muaath",
+      "score": "77.39%"
     },
     {
       "rank": 21,
-      "name": "Shaquel Bux"
+      "name": "Ncapayi, Iviwe",
+      "score": "77.26%"
     },
     {
       "rank": 22,
-      "name": "79.68%"
+      "name": "Claasen, Ryan",
+      "score": "77.01%"
     },
     {
       "rank": 23,
-      "name": "Justin Salisbury"
+      "name": "Asiphe Koloyi",
+      "score": "76.94%"
     },
     {
       "rank": 24,
-      "name": "79.34%"
+      "name": "Beaulique Golding",
+      "score": "75.82%"
     },
     {
       "rank": 25,
-      "name": "Logan Valentine"
+      "name": "Seth Wegewarth",
+      "score": "75.76%"
     },
     {
       "rank": 26,
-      "name": "79.18%"
+      "name": "Axola Zicina",
+      "score": "74.88%"
     },
     {
       "rank": 27,
-      "name": "Moses Terrayn V"
+      "name": "Nomvelo",
+      "score": "74.66%"
     },
     {
       "rank": 28,
-      "name": "79.07%"
+      "name": "Laaiqah Wassung",
+      "score": "74.31%"
     },
     {
       "rank": 29,
-      "name": "Waylon Alexander"
+      "name": "Fanti, Siphovuyo",
+      "score": "73.45%"
     },
     {
       "rank": 30,
-      "name": "78.92%"
+      "name": "ETHEL ZANELE KARAWE",
+      "score": "73.03%"
     },
     {
       "rank": 31,
-      "name": "Magnolia Smidt"
+      "name": "alton",
+      "score": "72.24%"
     },
     {
       "rank": 32,
-      "name": "78.47%"
+      "name": "Farouk Wilson",
+      "score": "71.46%"
     },
     {
       "rank": 33,
-      "name": "Cassidy Hindley"
+      "name": "Kezia Davids",
+      "score": "68.16%"
     },
     {
       "rank": 34,
-      "name": "78.31%"
-    },
-    {
-      "rank": 35,
-      "name": "Jo-Dien Martin"
-    },
-    {
-      "rank": 36,
-      "name": "77.50%"
-    },
-    {
-      "rank": 37,
-      "name": "Moegamat Naeem Abrahams"
-    },
-    {
-      "rank": 38,
-      "name": "77.50%"
-    },
-    {
-      "rank": 39,
-      "name": "Saban, Mogamat Muaath"
-    },
-    {
-      "rank": 40,
-      "name": "77.39%"
-    },
-    {
-      "rank": 41,
-      "name": "Ncapayi, Iviwe"
-    },
-    {
-      "rank": 42,
-      "name": "77.26%"
-    },
-    {
-      "rank": 43,
-      "name": "Claasen, Ryan"
-    },
-    {
-      "rank": 44,
-      "name": "77.01%"
-    },
-    {
-      "rank": 45,
-      "name": "Asiphe Koloyi"
-    },
-    {
-      "rank": 46,
-      "name": "76.94%"
-    },
-    {
-      "rank": 47,
-      "name": "Beaulique Golding"
-    },
-    {
-      "rank": 48,
-      "name": "75.82%"
-    },
-    {
-      "rank": 49,
-      "name": "Seth Wegewarth"
-    },
-    {
-      "rank": 50,
-      "name": "75.76%"
-    },
-    {
-      "rank": 51,
-      "name": "Axola Zicina"
-    },
-    {
-      "rank": 52,
-      "name": "74.88%"
-    },
-    {
-      "rank": 53,
-      "name": "Nomvelo"
-    },
-    {
-      "rank": 54,
-      "name": "74.66%"
-    },
-    {
-      "rank": 55,
-      "name": "Laaiqah Wassung"
-    },
-    {
-      "rank": 56,
-      "name": "74.31%"
-    },
-    {
-      "rank": 57,
-      "name": "Fanti, Siphovuyo"
-    },
-    {
-      "rank": 58,
-      "name": "73.45%"
-    },
-    {
-      "rank": 59,
-      "name": "ETHEL ZANELE KARAWE"
-    },
-    {
-      "rank": 60,
-      "name": "73.03%"
-    },
-    {
-      "rank": 61,
-      "name": "alton"
-    },
-    {
-      "rank": 62,
-      "name": "72.24%"
-    },
-    {
-      "rank": 63,
-      "name": "Farouk Wilson"
-    },
-    {
-      "rank": 64,
-      "name": "71.46%"
-    },
-    {
-      "rank": 65,
-      "name": "Kezia Davids"
-    },
-    {
-      "rank": 66,
-      "name": "68.16%"
-    },
-    {
-      "rank": 67,
-      "name": "Sbabalwe Mqina"
-    },
-    {
-      "rank": 68,
-      "name": "68.12%"
+      "name": "Sbabalwe Mqina",
+      "score": "68.12%"
     }
   ],
   "agents": [
