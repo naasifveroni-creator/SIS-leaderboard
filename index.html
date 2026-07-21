@@ -6,6 +6,7 @@
   <title>Δ SIS Performance · Delta</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
+    /* ========== RESET & BASE ========== */
     * {
       margin: 0;
       padding: 0;
@@ -43,6 +44,7 @@
       overflow: hidden;
     }
 
+    /* ========== FULLSCREEN TOGGLE ========== */
     .fullscreen-btn {
       position: absolute;
       bottom: 2vh;
@@ -76,6 +78,7 @@
       line-height: 1;
     }
 
+    /* ========== ADMIN ACCESS ========== */
     #adminAccess {
       position: fixed;
       bottom: 2vh;
@@ -104,6 +107,7 @@
       border-color: rgba(255, 215, 0, 0.15);
     }
 
+    /* ========== SLIDE BASE ========== */
     .slide {
       position: absolute;
       top: 0;
@@ -126,6 +130,7 @@
       transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s ease;
     }
 
+    /* ========== SLIDE 0 & 1 ========== */
     #slide0 {
       background: url('slide-title.webp.jpg') center/cover no-repeat, #0b1a33;
     }
@@ -134,12 +139,14 @@
       background: url('slide-data.webp.jpg') center/cover no-repeat, #0b1a33;
     }
 
+    /* ========== SLIDE 2 & 3 ========== */
     #slide2,
     #slide3 {
       background: linear-gradient(145deg, #f0f3f8 0%, #e8ecf4 100%);
       padding: 0;
     }
 
+    /* ---------- HEADER – ORIGINAL NAVY (solid) ---------- */
     .slide-header {
       background: #0b1a33;
       backdrop-filter: blur(16px) saturate(180%);
@@ -334,6 +341,7 @@
       font-size: 2vh;
     }
 
+    /* ========== TABLE CONTAINER ========== */
     .table-wrap {
       flex: 1;
       overflow: hidden;
@@ -398,6 +406,7 @@
       backdrop-filter: blur(4px);
     }
 
+    /* ---- Scrolling container ---- */
     .scroll-container {
       flex: 1;
       overflow: hidden;
@@ -424,6 +433,7 @@
       100% { transform: translateY(-50%); }
     }
 
+    /* ---- Glass-morphism table (Teams) ---- */
     .table-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -453,6 +463,7 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
+    /* ---- Table styles ---- */
     .table-wrap th {
       background: linear-gradient(135deg, #0b1a33 0%, #1a3050 100%);
       color: #fff;
@@ -508,6 +519,7 @@
       gap: 0.4vw;
     }
 
+    /* ===== TREND ARROW STYLING ===== */
     .trend-arrow {
       display: inline-block;
       font-size: 2vh;
@@ -537,6 +549,7 @@
       transform: translateX(0);
     }
 
+    /* ---- GREEN ROW (Top performer style) ---- */
     .table-wrap tr.top1 td {
       background: linear-gradient(90deg, rgba(27, 138, 78, 0.12), rgba(211, 47, 47, 0.06));
       position: relative;
@@ -574,6 +587,7 @@
       50% { opacity: 1; transform: scale(1.02); }
     }
 
+    /* ---- AMBER ROW ---- */
     .table-wrap tr.amber td {
       background: linear-gradient(90deg, rgba(230, 126, 34, 0.12), rgba(211, 47, 47, 0.06));
       position: relative;
@@ -621,6 +635,7 @@
       font-size: 2vh;
     }
 
+    /* ========== FOOTER – SKYWRITING ========== */
     .slide-footer {
       flex-shrink: 0;
       min-height: 14vh;
@@ -708,6 +723,7 @@
       100% { left: calc(100% + 20px); }
     }
 
+    /* ========== PROGRESS BAR ========== */
     .progress-container {
       position: absolute;
       bottom: 0;
@@ -733,6 +749,7 @@
       50% { opacity: 1; }
     }
 
+    /* ========== NAVIGATION ========== */
     .nav-controls {
       position: absolute;
       bottom: 1%;
@@ -796,6 +813,37 @@
       box-shadow: 0 0 20px rgba(211, 47, 47, 0.5);
     }
 
+    /* ========== FIX: Agents table – SIS pinned right ========== */
+    #slide2 .table-wrap table {
+      width: 100%;
+      table-layout: fixed;
+    }
+    #slide2 .table-wrap .rank-col {
+      width: 12%;
+    }
+    #slide2 .table-wrap .name-col {
+      width: 68%;
+    }
+    #slide2 .table-wrap .score-col {
+      width: 20%;
+      text-align: right;
+    }
+
+    #slide3 .table-wrap table {
+      table-layout: fixed;
+    }
+    #slide3 .table-wrap .rank-col {
+      width: 12%;
+    }
+    #slide3 .table-wrap .name-col {
+      width: 68%;
+    }
+    #slide3 .table-wrap .score-col {
+      width: 20%;
+      text-align: right;
+    }
+
+    /* ========== RESPONSIVE ========== */
     @media (max-aspect-ratio: 16/9) {
       .slide-header .logo-area h1 { font-size: 2vh; }
       .slide-header .logo-area img { height: 6vh; }
@@ -843,250 +891,138 @@
 
   <div class="slide-deck">
     <div class="slides-wrapper" id="slidesWrapper">
-
-      <button class="fullscreen-btn" id="fullscreenBtn">
-        <span class="icon">⛶</span> FULL
-      </button>
-
-      <div class="slide active" id="slide0" data-index="0" data-slide="1">
-        <div class="slide-counter"><span class="current">1</span> / 4</div>
-      </div>
-
-      <div class="slide" id="slide1" data-index="1" data-slide="2">
-        <div class="slide-counter"><span class="current">2</span> / 4</div>
-      </div>
-
+      <button class="fullscreen-btn" id="fullscreenBtn"><span class="icon">⛶</span> FULL</button>
+      <div class="slide active" id="slide0" data-index="0" data-slide="1"><div class="slide-counter"><span class="current">1</span> / 4</div></div>
+      <div class="slide" id="slide1" data-index="1" data-slide="2"><div class="slide-counter"><span class="current">2</span> / 4</div></div>
       <div class="slide" id="slide2" data-index="2" data-slide="3" data-duration="16000">
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
-          <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=24" alt="Delta" />
-            <h1><span>DELTA</span> · SIS</h1>
-          </div>
+          <div class="logo-area"><img src="delta-logo-ribbon.png?v=29" alt="Delta" /><h1><span>DELTA</span> · SIS</h1></div>
           <div class="behavior-tags" id="tags1">
-            <span class="tag" data-delay="0">GREET ME</span>
-            <span class="divider">•</span>
-            <span class="tag" data-delay="100">RECOGNIZE ME</span>
-            <span class="divider">•</span>
-            <span class="tag" data-delay="200">BE KIND TO ME</span>
-            <span class="divider">•</span>
-            <span class="tag" data-delay="300">INFORM ME</span>
-            <span class="divider">•</span>
-            <span class="tag red" data-delay="400">CONSISTENTLY EXECUTED</span>
-            <span class="divider">•</span>
+            <span class="tag" data-delay="0">GREET ME</span><span class="divider">•</span>
+            <span class="tag" data-delay="100">RECOGNIZE ME</span><span class="divider">•</span>
+            <span class="tag" data-delay="200">BE KIND TO ME</span><span class="divider">•</span>
+            <span class="tag" data-delay="300">INFORM ME</span><span class="divider">•</span>
+            <span class="tag red" data-delay="400">CONSISTENTLY EXECUTED</span><span class="divider">•</span>
             <span class="tag coach" data-delay="500">LEADERS AS COACHES</span>
           </div>
           <div class="border-line"></div>
         </div>
-
         <div class="table-wrap">
-          <div class="slide-title">
-            Top Performing Agents – SIS
-            <span class="week-date" id="agentsWeek">Week of Jun 25 – Jul 01, 2026</span>
-          </div>
-          <div class="scroll-container" id="agentScrollContainer">
-            <div id="agentTableInner"></div>
-          </div>
+          <div class="slide-title">Top Performing Agents – SIS <span class="week-date" id="agentsWeek">Week of Jun 25 – Jul 01, 2026</span></div>
+          <div class="scroll-container" id="agentScrollContainer"><div id="agentTableInner"></div></div>
         </div>
-
-        <div class="slide-footer">
-          <div class="footer-animation">
-            <div class="spray-fill"></div>
-            <svg class="plane" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M15 25 L70 20 L80 25 L70 30 L15 25Z" fill="#d32f2f" stroke="#b71c1c" stroke-width="1"/>
-              <path d="M45 22 L60 10 L68 15 L52 25 L45 22Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/>
-              <path d="M45 28 L60 40 L68 35 L52 25 L45 28Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/>
-              <path d="M15 25 L5 15 L15 20 L15 25Z" fill="#d32f2f"/>
-              <path d="M15 25 L5 35 L15 30 L15 25Z" fill="#d32f2f"/>
-              <path d="M15 23 L8 18 L15 22 L15 23Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/>
-              <path d="M15 27 L8 32 L15 28 L15 27Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/>
-              <circle cx="78" cy="25" r="3" fill="#fdb913"/>
-              <ellipse cx="82" cy="25" rx="8" ry="2" fill="#fdb913" opacity="0.8"/>
-              <path d="M65 23 Q72 23 68 27 Q65 27 65 23Z" fill="#0b1a33" opacity="0.6"/>
-            </svg>
-            <div class="spray-text">DELTA</div>
-          </div>
-        </div>
+        <div class="slide-footer"><div class="footer-animation"><div class="spray-fill"></div><svg class="plane" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 25 L70 20 L80 25 L70 30 L15 25Z" fill="#d32f2f" stroke="#b71c1c" stroke-width="1"/><path d="M45 22 L60 10 L68 15 L52 25 L45 22Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/><path d="M45 28 L60 40 L68 35 L52 25 L45 28Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/><path d="M15 25 L5 15 L15 20 L15 25Z" fill="#d32f2f"/><path d="M15 25 L5 35 L15 30 L15 25Z" fill="#d32f2f"/><path d="M15 23 L8 18 L15 22 L15 23Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/><path d="M15 27 L8 32 L15 28 L15 27Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/><circle cx="78" cy="25" r="3" fill="#fdb913"/><ellipse cx="82" cy="25" rx="8" ry="2" fill="#fdb913" opacity="0.8"/><path d="M65 23 Q72 23 68 27 Q65 27 65 23Z" fill="#0b1a33" opacity="0.6"/></svg><div class="spray-text">DELTA</div></div></div>
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
       </div>
-
       <div class="slide" id="slide3" data-index="3" data-slide="4" data-duration="16000">
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
-          <div class="logo-area">
-            <img src="delta-logo-ribbon.png?v=24" alt="Delta" />
-            <h1><span>DELTA</span> · SIS</h1>
-          </div>
+          <div class="logo-area"><img src="delta-logo-ribbon.png?v=29" alt="Delta" /><h1><span>DELTA</span> · SIS</h1></div>
           <div class="behavior-tags" id="tags2">
-            <span class="tag" data-delay="0">GREET ME</span>
-            <span class="divider">•</span>
-            <span class="tag" data-delay="100">RECOGNIZE ME</span>
-            <span class="divider">•</span>
-            <span class="tag" data-delay="200">BE KIND TO ME</span>
-            <span class="divider">•</span>
-            <span class="tag" data-delay="300">INFORM ME</span>
-            <span class="divider">•</span>
-            <span class="tag red" data-delay="400">CONSISTENTLY EXECUTED</span>
-            <span class="divider">•</span>
+            <span class="tag" data-delay="0">GREET ME</span><span class="divider">•</span>
+            <span class="tag" data-delay="100">RECOGNIZE ME</span><span class="divider">•</span>
+            <span class="tag" data-delay="200">BE KIND TO ME</span><span class="divider">•</span>
+            <span class="tag" data-delay="300">INFORM ME</span><span class="divider">•</span>
+            <span class="tag red" data-delay="400">CONSISTENTLY EXECUTED</span><span class="divider">•</span>
             <span class="tag coach" data-delay="500">LEADERS AS COACHES</span>
           </div>
           <div class="border-line"></div>
         </div>
-
         <div class="table-wrap">
-          <div class="slide-title">
-            Top Performing Teams – SIS
-            <span class="week-date" id="teamsWeek">Week of Jun 25 – Jul 01, 2026</span>
-          </div>
-          <div class="table-grid" id="teamTableWrap">
-            <div class="empty-state">Loading teams…</div>
-          </div>
+          <div class="slide-title">Top Performing Teams – SIS <span class="week-date" id="teamsWeek">Week of Jun 25 – Jul 01, 2026</span></div>
+          <div class="table-grid" id="teamTableWrap"><div class="empty-state">Loading teams…</div></div>
         </div>
-
-        <div class="slide-footer">
-          <div class="footer-animation">
-            <div class="spray-fill"></div>
-            <svg class="plane" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M15 25 L70 20 L80 25 L70 30 L15 25Z" fill="#d32f2f" stroke="#b71c1c" stroke-width="1"/>
-              <path d="M45 22 L60 10 L68 15 L52 25 L45 22Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/>
-              <path d="M45 28 L60 40 L68 35 L52 25 L45 28Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/>
-              <path d="M15 25 L5 15 L15 20 L15 25Z" fill="#d32f2f"/>
-              <path d="M15 25 L5 35 L15 30 L15 25Z" fill="#d32f2f"/>
-              <path d="M15 23 L8 18 L15 22 L15 23Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/>
-              <path d="M15 27 L8 32 L15 28 L15 27Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/>
-              <circle cx="78" cy="25" r="3" fill="#fdb913"/>
-              <ellipse cx="82" cy="25" rx="8" ry="2" fill="#fdb913" opacity="0.8"/>
-              <path d="M65 23 Q72 23 68 27 Q65 27 65 23Z" fill="#0b1a33" opacity="0.6"/>
-            </svg>
-            <div class="spray-text">DELTA</div>
-          </div>
-        </div>
+        <div class="slide-footer"><div class="footer-animation"><div class="spray-fill"></div><svg class="plane" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 25 L70 20 L80 25 L70 30 L15 25Z" fill="#d32f2f" stroke="#b71c1c" stroke-width="1"/><path d="M45 22 L60 10 L68 15 L52 25 L45 22Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/><path d="M45 28 L60 40 L68 35 L52 25 L45 28Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/><path d="M15 25 L5 15 L15 20 L15 25Z" fill="#d32f2f"/><path d="M15 25 L5 35 L15 30 L15 25Z" fill="#d32f2f"/><path d="M15 23 L8 18 L15 22 L15 23Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/><path d="M15 27 L8 32 L15 28 L15 27Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/><circle cx="78" cy="25" r="3" fill="#fdb913"/><ellipse cx="82" cy="25" rx="8" ry="2" fill="#fdb913" opacity="0.8"/><path d="M65 23 Q72 23 68 27 Q65 27 65 23Z" fill="#0b1a33" opacity="0.6"/></svg><div class="spray-text">DELTA</div></div></div>
         <div class="progress-container"><div class="progress-bar" id="progressBar2"></div></div>
       </div>
-
       <div class="nav-controls">
         <button class="arrow" id="prevSlide">‹</button>
         <div class="dots" id="dotsContainer"></div>
         <button class="arrow" id="nextSlide">›</button>
       </div>
-
     </div>
   </div>
 
-  <div id="adminAccess">
-    <a href="#" id="adminLink">🔐 Admin</a>
-  </div>
+  <div id="adminAccess"><a href="#" id="adminLink">🔐 Admin</a></div>
 
   <script>
     // =============================================
     // ADMIN ACCESS
     // =============================================
-
     (function() {
       const adminLink = document.getElementById('adminLink');
       const ADMIN_PASSWORD = 'delta2026';
-
       adminLink.addEventListener('click', function(e) {
         e.preventDefault();
         const entered = prompt('Enter admin password:');
-        if (entered === ADMIN_PASSWORD) {
-          window.open('admin.html', '_blank');
-        } else if (entered !== null) {
-          alert('Incorrect password. Access denied.');
-        }
+        if (entered === ADMIN_PASSWORD) { window.open('admin.html', '_blank'); }
+        else if (entered !== null) { alert('Incorrect password. Access denied.'); }
       });
-
       document.addEventListener('keydown', function(e) {
         if (e.ctrlKey && e.shiftKey && (e.key === 'a' || e.key === 'A')) {
           e.preventDefault();
           const entered = prompt('Enter admin password:');
-          if (entered === ADMIN_PASSWORD) {
-            window.open('admin.html', '_blank');
-          } else if (entered !== null) {
-            alert('Incorrect password. Access denied.');
-          }
+          if (entered === ADMIN_PASSWORD) { window.open('admin.html', '_blank'); }
+          else if (entered !== null) { alert('Incorrect password. Access denied.'); }
         }
       });
-
-      console.log('🔐 Admin access: Click the "🔐 Admin" link in the bottom-right corner');
     })();
 
     // =============================================
     // FULLSCREEN TOGGLE
     // =============================================
-
     (function() {
       const btn = document.getElementById('fullscreenBtn');
       if (!btn) return;
-
       btn.addEventListener('click', function() {
         if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen?.() ||
-          document.documentElement.webkitRequestFullscreen?.() ||
-          document.documentElement.msRequestFullscreen?.();
+          document.documentElement.requestFullscreen?.() || document.documentElement.webkitRequestFullscreen?.() || document.documentElement.msRequestFullscreen?.();
           btn.innerHTML = '<span class="icon">⛶</span> EXIT';
         } else {
-          document.exitFullscreen?.() ||
-          document.webkitExitFullscreen?.() ||
-          document.msExitFullscreen?.();
+          document.exitFullscreen?.() || document.webkitExitFullscreen?.() || document.msExitFullscreen?.();
           btn.innerHTML = '<span class="icon">⛶</span> FULL';
         }
       });
-
       document.addEventListener('fullscreenchange', function() {
-        if (document.fullscreenElement) {
-          btn.innerHTML = '<span class="icon">⛶</span> EXIT';
-        } else {
-          btn.innerHTML = '<span class="icon">⛶</span> FULL';
-        }
+        if (document.fullscreenElement) { btn.innerHTML = '<span class="icon">⛶</span> EXIT'; }
+        else { btn.innerHTML = '<span class="icon">⛶</span> FULL'; }
       });
     })();
 
     // =============================================
     // STAGGERED TAG ENTRANCE
     // =============================================
-
     (function() {
       function animateTags(tagsContainer) {
         const tags = tagsContainer.querySelectorAll('.tag');
         tags.forEach((tag) => {
           const delay = parseInt(tag.dataset.delay) || 0;
-          setTimeout(() => {
-            tag.classList.add('visible');
-          }, delay + 300);
+          setTimeout(() => { tag.classList.add('visible'); }, delay + 300);
         });
       }
-
       const tags1 = document.getElementById('tags1');
       const tags2 = document.getElementById('tags2');
       if (tags1) animateTags(tags1);
       if (tags2) animateTags(tags2);
-
       const observer = new MutationObserver(() => {
         document.querySelectorAll('.slide.active .behavior-tags').forEach((tags) => {
-          tags.querySelectorAll('.tag').forEach((tag) => {
-            tag.classList.remove('visible');
-          });
-          setTimeout(() => {
-            animateTags(tags);
-          }, 300);
+          tags.querySelectorAll('.tag').forEach((tag) => { tag.classList.remove('visible'); });
+          setTimeout(() => { animateTags(tags); }, 300);
         });
       });
-
       document.querySelectorAll('.slide').forEach((slide) => {
         observer.observe(slide, { attributes: true, attributeFilter: ['class'] });
       });
     })();
 
     // =============================================
-    // SLIDESHOW ENGINE + TREND ARROWS
+    // SLIDESHOW ENGINE + TREND ARROWS + AUTO-RANK
     // =============================================
-
     (function() {
       const slides = document.querySelectorAll('.slide');
       const dotsContainer = document.getElementById('dotsContainer');
       const progressBars = document.querySelectorAll('.progress-bar');
-
       let currentIndex = 0;
       let timer = null;
       let progressTimer = null;
@@ -1128,28 +1064,19 @@
         if (index >= slides.length) index = 0;
 
         isTransitioning = true;
-
         slides[currentIndex].classList.remove('active');
         dots[currentIndex].classList.remove('active');
-
         currentIndex = index;
         slides[currentIndex].classList.add('active');
         dots[currentIndex].classList.add('active');
-
         resetAnimations(currentIndex);
 
         if (timer) clearTimeout(timer);
         if (progressTimer) clearInterval(progressTimer);
-
         const duration = getSlideDuration(slides[currentIndex]);
         startProgressBar(duration);
-        timer = setTimeout(() => {
-          nextSlide();
-        }, duration);
-
-        setTimeout(() => {
-          isTransitioning = false;
-        }, 800);
+        timer = setTimeout(() => { nextSlide(); }, duration);
+        setTimeout(() => { isTransitioning = false; }, 800);
       }
 
       function nextSlide() { goToSlide(currentIndex + 1); }
@@ -1246,55 +1173,47 @@
       const TARGET_THRESHOLD = 86.30;
 
       function buildTrendArrow(currentVal, previousVal) {
-        if (previousVal === undefined || previousVal === null) {
-          return `<span class="trend-arrow neutral"></span>`;
-        }
+        if (previousVal === undefined || previousVal === null) { return `<span class="trend-arrow neutral"></span>`; }
         const diff = currentVal - previousVal;
-        if (diff > 0.01) {
-          return `<span class="trend-arrow up visible">↑</span>`;
-        } else if (diff < -0.01) {
-          return `<span class="trend-arrow down visible">↓</span>`;
-        }
+        if (diff > 0.01) { return `<span class="trend-arrow up visible">↑</span>`; }
+        else if (diff < -0.01) { return `<span class="trend-arrow down visible">↓</span>`; }
         return `<span class="trend-arrow neutral"></span>`;
+      }
+
+      // ---- AUTO-RANK: Sort by score descending and assign ranks ----
+      function autoRank(items) {
+        const sorted = [...items].sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
+        return sorted.map((item, index) => ({
+          ...item,
+          rank: index + 1
+        }));
       }
 
       function renderAgents(containerId, items, previousData) {
         const container = document.getElementById(containerId);
-        if (!items || items.length === 0) {
-          container.innerHTML = `<div class="empty-state">No data available.</div>`;
-          return;
-        }
-        const doubled = [...items, ...items];
+        if (!items || items.length === 0) { container.innerHTML = `<div class="empty-state">No data available.</div>`; return; }
+        // Auto-rank agents
+        const ranked = autoRank(items);
+        const doubled = [...ranked, ...ranked];
         let html = `<table>
           <thead><tr>
             <th class="rank-col">RANK</th>
             <th class="name-col">AGENT NAME</th>
-            <th>TEAM LEADER</th>
             <th class="score-col">SIS</th>
           </tr></thead><tbody>`;
 
         doubled.forEach(item => {
           const scoreVal = parseFloat(item.score);
-          let rowClass = '';
-          if (scoreVal >= TARGET_THRESHOLD) {
-            rowClass = 'top1';
-          } else {
-            rowClass = 'amber';
-          }
-
+          let rowClass = (scoreVal >= TARGET_THRESHOLD) ? 'top1' : 'amber';
           let prevScore = undefined;
           if (previousData && previousData.agents) {
             const prevItem = previousData.agents.find(a => a.name === item.name);
-            if (prevItem) {
-              prevScore = parseFloat(prevItem.score);
-            }
+            if (prevItem) { prevScore = parseFloat(prevItem.score); }
           }
           const arrowHtml = buildTrendArrow(scoreVal, prevScore);
-
           html += `<tr class="${rowClass}">
             <td class="rank-col">${item.rank}</td>
             <td class="name-col">${item.name}</td>
-            <td>${item.team || '—'}</td>
             <td class="score-col">${item.score} ${arrowHtml}</td>
           </tr>`;
         });
@@ -1305,48 +1224,30 @@
 
       function renderTeams(containerId, items, previousData) {
         const container = document.getElementById(containerId);
-        if (!items || items.length === 0) {
-          container.innerHTML = `<div class="empty-state">No data available.</div>`;
-          return;
-        }
-        const firstCol = items.slice(0, 10);
-        const secondCol = items.slice(10);
+        if (!items || items.length === 0) { container.innerHTML = `<div class="empty-state">No data available.</div>`; return; }
+        // Auto-rank teams
+        const ranked = autoRank(items);
+        const firstCol = ranked.slice(0, 10);
+        const secondCol = ranked.slice(10);
         const firstDoubled = [...firstCol, ...firstCol];
         const secondDoubled = [...secondCol, ...secondCol];
 
         function buildTeamTable(dataArray) {
-          let html = `<table>
-            <thead><tr>
-              <th>#</th>
-              <th class="name-col">TEAM LEADER</th>
-              <th class="score-col">SIS</th>
-            </tr></thead><tbody>`;
+          let html = `<table><thead><tr><th>#</th><th class="name-col">TEAM LEADER</th><th class="score-col">SIS</th></tr></thead><tbody>`;
           dataArray.forEach(item => {
             const scoreVal = parseFloat(item.score);
-            let rowClass = '';
-            if (scoreVal >= TARGET_THRESHOLD) {
-              rowClass = 'top1';
-            } else {
-              rowClass = 'amber';
-            }
+            let rowClass = (scoreVal >= TARGET_THRESHOLD) ? 'top1' : 'amber';
             let prevScore = undefined;
             if (previousData && previousData.teams) {
               const prevItem = previousData.teams.find(t => t.name === item.name);
-              if (prevItem) {
-                prevScore = parseFloat(prevItem.score);
-              }
+              if (prevItem) { prevScore = parseFloat(prevItem.score); }
             }
             const arrowHtml = buildTrendArrow(scoreVal, prevScore);
-            html += `<tr class="${rowClass}">
-              <td class="rank-col">${item.rank}</td>
-              <td class="name-col">${item.name}</td>
-              <td class="score-col">${item.score} ${arrowHtml}</td>
-            </tr>`;
+            html += `<tr class="${rowClass}"><td class="rank-col">${item.rank}</td><td class="name-col">${item.name}</td><td class="score-col">${item.score} ${arrowHtml}</td></tr>`;
           });
           html += `</tbody></table>`;
           return html;
         }
-
         let html = '';
         html += `<div class="scroll-container">${buildTeamTable(firstDoubled)}</div>`;
         html += `<div class="scroll-container">${buildTeamTable(secondDoubled)}</div>`;
@@ -1354,18 +1255,10 @@
       }
 
       function storeSnapshot(data) {
-        try {
-          localStorage.setItem('deltaPreviousData', JSON.stringify(data));
-        } catch (_) {}
+        try { localStorage.setItem('deltaPreviousData', JSON.stringify(data)); } catch (_) {}
       }
-
       function getPreviousData() {
-        try {
-          const raw = localStorage.getItem('deltaPreviousData');
-          if (raw) {
-            return JSON.parse(raw);
-          }
-        } catch (_) {}
+        try { const raw = localStorage.getItem('deltaPreviousData'); if (raw) { return JSON.parse(raw); } } catch (_) {}
         return null;
       }
 
@@ -1377,14 +1270,10 @@
           const weekText = data.week || 'Week of Jun 25 – Jul 01, 2026';
           document.getElementById('agentsWeek').textContent = weekText;
           document.getElementById('teamsWeek').textContent = weekText;
-
           const prevData = getPreviousData();
-
           renderAgents('agentTableInner', data.agents, prevData);
           renderTeams('teamTableWrap', data.teams, prevData);
-
           storeSnapshot(data);
-
           setTimeout(() => {
             resetAnimations(currentIndex);
             const duration = getSlideDuration(slides[currentIndex]);
@@ -1393,14 +1282,12 @@
             timer = setTimeout(() => { nextSlide(); }, duration);
           }, 300);
         } catch (e) {
-          document.getElementById('teamTableWrap').innerHTML =
-            '<div class="empty-state">⚠️ Could not load data. Refresh or try again later.</div>';
+          document.getElementById('teamTableWrap').innerHTML = '<div class="empty-state">⚠️ Could not load data. Refresh or try again later.</div>';
           document.getElementById('agentTableInner').innerHTML = '';
         }
       }
 
       loadData();
-
       setInterval(loadData, 60000);
 
       const slideObserver = new MutationObserver(() => {
@@ -1412,10 +1299,7 @@
           timer = setTimeout(() => { nextSlide(); }, duration);
         }, 100);
       });
-
-      slides.forEach(slide => {
-        slideObserver.observe(slide, { attributes: true, attributeFilter: ['class'] });
-      });
+      slides.forEach(slide => { slideObserver.observe(slide, { attributes: true, attributeFilter: ['class'] }); });
 
       const originalGoTo = goToSlide;
       goToSlide = function(index) {
@@ -1431,7 +1315,7 @@
     })();
 
     // =============================================
-    // REMOTE CONTROL POLLING (command.txt) – FIXED
+    // REMOTE CONTROL POLLING (command.txt)
     // =============================================
     (function() {
       let lastCommand = '';
