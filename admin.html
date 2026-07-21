@@ -456,7 +456,8 @@
 
     <div class="info-box">
       <strong>📋 Two separate upload portals</strong> – paste each table into its own section.<br />
-      <code>Teams: Rank  Name  SIS%</code> &nbsp;|&nbsp; <code>Agents: Rank  Name  TeamLeader  SIS%</code><br />
+      <code>Teams: Name  SIS%</code> &nbsp;|&nbsp; <code>Agents: Name  TeamLeader  SIS%</code><br />
+      <span style="color:#0b1a33; font-weight:500;">✅ Auto‑rank:</span> Paste <strong>without</strong> rank numbers – they'll be assigned automatically based on score!<br />
       <span class="warning">⚠️ You need a GitHub token with <code>repo</code> scope to publish.</span>
     </div>
 
@@ -496,24 +497,24 @@
           🏆 Top Performing Teams
           <span class="badge">Teams</span>
         </div>
-        <div class="portal-sub">Paste team data: <code>Rank, Name, SIS%</code> (tab-separated)</div>
-        <textarea id="teamsInput" spellcheck="false">1	Sinazo Nogaga	88.18%
-2	Zintle Daba	87.14%
-3	Mbono, Phelisa	86.22%
-4	Botshelo Manoko	85.71%
-5	Jesse Machelm	83.11%
-6	Justin Salisbury	83.00%
-7	Tina Barron	82.58%
-8	Waylon Alexander	81.43%
-9	Terrayn Moses	81.06%
-10	Dawood Thaaqib	80.86%
-11	Daniel Van Der Poel	79.46%
-12	Moegamat Naeem Abrahams	79.16%
-13	Fatima Becket	78.24%
-14	Claasen, Ryan	77.73%
-15	ETHEL ZANELE KARAWE	77.52%
-16	Saban, Mogamat Muaath	75.18%
-17	Ivewe Ncapayi	71.38%</textarea>
+        <div class="portal-sub">Paste team data: <code>Name, SIS%</code> (tab-separated) – ranks auto‑assigned</div>
+        <textarea id="teamsInput" spellcheck="false">Sinazo Nogaga	88.18%
+Zintle Daba	87.14%
+Mbono, Phelisa	86.22%
+Botshelo Manoko	85.71%
+Jesse Machelm	83.11%
+Justin Salisbury	83.00%
+Tina Barron	82.58%
+Waylon Alexander	81.43%
+Terrayn Moses	81.06%
+Dawood Thaaqib	80.86%
+Daniel Van Der Poel	79.46%
+Moegamat Naeem Abrahams	79.16%
+Fatima Becket	78.24%
+Claasen, Ryan	77.73%
+ETHEL ZANELE KARAWE	77.52%
+Saban, Mogamat Muaath	75.18%
+Ivewe Ncapayi	71.38%</textarea>
         <div class="portal-actions">
           <button class="btn-sm" id="previewTeamsBtn">👁 Preview Teams</button>
           <button class="btn-sm green" id="resetTeamsBtn">↺ Reset Teams</button>
@@ -526,17 +527,17 @@
           ⭐ Top Performing Agents
           <span class="badge">Agents</span>
         </div>
-        <div class="portal-sub">Paste agent data: <code>Rank, Name, TeamLeader, SIS%</code> (tab-separated)</div>
-        <textarea id="agentsInput" spellcheck="false">1	Abdul Abrahams	Moses Terrayn V	100.00%
-2	Stone Jade	Mbono, Phelisa	100.00%
-3	Alvino Februarie	Waylon Alexander	100.00%
-4	Shanseau Khabana	Waylon Alexander	100.00%
-5	Casey Williams	Tina Barron	100.00%
-6	Asavela Mkuyana	ETHEL ZANELE KARAWE	100.00%
-7	Gideon Muller	ETHEL ZANELE KARAWE	100.00%
-8	Hanton Kock	Waylon Alexander	100.00%
-9	Denica Williams	Fanti, Siphovuyo	100.00%
-10	Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%</textarea>
+        <div class="portal-sub">Paste agent data: <code>Name, TeamLeader, SIS%</code> (tab-separated) – ranks auto‑assigned</div>
+        <textarea id="agentsInput" spellcheck="false">Abdul Abrahams	Moses Terrayn V	100.00%
+Stone Jade	Mbono, Phelisa	100.00%
+Alvino Februarie	Waylon Alexander	100.00%
+Shanseau Khabana	Waylon Alexander	100.00%
+Casey Williams	Tina Barron	100.00%
+Asavela Mkuyana	ETHEL ZANELE KARAWE	100.00%
+Gideon Muller	ETHEL ZANELE KARAWE	100.00%
+Hanton Kock	Waylon Alexander	100.00%
+Denica Williams	Fanti, Siphovuyo	100.00%
+Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%</textarea>
         <div class="portal-actions">
           <button class="btn-sm" id="previewAgentsBtn">👁 Preview Agents</button>
           <button class="btn-sm green" id="resetAgentsBtn">↺ Reset Agents</button>
@@ -577,7 +578,7 @@
 
   <script>
     // =============================================
-    // ADMIN PAGE – WITH DATE PICKER & ALERT TOGGLES
+    // ADMIN PAGE – WITH AUTO-RANK
     // =============================================
 
     // ---- Hardcoded repo path ----
@@ -662,32 +663,84 @@
       el.className = type;
     }
 
-    // ---- Parse functions ----
-    function parseTeams(text) {
+    // =============================================
+    // AUTO-RANK PARSERS
+    // =============================================
+
+    function autoRankAndParseTeams(text) {
       const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-      return lines.map(line => {
+      const rows = lines.map(line => {
         const parts = line.split(/\t| {2,}/).filter(s => s.length > 0);
-        return { rank: parseInt(parts[0]), name: parts[1], score: parts[2] };
+        return parts;
       });
+
+      // Check if first row has a rank (first column is a number)
+      const hasRank = rows.length > 0 && !isNaN(parseFloat(rows[0][0]));
+
+      if (hasRank) {
+        // User included rank numbers – parse as-is
+        return rows.map(r => {
+          return { rank: parseInt(r[0]), name: r[1], score: r[2] };
+        });
+      } else {
+        // No rank – auto-rank by score
+        const parsed = rows.map(r => {
+          return { name: r[0], score: r[1] };
+        });
+        // Sort by score descending
+        const sorted = parsed.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
+        // Assign ranks
+        return sorted.map((item, index) => ({
+          rank: index + 1,
+          name: item.name,
+          score: item.score
+        }));
+      }
     }
 
-    function parseAgents(text) {
+    function autoRankAndParseAgents(text) {
       const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-      return lines.map(line => {
+      const rows = lines.map(line => {
         const parts = line.split(/\t| {2,}/).filter(s => s.length > 0);
-        return { rank: parseInt(parts[0]), name: parts[1], team: parts[2], score: parts[3] };
+        return parts;
       });
+
+      // Check if first row has a rank (first column is a number)
+      const hasRank = rows.length > 0 && !isNaN(parseFloat(rows[0][0]));
+
+      if (hasRank) {
+        // User included rank numbers – parse as-is (Rank, Name, Team, Score)
+        return rows.map(r => {
+          return { rank: parseInt(r[0]), name: r[1], team: r[2], score: r[3] };
+        });
+      } else {
+        // No rank – auto-rank by score (Name, Team, Score)
+        const parsed = rows.map(r => {
+          return { name: r[0], team: r[1], score: r[2] };
+        });
+        const sorted = parsed.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
+        return sorted.map((item, index) => ({
+          rank: index + 1,
+          name: item.name,
+          team: item.team,
+          score: item.score
+        }));
+      }
     }
 
     // ---- Preview Teams ----
     $('previewTeamsBtn').addEventListener('click', function() {
       const raw = $('teamsInput').value;
       try {
-        const parsed = parseTeams(raw);
+        const parsed = autoRankAndParseTeams(raw);
         if (!parsed || parsed.length === 0) throw new Error('No data');
-        showStatus('teamsStatus', '✅ ' + parsed.length + ' teams parsed', 'success');
+        // Show preview of top 3
+        const preview = parsed.slice(0, 3).map((item, i) => {
+          return `#${item.rank} ${item.name} ${item.score}`;
+        }).join('\n');
+        showStatus('teamsStatus', `✅ ${parsed.length} teams parsed (auto-ranked)\n${preview}${parsed.length > 3 ? '\n...' : ''}`, 'success');
       } catch (e) {
-        showStatus('teamsStatus', '❌ Invalid format. Use: Rank, Name, SIS%', 'error');
+        showStatus('teamsStatus', '❌ Invalid format. Use: Name, SIS% (tab-separated)', 'error');
       }
     });
 
@@ -695,49 +748,52 @@
     $('previewAgentsBtn').addEventListener('click', function() {
       const raw = $('agentsInput').value;
       try {
-        const parsed = parseAgents(raw);
+        const parsed = autoRankAndParseAgents(raw);
         if (!parsed || parsed.length === 0) throw new Error('No data');
-        showStatus('agentsStatus', '✅ ' + parsed.length + ' agents parsed', 'success');
+        const preview = parsed.slice(0, 3).map((item, i) => {
+          return `#${item.rank} ${item.name} (${item.team}) ${item.score}`;
+        }).join('\n');
+        showStatus('agentsStatus', `✅ ${parsed.length} agents parsed (auto-ranked)\n${preview}${parsed.length > 3 ? '\n...' : ''}`, 'success');
       } catch (e) {
-        showStatus('agentsStatus', '❌ Invalid format. Use: Rank, Name, TeamLeader, SIS%', 'error');
+        showStatus('agentsStatus', '❌ Invalid format. Use: Name, TeamLeader, SIS% (tab-separated)', 'error');
       }
     });
 
     // ---- Reset Teams ----
     $('resetTeamsBtn').addEventListener('click', function() {
-      const DEFAULT = `1	Sinazo Nogaga	88.18%
-2	Zintle Daba	87.14%
-3	Mbono, Phelisa	86.22%
-4	Botshelo Manoko	85.71%
-5	Jesse Machelm	83.11%
-6	Justin Salisbury	83.00%
-7	Tina Barron	82.58%
-8	Waylon Alexander	81.43%
-9	Terrayn Moses	81.06%
-10	Dawood Thaaqib	80.86%
-11	Daniel Van Der Poel	79.46%
-12	Moegamat Naeem Abrahams	79.16%
-13	Fatima Becket	78.24%
-14	Claasen, Ryan	77.73%
-15	ETHEL ZANELE KARAWE	77.52%
-16	Saban, Mogamat Muaath	75.18%
-17	Ivewe Ncapayi	71.38%`;
+      const DEFAULT = `Sinazo Nogaga	88.18%
+Zintle Daba	87.14%
+Mbono, Phelisa	86.22%
+Botshelo Manoko	85.71%
+Jesse Machelm	83.11%
+Justin Salisbury	83.00%
+Tina Barron	82.58%
+Waylon Alexander	81.43%
+Terrayn Moses	81.06%
+Dawood Thaaqib	80.86%
+Daniel Van Der Poel	79.46%
+Moegamat Naeem Abrahams	79.16%
+Fatima Becket	78.24%
+Claasen, Ryan	77.73%
+ETHEL ZANELE KARAWE	77.52%
+Saban, Mogamat Muaath	75.18%
+Ivewe Ncapayi	71.38%`;
       $('teamsInput').value = DEFAULT;
       showStatus('teamsStatus', '↺ Reset to sample teams', 'success');
     });
 
     // ---- Reset Agents ----
     $('resetAgentsBtn').addEventListener('click', function() {
-      const DEFAULT = `1	Abdul Abrahams	Moses Terrayn V	100.00%
-2	Stone Jade	Mbono, Phelisa	100.00%
-3	Alvino Februarie	Waylon Alexander	100.00%
-4	Shanseau Khabana	Waylon Alexander	100.00%
-5	Casey Williams	Tina Barron	100.00%
-6	Asavela Mkuyana	ETHEL ZANELE KARAWE	100.00%
-7	Gideon Muller	ETHEL ZANELE KARAWE	100.00%
-8	Hanton Kock	Waylon Alexander	100.00%
-9	Denica Williams	Fanti, Siphovuyo	100.00%
-10	Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%`;
+      const DEFAULT = `Abdul Abrahams	Moses Terrayn V	100.00%
+Stone Jade	Mbono, Phelisa	100.00%
+Alvino Februarie	Waylon Alexander	100.00%
+Shanseau Khabana	Waylon Alexander	100.00%
+Casey Williams	Tina Barron	100.00%
+Asavela Mkuyana	ETHEL ZANELE KARAWE	100.00%
+Gideon Muller	ETHEL ZANELE KARAWE	100.00%
+Hanton Kock	Waylon Alexander	100.00%
+Denica Williams	Fanti, Siphovuyo	100.00%
+Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%`;
       $('agentsInput').value = DEFAULT;
       showStatus('agentsStatus', '↺ Reset to sample agents', 'success');
     });
@@ -782,7 +838,7 @@
 
       let teams, agents;
       try {
-        teams = parseTeams(teamsRaw);
+        teams = autoRankAndParseTeams(teamsRaw);
         if (!teams || teams.length === 0) throw new Error('Teams data is empty or invalid');
       } catch (e) {
         showMainStatus('❌ Teams data is invalid. Preview first.', 'error');
@@ -790,7 +846,7 @@
       }
 
       try {
-        agents = parseAgents(agentsRaw);
+        agents = autoRankAndParseAgents(agentsRaw);
         if (!agents || agents.length === 0) throw new Error('Agents data is empty or invalid');
       } catch (e) {
         showMainStatus('❌ Agents data is invalid. Preview first.', 'error');
@@ -840,7 +896,7 @@
       }
     });
 
-    console.log('✅ Admin page loaded with date picker, alert toggles, and remote link.');
+    console.log('✅ Admin page loaded with auto-rank.');
   </script>
 
 </body>
