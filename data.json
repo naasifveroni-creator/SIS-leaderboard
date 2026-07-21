@@ -1,141 +1,175 @@
 {
-  "week": "Week of Jul 20, 2026 – Jul 26, 2026",
+  "week": "Week of Jul 1, 2026 – Jul 26, 2026",
   "teams": [
     {
-      "rank": null,
-      "name": "89.48%"
+      "rank": 1,
+      "name": "Sinazo Nogaga",
+      "score": "89.48%"
     },
     {
-      "rank": null,
-      "name": "88.77%"
+      "rank": 2,
+      "name": "Zintle Daba",
+      "score": "88.77%"
     },
     {
-      "rank": null,
-      "name": "85.68%"
+      "rank": 3,
+      "name": "Maghmoed galant",
+      "score": "85.68%"
     },
     {
-      "rank": null,
-      "name": "85.18%"
+      "rank": 4,
+      "name": "Manoko Botshelo",
+      "score": "85.18%"
     },
     {
-      "rank": null,
-      "name": "83.92%"
+      "rank": 5,
+      "name": "Tina Barron",
+      "score": "83.92%"
     },
     {
-      "rank": null,
-      "name": "81.88%"
+      "rank": 6,
+      "name": "Mbono, Phelisa",
+      "score": "81.88%"
     },
     {
-      "rank": null,
-      "name": "81.04%"
+      "rank": 7,
+      "name": "Arendse, Dylan C",
+      "score": "81.04%"
     },
     {
-      "rank": null,
-      "name": "80.54%"
+      "rank": 8,
+      "name": "Dawood Thaaqib",
+      "score": "80.54%"
     },
     {
-      "rank": null,
-      "name": "80.10%"
+      "rank": 9,
+      "name": "Daniel Van Der Poel",
+      "score": "80.10%"
     },
     {
-      "rank": null,
-      "name": "79.75%"
+      "rank": 10,
+      "name": "Jesse Machelm",
+      "score": "79.75%"
     },
     {
-      "rank": null,
-      "name": "79.68%"
+      "rank": 11,
+      "name": "Shaquel Bux",
+      "score": "79.68%"
     },
     {
-      "rank": null,
-      "name": "79.34%"
+      "rank": 12,
+      "name": "Justin Salisbury",
+      "score": "79.34%"
     },
     {
-      "rank": null,
-      "name": "79.18%"
+      "rank": 13,
+      "name": "Logan Valentine",
+      "score": "79.18%"
     },
     {
-      "rank": null,
-      "name": "79.07%"
+      "rank": 14,
+      "name": "Moses Terrayn V",
+      "score": "79.07%"
     },
     {
-      "rank": null,
-      "name": "78.92%"
+      "rank": 15,
+      "name": "Waylon Alexander",
+      "score": "78.92%"
     },
     {
-      "rank": null,
-      "name": "78.47%"
+      "rank": 16,
+      "name": "Magnolia Smidt",
+      "score": "78.47%"
     },
     {
-      "rank": null,
-      "name": "78.31%"
+      "rank": 17,
+      "name": "Cassidy Hindley",
+      "score": "78.31%"
     },
     {
-      "rank": null,
-      "name": "77.50%"
+      "rank": 18,
+      "name": "Moegamat Naeem Abrahams",
+      "score": "77.50%"
     },
     {
-      "rank": null,
-      "name": "77.50%"
+      "rank": 19,
+      "name": "Jo-Dien Martin",
+      "score": "77.50%"
     },
     {
-      "rank": null,
-      "name": "77.39%"
+      "rank": 20,
+      "name": "Saban, Mogamat Muaath",
+      "score": "77.39%"
     },
     {
-      "rank": null,
-      "name": "77.26%"
+      "rank": 21,
+      "name": "Ncapayi, Iviwe",
+      "score": "77.26%"
     },
     {
-      "rank": null,
-      "name": "77.01%"
+      "rank": 22,
+      "name": "Claasen, Ryan",
+      "score": "77.01%"
     },
     {
-      "rank": null,
-      "name": "76.94%"
+      "rank": 22,
+      "name": "Asiphe Koloyi",
+      "score": "76.94%"
     },
     {
-      "rank": null,
-      "name": "75.82%"
+      "rank": 24,
+      "name": "Beaulique Golding",
+      "score": "75.82%"
     },
     {
-      "rank": null,
-      "name": "75.76%"
+      "rank": 25,
+      "name": "Seth Wegewarth",
+      "score": "75.76%"
     },
     {
-      "rank": null,
-      "name": "74.88%"
+      "rank": 26,
+      "name": "Axola Zicina",
+      "score": "74.88%"
     },
     {
-      "rank": null,
-      "name": "74.66%"
+      "rank": 27,
+      "name": "Nomvelo",
+      "score": "74.66%"
     },
     {
-      "rank": null,
-      "name": "74.31%"
+      "rank": 28,
+      "name": "Laaiqah Wassung",
+      "score": "74.31%"
     },
     {
-      "rank": null,
-      "name": "73.45%"
+      "rank": 29,
+      "name": "Fanti, Siphovuyo",
+      "score": "73.45%"
     },
     {
-      "rank": null,
-      "name": "73.03%"
+      "rank": 30,
+      "name": "ETHEL ZANELE KARAWE",
+      "score": "73.03%"
     },
     {
-      "rank": null,
-      "name": "72.24%"
+      "rank": 31,
+      "name": "alton",
+      "score": "72.24%"
     },
     {
-      "rank": null,
-      "name": "71.46%"
+      "rank": 32,
+      "name": "Farouk Wilson",
+      "score": "71.46%"
     },
     {
-      "rank": null,
-      "name": "68.16%"
+      "rank": 33,
+      "name": "Kezia Davids",
+      "score": "68.16%"
     },
     {
-      "rank": null,
-      "name": "68.12%"
+      "rank": 34,
+      "name": "Sbabalwe Mqina",
+      "score": "68.12%"
     }
   ],
   "agents": [
