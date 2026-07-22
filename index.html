@@ -51,11 +51,22 @@
     .slide-title::after { content: ''; display: block; width: 60px; height: 3px; background: linear-gradient(90deg, #d32f2f, #d32f2f); margin: 0.15vh auto 0; border-radius: 10px; }
     .slide-title .week-date { font-weight: 800; font-size: 2.4vh; color: #0b1a33; display: inline-block; margin-top: 0.1vh; letter-spacing: 0.05em; background: rgba(255,255,255,0.2); padding: 0.1vh 2vw; border-radius: 30px; margin-left: auto; margin-right: auto; backdrop-filter: blur(4px); }
     .scroll-container { flex: 1; overflow: hidden; position: relative; mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); z-index: 1; }
-    .scroll-container table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06); animation: scrollTable 25s linear infinite; border: 1px solid rgba(255,255,255,0.08); }
-    @keyframes scrollTable { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+    .scroll-container table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06); border: 1px solid rgba(255,255,255,0.08); }
+    /* Agents slide: dynamic scroll – duration set by JS, no infinite loop */
+    #slide2 .scroll-container table {
+      animation: scrollTable linear forwards;
+    }
+    @keyframes scrollTable {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
     .table-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8vw 1.5vw; flex: 1; min-height: 0; height: 100%; }
     .table-grid .scroll-container { flex: 1; overflow: hidden; position: relative; mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); }
-    .table-grid .scroll-container table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06); animation: scrollTable 30s linear infinite; border: 1px solid rgba(255,255,255,0.08); }
+    .table-grid .scroll-container table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06); animation: scrollTableTeams 30s linear infinite; border: 1px solid rgba(255,255,255,0.08); }
+    @keyframes scrollTableTeams {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
     .table-wrap th { background: linear-gradient(135deg, #0b1a33 0%, #1a3050 100%); color: #fff; font-weight: 700; padding: 1vh 1vw; text-align: center; border-bottom: 3px solid #d32f2f; font-size: 2vh; text-transform: uppercase; letter-spacing: 0.08em; position: sticky; top: 0; z-index: 10; }
     .table-wrap td { padding: 1.2vh 1vw; border-bottom: 1px solid rgba(237,240,246,0.6); vertical-align: middle; color: #0b1a33; text-align: center; font-size: 2.6vh; font-weight: 500; transition: all 0.3s ease; }
     .table-wrap tr:last-child td { border-bottom: none; }
@@ -103,7 +114,7 @@
     #slide2 .table-wrap .name-col { width: 60%; }
     #slide2 .table-wrap .score-col { width: 30%; text-align: right; }
 
-    /* ===== TEAMS: two‑column grid – score column now 55% and fully right‑aligned ===== */
+    /* ===== TEAMS: two‑column grid – score column 55% ===== */
     #slide3 .table-grid .scroll-container table { 
       width: 100%; 
       table-layout: fixed; 
@@ -173,7 +184,7 @@
       <button class="fullscreen-btn" id="fullscreenBtn"><span class="icon">⛶</span> FULL</button>
       <div class="slide active" id="slide0" data-index="0" data-slide="1"><div class="slide-counter"><span class="current">1</span> / 4</div></div>
       <div class="slide" id="slide1" data-index="1" data-slide="2"><div class="slide-counter"><span class="current">2</span> / 4</div></div>
-      <div class="slide" id="slide2" data-index="2" data-slide="3" data-duration="16000">
+      <div class="slide" id="slide2" data-index="2" data-slide="3">
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area"><img src="delta-logo-ribbon.png?v=36" alt="Delta" /><h1><span>DELTA</span> · SIS</h1></div>
@@ -194,7 +205,7 @@
         <div class="slide-footer"><div class="footer-animation"><div class="spray-fill"></div><svg class="plane" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 25 L70 20 L80 25 L70 30 L15 25Z" fill="#d32f2f" stroke="#b71c1c" stroke-width="1"/><path d="M45 22 L60 10 L68 15 L52 25 L45 22Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/><path d="M45 28 L60 40 L68 35 L52 25 L45 28Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/><path d="M15 25 L5 15 L15 20 L15 25Z" fill="#d32f2f"/><path d="M15 25 L5 35 L15 30 L15 25Z" fill="#d32f2f"/><path d="M15 23 L8 18 L15 22 L15 23Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/><path d="M15 27 L8 32 L15 28 L15 27Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/><circle cx="78" cy="25" r="3" fill="#fdb913"/><ellipse cx="82" cy="25" rx="8" ry="2" fill="#fdb913" opacity="0.8"/><path d="M65 23 Q72 23 68 27 Q65 27 65 23Z" fill="#0b1a33" opacity="0.6"/></svg><div class="spray-text">DELTA</div></div></div>
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
       </div>
-      <div class="slide" id="slide3" data-index="3" data-slide="4" data-duration="16000">
+      <div class="slide" id="slide3" data-index="3" data-slide="4">
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area"><img src="delta-logo-ribbon.png?v=36" alt="Delta" /><h1><span>DELTA</span> · SIS</h1></div>
@@ -477,6 +488,7 @@
         const container = document.getElementById(containerId);
         if (!items || items.length === 0) { container.innerHTML = `<div class="empty-state">No data available.</div>`; return; }
         const ranked = autoRank(items);
+        // DOUBLE the list so the scroll can smoothly loop once
         const doubled = [...ranked, ...ranked];
         let html = `<table>
           <thead><tr>
@@ -504,6 +516,22 @@
 
         html += `</tbody></table>`;
         container.innerHTML = html;
+
+        // --- DYNAMIC SCROLL DURATION ---
+        // Each row takes ~0.25 seconds to pass. Min 20s, max 600s (10 min).
+        const rowCount = ranked.length;
+        let scrollDuration = Math.max(20, rowCount * 0.25);
+        scrollDuration = Math.min(600, scrollDuration); // cap at 10 min
+        const tableEl = container.querySelector('table');
+        if (tableEl) {
+          tableEl.style.animationDuration = scrollDuration + 's';
+        }
+        // Update the slide's data-duration so the slideshow waits for the scroll to finish
+        const slide = document.getElementById('slide2');
+        if (slide) {
+          slide.dataset.duration = (scrollDuration * 1000) + 1000; // +1s buffer
+        }
+        return scrollDuration;
       }
 
       function renderTeams(containerId, items, previousData) {
@@ -536,6 +564,7 @@
         html += `<div class="scroll-container">${buildTeamTable(firstDoubled)}</div>`;
         html += `<div class="scroll-container">${buildTeamTable(secondDoubled)}</div>`;
         container.innerHTML = html;
+        // Teams slide stays at 30s (fixed)
       }
 
       function storeSnapshot(data) {
@@ -555,12 +584,20 @@
           document.getElementById('agentsWeek').textContent = weekText;
           document.getElementById('teamsWeek').textContent = weekText;
           const prevData = getPreviousData();
-          renderAgents('agentTableInner', data.agents, prevData);
+          const scrollDuration = renderAgents('agentTableInner', data.agents, prevData);
           renderTeams('teamTableWrap', data.teams, prevData);
           storeSnapshot(data);
           setTimeout(() => {
             resetAnimations(currentIndex);
-            const duration = getSlideDuration(slides[currentIndex]);
+            // Use the updated slide duration (from data-duration set in renderAgents)
+            const slide = document.getElementById('slide2');
+            let duration = getSlideDuration(slide);
+            // If agents slide is active, use its duration, else default
+            if (currentIndex === 2) {
+              duration = getSlideDuration(slide);
+            } else {
+              duration = getSlideDuration(slides[currentIndex]);
+            }
             startProgressBar(duration);
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => { nextSlide(); }, duration);
