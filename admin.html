@@ -478,9 +478,9 @@
     </div>
 
     <div class="info-box">
-      <strong>📋 Supports TWO formats:</strong><br />
+      <strong>📋 Supports TWO formats automatically:</strong><br />
       <strong>1.</strong> Name + Score on the same line: <code>Name    Score%</code><br />
-      <strong>2.</strong> Name on line 1, Score on line 2 (alternating) – <strong>just paste your Excel data directly!</strong><br />
+      <strong>2.</strong> Name on line 1, Score on line 2 (alternating) – <strong>paste your raw Excel data directly!</strong><br />
       <span style="color:#0b1a33; font-weight:500;">✅ Auto‑rank:</span> Ranks assigned automatically based on score!<br />
       <span class="warning">⚠️ You need a GitHub token with <code>repo</code> scope to publish.</span>
     </div>
@@ -610,7 +610,7 @@ Sihle Mdedetyana	100.00%</textarea>
 
   <script>
     // =============================================
-    // ADMIN PAGE – SUPPORTS ALTERNATING LINES
+    // ADMIN PAGE – ROBUST PARSER FOR BOTH FORMATS
     // =============================================
 
     const REPO_PATH = 'naasifveroni-creator/sis-leaderboard';
@@ -688,24 +688,28 @@ Sihle Mdedetyana	100.00%</textarea>
     }
 
     // =============================================
-    // AUTO-RANK PARSERS – SUPPORTS BOTH FORMATS!
+    // SMART PARSER – DETECTS BOTH FORMATS
     // =============================================
 
-    function autoRankAndParseTeams(text) {
-      const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-      
+    function parseData(text) {
+      const lines = text.split('\n')
+        .map(l => l.trim())
+        .filter(l => l.length > 0);
+
       if (lines.length === 0) return [];
-      
+
+      // Check if the first line contains a tab or multiple spaces (indicates tab-separated)
       const firstLine = lines[0];
-      const hasTabOrSpaces = firstLine.includes('\t') || / {2,}/.test(firstLine);
-      
-      // --- FORMAT 1: Name + Score on same line (tab-separated) ---
-      if (hasTabOrSpaces && lines.every(line => line.includes('\t') || / {2,}/.test(line))) {
+      const hasTab = firstLine.includes('\t');
+      const hasMultipleSpaces = / {2,}/.test(firstLine);
+
+      // If it looks like tab-separated, parse as such
+      if (hasTab || hasMultipleSpaces) {
         const rows = lines.map(line => {
           const parts = line.split(/\t| {2,}/).filter(s => s.length > 0);
           return parts;
         });
-        
+        // Check if first column is a rank number
         const hasRank = rows.length > 0 && !isNaN(parseFloat(rows[0][0]));
         if (hasRank) {
           return rows.map(r => ({ rank: parseInt(r[0]), name: r[1], score: r[2] }));
@@ -715,28 +719,45 @@ Sihle Mdedetyana	100.00%</textarea>
           return sorted.map((item, index) => ({ rank: index + 1, name: item.name, score: item.score }));
         }
       }
-      
-      // --- FORMAT 2: Name on line 1, Score on line 2 (alternating) ---
-      // THIS IS YOUR FORMAT!
+
+      // Otherwise, assume alternating lines: line1 = name, line2 = score, line3 = name, ...
+      // But we need to be smart: if a line looks like a percentage (contains % or is a number), treat it as a score.
       const pairs = [];
-      for (let i = 0; i < lines.length; i += 2) {
-        const name = lines[i];
-        const score = lines[i + 1] || '0.00%';
-        if (name && score) {
-          pairs.push({ name: name, score: score });
+      let i = 0;
+      while (i < lines.length) {
+        const current = lines[i];
+        // Check if current line looks like a score (contains % or is a valid number)
+        const isScore = /%/.test(current) || !isNaN(parseFloat(current));
+        if (isScore) {
+          // If it's a score but we don't have a preceding name, skip (shouldn't happen)
+          i++;
+          continue;
+        }
+        // It's a name – look for the next line that is a score
+        let score = null;
+        let j = i + 1;
+        while (j < lines.length) {
+          const next = lines[j];
+          const isScoreNext = /%/.test(next) || !isNaN(parseFloat(next));
+          if (isScoreNext) {
+            score = next;
+            break;
+          }
+          j++; // skip any other non-score lines (e.g., blank or stray text)
+        }
+        if (score !== null) {
+          pairs.push({ name: current, score: score });
+          i = j + 1; // move past the score
+        } else {
+          // No score found – skip this name
+          i++;
         }
       }
-      
-      if (pairs.length === 0) {
-        return [];
-      }
-      
+
+      if (pairs.length === 0) return [];
+
       const sorted = pairs.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
       return sorted.map((item, index) => ({ rank: index + 1, name: item.name, score: item.score }));
-    }
-
-    function autoRankAndParseAgents(text) {
-      return autoRankAndParseTeams(text);
     }
 
     // ---- File upload helpers ----
@@ -766,7 +787,7 @@ Sihle Mdedetyana	100.00%</textarea>
     $('previewTeamsBtn').addEventListener('click', function() {
       const raw = $('teamsInput').value;
       try {
-        const parsed = autoRankAndParseTeams(raw);
+        const parsed = parseData(raw);
         if (!parsed || parsed.length === 0) throw new Error('No data');
         const preview = parsed.slice(0, 5).map((item) => {
           return `#${item.rank} ${item.name} ${item.score}`;
@@ -781,7 +802,7 @@ Sihle Mdedetyana	100.00%</textarea>
     $('previewAgentsBtn').addEventListener('click', function() {
       const raw = $('agentsInput').value;
       try {
-        const parsed = autoRankAndParseAgents(raw);
+        const parsed = parseData(raw);
         if (!parsed || parsed.length === 0) throw new Error('No data');
         const preview = parsed.slice(0, 5).map((item) => {
           return `#${item.rank} ${item.name} ${item.score}`;
@@ -871,7 +892,7 @@ Sihle Mdedetyana	100.00%`;
 
       let teams, agents;
       try {
-        teams = autoRankAndParseTeams(teamsRaw);
+        teams = parseData(teamsRaw);
         if (!teams || teams.length === 0) throw new Error('Teams data is empty or invalid');
       } catch (e) {
         showMainStatus('❌ Teams data is invalid. Preview first.', 'error');
@@ -879,7 +900,7 @@ Sihle Mdedetyana	100.00%`;
       }
 
       try {
-        agents = autoRankAndParseAgents(agentsRaw);
+        agents = parseData(agentsRaw);
         if (!agents || agents.length === 0) throw new Error('Agents data is empty or invalid');
       } catch (e) {
         showMainStatus('❌ Agents data is invalid. Preview first.', 'error');
@@ -929,7 +950,7 @@ Sihle Mdedetyana	100.00%`;
       }
     });
 
-    console.log('✅ Admin page loaded – supports alternating line format!');
+    console.log('✅ Admin page loaded – smart parser handles both formats.');
   </script>
 
 </body>
