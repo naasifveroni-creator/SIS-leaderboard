@@ -52,9 +52,10 @@
     .slide-title .week-date { font-weight: 800; font-size: 2.4vh; color: #0b1a33; display: inline-block; margin-top: 0.1vh; letter-spacing: 0.05em; background: rgba(255,255,255,0.2); padding: 0.1vh 2vw; border-radius: 30px; margin-left: auto; margin-right: auto; backdrop-filter: blur(4px); }
     .scroll-container { flex: 1; overflow: hidden; position: relative; mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); z-index: 1; }
     .scroll-container table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06); border: 1px solid rgba(255,255,255,0.08); }
-    /* Agents slide: dynamic scroll – duration set by JS, no infinite loop */
+    /* Agents slide: dynamic scroll – controlled by JS, starts from top */
     #slide2 .scroll-container table {
       animation: scrollTable linear forwards;
+      animation-play-state: paused;
     }
     @keyframes scrollTable {
       0% { transform: translateY(0); }
@@ -388,6 +389,20 @@
         timer = setTimeout(() => { nextSlide(); }, duration);
       };
 
+      // --- Function to restart the scroll animation for Agents slide ---
+      function restartAgentScroll() {
+        const container = document.getElementById('agentScrollContainer');
+        if (!container) return;
+        const table = container.querySelector('table');
+        if (!table) return;
+        // Remove animation, reflow, reapply
+        table.style.animation = 'none';
+        void table.offsetHeight; // force reflow
+        const duration = getComputedStyle(table).animationDuration || '20s';
+        table.style.animation = `scrollTable ${duration} linear forwards`;
+        table.style.animationPlayState = 'running';
+      }
+
       function resetAnimations(index) {
         const activeSlide = slides[index];
         const tables = activeSlide.querySelectorAll('table');
@@ -418,6 +433,11 @@
             }, 120 + (i * 80));
           });
         });
+
+        // If this is the Agents slide (index 2), restart the scroll animation
+        if (index === 2) {
+          restartAgentScroll();
+        }
       }
 
       function animateCounter(element, target) {
@@ -518,13 +538,15 @@
         container.innerHTML = html;
 
         // --- DYNAMIC SCROLL DURATION ---
-        // Each row takes ~0.25 seconds to pass. Min 20s, max 600s (10 min).
         const rowCount = ranked.length;
         let scrollDuration = Math.max(20, rowCount * 0.25);
         scrollDuration = Math.min(600, scrollDuration); // cap at 10 min
         const tableEl = container.querySelector('table');
         if (tableEl) {
+          // Set the duration as a CSS custom property or directly
           tableEl.style.animationDuration = scrollDuration + 's';
+          // Initially paused – will be started when slide becomes active
+          tableEl.style.animationPlayState = 'paused';
         }
         // Update the slide's data-duration so the slideshow waits for the scroll to finish
         const slide = document.getElementById('slide2');
