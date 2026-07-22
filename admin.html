@@ -479,7 +479,7 @@
 
     <div class="info-box">
       <strong>📋 Two separate upload portals</strong> – paste each table into its own section.<br />
-      <code>Teams: Name  SIS%</code> &nbsp;|&nbsp; <code>Agents: Name  TeamLeader  SIS%</code><br />
+      <code>Teams: Name  SIS%</code> &nbsp;|&nbsp; <code>Agents: Name  SIS%</code><br />
       <span style="color:#0b1a33; font-weight:500;">✅ Auto‑rank:</span> Paste <strong>without</strong> rank numbers – they'll be assigned automatically based on score!<br />
       <span class="warning">⚠️ You need a GitHub token with <code>repo</code> scope to publish.</span>
     </div>
@@ -554,17 +554,17 @@ Ivewe Ncapayi	71.38%</textarea>
           ⭐ Top Performing Agents
           <span class="badge">Agents</span>
         </div>
-        <div class="portal-sub">Paste agent data: <code>Name, TeamLeader, SIS%</code> (tab-separated) – ranks auto‑assigned</div>
-        <textarea id="agentsInput" spellcheck="false">Abdul Abrahams	Moses Terrayn V	100.00%
-Stone Jade	Mbono, Phelisa	100.00%
-Alvino Februarie	Waylon Alexander	100.00%
-Shanseau Khabana	Waylon Alexander	100.00%
-Casey Williams	Tina Barron	100.00%
-Asavela Mkuyana	ETHEL ZANELE KARAWE	100.00%
-Gideon Muller	ETHEL ZANELE KARAWE	100.00%
-Hanton Kock	Waylon Alexander	100.00%
-Denica Williams	Fanti, Siphovuyo	100.00%
-Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%</textarea>
+        <div class="portal-sub">Paste agent data: <code>Name, SIS%</code> (tab-separated) – ranks auto‑assigned</div>
+        <textarea id="agentsInput" spellcheck="false">Abdul Abrahams	100.00%
+Stone Jade	100.00%
+Alvino Februarie	100.00%
+Shanseau Khabana	100.00%
+Casey Williams	100.00%
+Asavela Mkuyana	100.00%
+Gideon Muller	100.00%
+Hanton Kock	100.00%
+Denica Williams	100.00%
+Sihle Mdedetyana	100.00%</textarea>
         <div class="file-upload-row">
           <input type="file" id="agentsFileInput" accept=".txt,.csv,.tsv" />
           <span class="file-hint">Upload .txt / .csv / .tsv</span>
@@ -609,7 +609,8 @@ Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%</textarea>
 
   <script>
     // =============================================
-    // ADMIN PAGE – WITH AUTO-RANK + FILE UPLOAD
+    // ADMIN PAGE – AUTO-RANK + FILE UPLOAD
+    // Both portals now use the same 2-column format: Name, Score
     // =============================================
 
     const REPO_PATH = 'naasifveroni-creator/sis-leaderboard';
@@ -687,7 +688,7 @@ Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%</textarea>
     }
 
     // =============================================
-    // AUTO-RANK PARSERS
+    // AUTO-RANK PARSERS – BOTH EXPECT 2 COLUMNS: NAME, SCORE
     // =============================================
 
     function autoRankAndParseTeams(text) {
@@ -696,7 +697,9 @@ Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%</textarea>
         const parts = line.split(/\t| {2,}/).filter(s => s.length > 0);
         return parts;
       });
+
       const hasRank = rows.length > 0 && !isNaN(parseFloat(rows[0][0]));
+
       if (hasRank) {
         return rows.map(r => ({ rank: parseInt(r[0]), name: r[1], score: r[2] }));
       } else {
@@ -712,13 +715,15 @@ Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%</textarea>
         const parts = line.split(/\t| {2,}/).filter(s => s.length > 0);
         return parts;
       });
+
       const hasRank = rows.length > 0 && !isNaN(parseFloat(rows[0][0]));
+
       if (hasRank) {
-        return rows.map(r => ({ rank: parseInt(r[0]), name: r[1], team: r[2], score: r[3] }));
+        return rows.map(r => ({ rank: parseInt(r[0]), name: r[1], score: r[2] }));
       } else {
-        const parsed = rows.map(r => ({ name: r[0], team: r[1], score: r[2] }));
+        const parsed = rows.map(r => ({ name: r[0], score: r[1] }));
         const sorted = parsed.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
-        return sorted.map((item, index) => ({ rank: index + 1, name: item.name, team: item.team, score: item.score }));
+        return sorted.map((item, index) => ({ rank: index + 1, name: item.name, score: item.score }));
       }
     }
 
@@ -738,7 +743,6 @@ Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%</textarea>
           showStatus(statusId, '❌ Failed to read file.', 'error');
         };
         reader.readAsText(file);
-        // Reset file input so the same file can be re-uploaded
         input.value = '';
       });
     }
@@ -768,11 +772,11 @@ Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%</textarea>
         const parsed = autoRankAndParseAgents(raw);
         if (!parsed || parsed.length === 0) throw new Error('No data');
         const preview = parsed.slice(0, 3).map((item) => {
-          return `#${item.rank} ${item.name} (${item.team}) ${item.score}`;
+          return `#${item.rank} ${item.name} ${item.score}`;
         }).join('\n');
         showStatus('agentsStatus', `✅ ${parsed.length} agents parsed (auto-ranked)\n${preview}${parsed.length > 3 ? '\n...' : ''}`, 'success');
       } catch (e) {
-        showStatus('agentsStatus', '❌ Invalid format. Use: Name, TeamLeader, SIS% (tab-separated)', 'error');
+        showStatus('agentsStatus', '❌ Invalid format. Use: Name, SIS% (tab-separated)', 'error');
       }
     });
 
@@ -801,16 +805,16 @@ Ivewe Ncapayi	71.38%`;
 
     // ---- Reset Agents ----
     $('resetAgentsBtn').addEventListener('click', function() {
-      const DEFAULT = `Abdul Abrahams	Moses Terrayn V	100.00%
-Stone Jade	Mbono, Phelisa	100.00%
-Alvino Februarie	Waylon Alexander	100.00%
-Shanseau Khabana	Waylon Alexander	100.00%
-Casey Williams	Tina Barron	100.00%
-Asavela Mkuyana	ETHEL ZANELE KARAWE	100.00%
-Gideon Muller	ETHEL ZANELE KARAWE	100.00%
-Hanton Kock	Waylon Alexander	100.00%
-Denica Williams	Fanti, Siphovuyo	100.00%
-Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%`;
+      const DEFAULT = `Abdul Abrahams	100.00%
+Stone Jade	100.00%
+Alvino Februarie	100.00%
+Shanseau Khabana	100.00%
+Casey Williams	100.00%
+Asavela Mkuyana	100.00%
+Gideon Muller	100.00%
+Hanton Kock	100.00%
+Denica Williams	100.00%
+Sihle Mdedetyana	100.00%`;
       $('agentsInput').value = DEFAULT;
       showStatus('agentsStatus', '↺ Reset to sample agents', 'success');
     });
@@ -913,7 +917,7 @@ Sihle Mdedetyana	Moegamat Naeem Abrahams	100.00%`;
       }
     });
 
-    console.log('✅ Admin page loaded with auto-rank + file upload.');
+    console.log('✅ Admin page loaded – both portals expect Name + Score only.');
   </script>
 
 </body>
