@@ -52,14 +52,16 @@
     .slide-title .week-date { font-weight: 800; font-size: 2.4vh; color: #0b1a33; display: inline-block; margin-top: 0.1vh; letter-spacing: 0.05em; background: rgba(255,255,255,0.2); padding: 0.1vh 2vw; border-radius: 30px; margin-left: auto; margin-right: auto; backdrop-filter: blur(4px); }
     .scroll-container { flex: 1; overflow: hidden; position: relative; mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); z-index: 1; }
     .scroll-container table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06); border: 1px solid rgba(255,255,255,0.08); }
-    /* Agents slide: dynamic scroll – controlled by JS */
-    #slide2 .scroll-container table {
-      animation: scrollTable linear forwards;
-      animation-play-state: running;
+    /* Agents slide – JS-controlled scroll via transform */
+    #slide2 .scroll-container .agent-scroll-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
     }
-    @keyframes scrollTable {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-50%); }
+    #slide2 .scroll-container .agent-scroll-wrapper .agent-scroll-inner {
+      transition: none;
+      will-change: transform;
     }
     .table-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8vw 1.5vw; flex: 1; min-height: 0; height: 100%; }
     .table-grid .scroll-container { flex: 1; overflow: hidden; position: relative; mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); }
@@ -201,7 +203,9 @@
         </div>
         <div class="table-wrap">
           <div class="slide-title">Top Performing Agents – SIS <span class="week-date" id="agentsWeek">Week of Jul 20 – Jul 26, 2026</span></div>
-          <div class="scroll-container" id="agentScrollContainer"><div id="agentTableInner"></div></div>
+          <div class="scroll-container" id="agentScrollContainer">
+            <div id="agentTableInner"></div>
+          </div>
         </div>
         <div class="slide-footer"><div class="footer-animation"><div class="spray-fill"></div><svg class="plane" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 25 L70 20 L80 25 L70 30 L15 25Z" fill="#d32f2f" stroke="#b71c1c" stroke-width="1"/><path d="M45 22 L60 10 L68 15 L52 25 L45 22Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/><path d="M45 28 L60 40 L68 35 L52 25 L45 28Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/><path d="M15 25 L5 15 L15 20 L15 25Z" fill="#d32f2f"/><path d="M15 25 L5 35 L15 30 L15 25Z" fill="#d32f2f"/><path d="M15 23 L8 18 L15 22 L15 23Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/><path d="M15 27 L8 32 L15 28 L15 27Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/><circle cx="78" cy="25" r="3" fill="#fdb913"/><ellipse cx="82" cy="25" rx="8" ry="2" fill="#fdb913" opacity="0.8"/><path d="M65 23 Q72 23 68 27 Q65 27 65 23Z" fill="#0b1a33" opacity="0.6"/></svg><div class="spray-text">DELTA</div></div></div>
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
@@ -318,6 +322,8 @@
       let timer = null;
       let progressTimer = null;
       let isTransitioning = false;
+      let agentScrollTimer = null;
+      let agentScrollPosition = 0;
 
       function getSlideDuration(slide) {
         const custom = parseInt(slide.dataset.duration);
@@ -349,6 +355,89 @@
         }, 50);
       }
 
+      // ---- Agent scroll controller ----
+      function startAgentScroll() {
+        const container = document.getElementById('agentScrollContainer');
+        if (!container) return;
+        const table = container.querySelector('table');
+        if (!table) return;
+        
+        const containerHeight = container.clientHeight;
+        const tableHeight = table.scrollHeight;
+        const totalScroll = Math.max(0, tableHeight - containerHeight);
+        
+        // If table fits, no scroll needed
+        if (totalScroll <= 0) {
+          table.style.transform = 'translateY(0)';
+          return;
+        }
+
+        // Stop any existing scroll
+        if (agentScrollTimer) {
+          cancelAnimationFrame(agentScrollTimer);
+          agentScrollTimer = null;
+        }
+
+        // Reset to top
+        agentScrollPosition = 0;
+        table.style.transform = 'translateY(0)';
+
+        // Calculate duration: 0.3s per row, min 20s
+        const rowCount = table.querySelectorAll('tbody tr').length / 2; // half because doubled
+        let duration = Math.max(20, rowCount * 0.3);
+        duration = Math.min(600, duration);
+
+        // Update slide duration
+        const slide = document.getElementById('slide2');
+        if (slide) {
+          slide.dataset.duration = (duration * 1000) + 1000;
+        }
+
+        const startTime = performance.now();
+        const startPosition = 0;
+        const endPosition = totalScroll;
+
+        function scrollStep(timestamp) {
+          const elapsed = (timestamp - startTime) / 1000;
+          const progress = Math.min(elapsed / duration, 1);
+          // Ease in-out
+          const eased = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+          const currentPos = startPosition + (endPosition - startPosition) * eased;
+          
+          table.style.transform = `translateY(-${currentPos}px)`;
+          agentScrollPosition = currentPos;
+
+          if (progress < 1) {
+            agentScrollTimer = requestAnimationFrame(scrollStep);
+          } else {
+            table.style.transform = `translateY(-${endPosition}px)`;
+            agentScrollTimer = null;
+          }
+        }
+
+        agentScrollTimer = requestAnimationFrame(scrollStep);
+      }
+
+      function stopAgentScroll() {
+        if (agentScrollTimer) {
+          cancelAnimationFrame(agentScrollTimer);
+          agentScrollTimer = null;
+        }
+      }
+
+      function resetAgentScroll() {
+        stopAgentScroll();
+        const container = document.getElementById('agentScrollContainer');
+        if (!container) return;
+        const table = container.querySelector('table');
+        if (!table) return;
+        agentScrollPosition = 0;
+        table.style.transform = 'translateY(0)';
+        // Restart after a brief delay
+        setTimeout(startAgentScroll, 300);
+      }
+
+      // ---- Slide transition ----
       function goToSlide(index) {
         if (isTransitioning || index === currentIndex) return;
         if (index < 0) index = slides.length - 1;
@@ -360,6 +449,8 @@
         currentIndex = index;
         slides[currentIndex].classList.add('active');
         dots[currentIndex].classList.add('active');
+        
+        // Reset animations for the new slide
         resetAnimations(currentIndex);
 
         if (timer) clearTimeout(timer);
@@ -381,27 +472,16 @@
       window.pauseSlideshow = function() {
         if (timer) { clearTimeout(timer); timer = null; }
         if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
-        if (window._autoPlayInterval) { clearInterval(window._autoPlayInterval); window._autoPlayInterval = null; }
+        stopAgentScroll();
       };
       window.resumeSlideshow = function() {
         const duration = getSlideDuration(slides[currentIndex]);
         startProgressBar(duration);
         timer = setTimeout(() => { nextSlide(); }, duration);
+        if (currentIndex === 2) {
+          startAgentScroll();
+        }
       };
-
-      // --- Function to restart the scroll animation for Agents slide ---
-      function restartAgentScroll() {
-        const container = document.getElementById('agentScrollContainer');
-        if (!container) return;
-        const table = container.querySelector('table');
-        if (!table) return;
-        // Remove animation, reflow, reapply
-        table.style.animation = 'none';
-        void table.offsetHeight; // force reflow
-        const duration = getComputedStyle(table).animationDuration || '20s';
-        table.style.animation = `scrollTable ${duration} linear forwards`;
-        table.style.animationPlayState = 'running';
-      }
 
       function resetAnimations(index) {
         const activeSlide = slides[index];
@@ -434,9 +514,11 @@
           });
         });
 
-        // If this is the Agents slide (index 2), restart the scroll animation
+        // If Agents slide (index 2), start the scroll
         if (index === 2) {
-          setTimeout(restartAgentScroll, 500);
+          setTimeout(resetAgentScroll, 600);
+        } else {
+          stopAgentScroll();
         }
       }
 
@@ -468,11 +550,15 @@
       wrapper.addEventListener('mouseenter', () => {
         if (timer) clearTimeout(timer);
         if (progressTimer) clearInterval(progressTimer);
+        stopAgentScroll();
       });
       wrapper.addEventListener('mouseleave', () => {
         const duration = getSlideDuration(slides[currentIndex]);
         startProgressBar(duration);
         timer = setTimeout(() => { nextSlide(); }, duration);
+        if (currentIndex === 2) {
+          startAgentScroll();
+        }
       });
 
       document.addEventListener('keydown', (e) => {
@@ -480,6 +566,7 @@
         if (e.key === 'ArrowLeft') prevSlide();
       });
 
+      // ---- Data parsing and rendering ----
       const TARGET_THRESHOLD = 86.30;
 
       function buildTrendArrow(currentVal, previousVal) {
@@ -537,21 +624,8 @@
         html += `</tbody></table>`;
         container.innerHTML = html;
 
-        // --- DYNAMIC SCROLL DURATION ---
-        const rowCount = ranked.length;
-        let scrollDuration = Math.max(20, rowCount * 0.25);
-        scrollDuration = Math.min(600, scrollDuration); // cap at 10 min
-        const tableEl = container.querySelector('table');
-        if (tableEl) {
-          tableEl.style.animationDuration = scrollDuration + 's';
-          tableEl.style.animationPlayState = 'running';
-        }
-        // Update the slide's data-duration so the slideshow waits for the scroll to finish
-        const slide = document.getElementById('slide2');
-        if (slide) {
-          slide.dataset.duration = (scrollDuration * 1000) + 1000; // +1s buffer
-        }
-        return scrollDuration;
+        // Auto-start scroll after a moment
+        setTimeout(startAgentScroll, 500);
       }
 
       function renderTeams(containerId, items, previousData) {
@@ -584,7 +658,6 @@
         html += `<div class="scroll-container">${buildTeamTable(firstDoubled)}</div>`;
         html += `<div class="scroll-container">${buildTeamTable(secondDoubled)}</div>`;
         container.innerHTML = html;
-        // Teams slide stays at 30s (fixed)
       }
 
       function storeSnapshot(data) {
@@ -604,20 +677,12 @@
           document.getElementById('agentsWeek').textContent = weekText;
           document.getElementById('teamsWeek').textContent = weekText;
           const prevData = getPreviousData();
-          const scrollDuration = renderAgents('agentTableInner', data.agents, prevData);
+          renderAgents('agentTableInner', data.agents, prevData);
           renderTeams('teamTableWrap', data.teams, prevData);
           storeSnapshot(data);
           setTimeout(() => {
             resetAnimations(currentIndex);
-            // Use the updated slide duration (from data-duration set in renderAgents)
-            const slide = document.getElementById('slide2');
-            let duration = getSlideDuration(slide);
-            // If agents slide is active, use its duration, else default
-            if (currentIndex === 2) {
-              duration = getSlideDuration(slide);
-            } else {
-              duration = getSlideDuration(slides[currentIndex]);
-            }
+            const duration = getSlideDuration(slides[currentIndex]);
             startProgressBar(duration);
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => { nextSlide(); }, duration);
@@ -631,6 +696,7 @@
       loadData();
       setInterval(loadData, 60000);
 
+      // Observe slide changes to restart animations
       const slideObserver = new MutationObserver(() => {
         setTimeout(() => {
           resetAnimations(currentIndex);
