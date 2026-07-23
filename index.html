@@ -104,7 +104,7 @@
     #slide2 .table-grid .scroll-container table { 
       width: 100%; 
       table-layout: fixed; 
-      animation: scrollTable 30s linear infinite;
+      animation: scrollTable linear infinite;
     }
     #slide2 .table-grid .scroll-container th.rank-col,
     #slide2 .table-grid .scroll-container td.rank-col { width: 10%; }
@@ -175,7 +175,7 @@
       <button class="fullscreen-btn" id="fullscreenBtn"><span class="icon">⛶</span> FULL</button>
       <div class="slide active" id="slide0" data-index="0" data-slide="1"><div class="slide-counter"><span class="current">1</span> / 4</div></div>
       <div class="slide" id="slide1" data-index="1" data-slide="2"><div class="slide-counter"><span class="current">2</span> / 4</div></div>
-      <div class="slide" id="slide2" data-index="2" data-slide="3" data-duration="31000">
+      <div class="slide" id="slide2" data-index="2" data-slide="3">
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area"><img src="delta-logo-ribbon.png?v=36" alt="Delta" /><h1><span>DELTA</span> · SIS</h1></div>
@@ -494,6 +494,7 @@
         const right = ranked.slice(half);
 
         function buildTable(dataArray) {
+          // Double the rows for seamless loop
           const doubled = [...dataArray, ...dataArray];
           let html = `<table><thead><tr><th class="rank-col">RANK</th><th class="name-col">AGENT NAME</th><th class="score-col">SIS</th></tr></thead><tbody>`;
           doubled.forEach(item => {
@@ -516,17 +517,32 @@
           return html;
         }
 
-        container.innerHTML = `
+        // Calculate scroll duration: match the same speed per row as Teams
+        // Teams: 34 rows × 2 = 68 rows in 30s → 0.44s per row
+        const ROWS_PER_SECOND = 68 / 30; // ~2.27 rows per second
+        const totalRows = ranked.length;
+        const scrollDuration = Math.max(20, totalRows / ROWS_PER_SECOND);
+        const slideDuration = Math.ceil(scrollDuration + 1);
+
+        // Build the entire HTML as one string to avoid race conditions
+        const html = `
           <div class="scroll-container">${buildTable(left)}</div>
           <div class="scroll-container">${buildTable(right)}</div>
         `;
+        container.innerHTML = html;
 
         const tables = container.querySelectorAll('.scroll-container table');
         tables.forEach(table => {
-          table.style.animationDuration = '30s';
-          table.style.animation = 'scrollTable 30s linear infinite';
+          table.style.animationDuration = scrollDuration + 's';
+          table.style.animation = `scrollTable ${scrollDuration}s linear infinite`;
           table.style.animationPlayState = 'running';
         });
+
+        // Set slide duration
+        const slide = document.getElementById('slide2');
+        if (slide) {
+          slide.dataset.duration = (slideDuration * 1000);
+        }
       }
 
       // ---- RENDER TEAMS ----
