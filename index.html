@@ -494,7 +494,6 @@
         const right = ranked.slice(half);
 
         function buildTable(dataArray) {
-          // Double the rows for seamless loop
           const doubled = [...dataArray, ...dataArray];
           let html = `<table><thead><tr><th class="rank-col">RANK</th><th class="name-col">AGENT NAME</th><th class="score-col">SIS</th></tr></thead><tbody>`;
           doubled.forEach(item => {
@@ -524,15 +523,15 @@
         const scrollDuration = Math.max(20, totalRows / ROWS_PER_SECOND);
         const slideDuration = Math.ceil(scrollDuration + 1);
 
-        // Build the entire HTML as one string to avoid race conditions
-        const html = `
-          <div class="scroll-container">${buildTable(left)}</div>
-          <div class="scroll-container">${buildTable(right)}</div>
-        `;
-        container.innerHTML = html;
+        // Build BOTH columns with their data
+        const leftHtml = `<div class="scroll-container">${buildTable(left)}</div>`;
+        const rightHtml = `<div class="scroll-container">${buildTable(right)}</div>`;
 
-        const tables = container.querySelectorAll('.scroll-container table');
-        tables.forEach(table => {
+        container.innerHTML = leftHtml + rightHtml;
+
+        // Apply the SAME animation to BOTH columns – they scroll together
+        const allTables = container.querySelectorAll('.scroll-container table');
+        allTables.forEach(table => {
           table.style.animationDuration = scrollDuration + 's';
           table.style.animation = `scrollTable ${scrollDuration}s linear infinite`;
           table.style.animationPlayState = 'running';
