@@ -104,7 +104,7 @@
     #slide2 .table-grid .scroll-container table { 
       width: 100%; 
       table-layout: fixed; 
-      animation: scrollTable linear infinite;
+      animation: scrollTable 30s linear infinite;
     }
     #slide2 .table-grid .scroll-container th.rank-col,
     #slide2 .table-grid .scroll-container td.rank-col { width: 10%; }
@@ -175,7 +175,7 @@
       <button class="fullscreen-btn" id="fullscreenBtn"><span class="icon">⛶</span> FULL</button>
       <div class="slide active" id="slide0" data-index="0" data-slide="1"><div class="slide-counter"><span class="current">1</span> / 4</div></div>
       <div class="slide" id="slide1" data-index="1" data-slide="2"><div class="slide-counter"><span class="current">2</span> / 4</div></div>
-      <div class="slide" id="slide2" data-index="2" data-slide="3">
+      <div class="slide" id="slide2" data-index="2" data-slide="3" data-duration="31000">
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area"><img src="delta-logo-ribbon.png?v=36" alt="Delta" /><h1><span>DELTA</span> · SIS</h1></div>
@@ -516,9 +516,6 @@
           return html;
         }
 
-        // FIXED: Both columns scroll at 30s, matching Teams slide
-        const SCROLL_DURATION = 30; // seconds
-
         container.innerHTML = `
           <div class="scroll-container">${buildTable(left)}</div>
           <div class="scroll-container">${buildTable(right)}</div>
@@ -526,16 +523,10 @@
 
         const tables = container.querySelectorAll('.scroll-container table');
         tables.forEach(table => {
-          table.style.animationDuration = SCROLL_DURATION + 's';
-          table.style.animation = `scrollTable ${SCROLL_DURATION}s linear infinite`;
+          table.style.animationDuration = '30s';
+          table.style.animation = 'scrollTable 30s linear infinite';
           table.style.animationPlayState = 'running';
         });
-
-        // Slide duration = scroll duration + 1s buffer
-        const slide = document.getElementById('slide2');
-        if (slide) {
-          slide.dataset.duration = ((SCROLL_DURATION + 1) * 1000);
-        }
       }
 
       // ---- RENDER TEAMS ----
