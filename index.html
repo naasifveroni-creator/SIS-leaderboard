@@ -516,8 +516,8 @@
           return html;
         }
 
-        const durationPerColumn = Math.max(20, half * 0.3);
-        const slideDuration = durationPerColumn + 1;
+        // FIXED: Both columns scroll at 30s, matching Teams slide
+        const SCROLL_DURATION = 30; // seconds
 
         container.innerHTML = `
           <div class="scroll-container">${buildTable(left)}</div>
@@ -526,14 +526,15 @@
 
         const tables = container.querySelectorAll('.scroll-container table');
         tables.forEach(table => {
-          table.style.animationDuration = durationPerColumn + 's';
-          table.style.animation = `scrollTable ${durationPerColumn}s linear infinite`;
+          table.style.animationDuration = SCROLL_DURATION + 's';
+          table.style.animation = `scrollTable ${SCROLL_DURATION}s linear infinite`;
           table.style.animationPlayState = 'running';
         });
 
+        // Slide duration = scroll duration + 1s buffer
         const slide = document.getElementById('slide2');
         if (slide) {
-          slide.dataset.duration = (slideDuration * 1000);
+          slide.dataset.duration = ((SCROLL_DURATION + 1) * 1000);
         }
       }
 
