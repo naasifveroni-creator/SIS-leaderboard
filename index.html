@@ -107,26 +107,17 @@
       animation: scrollTable linear infinite;
     }
     #slide2 .table-grid .scroll-container th.rank-col,
-    #slide2 .table-grid .scroll-container td.rank-col { 
-      width: 10%; 
-    }
+    #slide2 .table-grid .scroll-container td.rank-col { width: 10%; }
     #slide2 .table-grid .scroll-container th.name-col,
-    #slide2 .table-grid .scroll-container td.name-col { 
-      width: 45%;  /* WAS 60% – reduced to give score more room */
-    }
+    #slide2 .table-grid .scroll-container td.name-col { width: 45%; }
     #slide2 .table-grid .scroll-container th.score-col,
-    #slide2 .table-grid .scroll-container td.score-col { 
-      width: 45%;  /* WAS 30% – increased to fit percentages + arrows */
-      text-align: right; 
-      justify-content: flex-end; 
-      white-space: nowrap;
-    }
+    #slide2 .table-grid .scroll-container td.score-col { width: 45%; text-align: right; justify-content: flex-end; white-space: nowrap; }
 
     /* ===== TEAMS: two‑column grid ===== */
     #slide3 .table-grid .scroll-container table { 
       width: 100%; 
       table-layout: fixed; 
-      animation: scrollTableTeams 30s linear infinite;
+      animation: scrollTable 30s linear infinite;
     }
     #slide3 .table-grid .scroll-container th.rank-col,
     #slide3 .table-grid .scroll-container td.rank-col { width: 10%; }
@@ -184,6 +175,7 @@
       <button class="fullscreen-btn" id="fullscreenBtn"><span class="icon">⛶</span> FULL</button>
       <div class="slide active" id="slide0" data-index="0" data-slide="1"><div class="slide-counter"><span class="current">1</span> / 4</div></div>
       <div class="slide" id="slide1" data-index="1" data-slide="2"><div class="slide-counter"><span class="current">2</span> / 4</div></div>
+      <!-- Agents slide – duration set by JS -->
       <div class="slide" id="slide2" data-index="2" data-slide="3">
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
@@ -205,7 +197,8 @@
         <div class="slide-footer"><div class="footer-animation"><div class="spray-fill"></div><svg class="plane" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 25 L70 20 L80 25 L70 30 L15 25Z" fill="#d32f2f" stroke="#b71c1c" stroke-width="1"/><path d="M45 22 L60 10 L68 15 L52 25 L45 22Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/><path d="M45 28 L60 40 L68 35 L52 25 L45 28Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/><path d="M15 25 L5 15 L15 20 L15 25Z" fill="#d32f2f"/><path d="M15 25 L5 35 L15 30 L15 25Z" fill="#d32f2f"/><path d="M15 23 L8 18 L15 22 L15 23Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/><path d="M15 27 L8 32 L15 28 L15 27Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/><circle cx="78" cy="25" r="3" fill="#fdb913"/><ellipse cx="82" cy="25" rx="8" ry="2" fill="#fdb913" opacity="0.8"/><path d="M65 23 Q72 23 68 27 Q65 27 65 23Z" fill="#0b1a33" opacity="0.6"/></svg><div class="spray-text">DELTA</div></div></div>
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
       </div>
-      <div class="slide" id="slide3" data-index="3" data-slide="4">
+      <!-- Teams slide – fixed duration 31s -->
+      <div class="slide" id="slide3" data-index="3" data-slide="4" data-duration="31000">
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
           <div class="logo-area"><img src="delta-logo-ribbon.png?v=36" alt="Delta" /><h1><span>DELTA</span> · SIS</h1></div>
@@ -318,6 +311,7 @@
       let progressTimer = null;
       let isTransitioning = false;
 
+      // ---- Agent scroll pause/resume ----
       function pauseAgentScroll() {
         const tables = document.querySelectorAll('#slide2 .table-grid .scroll-container table');
         tables.forEach(table => {
@@ -332,25 +326,29 @@
         });
       }
 
+      // ---- Reset Agent scroll to top ----
       function resetAgentScroll() {
         const tables = document.querySelectorAll('#slide2 .table-grid .scroll-container table');
         tables.forEach(table => {
+          // Reset transform to top
           table.style.transform = 'translateY(0)';
+          // Force reflow
           void table.offsetHeight;
+          // Ensure animation runs
           const duration = table.style.animationDuration || '20s';
-          table.style.animation = 'none';
-          void table.offsetHeight;
           table.style.animation = `scrollTable ${duration} linear infinite`;
           table.style.animationPlayState = 'running';
         });
       }
 
+      // ---- Get slide duration ----
       function getSlideDuration(slide) {
         const custom = parseInt(slide.dataset.duration);
         if (!isNaN(custom) && custom > 0) return custom;
-        return 5500;
+        return 5500; // default 5.5s
       }
 
+      // ---- Dots ----
       slides.forEach((_, i) => {
         const dot = document.createElement('button');
         dot.className = 'dot' + (i === 0 ? ' active' : '');
@@ -360,6 +358,7 @@
       });
       const dots = dotsContainer.querySelectorAll('.dot');
 
+      // ---- Progress bar ----
       function startProgressBar(duration) {
         if (progressTimer) clearInterval(progressTimer);
         const startTime = Date.now();
@@ -375,6 +374,7 @@
         }, 50);
       }
 
+      // ---- Navigate ----
       function goToSlide(index) {
         if (isTransitioning || index === currentIndex) return;
         if (index < 0) index = slides.length - 1;
@@ -416,24 +416,32 @@
         if (currentIndex === 2) resumeAgentScroll();
       };
 
+      // ---- Reset animations (fade-in and scroll) ----
       function resetAnimations(index) {
         const activeSlide = slides[index];
 
+        // If Agents slide, reset scroll to top and start
         if (index === 2) {
           setTimeout(resetAgentScroll, 100);
         } else {
+          // Pause Agent scroll when leaving
           pauseAgentScroll();
         }
 
+        // For Teams slide, ensure animation is running (it's already set in CSS)
+        // but we need to re-trigger for any slide that has .scroll-container table
         const tables = activeSlide.querySelectorAll('.scroll-container table');
         tables.forEach(table => {
+          // Get current duration (or default)
           const duration = table.style.animationDuration || '30s';
+          // Re-apply animation to ensure it starts
           table.style.animation = 'none';
           void table.offsetHeight;
           table.style.animation = `scrollTable ${duration} linear infinite`;
           table.style.animationPlayState = 'running';
         });
 
+        // Fade-in rows
         const rows = activeSlide.querySelectorAll('tbody tr');
         rows.forEach((row, i) => {
           row.style.opacity = '0';
@@ -482,6 +490,7 @@
         requestAnimationFrame(updateCounter);
       }
 
+      // ---- Events ----
       document.getElementById('nextSlide').addEventListener('click', nextSlide);
       document.getElementById('prevSlide').addEventListener('click', prevSlide);
 
@@ -505,6 +514,7 @@
         if (e.key === 'ArrowLeft') prevSlide();
       });
 
+      // ---- Data parsing and rendering ----
       const TARGET_THRESHOLD = 86.30;
 
       function buildTrendArrow(currentVal, previousVal) {
@@ -567,7 +577,7 @@
         }
 
         const durationPerColumn = Math.max(20, half * 0.3);
-        const slideDuration = durationPerColumn + 1;
+        const slideDuration = durationPerColumn + 1; // +1s buffer
 
         let html = '';
         html += `<div class="scroll-container">${buildAgentTable(leftDoubled)}</div>`;
@@ -577,6 +587,7 @@
         const tables = container.querySelectorAll('.scroll-container table');
         tables.forEach(table => {
           table.style.animationDuration = durationPerColumn + 's';
+          // Reset transform and start animation
           table.style.transform = 'translateY(0)';
           table.style.animation = 'none';
           void table.offsetHeight;
@@ -584,6 +595,7 @@
           table.style.animationPlayState = 'running';
         });
 
+        // Update slide duration
         const slide = document.getElementById('slide2');
         if (slide) {
           slide.dataset.duration = (slideDuration * 1000);
@@ -624,6 +636,18 @@
         html += `<div class="scroll-container">${buildTeamTable(firstDoubled)}</div>`;
         html += `<div class="scroll-container">${buildTeamTable(secondDoubled)}</div>`;
         container.innerHTML = html;
+
+        // Ensure Teams slide has a data-duration of 31s (30s scroll + 1s buffer)
+        const slide = document.getElementById('slide3');
+        if (slide && !slide.dataset.duration) {
+          slide.dataset.duration = '31000';
+        }
+        // Also set animation duration to 30s on all tables (already in CSS)
+        const tables = container.querySelectorAll('.scroll-container table');
+        tables.forEach(table => {
+          table.style.animationDuration = '30s';
+          table.style.animationPlayState = 'running';
+        });
       }
 
       function storeSnapshot(data) {
