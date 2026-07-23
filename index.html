@@ -52,11 +52,9 @@
     .slide-title .week-date { font-weight: 800; font-size: 2.4vh; color: #0b1a33; display: inline-block; margin-top: 0.1vh; letter-spacing: 0.05em; background: rgba(255,255,255,0.2); padding: 0.1vh 2vw; border-radius: 30px; margin-left: auto; margin-right: auto; backdrop-filter: blur(4px); }
     .scroll-container { flex: 1; overflow: hidden; position: relative; mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); z-index: 1; }
     .scroll-container table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06); border: 1px solid rgba(255,255,255,0.08); }
-    /* Table grid for both Agents and Teams */
     .table-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8vw 1.5vw; flex: 1; min-height: 0; height: 100%; }
     .table-grid .scroll-container { flex: 1; overflow: hidden; position: relative; mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); }
     .table-grid .scroll-container table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.85); backdrop-filter: blur(8px); border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06); border: 1px solid rgba(255,255,255,0.08); animation: scrollTable 30s linear infinite; }
-    /* Keyframes for table scrolling (duration set dynamically) */
     @keyframes scrollTable {
       0% { transform: translateY(0); }
       100% { transform: translateY(-50%); }
@@ -102,18 +100,27 @@
     .dot { width: 1vh; height: 1vh; border-radius: 50%; background: rgba(255,255,255,0.2); border: none; cursor: pointer; transition: all 0.3s ease; padding: 0; }
     .dot.active { background: #d32f2f; transform: scale(1.4); box-shadow: 0 0 20px rgba(211,47,47,0.5); }
 
-    /* ===== AGENTS: two‑column grid ===== */
+    /* ===== AGENTS: two‑column grid – FIXED COLUMN WIDTHS ===== */
     #slide2 .table-grid .scroll-container table { 
       width: 100%; 
       table-layout: fixed; 
       animation: scrollTable linear infinite;
     }
     #slide2 .table-grid .scroll-container th.rank-col,
-    #slide2 .table-grid .scroll-container td.rank-col { width: 10%; }
+    #slide2 .table-grid .scroll-container td.rank-col { 
+      width: 10%; 
+    }
     #slide2 .table-grid .scroll-container th.name-col,
-    #slide2 .table-grid .scroll-container td.name-col { width: 60%; }
+    #slide2 .table-grid .scroll-container td.name-col { 
+      width: 45%;  /* WAS 60% – reduced to give score more room */
+    }
     #slide2 .table-grid .scroll-container th.score-col,
-    #slide2 .table-grid .scroll-container td.score-col { width: 30%; text-align: right; }
+    #slide2 .table-grid .scroll-container td.score-col { 
+      width: 45%;  /* WAS 30% – increased to fit percentages + arrows */
+      text-align: right; 
+      justify-content: flex-end; 
+      white-space: nowrap;
+    }
 
     /* ===== TEAMS: two‑column grid ===== */
     #slide3 .table-grid .scroll-container table { 
@@ -300,7 +307,7 @@
     })();
 
     // =============================================
-    // SLIDESHOW ENGINE + RENDER
+    // SLIDESHOW ENGINE + RENDER + PAUSE/RESTART
     // =============================================
     (function() {
       const slides = document.querySelectorAll('.slide');
@@ -310,6 +317,33 @@
       let timer = null;
       let progressTimer = null;
       let isTransitioning = false;
+
+      function pauseAgentScroll() {
+        const tables = document.querySelectorAll('#slide2 .table-grid .scroll-container table');
+        tables.forEach(table => {
+          table.style.animationPlayState = 'paused';
+        });
+      }
+
+      function resumeAgentScroll() {
+        const tables = document.querySelectorAll('#slide2 .table-grid .scroll-container table');
+        tables.forEach(table => {
+          table.style.animationPlayState = 'running';
+        });
+      }
+
+      function resetAgentScroll() {
+        const tables = document.querySelectorAll('#slide2 .table-grid .scroll-container table');
+        tables.forEach(table => {
+          table.style.transform = 'translateY(0)';
+          void table.offsetHeight;
+          const duration = table.style.animationDuration || '20s';
+          table.style.animation = 'none';
+          void table.offsetHeight;
+          table.style.animation = `scrollTable ${duration} linear infinite`;
+          table.style.animationPlayState = 'running';
+        });
+      }
 
       function getSlideDuration(slide) {
         const custom = parseInt(slide.dataset.duration);
@@ -373,27 +407,33 @@
       window.pauseSlideshow = function() {
         if (timer) { clearTimeout(timer); timer = null; }
         if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
+        pauseAgentScroll();
       };
       window.resumeSlideshow = function() {
         const duration = getSlideDuration(slides[currentIndex]);
         startProgressBar(duration);
         timer = setTimeout(() => { nextSlide(); }, duration);
+        if (currentIndex === 2) resumeAgentScroll();
       };
 
       function resetAnimations(index) {
         const activeSlide = slides[index];
-        // For tables with scroll animation, restart the animation by removing and re-adding
+
+        if (index === 2) {
+          setTimeout(resetAgentScroll, 100);
+        } else {
+          pauseAgentScroll();
+        }
+
         const tables = activeSlide.querySelectorAll('.scroll-container table');
         tables.forEach(table => {
-          // Force reflow by toggling animation
+          const duration = table.style.animationDuration || '30s';
           table.style.animation = 'none';
           void table.offsetHeight;
-          // Restore animation – duration kept from inline style
-          const duration = table.style.animationDuration || '30s';
           table.style.animation = `scrollTable ${duration} linear infinite`;
+          table.style.animationPlayState = 'running';
         });
 
-        // Fade in rows
         const rows = activeSlide.querySelectorAll('tbody tr');
         rows.forEach((row, i) => {
           row.style.opacity = '0';
@@ -446,14 +486,18 @@
       document.getElementById('prevSlide').addEventListener('click', prevSlide);
 
       const wrapper = document.getElementById('slidesWrapper');
+
       wrapper.addEventListener('mouseenter', () => {
         if (timer) clearTimeout(timer);
         if (progressTimer) clearInterval(progressTimer);
+        pauseAgentScroll();
       });
+
       wrapper.addEventListener('mouseleave', () => {
         const duration = getSlideDuration(slides[currentIndex]);
         startProgressBar(duration);
         timer = setTimeout(() => { nextSlide(); }, duration);
+        if (currentIndex === 2) resumeAgentScroll();
       });
 
       document.addEventListener('keydown', (e) => {
@@ -497,7 +541,6 @@
         const left = ranked.slice(0, half);
         const right = ranked.slice(half);
 
-        // Each column gets its own doubled list for infinite scroll
         const leftDoubled = [...left, ...left];
         const rightDoubled = [...right, ...right];
 
@@ -523,33 +566,31 @@
           return html;
         }
 
-        // Calculate duration per column (based on half the rows)
         const durationPerColumn = Math.max(20, half * 0.3);
-        const slideDuration = durationPerColumn + 1; // +1s buffer
+        const slideDuration = durationPerColumn + 1;
 
         let html = '';
         html += `<div class="scroll-container">${buildAgentTable(leftDoubled)}</div>`;
         html += `<div class="scroll-container">${buildAgentTable(rightDoubled)}</div>`;
         container.innerHTML = html;
 
-        // Set animation duration on both tables
         const tables = container.querySelectorAll('.scroll-container table');
         tables.forEach(table => {
           table.style.animationDuration = durationPerColumn + 's';
-          // Force animation to start
+          table.style.transform = 'translateY(0)';
           table.style.animation = 'none';
           void table.offsetHeight;
           table.style.animation = `scrollTable ${durationPerColumn}s linear infinite`;
+          table.style.animationPlayState = 'running';
         });
 
-        // Update slide duration
         const slide = document.getElementById('slide2');
         if (slide) {
           slide.dataset.duration = (slideDuration * 1000);
         }
       }
 
-      // ---- Render Teams (same as before) ----
+      // ---- Render Teams ----
       function renderTeams(containerId, items, previousData) {
         const container = document.getElementById(containerId);
         if (!items || items.length === 0) {
@@ -583,7 +624,6 @@
         html += `<div class="scroll-container">${buildTeamTable(firstDoubled)}</div>`;
         html += `<div class="scroll-container">${buildTeamTable(secondDoubled)}</div>`;
         container.innerHTML = html;
-        // Teams slide uses fixed 30s
       }
 
       function storeSnapshot(data) {
