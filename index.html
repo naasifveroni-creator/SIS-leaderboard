@@ -97,10 +97,7 @@
     .dot.active { background: #d32f2f; transform: scale(1.4); box-shadow: 0 0 20px rgba(211,47,47,0.5); }
 
     /* ===== AGENTS: two‑column grid – FIXED COLUMN WIDTHS ===== */
-    #slide2 .table-grid .scroll-container table { 
-      width: 100%; 
-      table-layout: fixed; 
-    }
+    #slide2 .table-grid .scroll-container table { width: 100%; table-layout: fixed; }
     #slide2 .table-grid .scroll-container th.rank-col,
     #slide2 .table-grid .scroll-container td.rank-col { width: 10%; }
     #slide2 .table-grid .scroll-container th.name-col,
@@ -297,7 +294,7 @@
     })();
 
     // =============================================
-    // SLIDESHOW ENGINE
+    // SLIDESHOW ENGINE + JS SCROLL
     // =============================================
     (function() {
       const slides = document.querySelectorAll('.slide');
@@ -307,6 +304,15 @@
       let timer = null;
       let progressTimer = null;
       let isTransitioning = false;
+
+      // Agent scroll state
+      let agentRAF = null;
+      let agentScrollContainers = [];
+      let agentTotalScroll = 0;
+      let agentScrollDuration = 0;
+      let agentStartTime = 0;
+      let agentPaused = false;
+      let agentCurrentProgress = 0;
 
       function getSlideDuration(slide) {
         const custom = parseInt(slide.dataset.duration);
@@ -338,6 +344,110 @@
         }, 50);
       }
 
+      // ----- Agent scroll -----
+      function startAgentScroll() {
+        const wrap = document.getElementById('agentTableWrap');
+        if (!wrap) return;
+        const containers = wrap.querySelectorAll('.scroll-container');
+        if (containers.length === 0) return;
+        const firstTable = containers[0].querySelector('table');
+        if (!firstTable) return;
+        const containerHeight = containers[0].clientHeight;
+        const tableHeight = firstTable.scrollHeight;
+        const totalScroll = Math.max(0, tableHeight - containerHeight);
+        if (totalScroll === 0) return;
+
+        const rowCount = firstTable.querySelectorAll('tbody tr').length / 2;
+        const duration = Math.max(20, rowCount * 0.4);
+        agentScrollDuration = duration;
+        agentTotalScroll = totalScroll;
+        agentScrollContainers = containers;
+        agentCurrentProgress = 0;
+        agentPaused = false;
+
+        // Set slide duration
+        const slide = document.getElementById('slide2');
+        if (slide) {
+          slide.dataset.duration = Math.ceil((duration + 1) * 1000);
+        }
+
+        // Reset scroll position
+        containers.forEach(sc => { sc.scrollTop = 0; });
+
+        // Start animation
+        agentStartTime = performance.now();
+        if (agentRAF) cancelAnimationFrame(agentRAF);
+        stepAgentScroll(performance.now());
+
+        // If slide is active, restart timer with new duration
+        if (slide && slide.classList.contains('active')) {
+          if (timer) clearTimeout(timer);
+          if (progressTimer) clearInterval(progressTimer);
+          const newDuration = getSlideDuration(slide);
+          startProgressBar(newDuration);
+          timer = setTimeout(() => { nextSlide(); }, newDuration);
+        }
+      }
+
+      function stepAgentScroll(timestamp) {
+        if (agentPaused) {
+          agentRAF = requestAnimationFrame(stepAgentScroll);
+          return;
+        }
+        const elapsed = (timestamp - agentStartTime) / 1000;
+        const progress = Math.min(elapsed / agentScrollDuration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const currentPos = agentTotalScroll * eased;
+        agentCurrentProgress = progress;
+        agentScrollContainers.forEach(sc => {
+          sc.scrollTop = currentPos;
+        });
+        if (progress < 1) {
+          agentRAF = requestAnimationFrame(stepAgentScroll);
+        } else {
+          // Finished
+          agentScrollContainers.forEach(sc => {
+            sc.scrollTop = agentTotalScroll;
+          });
+          agentRAF = null;
+          // The timer will trigger nextSlide when duration is up
+        }
+      }
+
+      function pauseAgentScroll() {
+        agentPaused = true;
+      }
+
+      function resumeAgentScroll() {
+        if (agentPaused) {
+          agentPaused = false;
+          if (!agentRAF) {
+            // If paused and RAF is null, restart
+            startAgentScroll();
+          } else {
+            // Continue from where it was
+            // We need to adjust startTime based on current progress
+            const elapsed = agentCurrentProgress * agentScrollDuration;
+            agentStartTime = performance.now() - (elapsed * 1000);
+            // RAF is already running, it will continue
+          }
+        }
+      }
+
+      function resetAgentScroll() {
+        if (agentRAF) cancelAnimationFrame(agentRAF);
+        agentRAF = null;
+        // Reset containers to top
+        const wrap = document.getElementById('agentTableWrap');
+        if (wrap) {
+          const containers = wrap.querySelectorAll('.scroll-container');
+          containers.forEach(sc => { sc.scrollTop = 0; });
+        }
+        agentCurrentProgress = 0;
+        setTimeout(startAgentScroll, 200);
+      }
+
+      // ----- Slide navigation -----
       function goToSlide(index) {
         if (isTransitioning || index === currentIndex) return;
         if (index < 0) index = slides.length - 1;
@@ -349,6 +459,7 @@
         currentIndex = index;
         slides[currentIndex].classList.add('active');
         dots[currentIndex].classList.add('active');
+
         resetAnimations(currentIndex);
 
         if (timer) clearTimeout(timer);
@@ -370,25 +481,31 @@
       window.pauseSlideshow = function() {
         if (timer) { clearTimeout(timer); timer = null; }
         if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
+        pauseAgentScroll();
       };
       window.resumeSlideshow = function() {
         const duration = getSlideDuration(slides[currentIndex]);
         startProgressBar(duration);
         if (timer) clearTimeout(timer);
         timer = setTimeout(() => { nextSlide(); }, duration);
+        if (currentIndex === 2) resumeAgentScroll();
       };
 
       function resetAnimations(index) {
         const activeSlide = slides[index];
-        const tables = activeSlide.querySelectorAll('.scroll-container table');
-        tables.forEach(table => {
-          const duration = table.style.animationDuration || '30s';
-          table.style.animation = 'none';
-          void table.offsetHeight;
-          table.style.animation = `scrollTable ${duration} linear infinite`;
-          table.style.animationPlayState = 'running';
-        });
+        // For Teams slide, restart CSS animation
+        if (index === 3) {
+          const tables = activeSlide.querySelectorAll('.scroll-container table');
+          tables.forEach(table => {
+            const duration = table.style.animationDuration || '30s';
+            table.style.animation = 'none';
+            void table.offsetHeight;
+            table.style.animation = `scrollTable ${duration} linear infinite`;
+            table.style.animationPlayState = 'running';
+          });
+        }
 
+        // Fade rows
         const rows = activeSlide.querySelectorAll('tbody tr');
         rows.forEach((row, i) => {
           row.style.opacity = '0';
@@ -414,6 +531,14 @@
             }
           }, 120 + (i * 80));
         });
+
+        // Agent slide: reset and start scroll
+        if (index === 2) {
+          setTimeout(resetAgentScroll, 300);
+        } else {
+          // Pause Agent scroll when leaving
+          pauseAgentScroll();
+        }
       }
 
       function animateCounter(element, target) {
@@ -444,22 +569,14 @@
       wrapper.addEventListener('mouseenter', () => {
         if (timer) clearTimeout(timer);
         if (progressTimer) clearInterval(progressTimer);
-        // Pause Agent scroll
-        const agentTables = document.querySelectorAll('#slide2 .table-grid .scroll-container table');
-        agentTables.forEach(table => {
-          table.style.animationPlayState = 'paused';
-        });
+        pauseAgentScroll();
       });
       wrapper.addEventListener('mouseleave', () => {
         const duration = getSlideDuration(slides[currentIndex]);
         startProgressBar(duration);
         if (timer) clearTimeout(timer);
         timer = setTimeout(() => { nextSlide(); }, duration);
-        // Resume Agent scroll
-        const agentTables = document.querySelectorAll('#slide2 .table-grid .scroll-container table');
-        agentTables.forEach(table => {
-          table.style.animationPlayState = 'running';
-        });
+        if (currentIndex === 2) resumeAgentScroll();
       });
 
       document.addEventListener('keydown', (e) => {
@@ -527,26 +644,18 @@
           return html;
         }
 
-        // Calculate duration based on number of agents (0.4s per agent, min 20s)
-        const totalRows = ranked.length;
-        const SCROLL_DURATION = Math.max(20, totalRows * 0.4);
-        const slideDuration = Math.ceil(SCROLL_DURATION + 1);
+        // Build both columns
+        const leftHtml = `<div class="scroll-container" style="overflow-y:auto; height:100%;">${buildTable(left)}</div>`;
+        const rightHtml = `<div class="scroll-container" style="overflow-y:auto; height:100%;">${buildTable(right)}</div>`;
+        container.innerHTML = leftHtml + rightHtml;
 
-        container.innerHTML = `
-          <div class="scroll-container">${buildTable(left)}</div>
-          <div class="scroll-container">${buildTable(right)}</div>
-        `;
+        // Force reflow
+        void container.offsetHeight;
 
-        const tables = container.querySelectorAll('.scroll-container table');
-        tables.forEach(table => {
-          table.style.animationDuration = SCROLL_DURATION + 's';
-          table.style.animation = `scrollTable ${SCROLL_DURATION}s linear infinite`;
-          table.style.animationPlayState = 'running';
-        });
-
+        // Start scroll if this slide is active
         const slide = document.getElementById('slide2');
-        if (slide) {
-          slide.dataset.duration = (slideDuration * 1000);
+        if (slide && slide.classList.contains('active')) {
+          setTimeout(resetAgentScroll, 300);
         }
       }
 
@@ -584,7 +693,6 @@
           <div class="scroll-container">${buildTable(firstCol)}</div>
           <div class="scroll-container">${buildTable(secondCol)}</div>
         `;
-
         const tables = container.querySelectorAll('.scroll-container table');
         tables.forEach(table => {
           table.style.animationDuration = '30s';
@@ -613,13 +721,15 @@
           renderAgents('agentTableWrap', data.agents, prevData);
           renderTeams('teamTableWrap', data.teams, prevData);
           storeSnapshot(data);
+
+          // Restart slideshow after rendering
           setTimeout(() => {
             resetAnimations(currentIndex);
             const duration = getSlideDuration(slides[currentIndex]);
             startProgressBar(duration);
             if (timer) clearTimeout(timer);
             timer = setTimeout(() => { nextSlide(); }, duration);
-          }, 300);
+          }, 400);
         } catch (e) {
           document.getElementById('teamTableWrap').innerHTML = '<div class="empty-state">⚠️ Could not load data.</div>';
           document.getElementById('agentTableWrap').innerHTML = '<div class="empty-state">⚠️ Could not load data.</div>';
