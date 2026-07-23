@@ -299,7 +299,7 @@
     })();
 
     // =============================================
-    // SLIDESHOW ENGINE
+    // SLIDESHOW ENGINE – STABLE VERSION
     // =============================================
     (function() {
       const slides = document.querySelectorAll('.slide');
@@ -376,6 +376,7 @@
       window.resumeSlideshow = function() {
         const duration = getSlideDuration(slides[currentIndex]);
         startProgressBar(duration);
+        if (timer) clearTimeout(timer);
         timer = setTimeout(() => { nextSlide(); }, duration);
       };
 
@@ -449,6 +450,7 @@
       wrapper.addEventListener('mouseleave', () => {
         const duration = getSlideDuration(slides[currentIndex]);
         startProgressBar(duration);
+        if (timer) clearTimeout(timer);
         timer = setTimeout(() => { nextSlide(); }, duration);
       });
 
@@ -517,21 +519,16 @@
           return html;
         }
 
-        // Calculate scroll duration
         const ROWS_PER_SECOND = 68 / 30;
         const totalRows = ranked.length;
         const scrollDuration = Math.max(20, totalRows / ROWS_PER_SECOND);
         const slideDuration = Math.ceil(scrollDuration + 1);
 
-        // Build HTML
         const leftHtml = `<div class="scroll-container">${buildTable(left)}</div>`;
         const rightHtml = `<div class="scroll-container">${buildTable(right)}</div>`;
         container.innerHTML = leftHtml + rightHtml;
 
-        // ---- FORCE REFLOW ----
-        void container.offsetHeight;
-
-        // ---- Apply animation styles after a tiny delay to ensure painting ----
+        // Apply animation with a small delay to ensure DOM is painted
         setTimeout(() => {
           const allTables = container.querySelectorAll('.scroll-container table');
           allTables.forEach(table => {
@@ -541,9 +538,8 @@
             table.style.animation = `scrollTable ${scrollDuration}s linear infinite`;
             table.style.animationPlayState = 'running';
           });
-        }, 50);
+        }, 100);
 
-        // Set slide duration
         const slide = document.getElementById('slide2');
         if (slide) {
           slide.dataset.duration = (slideDuration * 1000);
@@ -585,14 +581,14 @@
           <div class="scroll-container">${buildTable(secondCol)}</div>
         `;
 
-        // Force reflow and apply styles
-        void container.offsetHeight;
-        const tables = container.querySelectorAll('.scroll-container table');
-        tables.forEach(table => {
-          table.style.animationDuration = '30s';
-          table.style.animation = 'scrollTable 30s linear infinite';
-          table.style.animationPlayState = 'running';
-        });
+        setTimeout(() => {
+          const tables = container.querySelectorAll('.scroll-container table');
+          tables.forEach(table => {
+            table.style.animationDuration = '30s';
+            table.style.animation = 'scrollTable 30s linear infinite';
+            table.style.animationPlayState = 'running';
+          });
+        }, 100);
       }
 
       function storeSnapshot(data) {
@@ -616,14 +612,11 @@
           renderTeams('teamTableWrap', data.teams, prevData);
           storeSnapshot(data);
 
-          // ---- Restart the slideshow timer ----
+          // ---- Restart slideshow ----
           setTimeout(() => {
             resetAnimations(currentIndex);
-            const duration = getSlideDuration(slides[currentIndex]);
-            startProgressBar(duration);
-            if (timer) clearTimeout(timer);
-            timer = setTimeout(() => { nextSlide(); }, duration);
-          }, 300);
+            window.resumeSlideshow();
+          }, 500);
         } catch (e) {
           document.getElementById('teamTableWrap').innerHTML = '<div class="empty-state">⚠️ Could not load data.</div>';
           document.getElementById('agentTableWrap').innerHTML = '<div class="empty-state">⚠️ Could not load data.</div>';
