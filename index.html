@@ -297,7 +297,7 @@
     })();
 
     // =============================================
-    // SLIDESHOW ENGINE + JS SCROLL
+    // SLIDESHOW ENGINE
     // =============================================
     (function() {
       const slides = document.querySelectorAll('.slide');
@@ -307,14 +307,6 @@
       let timer = null;
       let progressTimer = null;
       let isTransitioning = false;
-
-      // ---- Agent scroll variables ----
-      let agentScrollRAF = null;
-      let agentScrollStartTime = 0;
-      let agentScrollDuration = 0;
-      let agentScrollStartPos = 0;
-      let agentTotalScroll = 0;
-      let agentScrollContainers = [];
 
       function getSlideDuration(slide) {
         const custom = parseInt(slide.dataset.duration);
@@ -346,90 +338,6 @@
         }, 50);
       }
 
-      // ---- Agent scroll function ----
-      function startAgentScroll() {
-        const container = document.getElementById('agentTableWrap');
-        if (!container) return;
-        const scrollContainers = container.querySelectorAll('.scroll-container');
-        if (scrollContainers.length === 0) return;
-
-        const table = scrollContainers[0].querySelector('table');
-        if (!table) return;
-        const containerHeight = scrollContainers[0].clientHeight;
-        const tableHeight = table.scrollHeight;
-        const totalScroll = Math.max(0, tableHeight - containerHeight);
-        if (totalScroll <= 0) return;
-
-        const rowCount = table.querySelectorAll('tbody tr').length / 2;
-        const ROWS_PER_SECOND = 68 / 30;
-        const duration = Math.max(20, rowCount / ROWS_PER_SECOND);
-        agentScrollDuration = duration;
-        agentTotalScroll = totalScroll;
-        agentScrollContainers = scrollContainers;
-
-        // Set slide duration BEFORE starting timer
-        const slide = document.getElementById('slide2');
-        if (slide) {
-          slide.dataset.duration = Math.ceil((duration + 1) * 1000);
-        }
-
-        // If this slide is active, restart the slideshow timer
-        if (slide && slide.classList.contains('active')) {
-          // Stop current timer
-          if (timer) clearTimeout(timer);
-          if (progressTimer) clearInterval(progressTimer);
-          const newDuration = getSlideDuration(slide);
-          startProgressBar(newDuration);
-          timer = setTimeout(() => { nextSlide(); }, newDuration);
-        }
-
-        // Start scrolling
-        agentScrollStartTime = performance.now();
-        agentScrollStartPos = 0;
-
-        // Reset scroll position
-        scrollContainers.forEach(sc => {
-          sc.scrollTop = 0;
-        });
-
-        function scrollStep(timestamp) {
-          const elapsed = (timestamp - agentScrollStartTime) / 1000;
-          const progress = Math.min(elapsed / agentScrollDuration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          const currentPos = agentScrollStartPos + (agentTotalScroll * eased);
-          scrollContainers.forEach(sc => {
-            sc.scrollTop = currentPos;
-          });
-          if (progress < 1) {
-            agentScrollRAF = requestAnimationFrame(scrollStep);
-          } else {
-            scrollContainers.forEach(sc => {
-              sc.scrollTop = agentTotalScroll;
-            });
-            agentScrollRAF = null;
-          }
-        }
-        agentScrollRAF = requestAnimationFrame(scrollStep);
-      }
-
-      function stopAgentScroll() {
-        if (agentScrollRAF) {
-          cancelAnimationFrame(agentScrollRAF);
-          agentScrollRAF = null;
-        }
-      }
-
-      function resetAgentScroll() {
-        stopAgentScroll();
-        const container = document.getElementById('agentTableWrap');
-        if (!container) return;
-        const scrollContainers = container.querySelectorAll('.scroll-container');
-        scrollContainers.forEach(sc => {
-          sc.scrollTop = 0;
-        });
-        setTimeout(startAgentScroll, 100);
-      }
-
       function goToSlide(index) {
         if (isTransitioning || index === currentIndex) return;
         if (index < 0) index = slides.length - 1;
@@ -441,7 +349,6 @@
         currentIndex = index;
         slides[currentIndex].classList.add('active');
         dots[currentIndex].classList.add('active');
-
         resetAnimations(currentIndex);
 
         if (timer) clearTimeout(timer);
@@ -463,28 +370,24 @@
       window.pauseSlideshow = function() {
         if (timer) { clearTimeout(timer); timer = null; }
         if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
-        stopAgentScroll();
       };
       window.resumeSlideshow = function() {
         const duration = getSlideDuration(slides[currentIndex]);
         startProgressBar(duration);
         if (timer) clearTimeout(timer);
         timer = setTimeout(() => { nextSlide(); }, duration);
-        if (currentIndex === 2) startAgentScroll();
       };
 
       function resetAnimations(index) {
         const activeSlide = slides[index];
-        if (index === 3) {
-          const tables = activeSlide.querySelectorAll('.scroll-container table');
-          tables.forEach(table => {
-            const duration = table.style.animationDuration || '30s';
-            table.style.animation = 'none';
-            void table.offsetHeight;
-            table.style.animation = `scrollTable ${duration} linear infinite`;
-            table.style.animationPlayState = 'running';
-          });
-        }
+        const tables = activeSlide.querySelectorAll('.scroll-container table');
+        tables.forEach(table => {
+          const duration = table.style.animationDuration || '30s';
+          table.style.animation = 'none';
+          void table.offsetHeight;
+          table.style.animation = `scrollTable ${duration} linear infinite`;
+          table.style.animationPlayState = 'running';
+        });
 
         const rows = activeSlide.querySelectorAll('tbody tr');
         rows.forEach((row, i) => {
@@ -511,12 +414,6 @@
             }
           }, 120 + (i * 80));
         });
-
-        if (index === 2) {
-          setTimeout(resetAgentScroll, 300);
-        } else {
-          stopAgentScroll();
-        }
       }
 
       function animateCounter(element, target) {
@@ -547,14 +444,22 @@
       wrapper.addEventListener('mouseenter', () => {
         if (timer) clearTimeout(timer);
         if (progressTimer) clearInterval(progressTimer);
-        stopAgentScroll();
+        // Pause Agent scroll
+        const agentTables = document.querySelectorAll('#slide2 .table-grid .scroll-container table');
+        agentTables.forEach(table => {
+          table.style.animationPlayState = 'paused';
+        });
       });
       wrapper.addEventListener('mouseleave', () => {
         const duration = getSlideDuration(slides[currentIndex]);
         startProgressBar(duration);
         if (timer) clearTimeout(timer);
         timer = setTimeout(() => { nextSlide(); }, duration);
-        if (currentIndex === 2) startAgentScroll();
+        // Resume Agent scroll
+        const agentTables = document.querySelectorAll('#slide2 .table-grid .scroll-container table');
+        agentTables.forEach(table => {
+          table.style.animationPlayState = 'running';
+        });
       });
 
       document.addEventListener('keydown', (e) => {
@@ -622,21 +527,26 @@
           return html;
         }
 
-        const leftHtml = `<div class="scroll-container" style="overflow-y:auto; height:100%;">${buildTable(left)}</div>`;
-        const rightHtml = `<div class="scroll-container" style="overflow-y:auto; height:100%;">${buildTable(right)}</div>`;
-        container.innerHTML = leftHtml + rightHtml;
+        // Calculate duration based on number of agents (0.4s per agent, min 20s)
+        const totalRows = ranked.length;
+        const SCROLL_DURATION = Math.max(20, totalRows * 0.4);
+        const slideDuration = Math.ceil(SCROLL_DURATION + 1);
 
-        // Calculate duration and set slide data-duration immediately
-        const rowCount = ranked.length;
-        const ROWS_PER_SECOND = 68 / 30;
-        const duration = Math.max(20, rowCount / ROWS_PER_SECOND);
+        container.innerHTML = `
+          <div class="scroll-container">${buildTable(left)}</div>
+          <div class="scroll-container">${buildTable(right)}</div>
+        `;
+
+        const tables = container.querySelectorAll('.scroll-container table');
+        tables.forEach(table => {
+          table.style.animationDuration = SCROLL_DURATION + 's';
+          table.style.animation = `scrollTable ${SCROLL_DURATION}s linear infinite`;
+          table.style.animationPlayState = 'running';
+        });
+
         const slide = document.getElementById('slide2');
         if (slide) {
-          slide.dataset.duration = Math.ceil((duration + 1) * 1000);
-        }
-
-        if (slide && slide.classList.contains('active')) {
-          setTimeout(resetAgentScroll, 300);
+          slide.dataset.duration = (slideDuration * 1000);
         }
       }
 
@@ -674,6 +584,7 @@
           <div class="scroll-container">${buildTable(firstCol)}</div>
           <div class="scroll-container">${buildTable(secondCol)}</div>
         `;
+
         const tables = container.querySelectorAll('.scroll-container table');
         tables.forEach(table => {
           table.style.animationDuration = '30s';
@@ -702,17 +613,13 @@
           renderAgents('agentTableWrap', data.agents, prevData);
           renderTeams('teamTableWrap', data.teams, prevData);
           storeSnapshot(data);
-
-          // Restart slideshow after everything is rendered
           setTimeout(() => {
             resetAnimations(currentIndex);
-            // Force restart timer with the new duration
-            if (timer) clearTimeout(timer);
-            if (progressTimer) clearInterval(progressTimer);
             const duration = getSlideDuration(slides[currentIndex]);
             startProgressBar(duration);
+            if (timer) clearTimeout(timer);
             timer = setTimeout(() => { nextSlide(); }, duration);
-          }, 600);
+          }, 300);
         } catch (e) {
           document.getElementById('teamTableWrap').innerHTML = '<div class="empty-state">⚠️ Could not load data.</div>';
           document.getElementById('agentTableWrap').innerHTML = '<div class="empty-state">⚠️ Could not load data.</div>';
