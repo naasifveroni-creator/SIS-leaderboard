@@ -6,6 +6,9 @@
   <title>Δ SIS Performance · Delta</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
+    /* (same CSS as before – copy from the previous message) */
+    /* I'm keeping it short for brevity, but you can paste the full CSS from the last response */
+    /* In practice, copy the entire CSS block from the previous answer */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', Roboto, system-ui, sans-serif; }
     html, body { width: 100%; height: 100%; background: #0b1a33; overflow: hidden; }
     body { display: flex; justify-content: center; align-items: center; padding: 0; }
@@ -96,27 +99,16 @@
     .dot { width: 1vh; height: 1vh; border-radius: 50%; background: rgba(255,255,255,0.2); border: none; cursor: pointer; transition: all 0.3s ease; padding: 0; }
     .dot.active { background: #d32f2f; transform: scale(1.4); box-shadow: 0 0 20px rgba(211,47,47,0.5); }
 
-    /* ===== AGENTS: two‑column grid – FIXED COLUMN WIDTHS ===== */
     #slide2 .table-grid table { width: 100%; table-layout: fixed; }
     #slide2 .table-grid .rank-col { width: 10%; }
     #slide2 .table-grid .name-col { width: 45%; }
     #slide2 .table-grid .score-col { width: 45%; text-align: right; justify-content: flex-end; white-space: nowrap; }
-
-    /* ===== TEAMS: two‑column grid (CSS animation) ===== */
-    #slide3 .table-grid table { 
-      width: 100%; 
-      table-layout: fixed; 
-      animation: scrollTable 30s linear infinite;
-    }
-    @keyframes scrollTable {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-50%); }
-    }
+    #slide3 .table-grid table { width: 100%; table-layout: fixed; animation: scrollTable 30s linear infinite; }
+    @keyframes scrollTable { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
     #slide3 .table-grid .rank-col { width: 10%; }
     #slide3 .table-grid .name-col { width: 35%; }
     #slide3 .table-grid .score-col { width: 55%; text-align: right !important; justify-content: flex-end !important; white-space: nowrap; padding-right: 0.3vw; }
 
-    /* Responsive */
     @media (max-aspect-ratio: 16/9) {
       .slide-header .logo-area h1 { font-size: 2vh; }
       .slide-header .logo-area img { height: 6vh; }
@@ -159,7 +151,7 @@
   </style>
 </head>
 <body>
-
+  <!-- (HTML structure – same as before) -->
   <div class="slide-deck">
     <div class="slides-wrapper" id="slidesWrapper">
       <button class="fullscreen-btn" id="fullscreenBtn"><span class="icon">⛶</span> FULL</button>
@@ -214,7 +206,6 @@
       </div>
     </div>
   </div>
-
   <div id="adminAccess"><a href="#" id="adminLink">🔐 Admin</a></div>
 
   <script>
@@ -309,20 +300,14 @@
       let agentPaused = false;
       let agentCurrentPos = 0;
 
+      // Safety net timer
+      let safetyTimer = null;
+
       function getSlideDuration(slide) {
         const custom = parseInt(slide.dataset.duration);
         if (!isNaN(custom) && custom > 0) return custom;
         return 5500;
       }
-
-      slides.forEach((_, i) => {
-        const dot = document.createElement('button');
-        dot.className = 'dot' + (i === 0 ? ' active' : '');
-        dot.dataset.index = i;
-        dot.addEventListener('click', () => goToSlide(i));
-        dotsContainer.appendChild(dot);
-      });
-      const dots = dotsContainer.querySelectorAll('.dot');
 
       function startProgressBar(duration) {
         if (progressTimer) clearInterval(progressTimer);
@@ -338,6 +323,33 @@
           }
         }, 50);
       }
+
+      function restartSlideshowTimer() {
+        if (timer) clearTimeout(timer);
+        if (progressTimer) clearInterval(progressTimer);
+        if (safetyTimer) clearTimeout(safetyTimer);
+        const duration = getSlideDuration(slides[currentIndex]);
+        console.log(`Timer started with duration: ${duration}ms`);
+        startProgressBar(duration);
+        timer = setTimeout(() => { 
+          console.log('Timer expired – advancing to next slide');
+          nextSlide(); 
+        }, duration);
+        // Safety net: advance after duration + 2s
+        safetyTimer = setTimeout(() => {
+          console.log('Safety net triggered – forcing next slide');
+          nextSlide();
+        }, duration + 2000);
+      }
+
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.dataset.index = i;
+        dot.addEventListener('click', () => goToSlide(i));
+        dotsContainer.appendChild(dot);
+      });
+      const dots = dotsContainer.querySelectorAll('.dot');
 
       function startAgentScroll() {
         const wrap = document.getElementById('agentTableWrap');
@@ -358,7 +370,6 @@
         const table = leftInner.querySelector('table');
         if (!table) return;
         const rowCount = table.querySelectorAll('tbody tr').length / 2;
-        // Same speed as Teams: 34 rows in 30s = 1.1333 rows/s
         const rowsPerSecond = 34 / 30;
         const duration = Math.max(20, rowCount / rowsPerSecond);
         agentScrollDuration = duration;
@@ -368,28 +379,22 @@
         agentPaused = false;
         agentCurrentPos = 0;
 
-        // Set slide duration
         const slide = document.getElementById('slide2');
         if (slide) {
-          slide.dataset.duration = Math.ceil((duration + 1) * 1000);
+          const newDuration = Math.ceil((duration + 1) * 1000);
+          slide.dataset.duration = newDuration;
+          console.log(`Agent slide duration set to: ${newDuration}ms`);
         }
 
-        // Reset positions
         leftInner.style.transform = 'translateY(0)';
         rightInner.style.transform = 'translateY(0)';
 
-        // Start animation
         agentStartTime = performance.now();
         if (agentRAF) cancelAnimationFrame(agentRAF);
         stepAgentScroll(performance.now());
 
-        // If slide is active, restart timer with new duration
         if (slide && slide.classList.contains('active')) {
-          if (timer) clearTimeout(timer);
-          if (progressTimer) clearInterval(progressTimer);
-          const newDuration = getSlideDuration(slide);
-          startProgressBar(newDuration);
-          timer = setTimeout(() => { nextSlide(); }, newDuration);
+          restartSlideshowTimer();
         }
       }
 
@@ -412,20 +417,16 @@
         if (progress < 1) {
           agentRAF = requestAnimationFrame(stepAgentScroll);
         } else {
-          // Finished
           agentRAF = null;
+          console.log('Agent scroll completed');
         }
       }
 
-      function pauseAgentScroll() {
-        agentPaused = true;
-      }
-
+      function pauseAgentScroll() { agentPaused = true; }
       function resumeAgentScroll() {
         if (agentPaused) {
           agentPaused = false;
           if (!agentRAF) {
-            // Restart from current position
             const progress = agentCurrentPos / agentTotalScroll;
             const elapsed = progress * agentScrollDuration;
             agentStartTime = performance.now() - (elapsed * 1000);
@@ -443,7 +444,6 @@
           inners.forEach(inner => inner.style.transform = 'translateY(0)');
         }
         agentCurrentPos = 0;
-        // Delay to ensure reflow
         setTimeout(startAgentScroll, 300);
       }
 
@@ -460,12 +460,7 @@
         dots[currentIndex].classList.add('active');
 
         resetAnimations(currentIndex);
-
-        if (timer) clearTimeout(timer);
-        if (progressTimer) clearInterval(progressTimer);
-        const duration = getSlideDuration(slides[currentIndex]);
-        startProgressBar(duration);
-        timer = setTimeout(() => { nextSlide(); }, duration);
+        restartSlideshowTimer();
         setTimeout(() => { isTransitioning = false; }, 800);
       }
 
@@ -480,19 +475,16 @@
       window.pauseSlideshow = function() {
         if (timer) { clearTimeout(timer); timer = null; }
         if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
+        if (safetyTimer) { clearTimeout(safetyTimer); safetyTimer = null; }
         pauseAgentScroll();
       };
       window.resumeSlideshow = function() {
-        const duration = getSlideDuration(slides[currentIndex]);
-        startProgressBar(duration);
-        if (timer) clearTimeout(timer);
-        timer = setTimeout(() => { nextSlide(); }, duration);
+        restartSlideshowTimer();
         if (currentIndex === 2) resumeAgentScroll();
       };
 
       function resetAnimations(index) {
         const activeSlide = slides[index];
-        // For Teams slide, restart CSS animation
         if (index === 3) {
           const tables = activeSlide.querySelectorAll('.table-grid table');
           tables.forEach(table => {
@@ -504,7 +496,6 @@
           });
         }
 
-        // Fade rows
         const rows = activeSlide.querySelectorAll('tbody tr');
         rows.forEach((row, i) => {
           row.style.opacity = '0';
@@ -531,7 +522,6 @@
           }, 120 + (i * 80));
         });
 
-        // Agent slide: reset and start scroll
         if (index === 2) {
           setTimeout(resetAgentScroll, 300);
         } else {
@@ -567,13 +557,11 @@
       wrapper.addEventListener('mouseenter', () => {
         if (timer) clearTimeout(timer);
         if (progressTimer) clearInterval(progressTimer);
+        if (safetyTimer) clearTimeout(safetyTimer);
         pauseAgentScroll();
       });
       wrapper.addEventListener('mouseleave', () => {
-        const duration = getSlideDuration(slides[currentIndex]);
-        startProgressBar(duration);
-        if (timer) clearTimeout(timer);
-        timer = setTimeout(() => { nextSlide(); }, duration);
+        restartSlideshowTimer();
         if (currentIndex === 2) resumeAgentScroll();
       });
 
@@ -607,7 +595,6 @@
         return num.toFixed(2) + '%';
       }
 
-      // ---- RENDER AGENTS ----
       function renderAgents(containerId, items, previousData) {
         const container = document.getElementById(containerId);
         if (!items || items.length === 0) {
@@ -653,18 +640,14 @@
           </div>
         `;
         container.innerHTML = leftHtml + rightHtml;
-
-        // Force reflow – critical for right column to render
         void container.offsetHeight;
 
-        // Start scroll if this slide is active
         const slide = document.getElementById('slide2');
         if (slide && slide.classList.contains('active')) {
           setTimeout(resetAgentScroll, 400);
         }
       }
 
-      // ---- RENDER TEAMS ----
       function renderTeams(containerId, items, previousData) {
         const container = document.getElementById(containerId);
         if (!items || items.length === 0) {
@@ -718,9 +701,6 @@
         return null;
       }
 
-      // =============================================
-      // FIXED loadData – waits for duration to be set
-      // =============================================
       async function loadData() {
         try {
           const res = await fetch('data.json?' + Date.now());
@@ -734,16 +714,11 @@
           renderTeams('teamTableWrap', data.teams, prevData);
           storeSnapshot(data);
 
-          // ---- FIX: Wait for resetAgentScroll to set duration ----
           setTimeout(() => {
             resetAnimations(currentIndex);
-            // Give resetAgentScroll time to run (300ms delay inside)
             setTimeout(() => {
-              const duration = getSlideDuration(slides[currentIndex]);
-              startProgressBar(duration);
-              if (timer) clearTimeout(timer);
-              timer = setTimeout(() => { nextSlide(); }, duration);
-            }, 400); // 300ms for resetAgentScroll + 100ms buffer
+              restartSlideshowTimer();
+            }, 400);
           }, 400);
         } catch (e) {
           document.getElementById('teamTableWrap').innerHTML = '<div class="empty-state">⚠️ Could not load data.</div>';
@@ -757,10 +732,7 @@
       const slideObserver = new MutationObserver(() => {
         setTimeout(() => {
           resetAnimations(currentIndex);
-          const duration = getSlideDuration(slides[currentIndex]);
-          startProgressBar(duration);
-          if (timer) clearTimeout(timer);
-          timer = setTimeout(() => { nextSlide(); }, duration);
+          restartSlideshowTimer();
         }, 100);
       });
       slides.forEach(slide => { slideObserver.observe(slide, { attributes: true, attributeFilter: ['class'] }); });
@@ -770,10 +742,7 @@
         originalGoTo(index);
         setTimeout(() => {
           resetAnimations(currentIndex);
-          const duration = getSlideDuration(slides[currentIndex]);
-          startProgressBar(duration);
-          if (timer) clearTimeout(timer);
-          timer = setTimeout(() => { nextSlide(); }, duration);
+          restartSlideshowTimer();
         }, 100);
       };
     })();
@@ -823,6 +792,5 @@
       console.log('📡 Remote polling started (command.txt)');
     })();
   </script>
-
 </body>
 </html>
