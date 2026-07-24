@@ -358,7 +358,9 @@
         const table = leftInner.querySelector('table');
         if (!table) return;
         const rowCount = table.querySelectorAll('tbody tr').length / 2;
-        const duration = Math.max(20, rowCount * 0.4);
+        // Same speed as Teams: 34 rows in 30s = 1.1333 rows/s
+        const rowsPerSecond = 34 / 30;
+        const duration = Math.max(20, rowCount / rowsPerSecond);
         agentScrollDuration = duration;
         agentTotalScroll = totalScroll;
         agentLeftWrapper = leftWrapper;
@@ -441,7 +443,8 @@
           inners.forEach(inner => inner.style.transform = 'translateY(0)');
         }
         agentCurrentPos = 0;
-        setTimeout(startAgentScroll, 200);
+        // Delay to ensure reflow
+        setTimeout(startAgentScroll, 300);
       }
 
       function goToSlide(index) {
@@ -651,13 +654,13 @@
         `;
         container.innerHTML = leftHtml + rightHtml;
 
-        // Force reflow
+        // Force reflow – critical for right column to render
         void container.offsetHeight;
 
         // Start scroll if this slide is active
         const slide = document.getElementById('slide2');
         if (slide && slide.classList.contains('active')) {
-          setTimeout(resetAgentScroll, 300);
+          setTimeout(resetAgentScroll, 400);
         }
       }
 
