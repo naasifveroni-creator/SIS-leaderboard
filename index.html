@@ -718,6 +718,9 @@
         return null;
       }
 
+      // =============================================
+      // FIXED loadData – waits for duration to be set
+      // =============================================
       async function loadData() {
         try {
           const res = await fetch('data.json?' + Date.now());
@@ -731,13 +734,16 @@
           renderTeams('teamTableWrap', data.teams, prevData);
           storeSnapshot(data);
 
-          // Restart slideshow after rendering
+          // ---- FIX: Wait for resetAgentScroll to set duration ----
           setTimeout(() => {
             resetAnimations(currentIndex);
-            const duration = getSlideDuration(slides[currentIndex]);
-            startProgressBar(duration);
-            if (timer) clearTimeout(timer);
-            timer = setTimeout(() => { nextSlide(); }, duration);
+            // Give resetAgentScroll time to run (300ms delay inside)
+            setTimeout(() => {
+              const duration = getSlideDuration(slides[currentIndex]);
+              startProgressBar(duration);
+              if (timer) clearTimeout(timer);
+              timer = setTimeout(() => { nextSlide(); }, duration);
+            }, 400); // 300ms for resetAgentScroll + 100ms buffer
           }, 400);
         } catch (e) {
           document.getElementById('teamTableWrap').innerHTML = '<div class="empty-state">⚠️ Could not load data.</div>';
