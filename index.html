@@ -6,9 +6,7 @@
   <title>Δ SIS Performance · Delta</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    /* ===== Full CSS – same as before, kept for brevity ===== */
-    /* Copy the CSS from the previous message – it's unchanged */
-    /* (I'll include it below for completeness) */
+    /* ===== CSS – minimal changes ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', Roboto, system-ui, sans-serif; }
     html, body { width: 100%; height: 100%; background: #0b1a33; overflow: hidden; }
     body { display: flex; justify-content: center; align-items: center; padding: 0; }
@@ -278,7 +276,7 @@
     })();
 
     // =============================================
-    // SLIDESHOW ENGINE – FINAL CLEAN VERSION
+    // SLIDESHOW ENGINE – SIMPLIFIED
     // =============================================
     (function() {
       const slides = document.querySelectorAll('.slide');
@@ -320,14 +318,14 @@
         }, 50);
       }
 
-      // ---- The ONE timer function ----
+      // ---- ONE function to start the slide timer ----
       function startSlideTimer() {
         if (slideTimer) clearTimeout(slideTimer);
         const duration = getSlideDuration(slides[currentIndex]);
-        console.log(`🕐 Starting timer for ${duration}ms`);
+        console.log(`Starting timer for ${duration}ms`);
         startProgressBar(duration);
         slideTimer = setTimeout(() => {
-          console.log('⏰ Timer expired – advancing to next slide');
+          console.log('Timer expired – advancing to next slide');
           nextSlide();
         }, duration);
       }
@@ -351,8 +349,7 @@
 
         const table = leftInner.querySelector('table');
         if (!table) return;
-        // Each column has half the total agents (because we split the list)
-        const rowCount = table.querySelectorAll('tbody tr').length / 2;
+        const rowCount = table.querySelectorAll('tbody tr').length / 2; // half of agents
         const rowsPerSecond = 34 / 30; // Teams speed
         const duration = Math.max(20, rowCount / rowsPerSecond);
         agentScrollDuration = duration;
@@ -366,7 +363,7 @@
         if (slide) {
           const newDuration = Math.ceil((duration + 1) * 1000);
           slide.dataset.duration = newDuration;
-          console.log(`📊 Agent slide duration set to: ${newDuration}ms`);
+          console.log(`Agent slide duration set to: ${newDuration}ms`);
           // Restart timer with new duration
           startSlideTimer();
         }
@@ -399,7 +396,7 @@
           agentRAF = requestAnimationFrame(stepAgentScroll);
         } else {
           agentRAF = null;
-          console.log('✅ Agent scroll completed');
+          console.log('Agent scroll completed');
         }
       }
 
@@ -623,7 +620,7 @@
           </div>
         `;
         container.innerHTML = leftHtml + rightHtml;
-        void container.offsetHeight; // force reflow
+        void container.offsetHeight;
 
         const slide = document.getElementById('slide2');
         if (slide && slide.classList.contains('active')) {
