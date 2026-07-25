@@ -6,9 +6,9 @@
   <title>Δ SIS Performance · Delta</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    /* (same CSS as before – copy from the previous message) */
-    /* I'm keeping it short for brevity, but you can paste the full CSS from the last response */
-    /* In practice, copy the entire CSS block from the previous answer */
+    /* ===== Full CSS – same as before, kept for brevity ===== */
+    /* Copy the CSS from the previous message – it's unchanged */
+    /* (I'll include it below for completeness) */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', Roboto, system-ui, sans-serif; }
     html, body { width: 100%; height: 100%; background: #0b1a33; overflow: hidden; }
     body { display: flex; justify-content: center; align-items: center; padding: 0; }
@@ -151,7 +151,6 @@
   </style>
 </head>
 <body>
-  <!-- (HTML structure – same as before) -->
   <div class="slide-deck">
     <div class="slides-wrapper" id="slidesWrapper">
       <button class="fullscreen-btn" id="fullscreenBtn"><span class="icon">⛶</span> FULL</button>
@@ -279,15 +278,15 @@
     })();
 
     // =============================================
-    // SLIDESHOW ENGINE
+    // SLIDESHOW ENGINE – FINAL CLEAN VERSION
     // =============================================
     (function() {
       const slides = document.querySelectorAll('.slide');
       const dotsContainer = document.getElementById('dotsContainer');
       const progressBars = document.querySelectorAll('.progress-bar');
       let currentIndex = 0;
-      let timer = null;
-      let progressTimer = null;
+      let slideTimer = null;
+      let progressInterval = null;
       let isTransitioning = false;
 
       // Agent scroll state
@@ -300,9 +299,6 @@
       let agentPaused = false;
       let agentCurrentPos = 0;
 
-      // Safety net timer
-      let safetyTimer = null;
-
       function getSlideDuration(slide) {
         const custom = parseInt(slide.dataset.duration);
         if (!isNaN(custom) && custom > 0) return custom;
@@ -310,47 +306,33 @@
       }
 
       function startProgressBar(duration) {
-        if (progressTimer) clearInterval(progressTimer);
+        if (progressInterval) clearInterval(progressInterval);
         const startTime = Date.now();
         progressBars.forEach(bar => { bar.style.width = '0%'; });
-        progressTimer = setInterval(() => {
+        progressInterval = setInterval(() => {
           const elapsed = Date.now() - startTime;
           const progress = Math.min((elapsed / duration) * 100, 100);
           progressBars.forEach(bar => { bar.style.width = progress + '%'; });
           if (progress >= 100) {
-            clearInterval(progressTimer);
-            progressTimer = null;
+            clearInterval(progressInterval);
+            progressInterval = null;
           }
         }, 50);
       }
 
-      function restartSlideshowTimer() {
-        if (timer) clearTimeout(timer);
-        if (progressTimer) clearInterval(progressTimer);
-        if (safetyTimer) clearTimeout(safetyTimer);
+      // ---- The ONE timer function ----
+      function startSlideTimer() {
+        if (slideTimer) clearTimeout(slideTimer);
         const duration = getSlideDuration(slides[currentIndex]);
-        console.log(`Timer started with duration: ${duration}ms`);
+        console.log(`🕐 Starting timer for ${duration}ms`);
         startProgressBar(duration);
-        timer = setTimeout(() => { 
-          console.log('Timer expired – advancing to next slide');
-          nextSlide(); 
-        }, duration);
-        // Safety net: advance after duration + 2s
-        safetyTimer = setTimeout(() => {
-          console.log('Safety net triggered – forcing next slide');
+        slideTimer = setTimeout(() => {
+          console.log('⏰ Timer expired – advancing to next slide');
           nextSlide();
-        }, duration + 2000);
+        }, duration);
       }
 
-      slides.forEach((_, i) => {
-        const dot = document.createElement('button');
-        dot.className = 'dot' + (i === 0 ? ' active' : '');
-        dot.dataset.index = i;
-        dot.addEventListener('click', () => goToSlide(i));
-        dotsContainer.appendChild(dot);
-      });
-      const dots = dotsContainer.querySelectorAll('.dot');
-
+      // ---- Agent scroll ----
       function startAgentScroll() {
         const wrap = document.getElementById('agentTableWrap');
         if (!wrap) return;
@@ -369,8 +351,9 @@
 
         const table = leftInner.querySelector('table');
         if (!table) return;
+        // Each column has half the total agents (because we split the list)
         const rowCount = table.querySelectorAll('tbody tr').length / 2;
-        const rowsPerSecond = 34 / 30;
+        const rowsPerSecond = 34 / 30; // Teams speed
         const duration = Math.max(20, rowCount / rowsPerSecond);
         agentScrollDuration = duration;
         agentTotalScroll = totalScroll;
@@ -383,7 +366,9 @@
         if (slide) {
           const newDuration = Math.ceil((duration + 1) * 1000);
           slide.dataset.duration = newDuration;
-          console.log(`Agent slide duration set to: ${newDuration}ms`);
+          console.log(`📊 Agent slide duration set to: ${newDuration}ms`);
+          // Restart timer with new duration
+          startSlideTimer();
         }
 
         leftInner.style.transform = 'translateY(0)';
@@ -392,10 +377,6 @@
         agentStartTime = performance.now();
         if (agentRAF) cancelAnimationFrame(agentRAF);
         stepAgentScroll(performance.now());
-
-        if (slide && slide.classList.contains('active')) {
-          restartSlideshowTimer();
-        }
       }
 
       function stepAgentScroll(timestamp) {
@@ -418,7 +399,7 @@
           agentRAF = requestAnimationFrame(stepAgentScroll);
         } else {
           agentRAF = null;
-          console.log('Agent scroll completed');
+          console.log('✅ Agent scroll completed');
         }
       }
 
@@ -447,6 +428,7 @@
         setTimeout(startAgentScroll, 300);
       }
 
+      // ---- Navigation ----
       function goToSlide(index) {
         if (isTransitioning || index === currentIndex) return;
         if (index < 0) index = slides.length - 1;
@@ -460,7 +442,9 @@
         dots[currentIndex].classList.add('active');
 
         resetAnimations(currentIndex);
-        restartSlideshowTimer();
+
+        // Start timer for this slide
+        startSlideTimer();
         setTimeout(() => { isTransitioning = false; }, 800);
       }
 
@@ -473,16 +457,16 @@
       window.getSlideCount = function() { return slides.length; };
       window.getCurrentIndex = function() { return currentIndex; };
       window.pauseSlideshow = function() {
-        if (timer) { clearTimeout(timer); timer = null; }
-        if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
-        if (safetyTimer) { clearTimeout(safetyTimer); safetyTimer = null; }
+        if (slideTimer) clearTimeout(slideTimer);
+        if (progressInterval) clearInterval(progressInterval);
         pauseAgentScroll();
       };
       window.resumeSlideshow = function() {
-        restartSlideshowTimer();
+        startSlideTimer();
         if (currentIndex === 2) resumeAgentScroll();
       };
 
+      // ---- Reset animations ----
       function resetAnimations(index) {
         const activeSlide = slides[index];
         if (index === 3) {
@@ -555,13 +539,12 @@
 
       const wrapper = document.getElementById('slidesWrapper');
       wrapper.addEventListener('mouseenter', () => {
-        if (timer) clearTimeout(timer);
-        if (progressTimer) clearInterval(progressTimer);
-        if (safetyTimer) clearTimeout(safetyTimer);
+        if (slideTimer) clearTimeout(slideTimer);
+        if (progressInterval) clearInterval(progressInterval);
         pauseAgentScroll();
       });
       wrapper.addEventListener('mouseleave', () => {
-        restartSlideshowTimer();
+        startSlideTimer();
         if (currentIndex === 2) resumeAgentScroll();
       });
 
@@ -640,7 +623,7 @@
           </div>
         `;
         container.innerHTML = leftHtml + rightHtml;
-        void container.offsetHeight;
+        void container.offsetHeight; // force reflow
 
         const slide = document.getElementById('slide2');
         if (slide && slide.classList.contains('active')) {
@@ -716,8 +699,9 @@
 
           setTimeout(() => {
             resetAnimations(currentIndex);
+            // Start timer after animations are set
             setTimeout(() => {
-              restartSlideshowTimer();
+              startSlideTimer();
             }, 400);
           }, 400);
         } catch (e) {
@@ -732,7 +716,7 @@
       const slideObserver = new MutationObserver(() => {
         setTimeout(() => {
           resetAnimations(currentIndex);
-          restartSlideshowTimer();
+          startSlideTimer();
         }, 100);
       });
       slides.forEach(slide => { slideObserver.observe(slide, { attributes: true, attributeFilter: ['class'] }); });
@@ -742,7 +726,7 @@
         originalGoTo(index);
         setTimeout(() => {
           resetAnimations(currentIndex);
-          restartSlideshowTimer();
+          startSlideTimer();
         }, 100);
       };
     })();
