@@ -61,32 +61,28 @@
     .table-wrap tr:last-child td { border-bottom: none; }
     .table-wrap .rank-col { width: 10%; color: #6b7f96; font-weight: 600; font-size: 2.4vh; }
     .table-wrap .name-col { font-weight: 500; text-align: left; font-size: 2.4vh; }
-    /* Generic score column */
-    .table-wrap .score-col {
-      font-weight: 700;
-      text-align: right;
-      color: #0b1a33;
-      font-size: 2.6vh;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 0.4vw;
-    }
-    /* Agents slide – wide score column */
+
+    /* ===== SCORE COLUMNS – FORCE WIDTH TO PREVENT CUT-OFF ===== */
     #slide2 .table-grid .score-col {
-      width: 45%;
+      width: 45% !important;
+      min-width: 45% !important;
+      max-width: 45% !important;
       text-align: right;
       justify-content: flex-end;
       white-space: nowrap;
+      overflow: visible !important;
     }
-    /* Teams slide – even wider score column */
     #slide3 .table-grid .score-col {
-      width: 55%;
+      width: 55% !important;
+      min-width: 55% !important;
+      max-width: 55% !important;
       text-align: right !important;
       justify-content: flex-end !important;
       white-space: nowrap;
       padding-right: 0.3vw;
+      overflow: visible !important;
     }
+
     .trend-arrow { display: inline-block; font-size: 2vh; font-weight: 300; visibility: hidden; transform: translateX(10px); transition: all 0.4s ease; margin-left: 0.2vw; pointer-events: none; }
     .trend-arrow.visible { visibility: visible; transform: translateX(0); }
     .trend-arrow.up { color: #2ecc71; }
