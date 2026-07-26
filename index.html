@@ -55,13 +55,38 @@
     .scroll-inner { transition: none; will-change: transform; }
     .table-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8vw 1.5vw; flex: 1; min-height: 0; height: 100%; }
     .table-grid .scroll-wrapper { flex: 1; overflow: hidden; position: relative; mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); }
-    .table-grid .scroll-inner { animation: none; }   /* ← disabled for JS scroll */
+    .table-grid .scroll-inner { animation: none; }   /* JS scroll replaces CSS */
     .table-wrap th { background: linear-gradient(135deg, #0b1a33 0%, #1a3050 100%); color: #fff; font-weight: 700; padding: 1vh 1vw; text-align: center; border-bottom: 3px solid #d32f2f; font-size: 2vh; text-transform: uppercase; letter-spacing: 0.08em; position: sticky; top: 0; z-index: 10; }
     .table-wrap td { padding: 1.2vh 1vw; border-bottom: 1px solid rgba(237,240,246,0.6); vertical-align: middle; color: #0b1a33; text-align: center; font-size: 2.6vh; font-weight: 500; transition: all 0.3s ease; }
     .table-wrap tr:last-child td { border-bottom: none; }
     .table-wrap .rank-col { width: 10%; color: #6b7f96; font-weight: 600; font-size: 2.4vh; }
     .table-wrap .name-col { font-weight: 500; text-align: left; font-size: 2.4vh; }
-    .table-wrap .score-col { font-weight: 700; text-align: right; width: 12%; color: #0b1a33; font-size: 2.6vh; display: flex; align-items: center; justify-content: flex-end; gap: 0.4vw; }
+    /* Generic score column */
+    .table-wrap .score-col {
+      font-weight: 700;
+      text-align: right;
+      color: #0b1a33;
+      font-size: 2.6vh;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.4vw;
+    }
+    /* Agents slide – wide score column */
+    #slide2 .table-grid .score-col {
+      width: 45%;
+      text-align: right;
+      justify-content: flex-end;
+      white-space: nowrap;
+    }
+    /* Teams slide – even wider score column */
+    #slide3 .table-grid .score-col {
+      width: 55%;
+      text-align: right !important;
+      justify-content: flex-end !important;
+      white-space: nowrap;
+      padding-right: 0.3vw;
+    }
     .trend-arrow { display: inline-block; font-size: 2vh; font-weight: 300; visibility: hidden; transform: translateX(10px); transition: all 0.4s ease; margin-left: 0.2vw; pointer-events: none; }
     .trend-arrow.visible { visibility: visible; transform: translateX(0); }
     .trend-arrow.up { color: #2ecc71; }
@@ -145,17 +170,14 @@
     <div class="slides-wrapper" id="slidesWrapper">
       <button class="fullscreen-btn" id="fullscreenBtn"><span class="icon">⛶</span> FULL</button>
 
-      <!-- Slide 0 – Title image only -->
       <div class="slide active" id="slide0" data-index="0" data-slide="1">
         <div class="slide-counter"><span class="current">1</span> / 4</div>
       </div>
 
-      <!-- Slide 1 – Data insights image only -->
       <div class="slide" id="slide1" data-index="1" data-slide="2">
         <div class="slide-counter"><span class="current">2</span> / 4</div>
       </div>
 
-      <!-- Slide 2 – Agents table -->
       <div class="slide" id="slide2" data-index="2" data-slide="3">
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
@@ -178,7 +200,6 @@
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
       </div>
 
-      <!-- Slide 3 – Teams table -->
       <div class="slide" id="slide3" data-index="3" data-slide="4">
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
@@ -213,7 +234,7 @@
 
   <script>
     // =============================================
-    // ADMIN ACCESS (unchanged)
+    // ADMIN ACCESS
     // =============================================
     (function() {
       const adminLink = document.getElementById('adminLink');
@@ -290,12 +311,12 @@
       const progressBars = document.querySelectorAll('.progress-bar');
       const wrapper = document.getElementById('slidesWrapper');
 
-      // ── Timing constants (adjustable) ──
+      // ── Timing constants ──
       const AGENTS_TIME_PER_ROW = 0.6;   // seconds per row
       const TEAMS_TIME_PER_ROW  = 0.8;
-      const AGENTS_MIN_DISPLAY  = 40;    // minimum seconds for agents slide
-      const TEAMS_MIN_DISPLAY   = 45;    // minimum seconds for teams slide
-      const MAX_DISPLAY         = 120;   // maximum seconds for any data slide
+      const AGENTS_MIN_DISPLAY  = 40;    // seconds
+      const TEAMS_MIN_DISPLAY   = 45;    // seconds
+      const MAX_DISPLAY         = 120;   // seconds
 
       let currentIndex = 0;
       let timer = null;
@@ -305,7 +326,6 @@
 
       let slideDuration = 5500;
       let elapsedTime = 0;
-      let timerStartTime = 0;
 
       let scrollAnimFrames = [];
       let slideAnimInitialized = new Array(slides.length).fill(false);
@@ -316,12 +336,10 @@
         return 5500;
       }
 
-      // ── Progress bar (pause/resume aware) ──
       function startProgressBar(duration, startPercent = 0) {
         if (progressInterval) clearInterval(progressInterval);
         const startTime = Date.now();
         progressBars.forEach(bar => { bar.style.width = startPercent + '%'; });
-
         progressInterval = setInterval(() => {
           const now = Date.now();
           const elapsed = now - startTime;
@@ -336,17 +354,13 @@
       }
 
       function stopProgressBar() {
-        if (progressInterval) {
-          clearInterval(progressInterval);
-          progressInterval = null;
-        }
+        if (progressInterval) { clearInterval(progressInterval); progressInterval = null; }
         if (progressBars.length > 0) {
           const currentWidth = parseFloat(progressBars[0].style.width) || 0;
           elapsedTime = (currentWidth / 100) * slideDuration;
         }
       }
 
-      // ── Timer management ──
       function clearSlideshowTimer() {
         if (timer) { clearTimeout(timer); timer = null; }
         stopProgressBar();
@@ -355,30 +369,20 @@
       function startSlideshowTimer(duration = null, startFromElapsed = null) {
         clearSlideshowTimer();
         if (duration !== null) slideDuration = duration;
-        if (startFromElapsed !== null) {
-          elapsedTime = startFromElapsed;
-        } else {
-          elapsedTime = 0;
-        }
+        if (startFromElapsed !== null) elapsedTime = startFromElapsed;
+        else elapsedTime = 0;
 
         const remaining = slideDuration - elapsedTime;
-        if (remaining <= 0) {
-          nextSlide();
-          return;
-        }
+        if (remaining <= 0) { nextSlide(); return; }
 
         startProgressBar(slideDuration, (elapsedTime / slideDuration) * 100);
-        timerStartTime = Date.now();
-        timer = setTimeout(() => {
-          if (!isPaused) nextSlide();
-        }, remaining);
+        timer = setTimeout(() => { if (!isPaused) nextSlide(); }, remaining);
       }
 
       function pauseSlideshow() {
         if (isPaused) return;
         isPaused = true;
-        if (timer) { clearTimeout(timer); timer = null; }
-        stopProgressBar();
+        clearSlideshowTimer();
         scrollAnimFrames.forEach(id => cancelAnimationFrame(id));
         scrollAnimFrames = [];
       }
@@ -387,11 +391,9 @@
         if (!isPaused) return;
         isPaused = false;
         startSlideshowTimer(slideDuration, elapsedTime);
-        const activeSlide = slides[currentIndex];
-        if (activeSlide) startInfiniteScroll(activeSlide);
+        if (slides[currentIndex]) startInfiniteScroll(slides[currentIndex]);
       }
 
-      // ── Navigation ──
       function goToSlide(index) {
         if (isTransitioning || index === currentIndex) return;
         if (index < 0) index = slides.length - 1;
@@ -414,10 +416,8 @@
           startInfiniteScroll(slides[currentIndex]);
         }
 
-        const duration = getSlideDuration(slides[currentIndex]);
-        startSlideshowTimer(duration);
+        startSlideshowTimer(getSlideDuration(slides[currentIndex]));
         isPaused = false;
-
         setTimeout(() => { isTransitioning = false; }, 800);
       }
 
@@ -431,7 +431,6 @@
       window.pauseSlideshow = pauseSlideshow;
       window.resumeSlideshow = resumeSlideshow;
 
-      // ── JS-powered Infinite Scroll ──
       function cancelAllScrollAnimations() {
         scrollAnimFrames.forEach(id => cancelAnimationFrame(id));
         scrollAnimFrames = [];
@@ -457,9 +456,7 @@
             const dt = now - lastTime;
             lastTime = now;
             wrapper.scrollTop += pixelsPerMs * dt;
-            if (wrapper.scrollTop >= half) {
-              wrapper.scrollTop -= half;
-            }
+            if (wrapper.scrollTop >= half) wrapper.scrollTop -= half;
             const frameId = requestAnimationFrame(step);
             scrollAnimFrames.push(frameId);
           }
@@ -468,17 +465,15 @@
         });
       }
 
-      // ── Entrance animations (fade rows, count up) ──
       function resetEntranceAnimations(index) {
         const activeSlide = slides[index];
-        // No animation for slides 0 and 1
         if (index < 2) {
           slideAnimInitialized[index] = true;
           return;
         }
 
         const rows = activeSlide.querySelectorAll('tbody tr');
-        rows.forEach((row, i) => {
+        rows.forEach((row) => {
           row.style.opacity = '0';
           row.style.transform = 'translateY(10px)';
           const scoreCell = row.querySelector('.score-col');
@@ -492,13 +487,9 @@
             row.style.opacity = '1';
             row.style.transform = 'translateY(0)';
             const scoreCell = row.querySelector('.score-col');
-            if (scoreCell && row.dataset.targetScore) {
-              animateCounter(scoreCell, row.dataset.targetScore);
-            }
+            if (scoreCell && row.dataset.targetScore) animateCounter(scoreCell, row.dataset.targetScore);
             const arrow = row.querySelector('.trend-arrow');
-            if (arrow) {
-              setTimeout(() => { arrow.classList.add('visible'); }, 300 + (i * 80));
-            }
+            if (arrow) setTimeout(() => { arrow.classList.add('visible'); }, 300 + (i * 80));
           }, 120 + (i * 80));
         });
         slideAnimInitialized[index] = true;
@@ -517,16 +508,13 @@
           const eased = 1 - Math.pow(1 - progress, 3);
           const currentValue = eased * targetValue;
           element.textContent = currentValue.toFixed(2) + suffix;
-          if (progress < 1) {
-            requestAnimationFrame(updateCounter);
-          } else {
-            element.textContent = target;
-          }
+          if (progress < 1) requestAnimationFrame(updateCounter);
+          else element.textContent = target;
         }
         requestAnimationFrame(updateCounter);
       }
 
-      // ── Dots and buttons ──
+      // Dots and buttons
       slides.forEach((_, i) => {
         const dot = document.createElement('button');
         dot.className = 'dot' + (i === 0 ? ' active' : '');
@@ -539,18 +527,15 @@
       document.getElementById('nextSlide').addEventListener('click', nextSlide);
       document.getElementById('prevSlide').addEventListener('click', prevSlide);
 
-      // ── Hover pause ──
       wrapper.addEventListener('mouseenter', () => pauseSlideshow());
       wrapper.addEventListener('mouseleave', () => resumeSlideshow());
 
-      // ── Keyboard controls ──
       document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight') nextSlide();
         if (e.key === 'ArrowLeft') prevSlide();
         if (e.key === ' ' || e.code === 'Space') {
           e.preventDefault();
-          if (isPaused) resumeSlideshow();
-          else pauseSlideshow();
+          if (isPaused) resumeSlideshow(); else pauseSlideshow();
         }
         if (e.key === 'f' || e.key === 'F') {
           const btn = document.getElementById('fullscreenBtn');
@@ -558,14 +543,12 @@
         }
       });
 
-      // ── Page Visibility API ──
       document.addEventListener('visibilitychange', () => {
-        if (document.hidden) pauseSlideshow();
-        else resumeSlideshow();
+        if (document.hidden) pauseSlideshow(); else resumeSlideshow();
       });
 
       // =============================================
-      // DATA RENDERING (dynamic duration)
+      // DATA RENDERING
       // =============================================
       const TARGET_THRESHOLD = 86.30;
 
@@ -636,8 +619,7 @@
           </div>
         `;
 
-        // Dynamic duration for agents
-        const rowCount = left.length; // rows in the left column (scrolling column)
+        const rowCount = left.length;
         let computedDurationSec = rowCount * AGENTS_TIME_PER_ROW;
         computedDurationSec = Math.max(AGENTS_MIN_DISPLAY, computedDurationSec);
         computedDurationSec = Math.min(MAX_DISPLAY, computedDurationSec);
@@ -697,8 +679,7 @@
           </div>
         `;
 
-        // Dynamic duration for teams
-        const rowCount = firstCol.length; // rows in left column (10 or fewer)
+        const rowCount = firstCol.length;
         let computedDurationSec = rowCount * TEAMS_TIME_PER_ROW;
         computedDurationSec = Math.max(TEAMS_MIN_DISPLAY, computedDurationSec);
         computedDurationSec = Math.min(MAX_DISPLAY, computedDurationSec);
@@ -758,7 +739,7 @@
     })();
 
     // =============================================
-    // REMOTE CONTROL POLLING (improved)
+    // REMOTE CONTROL POLLING
     // =============================================
     (function() {
       let lastExecutedCommand = '';
@@ -770,31 +751,21 @@
           if (!res.ok) return;
           const command = await res.text();
           const trimmed = command.trim();
-          if (!trimmed || trimmed === 'none') return;
-          if (trimmed === lastExecutedCommand) return;
+          if (!trimmed || trimmed === 'none' || trimmed === lastExecutedCommand) return;
           lastExecutedCommand = trimmed;
-
           console.log('📡 Remote command received:', trimmed);
 
-          if (trimmed === 'next') {
-            if (typeof window.nextSlide === 'function') window.nextSlide();
-          } else if (trimmed === 'prev') {
-            if (typeof window.prevSlide === 'function') window.prevSlide();
-          } else if (trimmed.startsWith('slide:')) {
+          if (trimmed === 'next') { if (window.nextSlide) window.nextSlide(); }
+          else if (trimmed === 'prev') { if (window.prevSlide) window.prevSlide(); }
+          else if (trimmed.startsWith('slide:')) {
             const index = parseInt(trimmed.split(':')[1]);
-            if (!isNaN(index) && typeof window.goToSlide === 'function') {
-              window.goToSlide(index);
-            }
+            if (!isNaN(index) && window.goToSlide) window.goToSlide(index);
           } else if (trimmed === 'fullscreen') {
             const btn = document.getElementById('fullscreenBtn');
             if (btn) btn.click();
-          } else if (trimmed === 'refresh') {
-            window.location.reload();
-          } else if (trimmed === 'play') {
-            if (typeof window.resumeSlideshow === 'function') window.resumeSlideshow();
-          } else if (trimmed === 'pause') {
-            if (typeof window.pauseSlideshow === 'function') window.pauseSlideshow();
-          }
+          } else if (trimmed === 'refresh') { window.location.reload(); }
+          else if (trimmed === 'play') { if (window.resumeSlideshow) window.resumeSlideshow(); }
+          else if (trimmed === 'pause') { if (window.pauseSlideshow) window.pauseSlideshow(); }
         } catch (e) { /* silent */ }
       }
 
