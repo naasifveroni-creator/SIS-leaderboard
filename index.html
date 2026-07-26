@@ -21,13 +21,7 @@
     .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; visibility: hidden; transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s ease; display: flex; flex-direction: column; transform: scale(0.98); }
     .slide.active { opacity: 1; visibility: visible; position: relative; transform: scale(1); transition: opacity 0.8s ease, transform 0.8s ease, visibility 0.8s ease; }
     #slide0 { background: url('slide-title.webp.jpg') center/cover no-repeat, #0b1a33; }
-    #slide0 .slide-fallback { display: flex; align-items: center; justify-content: center; flex-direction: column; color: white; height: 100%; background: radial-gradient(ellipse at center, #1a3050, #0b1a33); }
-    #slide0 .slide-fallback h1 { font-size: 12vh; font-weight: 900; letter-spacing: 0.05em; color: #d32f2f; text-shadow: 0 0 60px rgba(211,47,47,0.3); }
-    #slide0 .slide-fallback p { font-size: 3vh; font-weight: 300; color: rgba(255,255,255,0.6); margin-top: 1vh; letter-spacing: 0.3em; }
     #slide1 { background: url('slide-data.webp.jpg') center/cover no-repeat, #0b1a33; }
-    #slide1 .slide-fallback { display: flex; align-items: center; justify-content: center; flex-direction: column; color: white; height: 100%; background: radial-gradient(ellipse at center, #1a3050, #0b1a33); }
-    #slide1 .slide-fallback h1 { font-size: 8vh; font-weight: 700; letter-spacing: 0.05em; color: #fff; text-shadow: 0 0 40px rgba(255,255,255,0.1); }
-    #slide1 .slide-fallback p { font-size: 2.5vh; font-weight: 300; color: rgba(255,255,255,0.5); margin-top: 1vh; }
     #slide2, #slide3 { background: linear-gradient(145deg, #f0f3f8 0%, #e8ecf4 100%); padding: 0; }
     .slide-header { background: #0b1a33; backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); padding: 0.3vh 2vw; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.2vh 1vw; flex-shrink: 0; min-height: 10vh; border-bottom: 2px solid rgba(211,47,47,0.3); position: relative; overflow: hidden; box-shadow: 0 4px 30px rgba(0,0,0,0.3); border-radius: 0 0 12px 12px; margin: 0 0.5vw; }
     .slide-header::before { content: ''; position: absolute; top: 0; left: -150%; width: 300%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.02) 20%, rgba(255,255,255,0.06) 40%, rgba(255,255,255,0.02) 60%, transparent 100%); animation: shimmerWhite 10s ease-in-out infinite; pointer-events: none; z-index: 0; }
@@ -61,7 +55,7 @@
     .scroll-inner { transition: none; will-change: transform; }
     .table-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8vw 1.5vw; flex: 1; min-height: 0; height: 100%; }
     .table-grid .scroll-wrapper { flex: 1; overflow: hidden; position: relative; mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%); }
-    .table-grid .scroll-inner { transition: none; will-change: transform; }
+    .table-grid .scroll-inner { animation: none; }   /* ← disabled for JS scroll */
     .table-wrap th { background: linear-gradient(135deg, #0b1a33 0%, #1a3050 100%); color: #fff; font-weight: 700; padding: 1vh 1vw; text-align: center; border-bottom: 3px solid #d32f2f; font-size: 2vh; text-transform: uppercase; letter-spacing: 0.08em; position: sticky; top: 0; z-index: 10; }
     .table-wrap td { padding: 1.2vh 1vw; border-bottom: 1px solid rgba(237,240,246,0.6); vertical-align: middle; color: #0b1a33; text-align: center; font-size: 2.6vh; font-weight: 500; transition: all 0.3s ease; }
     .table-wrap tr:last-child td { border-bottom: none; }
@@ -103,9 +97,7 @@
     .dot { width: 1vh; height: 1vh; border-radius: 50%; background: rgba(255,255,255,0.2); border: none; cursor: pointer; transition: all 0.3s ease; padding: 0; }
     .dot.active { background: #d32f2f; transform: scale(1.4); box-shadow: 0 0 20px rgba(211,47,47,0.5); }
 
-    /* disable CSS animation on scroll-inner (now handled by JS) */
-    .table-grid .scroll-inner { animation: none; }
-
+    /* Responsive */
     @media (max-aspect-ratio: 16/9) {
       .slide-header .logo-area h1 { font-size: 2vh; }
       .slide-header .logo-area img { height: 6vh; }
@@ -152,20 +144,18 @@
   <div class="slide-deck">
     <div class="slides-wrapper" id="slidesWrapper">
       <button class="fullscreen-btn" id="fullscreenBtn"><span class="icon">⛶</span> FULL</button>
+
+      <!-- Slide 0 – Title image only -->
       <div class="slide active" id="slide0" data-index="0" data-slide="1">
         <div class="slide-counter"><span class="current">1</span> / 4</div>
-        <div class="slide-fallback">
-          <h1>Δ DELTA</h1>
-          <p>SIS PERFORMANCE</p>
-        </div>
       </div>
+
+      <!-- Slide 1 – Data insights image only -->
       <div class="slide" id="slide1" data-index="1" data-slide="2">
         <div class="slide-counter"><span class="current">2</span> / 4</div>
-        <div class="slide-fallback">
-          <h1>📊 DATA INSIGHTS</h1>
-          <p>Weekly Performance Overview</p>
-        </div>
       </div>
+
+      <!-- Slide 2 – Agents table -->
       <div class="slide" id="slide2" data-index="2" data-slide="3">
         <div class="slide-counter"><span class="current">3</span> / 4</div>
         <div class="slide-header">
@@ -187,6 +177,8 @@
         <div class="slide-footer"><div class="footer-animation"><div class="spray-fill"></div><svg class="plane" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 25 L70 20 L80 25 L70 30 L15 25Z" fill="#d32f2f" stroke="#b71c1c" stroke-width="1"/><path d="M45 22 L60 10 L68 15 L52 25 L45 22Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/><path d="M45 28 L60 40 L68 35 L52 25 L45 28Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/><path d="M15 25 L5 15 L15 20 L15 25Z" fill="#d32f2f"/><path d="M15 25 L5 35 L15 30 L15 25Z" fill="#d32f2f"/><path d="M15 23 L8 18 L15 22 L15 23Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/><path d="M15 27 L8 32 L15 28 L15 27Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/><circle cx="78" cy="25" r="3" fill="#fdb913"/><ellipse cx="82" cy="25" rx="8" ry="2" fill="#fdb913" opacity="0.8"/><path d="M65 23 Q72 23 68 27 Q65 27 65 23Z" fill="#0b1a33" opacity="0.6"/></svg><div class="spray-text">DELTA</div></div></div>
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
       </div>
+
+      <!-- Slide 3 – Teams table -->
       <div class="slide" id="slide3" data-index="3" data-slide="4">
         <div class="slide-counter"><span class="current">4</span> / 4</div>
         <div class="slide-header">
@@ -208,6 +200,7 @@
         <div class="slide-footer"><div class="footer-animation"><div class="spray-fill"></div><svg class="plane" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 25 L70 20 L80 25 L70 30 L15 25Z" fill="#d32f2f" stroke="#b71c1c" stroke-width="1"/><path d="M45 22 L60 10 L68 15 L52 25 L45 22Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/><path d="M45 28 L60 40 L68 35 L52 25 L45 28Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1.5"/><path d="M15 25 L5 15 L15 20 L15 25Z" fill="#d32f2f"/><path d="M15 25 L5 35 L15 30 L15 25Z" fill="#d32f2f"/><path d="M15 23 L8 18 L15 22 L15 23Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/><path d="M15 27 L8 32 L15 28 L15 27Z" fill="#ffffff" stroke="#d32f2f" stroke-width="1"/><circle cx="78" cy="25" r="3" fill="#fdb913"/><ellipse cx="82" cy="25" rx="8" ry="2" fill="#fdb913" opacity="0.8"/><path d="M65 23 Q72 23 68 27 Q65 27 65 23Z" fill="#0b1a33" opacity="0.6"/></svg><div class="spray-text">DELTA</div></div></div>
         <div class="progress-container"><div class="progress-bar" id="progressBar2"></div></div>
       </div>
+
       <div class="nav-controls">
         <button class="arrow" id="prevSlide">‹</button>
         <div class="dots" id="dotsContainer"></div>
@@ -220,7 +213,7 @@
 
   <script>
     // =============================================
-    // ADMIN ACCESS
+    // ADMIN ACCESS (unchanged)
     // =============================================
     (function() {
       const adminLink = document.getElementById('adminLink');
@@ -297,7 +290,7 @@
       const progressBars = document.querySelectorAll('.progress-bar');
       const wrapper = document.getElementById('slidesWrapper');
 
-      // ── Timing constants (you can adjust) ──
+      // ── Timing constants (adjustable) ──
       const AGENTS_TIME_PER_ROW = 0.6;   // seconds per row
       const TEAMS_TIME_PER_ROW  = 0.8;
       const AGENTS_MIN_DISPLAY  = 40;    // minimum seconds for agents slide
@@ -475,9 +468,10 @@
         });
       }
 
-      // ── Entrance animations (fade + counter) ──
+      // ── Entrance animations (fade rows, count up) ──
       function resetEntranceAnimations(index) {
         const activeSlide = slides[index];
+        // No animation for slides 0 and 1
         if (index < 2) {
           slideAnimInitialized[index] = true;
           return;
