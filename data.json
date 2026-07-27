@@ -1,1047 +1,976 @@
-{
-  "week": "Week of Jul 27, 2026 – Aug 2, 2026",
-  "teams": [
-    {
-      "rank": 1,
-      "name": "Sinazo Nogaga",
-      "score": "90.17%"
-    },
-    {
-      "rank": 2,
-      "name": "Zintle Daba",
-      "score": "88.29%"
-    },
-    {
-      "rank": 3,
-      "name": "Maghmoed galant",
-      "score": "85.84%"
-    },
-    {
-      "rank": 4,
-      "name": "Manoko Botshelo",
-      "score": "84.93%"
-    },
-    {
-      "rank": 5,
-      "name": "Tina Barron",
-      "score": "84.08%"
-    },
-    {
-      "rank": 6,
-      "name": "Mbono, Phelisa",
-      "score": "82.48%"
-    },
-    {
-      "rank": 7,
-      "name": "Dawood Thaaqib",
-      "score": "81.60%"
-    },
-    {
-      "rank": 8,
-      "name": "Daniel Van Der Poel",
-      "score": "80.98%"
-    },
-    {
-      "rank": 9,
-      "name": "Jesse Machelm",
-      "score": "80.15%"
-    },
-    {
-      "rank": 10,
-      "name": "Shaquel Bux",
-      "score": "80.14%"
-    },
-    {
-      "rank": 11,
-      "name": "Arendse, Dylan C",
-      "score": "79.93%"
-    },
-    {
-      "rank": 12,
-      "name": "Waylon Alexander",
-      "score": "79.63%"
-    },
-    {
-      "rank": 13,
-      "name": "Justin Salisbury",
-      "score": "79.54%"
-    },
-    {
-      "rank": 14,
-      "name": "Magnolia Smidt",
-      "score": "79.20%"
-    },
-    {
-      "rank": 15,
-      "name": "Ncapayi, Iviwe",
-      "score": "78.64%"
-    },
-    {
-      "rank": 16,
-      "name": "cassidy hindley",
-      "score": "78.60%"
-    },
-    {
-      "rank": 17,
-      "name": "Beaulique Golding",
-      "score": "78.43%"
-    },
-    {
-      "rank": 18,
-      "name": "Moses Terrayn V",
-      "score": "78.43%"
-    },
-    {
-      "rank": 19,
-      "name": "Logan Valentine",
-      "score": "78.27%"
-    },
-    {
-      "rank": 20,
-      "name": "Moegamat Naeem Abrahams",
-      "score": "78.24%"
-    },
-    {
-      "rank": 21,
-      "name": "Saban, Mogamat Muaath",
-      "score": "77.49%"
-    },
-    {
-      "rank": 22,
-      "name": "Claasen, Ryan",
-      "score": "77.30%"
-    },
-    {
-      "rank": 23,
-      "name": "Jo-Dien Martin",
-      "score": "77.19%"
-    },
-    {
-      "rank": 24,
-      "name": "asiphe koloyi",
-      "score": "76.56%"
-    },
-    {
-      "rank": 25,
-      "name": "seth wegewarth",
-      "score": "76.47%"
-    },
-    {
-      "rank": 26,
-      "name": "Axola Zicina",
-      "score": "75.62%"
-    },
-    {
-      "rank": 27,
-      "name": "laaiqah wassung",
-      "score": "75.36%"
-    },
-    {
-      "rank": 28,
-      "name": "ETHEL ZANELE KARAWE",
-      "score": "73.89%"
-    },
-    {
-      "rank": 29,
-      "name": "alton",
-      "score": "72.94%"
-    },
-    {
-      "rank": 30,
-      "name": "Farouk Wilson",
-      "score": "72.52%"
-    },
-    {
-      "rank": 31,
-      "name": "Fanti, Siphovuyo",
-      "score": "72.36%"
-    },
-    {
-      "rank": 32,
-      "name": "nomvelo",
-      "score": "71.60%"
-    },
-    {
-      "rank": 33,
-      "name": "kezia davids",
-      "score": "70.06%"
-    },
-    {
-      "rank": 34,
-      "name": "sbabalwe mqina",
-      "score": "69.85%"
-    },
-    {
-      "rank": 35,
-      "name": "Anizo Pierre Martin",
-      "score": "66.67%"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Δ Update SIS Data</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
     }
-  ],
-  "agents": [
-    {
-      "rank": 1,
-      "name": "Sbabalwe",
-      "score": "Mqina"
-    },
-    {
-      "rank": 2,
-      "name": "Williams, Casey D",
-      "score": "100.00%"
-    },
-    {
-      "rank": 3,
-      "name": "Atlarelang",
-      "score": "Nchupetsang"
-    },
-    {
-      "rank": 4,
-      "name": "Dylan",
-      "score": "Samuels"
-    },
-    {
-      "rank": 5,
-      "name": "Nomvelo Ayabongs Majola",
-      "score": "100.00%"
-    },
-    {
-      "rank": 6,
-      "name": "Bathielah",
-      "score": "Alexander"
-    },
-    {
-      "rank": 7,
-      "name": "Rosco",
-      "score": "Carstens"
-    },
-    {
-      "rank": 8,
-      "name": "Shanseau",
-      "score": "Khabana"
-    },
-    {
-      "rank": 9,
-      "name": "Thembela Alwande Nzimande",
-      "score": "100.00%"
-    },
-    {
-      "rank": 10,
-      "name": "Anushka",
-      "score": "Meyer"
-    },
-    {
-      "rank": 11,
-      "name": "Laura",
-      "score": "Mjambana"
-    },
-    {
-      "rank": 12,
-      "name": "Umr",
-      "score": "Tape"
-    },
-    {
-      "rank": 13,
-      "name": "Mohammad Ammaar Johnson",
-      "score": "100.00%"
-    },
-    {
-      "rank": 14,
-      "name": "Rafeeq",
-      "score": "Bosch"
-    },
-    {
-      "rank": 15,
-      "name": "Jody Trevano Arendse",
-      "score": "100.00%"
-    },
-    {
-      "rank": 16,
-      "name": "Nonkululeko",
-      "score": "Mohlanga"
-    },
-    {
-      "rank": 17,
-      "name": "Andrea",
-      "score": "Landsman"
-    },
-    {
-      "rank": 18,
-      "name": "Charleston Thomas Carolus",
-      "score": "100.00%"
-    },
-    {
-      "rank": 19,
-      "name": "Bergman Vougan",
-      "score": "100.00%"
-    },
-    {
-      "rank": 20,
-      "name": "Awam",
-      "score": "Klaas"
-    },
-    {
-      "rank": 21,
-      "name": "Beaulique Anthula Golding",
-      "score": "100.00%"
-    },
-    {
-      "rank": 22,
-      "name": "Micheala",
-      "score": "Adendorph"
-    },
-    {
-      "rank": 23,
-      "name": "Alisa Nicole Abrahams",
-      "score": "100.00%"
-    },
-    {
-      "rank": 24,
-      "name": "Erasmus Jonatena M",
-      "score": "100.00%"
-    },
-    {
-      "rank": 25,
-      "name": "Warrick",
-      "score": "Dick"
-    },
-    {
-      "rank": 26,
-      "name": "Mikaeel",
-      "score": "Moerat"
-    },
-    {
-      "rank": 27,
-      "name": "Shannon Linda Hartogh",
-      "score": "100.00%"
-    },
-    {
-      "rank": 28,
-      "name": "Ameerah",
-      "score": "Mentoor"
-    },
-    {
-      "rank": 29,
-      "name": "Uzair",
-      "score": "Rossier"
-    },
-    {
-      "rank": 30,
-      "name": "Damian",
-      "score": "Khuzwayo"
-    },
-    {
-      "rank": 31,
-      "name": "Farhat",
-      "score": "Johnson"
-    },
-    {
-      "rank": 32,
-      "name": "Matutu, Sisipho",
-      "score": "100.00%"
-    },
-    {
-      "rank": 33,
-      "name": "Ondela",
-      "score": "Sofute"
-    },
-    {
-      "rank": 34,
-      "name": "Stone Jade",
-      "score": "98.04%"
-    },
-    {
-      "rank": 35,
-      "name": "Pieters, Shanwin",
-      "score": "97.56%"
-    },
-    {
-      "rank": 36,
-      "name": "Naidoo Keshni",
-      "score": "97.22%"
-    },
-    {
-      "rank": 37,
-      "name": "Olwam",
-      "score": "Ndibongo"
-    },
-    {
-      "rank": 38,
-      "name": "Toshca Tamiah Herman",
-      "score": "96.97%"
-    },
-    {
-      "rank": 39,
-      "name": "Lihle",
-      "score": "Samson"
-    },
-    {
-      "rank": 40,
-      "name": "Mnqandi Hlumelo Z",
-      "score": "96.67%"
-    },
-    {
-      "rank": 41,
-      "name": "Mbase",
-      "score": "Mayana"
-    },
-    {
-      "rank": 42,
-      "name": "Ethan",
-      "score": "Bock"
-    },
-    {
-      "rank": 43,
-      "name": "Carelse, Cheslyn",
-      "score": "96.23%"
-    },
-    {
-      "rank": 44,
-      "name": "Craig, Daniel",
-      "score": "96.23%"
-    },
-    {
-      "rank": 45,
-      "name": "Benjamin Octavia",
-      "score": "96.00%"
-    },
-    {
-      "rank": 46,
-      "name": "Brittney Lauren Molisie",
-      "score": "95.88%"
-    },
-    {
-      "rank": 47,
-      "name": "Nayimuli, Sandra",
-      "score": "95.65%"
-    },
-    {
-      "rank": 48,
-      "name": "Jade",
-      "score": "Curnow"
-    },
-    {
-      "rank": 49,
-      "name": "Naki Liwalapakade",
-      "score": "95.51%"
-    },
-    {
-      "rank": 50,
-      "name": "Cassiem, Fawaz",
-      "score": "95.29%"
-    },
-    {
-      "rank": 51,
-      "name": "Zanele Silindokuhle Molo",
-      "score": "94.74%"
-    },
-    {
-      "rank": 52,
-      "name": "Luve",
-      "score": "Ntshinga"
-    },
-    {
-      "rank": 53,
-      "name": "Noqekwa Kanyisa M",
-      "score": "94.35%"
-    },
-    {
-      "rank": 54,
-      "name": "Mahlangabeza, Chulumanco",
-      "score": "94.32%"
-    },
-    {
-      "rank": 55,
-      "name": "Chrisleyana Brooklin Bartlett",
-      "score": "94.29%"
-    },
-    {
-      "rank": 56,
-      "name": "Opperman Keron",
-      "score": "94.12%"
-    },
-    {
-      "rank": 57,
-      "name": "Fortune, Rene",
-      "score": "94.05%"
-    },
-    {
-      "rank": 58,
-      "name": "Ngamlana, Liso",
-      "score": "93.90%"
-    },
-    {
-      "rank": 59,
-      "name": "October Zoe T",
-      "score": "93.75%"
-    },
-    {
-      "rank": 60,
-      "name": "Manakele, Aviwe",
-      "score": "93.75%"
-    },
-    {
-      "rank": 61,
-      "name": "Lilitha Khumo Leshiba",
-      "score": "93.55%"
-    },
-    {
-      "rank": 62,
-      "name": "Stoffels, Junaid",
-      "score": "93.48%"
-    },
-    {
-      "rank": 63,
-      "name": "Aploon Tamia M",
-      "score": "93.48%"
-    },
-    {
-      "rank": 64,
-      "name": "Fourie, Jason",
-      "score": "93.26%"
-    },
-    {
-      "rank": 65,
-      "name": "Karriem, Jawaad",
-      "score": "93.20%"
-    },
-    {
-      "rank": 66,
-      "name": "Andrea",
-      "score": "Hofmeyer"
-    },
-    {
-      "rank": 67,
-      "name": "De Vree Stephanie",
-      "score": "93.10%"
-    },
-    {
-      "rank": 68,
-      "name": "Matthews, Josh A",
-      "score": "93.08%"
-    },
-    {
-      "rank": 69,
-      "name": "Smith, Jacqueline",
-      "score": "93.02%"
-    },
-    {
-      "rank": 70,
-      "name": "Muller, Inga",
-      "score": "92.86%"
-    },
-    {
-      "rank": 71,
-      "name": "Abrahams, Moegammad Basheer",
-      "score": "92.86%"
-    },
-    {
-      "rank": 72,
-      "name": "Hill, Kirsten",
-      "score": "92.66%"
-    },
-    {
-      "rank": 73,
-      "name": "Govender, Dharshan",
-      "score": "92.21%"
-    },
-    {
-      "rank": 74,
-      "name": "Nathan Kenneth",
-      "score": "Morrison"
-    },
-    {
-      "rank": 75,
-      "name": "Nongxa, Siyasanga",
-      "score": "92.00%"
-    },
-    {
-      "rank": 76,
-      "name": "Luyanda",
-      "score": "Makalima"
-    },
-    {
-      "rank": 77,
-      "name": "Hayden",
-      "score": "Sequera"
-    },
-    {
-      "rank": 78,
-      "name": "Peter Zintle",
-      "score": "91.89%"
-    },
-    {
-      "rank": 79,
-      "name": "Denica",
-      "score": "Williams"
-    },
-    {
-      "rank": 80,
-      "name": "Morrison, Edric C",
-      "score": "91.67%"
-    },
-    {
-      "rank": 81,
-      "name": "Mzalazala, Alida",
-      "score": "91.67%"
-    },
-    {
-      "rank": 82,
-      "name": "Nonyukela, Zukhanye",
-      "score": "91.61%"
-    },
-    {
-      "rank": 83,
-      "name": "Ngcengane, Mivuyo",
-      "score": "91.60%"
-    },
-    {
-      "rank": 84,
-      "name": "Bryant Sarah",
-      "score": "91.43%"
-    },
-    {
-      "rank": 85,
-      "name": "Haupt, Liam",
-      "score": "91.30%"
-    },
-    {
-      "rank": 86,
-      "name": "Nathan",
-      "score": "Wilson"
-    },
-    {
-      "rank": 87,
-      "name": "Solomon, Lindokuhle",
-      "score": "91.11%"
-    },
-    {
-      "rank": 88,
-      "name": "Basson, Ubernicia J",
-      "score": "91.11%"
-    },
-    {
-      "rank": 89,
-      "name": "Cloete, Cassidy R",
-      "score": "91.11%"
-    },
-    {
-      "rank": 90,
-      "name": "Adams, Nathan",
-      "score": "90.91%"
-    },
-    {
-      "rank": 91,
-      "name": "Ntlonja Uzile",
-      "score": "90.91%"
-    },
-    {
-      "rank": 92,
-      "name": "Ngcungama, Mlondolozi",
-      "score": "90.80%"
-    },
-    {
-      "rank": 93,
-      "name": "Tshapi, Naledi S",
-      "score": "90.79%"
-    },
-    {
-      "rank": 94,
-      "name": "Nombula, Stella",
-      "score": "90.74%"
-    },
-    {
-      "rank": 95,
-      "name": "Nomcebo",
-      "score": "Ncwane"
-    },
-    {
-      "rank": 96,
-      "name": "Nwadigo, Amarachi C",
-      "score": "90.63%"
-    },
-    {
-      "rank": 97,
-      "name": "Jasmine Maryke Weinand",
-      "score": "90.63%"
-    },
-    {
-      "rank": 98,
-      "name": "Nchunu, Thato",
-      "score": "90.59%"
-    },
-    {
-      "rank": 99,
-      "name": "Linathi Angela Ntshinka",
-      "score": "90.48%"
-    },
-    {
-      "rank": 100,
-      "name": "Thebe, Lethabo F",
-      "score": "90.43%"
-    },
-    {
-      "rank": 101,
-      "name": "Royi, Shanita",
-      "score": "90.41%"
-    },
-    {
-      "rank": 102,
-      "name": "Matseke, Oarabile S",
-      "score": "90.24%"
-    },
-    {
-      "rank": 103,
-      "name": "Achume",
-      "score": "Bavu"
-    },
-    {
-      "rank": 104,
-      "name": "Mahlasela Sinokuhle",
-      "score": "90.12%"
-    },
-    {
-      "rank": 105,
-      "name": "Pakati, Likho",
-      "score": "90.08%"
-    },
-    {
-      "rank": 106,
-      "name": "Wynand, Kyle",
-      "score": "90.00%"
-    },
-    {
-      "rank": 107,
-      "name": "Gragry Luvuyo Mushiringi",
-      "score": "89.74%"
-    },
-    {
-      "rank": 108,
-      "name": "Nondumo, Viwe",
-      "score": "89.74%"
-    },
-    {
-      "rank": 109,
-      "name": "Patricia Maurisha Murray",
-      "score": "89.73%"
-    },
-    {
-      "rank": 110,
-      "name": "Majavie, Ethan",
-      "score": "89.61%"
-    },
-    {
-      "rank": 111,
-      "name": "Van Niekerk, Keano",
-      "score": "89.52%"
-    },
-    {
-      "rank": 112,
-      "name": "Snyers, Charmick G",
-      "score": "89.47%"
-    },
-    {
-      "rank": 113,
-      "name": "Kabila Wa Kabila, Believe",
-      "score": "89.38%"
-    },
-    {
-      "rank": 114,
-      "name": "Luciano",
-      "score": "Louw"
-    },
-    {
-      "rank": 115,
-      "name": "Simbongile Jesicca Beme",
-      "score": "89.29%"
-    },
-    {
-      "rank": 116,
-      "name": "Rarana Mihlali",
-      "score": "89.29%"
-    },
-    {
-      "rank": 117,
-      "name": "Cayden",
-      "score": "Josephus"
-    },
-    {
-      "rank": 118,
-      "name": "Onawanda Lindsey Gugushe",
-      "score": "89.19%"
-    },
-    {
-      "rank": 119,
-      "name": "Gallant, Daniel",
-      "score": "89.19%"
-    },
-    {
-      "rank": 120,
-      "name": "Shakierah",
-      "score": "Isaacs"
-    },
-    {
-      "rank": 121,
-      "name": "Fisher Carly",
-      "score": "89.06%"
-    },
-    {
-      "rank": 122,
-      "name": "Nicholas Daniel Groenewald",
-      "score": "89.06%"
-    },
-    {
-      "rank": 123,
-      "name": "Rian",
-      "score": "Van Der Berg"
-    },
-    {
-      "rank": 124,
-      "name": "De Villiers, Nuraan",
-      "score": "88.89%"
-    },
-    {
-      "rank": 125,
-      "name": "Christians, Moegamat Nur",
-      "score": "88.76%"
-    },
-    {
-      "rank": 126,
-      "name": "Titus, Mogammad Ayoob",
-      "score": "88.68%"
-    },
-    {
-      "rank": 127,
-      "name": "Amahle",
-      "score": "Geva"
-    },
-    {
-      "rank": 128,
-      "name": "Ndabeni Amahle",
-      "score": "88.52%"
-    },
-    {
-      "rank": 129,
-      "name": "Carlinne Christena Petersen",
-      "score": "88.46%"
-    },
-    {
-      "rank": 130,
-      "name": "Faith",
-      "score": "Pasquallie"
-    },
-    {
-      "rank": 131,
-      "name": "Ethan",
-      "score": "Lenders"
-    },
-    {
-      "rank": 132,
-      "name": "Kerr, Keanu F",
-      "score": "88.24%"
-    },
-    {
-      "rank": 133,
-      "name": "Magoboza, Lulibo",
-      "score": "88.00%"
-    },
-    {
-      "rank": 134,
-      "name": "Maarman, Ethan J",
-      "score": "88.00%"
-    },
-    {
-      "rank": 135,
-      "name": "Regal, Mujahid",
-      "score": "87.93%"
-    },
-    {
-      "rank": 136,
-      "name": "Njaza, Mangaliso",
-      "score": "87.92%"
-    },
-    {
-      "rank": 137,
-      "name": "Ndyebi Lihlumelo M",
-      "score": "87.88%"
-    },
-    {
-      "rank": 138,
-      "name": "Lang Emile",
-      "score": "87.88%"
-    },
-    {
-      "rank": 139,
-      "name": "Mgolozeli Kamvalethu",
-      "score": "87.88%"
-    },
-    {
-      "rank": 140,
-      "name": "Moilwe Ivy N",
-      "score": "87.80%"
-    },
-    {
-      "rank": 141,
-      "name": "Edwards, Ismail",
-      "score": "87.64%"
-    },
-    {
-      "rank": 142,
-      "name": "Onika",
-      "score": "Mamba"
-    },
-    {
-      "rank": 143,
-      "name": "Kaylin",
-      "score": "Van der Merwe"
-    },
-    {
-      "rank": 144,
-      "name": "Alisha Sinothando Baba",
-      "score": "87.50%"
-    },
-    {
-      "rank": 145,
-      "name": "Deal, Trent J",
-      "score": "87.50%"
-    },
-    {
-      "rank": 146,
-      "name": "Steenberg, Nicole",
-      "score": "87.32%"
-    },
-    {
-      "rank": 147,
-      "name": "Taryn",
-      "score": "Van Sensie"
-    },
-    {
-      "rank": 148,
-      "name": "Albertyn, Jaden C",
-      "score": "87.27%"
-    },
-    {
-      "rank": 149,
-      "name": "Estment, Declan",
-      "score": "87.23%"
-    },
-    {
-      "rank": 150,
-      "name": "Mohamed, Yushrie",
-      "score": "87.23%"
-    },
-    {
-      "rank": 151,
-      "name": "Skolpat Tandile A",
-      "score": "87.21%"
-    },
-    {
-      "rank": 152,
-      "name": "Amroodt, Zolah",
-      "score": "87.18%"
-    },
-    {
-      "rank": 153,
-      "name": "Hugh",
-      "score": "O'ryan"
-    },
-    {
-      "rank": 154,
-      "name": "Mzomba, Mihlali",
-      "score": "87.18%"
-    },
-    {
-      "rank": 155,
-      "name": "Johnson, Mogamat Fawaaz",
-      "score": "87.06%"
-    },
-    {
-      "rank": 156,
-      "name": "Vicky Sharon Franke",
-      "score": "87.04%"
-    },
-    {
-      "rank": 157,
-      "name": "Aviwe",
-      "score": "Sinuka"
-    },
-    {
-      "rank": 158,
-      "name": "Viwe",
-      "score": "Saleni"
-    },
-    {
-      "rank": 159,
-      "name": "Busisiwa Tamara Gude",
-      "score": "86.84%"
-    },
-    {
-      "rank": 160,
-      "name": "Zaindeen, Jiyaad",
-      "score": "86.84%"
-    },
-    {
-      "rank": 161,
-      "name": "Miya, Athenkosi L",
-      "score": "86.79%"
-    },
-    {
-      "rank": 162,
-      "name": "Ntanjana, Sinotando",
-      "score": "86.67%"
-    },
-    {
-      "rank": 163,
-      "name": "Floris, Mia Lee",
-      "score": "86.67%"
-    },
-    {
-      "rank": 164,
-      "name": "Tetani, Yolani",
-      "score": "86.67%"
-    },
-    {
-      "rank": 165,
-      "name": "Cameron, Chantel",
-      "score": "86.57%"
-    },
-    {
-      "rank": 166,
-      "name": "Smidt, Germaine",
-      "score": "86.54%"
-    },
-    {
-      "rank": 167,
-      "name": "Ludolph, Connor D",
-      "score": "86.54%"
-    },
-    {
-      "rank": 168,
-      "name": "Mbaraka",
-      "score": "ndawule"
-    },
-    {
-      "rank": 169,
-      "name": "Kalam, Moegamat",
-      "score": "86.41%"
-    },
-    {
-      "rank": 170,
-      "name": "Philander, Caira L",
-      "score": "86.40%"
-    },
-    {
-      "rank": 171,
-      "name": "Asavela",
-      "score": "Mkuyana"
-    },
-    {
-      "rank": 172,
-      "name": "Fatyi Zikhona",
-      "score": "86.36%"
-    },
-    {
-      "rank": 173,
-      "name": "Kokwana, Lima",
-      "score": "86.30%"
+
+    body {
+      background: #f0f3f8;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
     }
-  ]
-}
+
+    .admin-box {
+      max-width: 1100px;
+      width: 100%;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(11, 26, 51, 0.10);
+      padding: 2rem 2.5rem;
+    }
+
+    .header-mini {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      border-bottom: 2px solid #e9edf4;
+      padding-bottom: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .header-mini svg {
+      height: 36px;
+    }
+
+    .header-mini h1 {
+      font-weight: 300;
+      color: #0b1a33;
+      font-size: 1.8rem;
+    }
+
+    .header-mini h1 span {
+      font-weight: 700;
+      color: #d32f2f;
+    }
+
+    .info-box {
+      background: #f5f8fe;
+      padding: 1rem 1.5rem;
+      border-radius: 14px;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #d32f2f;
+      font-size: 0.95rem;
+      color: #1a2a4a;
+      line-height: 1.6;
+    }
+
+    .info-box strong {
+      color: #0b1a33;
+    }
+
+    .info-box code {
+      background: #e9edf4;
+      padding: 0.1rem 0.5rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+
+    .info-box .warning {
+      background: #fef0ee;
+      padding: 0.1rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: #b71c1c;
+    }
+
+    .date-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      align-items: center;
+      padding: 0.8rem 1.2rem;
+      background: #f5f8fe;
+      border-radius: 12px;
+      border: 1px solid #e9edf4;
+      margin-bottom: 1.5rem;
+    }
+
+    .date-section label {
+      font-weight: 600;
+      color: #0b1a33;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .date-section input[type="date"] {
+      padding: 0.3rem 0.8rem;
+      border: 1px solid #d0d7e2;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      background: #fff;
+    }
+
+    .date-section .date-hint {
+      font-size: 0.75rem;
+      color: #6b7f96;
+      margin-left: 0.5rem;
+    }
+
+    .alert-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem 2.5rem;
+      align-items: center;
+      padding: 0.8rem 1.2rem;
+      background: #f5f8fe;
+      border-radius: 12px;
+      border: 1px solid #e9edf4;
+      margin-bottom: 1.5rem;
+    }
+
+    .alert-section .alert-label {
+      font-weight: 600;
+      color: #0b1a33;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .alert-section input[type="checkbox"] {
+      width: 1.2rem;
+      height: 1.2rem;
+      accent-color: #d32f2f;
+      cursor: pointer;
+    }
+
+    .alert-section .alert-hint {
+      font-size: 0.75rem;
+      color: #6b7f96;
+    }
+
+    .portal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .portal {
+      background: #fafcff;
+      border: 1px solid #e9edf4;
+      border-radius: 14px;
+      padding: 1.2rem;
+    }
+
+    .portal-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #0b1a33;
+      margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .portal-title .badge {
+      font-size: 0.65rem;
+      background: #e9edf4;
+      padding: 0.1rem 0.6rem;
+      border-radius: 20px;
+      color: #6b7f96;
+      font-weight: 500;
+    }
+
+    .portal-sub {
+      font-size: 0.8rem;
+      color: #6b7f96;
+      margin-bottom: 0.6rem;
+    }
+
+    .portal textarea {
+      width: 100%;
+      height: 300px;
+      padding: 0.8rem;
+      border: 1px solid #d0d7e2;
+      border-radius: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      line-height: 1.6;
+      resize: vertical;
+      background: #fff;
+    }
+
+    .portal textarea:focus {
+      border-color: #0b1a33;
+      box-shadow: 0 0 0 3px rgba(11, 26, 51, 0.06);
+      outline: none;
+    }
+
+    .file-upload-row {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 0.4rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .file-upload-row input[type="file"] {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.4rem;
+      background: #fff;
+      border: 1px solid #d0d7e2;
+      border-radius: 6px;
+      max-width: 180px;
+    }
+
+    .file-upload-row .file-hint {
+      font-size: 0.7rem;
+      color: #6b7f96;
+    }
+
+    .portal-actions {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .portal-actions .btn-sm {
+      background: #e9edf4;
+      color: #0b1a33;
+      border: none;
+      padding: 0.3rem 1.2rem;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .portal-actions .btn-sm:hover {
+      background: #d5dce8;
+    }
+
+    .portal-actions .btn-sm.green {
+      background: #d32f2f;
+      color: #fff;
+    }
+
+    .portal-actions .btn-sm.green:hover {
+      background: #b71c1c;
+    }
+
+    .portal-status {
+      font-size: 0.8rem;
+      margin-top: 0.4rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      display: none;
+    }
+
+    .portal-status.success {
+      background: #e1f5e8;
+      color: #1a5a3a;
+      display: block;
+    }
+
+    .portal-status.error {
+      background: #fde8e8;
+      color: #a13a3a;
+      display: block;
+    }
+
+    .token-section {
+      margin: 1.5rem 0 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e9edf4;
+    }
+
+    .token-input {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .token-input label {
+      font-weight: 600;
+      color: #0b1a33;
+      font-size: 0.9rem;
+    }
+
+    .token-input input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.5rem 1rem;
+      border: 1px solid #d0d7e2;
+      border-radius: 30px;
+      font-size: 0.85rem;
+    }
+
+    .repo-input {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+      margin-top: 0.5rem;
+      padding: 0.5rem 0.8rem;
+      background: #f5f8fe;
+      border-radius: 10px;
+      border: 1px solid #e9edf4;
+    }
+
+    .repo-input label {
+      font-weight: 600;
+      color: #0b1a33;
+      font-size: 0.9rem;
+    }
+
+    .repo-input input {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.4rem 0.8rem;
+      border: 1px solid #d0d7e2;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      background: #fff;
+      cursor: default;
+      background: #f0f3f8;
+    }
+
+    .repo-input .hint {
+      font-size: 0.7rem;
+      color: #6b7f96;
+    }
+
+    .publish-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 0.8rem;
+    }
+
+    .btn {
+      background: #0b1a33;
+      color: #fff;
+      border: none;
+      padding: 0.7rem 2rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn:hover {
+      background: #1a3050;
+    }
+
+    .btn.red {
+      background: #d32f2f;
+      color: #fff;
+    }
+
+    .btn.red:hover {
+      background: #b71c1c;
+    }
+
+    .btn.secondary {
+      background: #e9edf4;
+      color: #0b1a33;
+    }
+
+    .btn.secondary:hover {
+      background: #d5dce8;
+    }
+
+    #status {
+      margin-top: 1rem;
+      padding: 0.8rem 1.2rem;
+      border-radius: 12px;
+      display: none;
+      font-weight: 500;
+    }
+
+    #status.success {
+      background: #e1f5e8;
+      color: #1a5a3a;
+      display: block;
+    }
+
+    #status.error {
+      background: #fde8e8;
+      color: #a13a3a;
+      display: block;
+    }
+
+    .preview-link {
+      margin-top: 1.8rem;
+      text-align: right;
+      border-top: 1px solid #edf0f6;
+      padding-top: 1.2rem;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .preview-link a {
+      color: #0b1a33;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px dashed #b0bcca;
+    }
+
+    .preview-link a:hover {
+      border-bottom-color: #0b1a33;
+    }
+
+    @media (max-width: 800px) {
+      .portal-grid {
+        grid-template-columns: 1fr;
+      }
+      .date-section {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .alert-section {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .admin-box {
+        padding: 1.2rem;
+      }
+      .header-mini h1 {
+        font-size: 1.3rem;
+      }
+      .portal textarea {
+        height: 150px;
+      }
+      .preview-link {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-box">
+    <div class="header-mini">
+      <svg viewBox="0 0 60 50" fill="none" width="40" height="34">
+        <path d="M30 2 L2 46 L58 46 L30 2Z" fill="#d32f2f" stroke="#d32f2f" stroke-width="2"/>
+        <path d="M30 10 L10 44 L50 44 L30 10Z" fill="#0b1a33" stroke="#0b1a33" stroke-width="1.5"/>
+        <text x="30" y="38" font-size="14" font-weight="700" fill="#d32f2f" text-anchor="middle" font-family="Segoe UI, sans-serif">Δ</text>
+      </svg>
+      <h1><span>DELTA</span> · Update SIS Data</h1>
+    </div>
+
+    <div class="info-box">
+      <strong>📋 Supports TWO formats automatically:</strong><br />
+      <strong>1.</strong> Name + Score on the same line: <code>Name    Score%</code><br />
+      <strong>2.</strong> Name on line 1, Score on line 2 (alternating) – <strong>paste your raw Excel data directly!</strong><br />
+      <span style="color:#0b1a33; font-weight:500;">✅ Auto‑rank:</span> Ranks assigned automatically based on score!<br />
+      <span class="warning">⚠️ You need a GitHub token with <code>repo</code> scope to publish.</span>
+    </div>
+
+    <!-- ===== DATE PICKER ===== -->
+    <div class="date-section">
+      <label>
+        📅 Week Start
+        <input type="date" id="weekStart" />
+      </label>
+      <label>
+        📅 Week End
+        <input type="date" id="weekEnd" />
+      </label>
+      <span class="date-hint">Auto‑fills to current week – change if needed</span>
+    </div>
+
+    <!-- ===== ALERT TOGGLES ===== -->
+    <div class="alert-section" id="alertSection">
+      <span class="alert-label">🔔 Alerts</span>
+      <label>
+        <input type="checkbox" id="alertFlash" checked /> 💡 100% Flash
+      </label>
+      <label>
+        <input type="checkbox" id="alertPopup" checked /> 🔥 New #1 Pop‑up
+      </label>
+      <label>
+        <input type="checkbox" id="alertBanner" checked /> 🎉 Milestone Banner
+      </label>
+      <span class="alert-hint">Saved automatically in your browser</span>
+    </div>
+
+    <!-- ===== TWO PORTALS ===== -->
+    <div class="portal-grid">
+
+      <div class="portal" id="teamsPortal">
+        <div class="portal-title">
+          🏆 Top Performing Teams
+          <span class="badge">Teams</span>
+        </div>
+        <div class="portal-sub">Paste team data: <code>Name, SIS%</code> (tab-separated OR alternating lines)</div>
+        <textarea id="teamsInput" spellcheck="false">Sinazo Nogaga	88.18%
+Zintle Daba	87.14%
+Mbono, Phelisa	86.22%
+Botshelo Manoko	85.71%
+Jesse Machelm	83.11%
+Justin Salisbury	83.00%
+Tina Barron	82.58%
+Waylon Alexander	81.43%
+Terrayn Moses	81.06%
+Dawood Thaaqib	80.86%
+Daniel Van Der Poel	79.46%
+Moegamat Naeem Abrahams	79.16%
+Fatima Becket	78.24%
+Claasen, Ryan	77.73%
+ETHEL ZANELE KARAWE	77.52%
+Saban, Mogamat Muaath	75.18%
+Ivewe Ncapayi	71.38%</textarea>
+        <div class="file-upload-row">
+          <input type="file" id="teamsFileInput" accept=".txt,.csv,.tsv" />
+          <span class="file-hint">Upload .txt / .csv / .tsv</span>
+        </div>
+        <div class="portal-actions">
+          <button class="btn-sm" id="previewTeamsBtn">👁 Preview Teams</button>
+          <button class="btn-sm green" id="resetTeamsBtn">↺ Reset Teams</button>
+        </div>
+        <div class="portal-status" id="teamsStatus"></div>
+      </div>
+
+      <div class="portal" id="agentsPortal">
+        <div class="portal-title">
+          ⭐ Top Performing Agents
+          <span class="badge">Agents</span>
+        </div>
+        <div class="portal-sub">Paste agent data: <code>Name, SIS%</code> (tab-separated OR alternating lines)</div>
+        <textarea id="agentsInput" spellcheck="false">Abdul Abrahams	100.00%
+Stone Jade	100.00%
+Alvino Februarie	100.00%
+Shanseau Khabana	100.00%
+Casey Williams	100.00%
+Asavela Mkuyana	100.00%
+Gideon Muller	100.00%
+Hanton Kock	100.00%
+Denica Williams	100.00%
+Sihle Mdedetyana	100.00%</textarea>
+        <div class="file-upload-row">
+          <input type="file" id="agentsFileInput" accept=".txt,.csv,.tsv" />
+          <span class="file-hint">Upload .txt / .csv / .tsv</span>
+        </div>
+        <div class="portal-actions">
+          <button class="btn-sm" id="previewAgentsBtn">👁 Preview Agents</button>
+          <button class="btn-sm green" id="resetAgentsBtn">↺ Reset Agents</button>
+        </div>
+        <div class="portal-status" id="agentsStatus"></div>
+      </div>
+
+    </div>
+
+    <!-- ===== TOKEN & REPO PATH ===== -->
+    <div class="token-section">
+      <div class="token-input">
+        <label for="tokenField">🔑 GitHub Token:</label>
+        <input type="password" id="tokenField" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
+        <span style="font-size:0.75rem; color:#6b7f96;">(stored only in your browser)</span>
+      </div>
+
+      <div class="repo-input" id="repoSection">
+        <label for="repoField">📁 Repo Path:</label>
+        <input type="text" id="repoField" readonly />
+        <span class="hint">Auto-detected – you never need to type this</span>
+      </div>
+
+      <div class="publish-actions">
+        <button class="btn red" id="publishBtn">🚀 Publish Both to GitHub</button>
+        <button class="btn secondary" id="resetAllBtn">↺ Reset All to Sample</button>
+      </div>
+    </div>
+
+    <div id="status"></div>
+
+    <div class="preview-link">
+      <a href="index.html" target="_blank">📊 View live board</a>
+      <a href="remote.html" target="_blank">📱 Remote Control</a>
+    </div>
+  </div>
+
+  <script>
+    // =============================================
+    // ADMIN PAGE – SMART PARSER (CORRECTED)
+    // =============================================
+
+    const REPO_PATH = 'naasifveroni-creator/sis-leaderboard';
+    document.getElementById('repoField').value = REPO_PATH;
+
+    const weekStartInput = document.getElementById('weekStart');
+    const weekEndInput = document.getElementById('weekEnd');
+
+    function setCurrentWeek() {
+      const now = new Date();
+      const day = now.getDay();
+      const diffToMonday = (day === 0 ? 6 : day - 1);
+      const monday = new Date(now);
+      monday.setDate(now.getDate() - diffToMonday);
+      const sunday = new Date(monday);
+      sunday.setDate(monday.getDate() + 6);
+
+      const formatDate = (date) => {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, '0');
+        const d = String(date.getDate()).padStart(2, '0');
+        return `${y}-${m}-${d}`;
+      };
+
+      weekStartInput.value = formatDate(monday);
+      weekEndInput.value = formatDate(sunday);
+    }
+    setCurrentWeek();
+
+    function formatDisplayDate(dateStr) {
+      const parts = dateStr.split('-');
+      const date = new Date(parts[0], parts[1] - 1, parts[2]);
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    // ---- Alert toggles ----
+    function saveAlertSettings() {
+      const settings = {
+        flash: document.getElementById('alertFlash').checked,
+        popup: document.getElementById('alertPopup').checked,
+        banner: document.getElementById('alertBanner').checked,
+      };
+      try { localStorage.setItem('deltaAlertSettings', JSON.stringify(settings)); } catch (_) {}
+    }
+
+    function loadAlertSettings() {
+      try {
+        const raw = localStorage.getItem('deltaAlertSettings');
+        if (raw) {
+          const settings = JSON.parse(raw);
+          document.getElementById('alertFlash').checked = settings.flash !== undefined ? settings.flash : true;
+          document.getElementById('alertPopup').checked = settings.popup !== undefined ? settings.popup : true;
+          document.getElementById('alertBanner').checked = settings.banner !== undefined ? settings.banner : true;
+        }
+      } catch (_) {}
+    }
+    document.querySelectorAll('#alertSection input[type="checkbox"]').forEach(cb => {
+      cb.addEventListener('change', saveAlertSettings);
+    });
+    loadAlertSettings();
+
+    // ---- Helpers ----
+    function $(id) { return document.getElementById(id); }
+
+    function showStatus(id, msg, type) {
+      const el = $(id);
+      el.textContent = msg;
+      el.className = 'portal-status ' + type;
+    }
+
+    function showMainStatus(msg, type) {
+      const el = $('status');
+      el.textContent = msg;
+      el.className = type;
+    }
+
+    // =============================================
+    // SMART PARSER – HANDLES MULTI-WORD NAMES CORRECTLY
+    // =============================================
+
+    function parseData(text) {
+      const lines = text.split('\n')
+        .map(l => l.trim())
+        .filter(l => l.length > 0);
+
+      if (lines.length === 0) return [];
+
+      // Helper: does a line look like a score (percentage or plain number)?
+      const isScoreLike = (str) => /%$/.test(str) || (!isNaN(parseFloat(str)) && !/[a-zA-Z]/.test(str));
+
+      // Detect format: tab‑separated (or 2+ spaces) vs alternating lines
+      const hasTab = lines[0].includes('\t');
+      const hasMultiSpace = / {2,}/.test(lines[0]);
+
+      if (hasTab || hasMultiSpace) {
+        // ── Tab‑separated format ──
+        const rows = [];
+
+        for (const line of lines) {
+          const parts = line.split(/\t| {2,}/).filter(s => s.length > 0);
+          if (parts.length < 2) continue;
+
+          // Last part is always the score (if it looks like one), else skip line
+          const last = parts[parts.length - 1];
+          if (!isScoreLike(last)) continue;
+
+          const score = last;
+          let name = '';
+          let rank = null;
+
+          if (parts.length >= 3) {
+            // First part might be a rank number
+            const first = parts[0];
+            if (!isNaN(parseFloat(first)) && parts.length >= 3) {
+              rank = parseInt(first);
+              // Name = everything between rank and score
+              name = parts.slice(1, -1).join(' ');
+            } else {
+              // No rank – name = everything except score
+              name = parts.slice(0, -1).join(' ');
+            }
+          } else {
+            // Only name + score
+            name = parts[0];
+          }
+
+          rows.push({ name, score, rank });
+        }
+
+        // Assign ranks if missing
+        const hasAnyRank = rows.some(r => r.rank !== null);
+        if (hasAnyRank) {
+          rows.sort((a, b) => (a.rank || 9999) - (b.rank || 9999));
+        } else {
+          rows.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
+          rows.forEach((r, i) => r.rank = i + 1);
+        }
+        return rows;
+      }
+
+      // ── Alternating lines format ──
+      const pairs = [];
+      let i = 0;
+      while (i < lines.length) {
+        const current = lines[i];
+        if (isScoreLike(current)) { i++; continue; }
+
+        let score = null;
+        let j = i + 1;
+        while (j < lines.length) {
+          if (isScoreLike(lines[j])) {
+            score = lines[j];
+            break;
+          }
+          j++;
+        }
+        if (score) {
+          pairs.push({ name: current, score });
+          i = j + 1;
+        } else {
+          i++;
+        }
+      }
+
+      pairs.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
+      pairs.forEach((p, idx) => p.rank = idx + 1);
+      return pairs;
+    }
+
+    // ---- File upload helpers ----
+    function setupFileUpload(fileInputId, textareaId, statusId) {
+      const input = $(fileInputId);
+      const textarea = $(textareaId);
+      input.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+          textarea.value = ev.target.result;
+          showStatus(statusId, `📄 Loaded ${file.name} (${file.size} bytes)`, 'success');
+        };
+        reader.onerror = function() {
+          showStatus(statusId, '❌ Failed to read file.', 'error');
+        };
+        reader.readAsText(file);
+        input.value = '';
+      });
+    }
+
+    setupFileUpload('teamsFileInput', 'teamsInput', 'teamsStatus');
+    setupFileUpload('agentsFileInput', 'agentsInput', 'agentsStatus');
+
+    // ---- Preview Teams ----
+    $('previewTeamsBtn').addEventListener('click', function() {
+      const raw = $('teamsInput').value;
+      try {
+        const parsed = parseData(raw);
+        if (!parsed || parsed.length === 0) throw new Error('No data');
+        const preview = parsed.slice(0, 5).map((item) => {
+          return `#${item.rank} ${item.name} ${item.score}`;
+        }).join('\n');
+        showStatus('teamsStatus', `✅ ${parsed.length} teams parsed (auto-ranked)\n${preview}${parsed.length > 5 ? '\n...' : ''}`, 'success');
+      } catch (e) {
+        showStatus('teamsStatus', '❌ Invalid format. Use: Name + Score (tab-separated or alternating lines)', 'error');
+      }
+    });
+
+    // ---- Preview Agents ----
+    $('previewAgentsBtn').addEventListener('click', function() {
+      const raw = $('agentsInput').value;
+      try {
+        const parsed = parseData(raw);
+        if (!parsed || parsed.length === 0) throw new Error('No data');
+        const preview = parsed.slice(0, 5).map((item) => {
+          return `#${item.rank} ${item.name} ${item.score}`;
+        }).join('\n');
+        showStatus('agentsStatus', `✅ ${parsed.length} agents parsed (auto-ranked)\n${preview}${parsed.length > 5 ? '\n...' : ''}`, 'success');
+      } catch (e) {
+        showStatus('agentsStatus', '❌ Invalid format. Use: Name + Score (tab-separated or alternating lines)', 'error');
+      }
+    });
+
+    // ---- Reset Teams ----
+    $('resetTeamsBtn').addEventListener('click', function() {
+      const DEFAULT = `Sinazo Nogaga	88.18%
+Zintle Daba	87.14%
+Mbono, Phelisa	86.22%
+Botshelo Manoko	85.71%
+Jesse Machelm	83.11%
+Justin Salisbury	83.00%
+Tina Barron	82.58%
+Waylon Alexander	81.43%
+Terrayn Moses	81.06%
+Dawood Thaaqib	80.86%
+Daniel Van Der Poel	79.46%
+Moegamat Naeem Abrahams	79.16%
+Fatima Becket	78.24%
+Claasen, Ryan	77.73%
+ETHEL ZANELE KARAWE	77.52%
+Saban, Mogamat Muaath	75.18%
+Ivewe Ncapayi	71.38%`;
+      $('teamsInput').value = DEFAULT;
+      showStatus('teamsStatus', '↺ Reset to sample teams', 'success');
+    });
+
+    // ---- Reset Agents ----
+    $('resetAgentsBtn').addEventListener('click', function() {
+      const DEFAULT = `Abdul Abrahams	100.00%
+Stone Jade	100.00%
+Alvino Februarie	100.00%
+Shanseau Khabana	100.00%
+Casey Williams	100.00%
+Asavela Mkuyana	100.00%
+Gideon Muller	100.00%
+Hanton Kock	100.00%
+Denica Williams	100.00%
+Sihle Mdedetyana	100.00%`;
+      $('agentsInput').value = DEFAULT;
+      showStatus('agentsStatus', '↺ Reset to sample agents', 'success');
+    });
+
+    // ---- Reset All ----
+    $('resetAllBtn').addEventListener('click', function() {
+      if (confirm('Reset both portals to sample data?')) {
+        $('resetTeamsBtn').click();
+        $('resetAgentsBtn').click();
+        $('status').className = '';
+        $('status').textContent = '';
+      }
+    });
+
+    // ---- Publish Both ----
+    $('publishBtn').addEventListener('click', async function() {
+      const token = $('tokenField').value.trim();
+      if (!token) {
+        showMainStatus('❌ Please enter your GitHub token.', 'error');
+        return;
+      }
+
+      const start = weekStartInput.value;
+      const end = weekEndInput.value;
+      if (!start || !end) {
+        showMainStatus('❌ Please set both week start and end dates.', 'error');
+        return;
+      }
+
+      const startDisplay = formatDisplayDate(start);
+      const endDisplay = formatDisplayDate(end);
+      const weekText = `Week of ${startDisplay} – ${endDisplay}`;
+
+      const repoPath = $('repoField').value.trim();
+      if (!repoPath) {
+        showMainStatus('❌ Repo path not detected.', 'error');
+        return;
+      }
+
+      const teamsRaw = $('teamsInput').value;
+      const agentsRaw = $('agentsInput').value;
+
+      let teams, agents;
+      try {
+        teams = parseData(teamsRaw);
+        if (!teams || teams.length === 0) throw new Error('Teams data is empty or invalid');
+      } catch (e) {
+        showMainStatus('❌ Teams data is invalid. Preview first.', 'error');
+        return;
+      }
+
+      try {
+        agents = parseData(agentsRaw);
+        if (!agents || agents.length === 0) throw new Error('Agents data is empty or invalid');
+      } catch (e) {
+        showMainStatus('❌ Agents data is invalid. Preview first.', 'error');
+        return;
+      }
+
+      const newData = { week: weekText, teams, agents };
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(newData, null, 2))));
+
+      try {
+        const fileUrl = `https://api.github.com/repos/${repoPath}/contents/data.json`;
+        const headRes = await fetch(fileUrl, {
+          headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+        });
+        if (!headRes.ok) {
+          const err = await headRes.json();
+          throw new Error(err.message || 'Could not fetch data.json. Check token and repo path.');
+        }
+        const fileMeta = await headRes.json();
+        const sha = fileMeta.sha;
+
+        const commitRes = await fetch(fileUrl, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.github.v3+json'
+          },
+          body: JSON.stringify({
+            message: `Update SIS leaderboard (${weekText})`,
+            content: content,
+            sha: sha
+          })
+        });
+
+        if (!commitRes.ok) {
+          const err = await commitRes.json();
+          throw new Error(err.message || 'Commit failed');
+        }
+
+        showMainStatus('✅ Published! Live page will update in 1–2 minutes.', 'success');
+        showStatus('teamsStatus', '✅ Published', 'success');
+        showStatus('agentsStatus', '✅ Published', 'success');
+
+      } catch (err) {
+        showMainStatus('❌ Error: ' + err.message, 'error');
+      }
+    });
+
+    console.log('✅ Admin page loaded – smart parser handles both formats.');
+  </script>
+
+</body>
+</html>
