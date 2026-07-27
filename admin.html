@@ -601,7 +601,6 @@ Sihle Mdedetyana	100.00%</textarea>
 
     <div id="status"></div>
 
-    <!-- ===== LINKS: View Board + Remote Control ===== -->
     <div class="preview-link">
       <a href="index.html" target="_blank">📊 View live board</a>
       <a href="remote.html" target="_blank">📱 Remote Control</a>
@@ -610,7 +609,7 @@ Sihle Mdedetyana	100.00%</textarea>
 
   <script>
     // =============================================
-    // ADMIN PAGE – ROBUST PARSER FOR BOTH FORMATS
+    // ADMIN PAGE – SMART PARSER (CORRECTED)
     // =============================================
 
     const REPO_PATH = 'naasifveroni-creator/sis-leaderboard';
@@ -688,7 +687,7 @@ Sihle Mdedetyana	100.00%</textarea>
     }
 
     // =============================================
-    // SMART PARSER – DETECTS BOTH FORMATS
+    // SMART PARSER – HANDLES MULTI-WORD NAMES CORRECTLY
     // =============================================
 
     function parseData(text) {
@@ -698,66 +697,86 @@ Sihle Mdedetyana	100.00%</textarea>
 
       if (lines.length === 0) return [];
 
-      // Check if the first line contains a tab or multiple spaces (indicates tab-separated)
-      const firstLine = lines[0];
-      const hasTab = firstLine.includes('\t');
-      const hasMultipleSpaces = / {2,}/.test(firstLine);
+      // Helper: does a line look like a score (percentage or plain number)?
+      const isScoreLike = (str) => /%$/.test(str) || (!isNaN(parseFloat(str)) && !/[a-zA-Z]/.test(str));
 
-      // If it looks like tab-separated, parse as such
-      if (hasTab || hasMultipleSpaces) {
-        const rows = lines.map(line => {
+      // Detect format: tab‑separated (or 2+ spaces) vs alternating lines
+      const hasTab = lines[0].includes('\t');
+      const hasMultiSpace = / {2,}/.test(lines[0]);
+
+      if (hasTab || hasMultiSpace) {
+        // ── Tab‑separated format ──
+        const rows = [];
+
+        for (const line of lines) {
           const parts = line.split(/\t| {2,}/).filter(s => s.length > 0);
-          return parts;
-        });
-        // Check if first column is a rank number
-        const hasRank = rows.length > 0 && !isNaN(parseFloat(rows[0][0]));
-        if (hasRank) {
-          return rows.map(r => ({ rank: parseInt(r[0]), name: r[1], score: r[2] }));
-        } else {
-          const parsed = rows.map(r => ({ name: r[0], score: r[1] }));
-          const sorted = parsed.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
-          return sorted.map((item, index) => ({ rank: index + 1, name: item.name, score: item.score }));
+          if (parts.length < 2) continue;
+
+          // Last part is always the score (if it looks like one), else skip line
+          const last = parts[parts.length - 1];
+          if (!isScoreLike(last)) continue;
+
+          const score = last;
+          let name = '';
+          let rank = null;
+
+          if (parts.length >= 3) {
+            // First part might be a rank number
+            const first = parts[0];
+            if (!isNaN(parseFloat(first)) && parts.length >= 3) {
+              rank = parseInt(first);
+              // Name = everything between rank and score
+              name = parts.slice(1, -1).join(' ');
+            } else {
+              // No rank – name = everything except score
+              name = parts.slice(0, -1).join(' ');
+            }
+          } else {
+            // Only name + score
+            name = parts[0];
+          }
+
+          rows.push({ name, score, rank });
         }
+
+        // Assign ranks if missing
+        const hasAnyRank = rows.some(r => r.rank !== null);
+        if (hasAnyRank) {
+          rows.sort((a, b) => (a.rank || 9999) - (b.rank || 9999));
+        } else {
+          rows.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
+          rows.forEach((r, i) => r.rank = i + 1);
+        }
+        return rows;
       }
 
-      // Otherwise, assume alternating lines: line1 = name, line2 = score, line3 = name, ...
-      // But we need to be smart: if a line looks like a percentage (contains % or is a number), treat it as a score.
+      // ── Alternating lines format ──
       const pairs = [];
       let i = 0;
       while (i < lines.length) {
         const current = lines[i];
-        // Check if current line looks like a score (contains % or is a valid number)
-        const isScore = /%/.test(current) || !isNaN(parseFloat(current));
-        if (isScore) {
-          // If it's a score but we don't have a preceding name, skip (shouldn't happen)
-          i++;
-          continue;
-        }
-        // It's a name – look for the next line that is a score
+        if (isScoreLike(current)) { i++; continue; }
+
         let score = null;
         let j = i + 1;
         while (j < lines.length) {
-          const next = lines[j];
-          const isScoreNext = /%/.test(next) || !isNaN(parseFloat(next));
-          if (isScoreNext) {
-            score = next;
+          if (isScoreLike(lines[j])) {
+            score = lines[j];
             break;
           }
-          j++; // skip any other non-score lines (e.g., blank or stray text)
+          j++;
         }
-        if (score !== null) {
-          pairs.push({ name: current, score: score });
-          i = j + 1; // move past the score
+        if (score) {
+          pairs.push({ name: current, score });
+          i = j + 1;
         } else {
-          // No score found – skip this name
           i++;
         }
       }
 
-      if (pairs.length === 0) return [];
-
-      const sorted = pairs.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
-      return sorted.map((item, index) => ({ rank: index + 1, name: item.name, score: item.score }));
+      pairs.sort((a, b) => parseFloat(b.score) - parseFloat(a.score));
+      pairs.forEach((p, idx) => p.rank = idx + 1);
+      return pairs;
     }
 
     // ---- File upload helpers ----
