@@ -3,173 +3,178 @@
   "teams": [
     {
       "name": "Sinazo Nogaga",
-      "score": "87.26%",
+      "score": "86.83%",
       "rank": 1
     },
     {
       "name": "Tina Barron",
-      "score": "85.47%",
+      "score": "86.21%",
       "rank": 2
     },
     {
-      "name": "Ncapayi, Iviwe",
-      "score": "85.06%",
+      "name": "Manoko Botshelo",
+      "score": "85.29%",
       "rank": 3
     },
     {
-      "name": "Manoko Botshelo",
-      "score": "84.51%",
+      "name": "Ncapayi, Iviwe",
+      "score": "84.47%",
       "rank": 4
     },
     {
-      "name": "Justin Salisbury",
-      "score": "83.68%",
+      "name": "Jesse Machelm",
+      "score": "84.19%",
       "rank": 5
     },
     {
-      "name": "Waylon Alexander",
-      "score": "83.44%",
+      "name": "Justin Salisbury",
+      "score": "84.05%",
       "rank": 6
     },
     {
-      "name": "Jesse Machelm",
-      "score": "83.28%",
+      "name": "Mbono, Phelisa",
+      "score": "82.98%",
       "rank": 7
     },
     {
-      "name": "Zintle Daba",
-      "score": "82.60%",
+      "name": "Waylon Alexander",
+      "score": "82.75%",
       "rank": 8
     },
     {
-      "name": "Mbono, Phelisa",
-      "score": "82.58%",
+      "name": "nomvelo",
+      "score": "82.10%",
       "rank": 9
     },
     {
-      "name": "Fanti, Siphovuyo",
-      "score": "82.03%",
+      "name": "Zintle Daba",
+      "score": "81.68%",
       "rank": 10
     },
     {
-      "name": "Moegamat Naeem Abrahams",
-      "score": "81.90%",
+      "name": "Fanti, Siphovuyo",
+      "score": "81.39%",
       "rank": 11
     },
     {
-      "name": "nomvelo",
-      "score": "81.89%",
+      "name": "Daniel Van Der Poel",
+      "score": "81.26%",
       "rank": 12
     },
     {
-      "name": "Daniel Van Der Poel",
-      "score": "81.29%",
+      "name": "Moegamat Naeem Abrahams",
+      "score": "81.15%",
       "rank": 13
     },
     {
       "name": "Magnolia Smidt",
-      "score": "81.21%",
+      "score": "81.08%",
       "rank": 14
     },
     {
-      "name": "Siyabonga Mdutyana",
-      "score": "79.37%",
+      "name": "Dawood Thaaqib",
+      "score": "79.38%",
       "rank": 15
     },
     {
-      "name": "Claasen, Ryan",
-      "score": "79.27%",
+      "name": "Farouk Wilson",
+      "score": "79.06%",
       "rank": 16
     },
     {
-      "name": "Farouk Wilson",
-      "score": "78.92%",
+      "name": "Claasen, Ryan",
+      "score": "78.96%",
       "rank": 17
     },
     {
-      "name": "Dawood Thaaqib",
-      "score": "78.38%",
+      "name": "Arendse, Dylan C",
+      "score": "78.57%",
       "rank": 18
     },
     {
-      "name": "Arendse, Dylan C",
-      "score": "77.83%",
+      "name": "Siyabonga Mdutyana",
+      "score": "78.31%",
       "rank": 19
     },
     {
       "name": "alton",
-      "score": "77.47%",
+      "score": "77.82%",
       "rank": 20
     },
     {
-      "name": "Jo-Dien Martin",
-      "score": "76.75%",
+      "name": "Luve Ntshinga",
+      "score": "77.47%",
       "rank": 21
     },
     {
-      "name": "laaiqah wassung",
-      "score": "76.68%",
+      "name": "Jo-Dien Martin",
+      "score": "76.31%",
       "rank": 22
     },
     {
-      "name": "Axola Zicina",
-      "score": "76.54%",
+      "name": "Moses Terrayn V",
+      "score": "76.03%",
       "rank": 23
     },
     {
-      "name": "Moses Terrayn V",
-      "score": "76.35%",
+      "name": "laaiqah wassung",
+      "score": "76.01%",
       "rank": 24
     },
     {
-      "name": "cassidy hindley",
-      "score": "76.01%",
+      "name": "Axola Zicina",
+      "score": "75.67%",
       "rank": 25
     },
     {
-      "name": "seth wegewarth",
-      "score": "75.87%",
+      "name": "Logan Valentine",
+      "score": "75.59%",
       "rank": 26
     },
     {
-      "name": "Logan Valentine",
-      "score": "75.53%",
+      "name": "seth wegewarth",
+      "score": "75.26%",
       "rank": 27
     },
     {
-      "name": "ETHEL ZANELE KARAWE",
-      "score": "74.65%",
+      "name": "cassidy hindley",
+      "score": "75.17%",
       "rank": 28
     },
     {
-      "name": "Shaquel Bux",
-      "score": "74.00%",
+      "name": "ETHEL ZANELE KARAWE",
+      "score": "75.05%",
       "rank": 29
     },
     {
-      "name": "asiphe koloyi",
-      "score": "71.11%",
+      "name": "Shaquel Bux",
+      "score": "73.38%",
       "rank": 30
     },
     {
-      "name": "Saban, Mogamat Muaath",
-      "score": "68.98%",
+      "name": "sbabalwe mqina",
+      "score": "71.52%",
       "rank": 31
     },
     {
-      "name": "sbabalwe mqina",
-      "score": "68.81%",
+      "name": "asiphe koloyi",
+      "score": "71.19%",
       "rank": 32
     },
     {
-      "name": "Beaulique Golding",
-      "score": "66.91%",
+      "name": "Saban, Mogamat Muaath",
+      "score": "70.94%",
       "rank": 33
     },
     {
-      "name": "kezia davids",
-      "score": "66.19%",
+      "name": "Beaulique Golding",
+      "score": "68.01%",
       "rank": 34
+    },
+    {
+      "name": "kezia davids",
+      "score": "66.58%",
+      "rank": 35
     }
   ],
   "agents": [
@@ -179,67 +184,67 @@
       "rank": 1
     },
     {
-      "name": "Avanda Patterson",
+      "name": "VUYOLWETHU CODELIA QAMATA",
       "score": "100.00%",
       "rank": 2
     },
     {
-      "name": "VUYOLWETHU CODELIA QAMATA",
+      "name": "Avanda Patterson",
       "score": "100.00%",
       "rank": 3
     },
     {
-      "name": "Magnolia Smidt",
+      "name": "Shaquel Bux",
       "score": "100.00%",
       "rank": 4
     },
     {
-      "name": "Viwe Saleni",
+      "name": "Moegamat Naeem Abrahams",
       "score": "100.00%",
       "rank": 5
     },
     {
-      "name": "Shaquel Bux",
+      "name": "Kezia Calista Davids",
       "score": "100.00%",
       "rank": 6
     },
     {
-      "name": "Moegamat Naeem Abrahams",
+      "name": "Magnolia Smidt",
       "score": "100.00%",
       "rank": 7
     },
     {
-      "name": "Kezia Calista Davids",
+      "name": "Justin Salisbury",
       "score": "100.00%",
       "rank": 8
     },
     {
-      "name": "Justin Salisbury",
+      "name": "Shakirah Africa",
       "score": "100.00%",
       "rank": 9
     },
     {
-      "name": "Shakirah Africa",
+      "name": "Jo-Dien Martin",
       "score": "100.00%",
       "rank": 10
     },
     {
-      "name": "Jo-Dien Martin",
+      "name": "Cassidy Hindley",
       "score": "100.00%",
       "rank": 11
     },
     {
-      "name": "Cassidy Hindley",
+      "name": "Tina Barron",
       "score": "100.00%",
       "rank": 12
     },
     {
-      "name": "Tina Barron",
+      "name": "MOGAMAT MUAATH SABAN",
       "score": "100.00%",
       "rank": 13
     },
     {
-      "name": "MOGAMAT MUAATH SABAN",
+      "name": "Toshca Tamiah Herman",
       "score": "100.00%",
       "rank": 14
     },
@@ -254,7 +259,7 @@
       "rank": 16
     },
     {
-      "name": "Onika Mamba",
+      "name": "Kailin Victoria-Lee Riley",
       "score": "100.00%",
       "rank": 17
     },
@@ -264,723 +269,723 @@
       "rank": 18
     },
     {
-      "name": "Kailin Victoria-Lee Riley",
+      "name": "Pamela Nonjabulo Dube",
       "score": "100.00%",
       "rank": 19
     },
     {
-      "name": "Pamela Nonjabulo Dube",
+      "name": "Nonkululeko Mohlanga",
       "score": "100.00%",
       "rank": 20
     },
     {
-      "name": "Nonkululeko Mohlanga",
+      "name": "Drew Toni Kleynhans",
       "score": "100.00%",
       "rank": 21
     },
     {
-      "name": "Toshca Tamiah Herman",
+      "name": "Siphovuyo Fanti",
       "score": "100.00%",
       "rank": 22
     },
     {
-      "name": "Drew Toni Kleynhans",
+      "name": "Zintle Ngombane",
       "score": "100.00%",
       "rank": 23
     },
     {
-      "name": "Siphovuyo Fanti",
+      "name": "AMAHLE MTINGBENI",
       "score": "100.00%",
       "rank": 24
     },
     {
-      "name": "Zintle Ngombane",
+      "name": "Viwe Saleni",
       "score": "100.00%",
       "rank": 25
     },
     {
-      "name": "AMAHLE MTINGBENI",
+      "name": "Terrayn Veron Moses",
       "score": "100.00%",
       "rank": 26
     },
     {
-      "name": "Terrayn Veron Moses",
-      "score": "100.00%",
+      "name": "Prins, Andrew",
+      "score": "97.78%",
       "rank": 27
     },
     {
-      "name": "Prins, Andrew",
-      "score": "98.84%",
+      "name": "Thomas Christian",
+      "score": "96.59%",
       "rank": 28
     },
     {
-      "name": "Kerr, Keanu F",
-      "score": "96.72%",
+      "name": "Amahle Geva",
+      "score": "96.03%",
       "rank": 29
     },
     {
-      "name": "Gasnola, Bilqees",
-      "score": "96.36%",
+      "name": "Joyi Aluta",
+      "score": "95.83%",
       "rank": 30
-    },
-    {
-      "name": "Thomas Christian",
-      "score": "96.25%",
-      "rank": 31
-    },
-    {
-      "name": "Spogter Faith F",
-      "score": "96.23%",
-      "rank": 32
-    },
-    {
-      "name": "Brittney Lauren Molisie",
-      "score": "96.00%",
-      "rank": 33
-    },
-    {
-      "name": "Amahle Geva",
-      "score": "95.73%",
-      "rank": 34
     },
     {
       "name": "Tamrynn Gonda",
       "score": "95.65%",
-      "rank": 35
-    },
-    {
-      "name": "Pakati, Likho",
-      "score": "95.65%",
-      "rank": 36
-    },
-    {
-      "name": "Joyi Aluta",
-      "score": "95.35%",
-      "rank": 37
+      "rank": 31
     },
     {
       "name": "Kabila Wa Kabila, Believe",
-      "score": "95.35%",
-      "rank": 38
+      "score": "95.56%",
+      "rank": 32
     },
     {
       "name": "Ethan Bock",
-      "score": "95.10%",
+      "score": "95.33%",
+      "rank": 33
+    },
+    {
+      "name": "Hayden Sequera",
+      "score": "95.24%",
+      "rank": 34
+    },
+    {
+      "name": "Spogter Faith F",
+      "score": "95.24%",
+      "rank": 35
+    },
+    {
+      "name": "Davids Ishmail",
+      "score": "95.24%",
+      "rank": 36
+    },
+    {
+      "name": "Nayimuli, Sandra",
+      "score": "95.00%",
+      "rank": 37
+    },
+    {
+      "name": "Bussack Laa'iq",
+      "score": "94.87%",
+      "rank": 38
+    },
+    {
+      "name": "Matseke, Oarabile S",
+      "score": "94.74%",
       "rank": 39
     },
     {
-      "name": "Eksteen, Kristen",
-      "score": "95.00%",
+      "name": "Onawanda Lindsey Gugushe",
+      "score": "94.55%",
       "rank": 40
     },
     {
       "name": "October Zoe T",
-      "score": "94.96%",
+      "score": "94.37%",
       "rank": 41
     },
     {
-      "name": "Davids Ishmail",
-      "score": "94.64%",
+      "name": "Brittney Lauren Molisie",
+      "score": "94.17%",
       "rank": 42
     },
     {
-      "name": "Hayden Sequera",
-      "score": "94.62%",
+      "name": "Natania Goliath",
+      "score": "94.12%",
       "rank": 43
     },
     {
-      "name": "Mnqandi Hlumelo Z",
-      "score": "94.44%",
+      "name": "Zaindeen, Jiyaad",
+      "score": "94.03%",
       "rank": 44
     },
     {
-      "name": "Bussack Laa'iq",
-      "score": "94.44%",
+      "name": "Naidoo Keshni",
+      "score": "93.94%",
       "rank": 45
     },
     {
-      "name": "Nayimuli, Sandra",
-      "score": "94.39%",
+      "name": "Mnqandi Hlumelo Z",
+      "score": "93.88%",
       "rank": 46
     },
     {
-      "name": "Matthews, Josh A",
-      "score": "94.37%",
-      "rank": 47
-    },
-    {
-      "name": "Onawanda Lindsey Gugushe",
-      "score": "94.17%",
-      "rank": 48
-    },
-    {
-      "name": "Matseke, Oarabile S",
-      "score": "94.05%",
-      "rank": 49
-    },
-    {
-      "name": "Tiara-Jodi Amber Williams",
-      "score": "93.83%",
-      "rank": 50
-    },
-    {
-      "name": "Van Niekerk, Keano",
-      "score": "93.81%",
-      "rank": 51
-    },
-    {
-      "name": "Abrahams, Moegammad Basheer",
+      "name": "Eksteen, Kristen",
       "score": "93.75%",
-      "rank": 52
+      "rank": 47
     },
     {
       "name": "Sihle Mdedetyana",
       "score": "93.75%",
-      "rank": 53
-    },
-    {
-      "name": "Naidoo Keshni",
-      "score": "93.75%",
-      "rank": 54
-    },
-    {
-      "name": "Zaindeen, Jiyaad",
-      "score": "93.55%",
-      "rank": 55
-    },
-    {
-      "name": "Fisher Carly",
-      "score": "93.33%",
-      "rank": 56
-    },
-    {
-      "name": "September Ronaldo F",
-      "score": "92.71%",
-      "rank": 57
+      "rank": 48
     },
     {
       "name": "Yoosuf Adams",
-      "score": "92.68%",
+      "score": "93.55%",
+      "rank": 49
+    },
+    {
+      "name": "Jacobs, Amy",
+      "score": "93.55%",
+      "rank": 50
+    },
+    {
+      "name": "Ngcungama, Mlondolozi",
+      "score": "93.46%",
+      "rank": 51
+    },
+    {
+      "name": "Macam Thando",
+      "score": "93.22%",
+      "rank": 52
+    },
+    {
+      "name": "Arendse, Mikael S",
+      "score": "93.20%",
+      "rank": 53
+    },
+    {
+      "name": "Awam Klaas",
+      "score": "93.02%",
+      "rank": 54
+    },
+    {
+      "name": "Unam Gogo",
+      "score": "92.86%",
+      "rank": 55
+    },
+    {
+      "name": "September Ronaldo F",
+      "score": "92.78%",
+      "rank": 56
+    },
+    {
+      "name": "Roxanne Mollar",
+      "score": "92.59%",
+      "rank": 57
+    },
+    {
+      "name": "Craig, Daniel",
+      "score": "92.59%",
       "rank": 58
+    },
+    {
+      "name": "Van Niekerk, Keano",
+      "score": "92.56%",
+      "rank": 59
+    },
+    {
+      "name": "Noqekwa Kanyisa M",
+      "score": "92.51%",
+      "rank": 60
     },
     {
       "name": "Bazi, Amahle",
       "score": "92.50%",
-      "rank": 59
-    },
-    {
-      "name": "Roxanne Mollar",
-      "score": "92.45%",
-      "rank": 60
+      "rank": 61
     },
     {
       "name": "Vicky Sharon Franke",
       "score": "92.31%",
-      "rank": 61
-    },
-    {
-      "name": "Jacobs, Amy",
-      "score": "92.31%",
       "rank": 62
     },
     {
-      "name": "Ngcungama, Mlondolozi",
-      "score": "92.13%",
+      "name": "Stone Jade",
+      "score": "92.21%",
       "rank": 63
-    },
-    {
-      "name": "Unam Gogo",
-      "score": "92.11%",
-      "rank": 64
     },
     {
       "name": "Charleston Thomas Carolus",
       "score": "92.06%",
-      "rank": 65
-    },
-    {
-      "name": "Craig, Daniel",
-      "score": "91.89%",
-      "rank": 66
-    },
-    {
-      "name": "Peter Zintle",
-      "score": "91.85%",
-      "rank": 67
-    },
-    {
-      "name": "Macam Thando",
-      "score": "91.84%",
-      "rank": 68
-    },
-    {
-      "name": "Jacobs, Aaliya",
-      "score": "91.76%",
-      "rank": 69
-    },
-    {
-      "name": "Mzalazala, Alida",
-      "score": "91.74%",
-      "rank": 70
-    },
-    {
-      "name": "Noqekwa Kanyisa M",
-      "score": "91.72%",
-      "rank": 71
-    },
-    {
-      "name": "Opperman Keron",
-      "score": "91.67%",
-      "rank": 72
-    },
-    {
-      "name": "Alisha Sinothando Baba",
-      "score": "91.43%",
-      "rank": 73
-    },
-    {
-      "name": "Arendse, Mikael S",
-      "score": "91.25%",
-      "rank": 74
-    },
-    {
-      "name": "Stone Jade",
-      "score": "91.18%",
-      "rank": 75
-    },
-    {
-      "name": "Awam Klaas",
-      "score": "91.18%",
-      "rank": 76
-    },
-    {
-      "name": "Laura Mjambana",
-      "score": "91.07%",
-      "rank": 77
-    },
-    {
-      "name": "Asavela Mkuyana",
-      "score": "90.91%",
-      "rank": 78
-    },
-    {
-      "name": "Natania Goliath",
-      "score": "90.91%",
-      "rank": 79
-    },
-    {
-      "name": "Adams, Nathan",
-      "score": "90.91%",
-      "rank": 80
-    },
-    {
-      "name": "Andrea Hofmeyer",
-      "score": "90.74%",
-      "rank": 81
-    },
-    {
-      "name": "Qureshi Abohurera",
-      "score": "90.67%",
-      "rank": 82
+      "rank": 64
     },
     {
       "name": "Mntwini Wanda",
-      "score": "90.63%",
-      "rank": 83
+      "score": "92.00%",
+      "rank": 65
     },
     {
-      "name": "Amber Derricka Smith",
-      "score": "90.63%",
-      "rank": 84
-    },
-    {
-      "name": "Nondumo, Viwe",
-      "score": "90.57%",
-      "rank": 85
-    },
-    {
-      "name": "Andrea Landsman",
-      "score": "90.57%",
-      "rank": 86
-    },
-    {
-      "name": "Mtiki Sisipho",
-      "score": "90.48%",
-      "rank": 87
-    },
-    {
-      "name": "Nontloko Ima",
-      "score": "90.43%",
-      "rank": 88
-    },
-    {
-      "name": "Gragry Luvuyo Mushiringi",
-      "score": "90.28%",
-      "rank": 89
-    },
-    {
-      "name": "Ross May-Lee",
-      "score": "90.24%",
-      "rank": 90
-    },
-    {
-      "name": "Heuvel, Callaghn C",
-      "score": "90.24%",
-      "rank": 91
-    },
-    {
-      "name": "Nathan Wilson",
-      "score": "90.16%",
-      "rank": 92
-    },
-    {
-      "name": "Anushka Meyer",
-      "score": "90.11%",
-      "rank": 93
+      "name": "Alisha Sinothando Baba",
+      "score": "91.96%",
+      "rank": 66
     },
     {
       "name": "Jasmine Maryke Weinand",
-      "score": "90.00%",
-      "rank": 94
-    },
-    {
-      "name": "Valentine, Riyaan",
-      "score": "89.89%",
-      "rank": 95
-    },
-    {
-      "name": "Muller, Gideon B",
-      "score": "89.83%",
-      "rank": 96
+      "score": "91.94%",
+      "rank": 67
     },
     {
       "name": "Yonela Butsi",
-      "score": "89.80%",
-      "rank": 97
+      "score": "91.67%",
+      "rank": 68
     },
     {
-      "name": "Tetani, Yolani",
-      "score": "89.77%",
-      "rank": 98
+      "name": "Ross May-Lee",
+      "score": "91.58%",
+      "rank": 69
+    },
+    {
+      "name": "Peter Zintle",
+      "score": "91.50%",
+      "rank": 70
+    },
+    {
+      "name": "Asavela Mkuyana",
+      "score": "91.46%",
+      "rank": 71
+    },
+    {
+      "name": "Nathan Kenneth Morrison",
+      "score": "91.18%",
+      "rank": 72
+    },
+    {
+      "name": "Opperman Keron",
+      "score": "91.18%",
+      "rank": 73
+    },
+    {
+      "name": "Wynand, Kyle",
+      "score": "91.11%",
+      "rank": 74
+    },
+    {
+      "name": "Muller, Gideon B",
+      "score": "90.91%",
+      "rank": 75
+    },
+    {
+      "name": "Abrahams, Zainab",
+      "score": "90.80%",
+      "rank": 76
+    },
+    {
+      "name": "Adams, Nathan",
+      "score": "90.79%",
+      "rank": 77
+    },
+    {
+      "name": "Jacobs, Aaliya",
+      "score": "90.43%",
+      "rank": 78
+    },
+    {
+      "name": "Matthews, Josh A",
+      "score": "90.36%",
+      "rank": 79
     },
     {
       "name": "Achume Bavu",
+      "score": "90.24%",
+      "rank": 80
+    },
+    {
+      "name": "Ngubomb, Hlomla",
+      "score": "90.24%",
+      "rank": 81
+    },
+    {
+      "name": "Abrahams, Moegammad Basheer",
+      "score": "90.14%",
+      "rank": 82
+    },
+    {
+      "name": "Adams, Imtiaz",
+      "score": "90.08%",
+      "rank": 83
+    },
+    {
+      "name": "Nondumo, Viwe",
+      "score": "90.00%",
+      "rank": 84
+    },
+    {
+      "name": "Mtiki Sisipho",
+      "score": "90.00%",
+      "rank": 85
+    },
+    {
+      "name": "Nontloko Ima",
+      "score": "90.00%",
+      "rank": 86
+    },
+    {
+      "name": "Uzair Rossier",
+      "score": "90.00%",
+      "rank": 87
+    },
+    {
+      "name": "Onika Mamba",
+      "score": "90.00%",
+      "rank": 88
+    },
+    {
+      "name": "De Wet Cameron",
+      "score": "90.00%",
+      "rank": 89
+    },
+    {
+      "name": "Nomcebo Ncwane",
+      "score": "89.77%",
+      "rank": 90
+    },
+    {
+      "name": "Mzalazala, Alida",
+      "score": "89.76%",
+      "rank": 91
+    },
+    {
+      "name": "Kerr, Keanu F",
+      "score": "89.74%",
+      "rank": 92
+    },
+    {
+      "name": "Rafeeq Bosch",
+      "score": "89.72%",
+      "rank": 93
+    },
+    {
+      "name": "Ngamlana, Liso",
       "score": "89.71%",
-      "rank": 99
+      "rank": 94
     },
     {
       "name": "Jade Curnow",
       "score": "89.69%",
-      "rank": 100
+      "rank": 95
     },
     {
-      "name": "Wynand, Kyle",
-      "score": "89.61%",
-      "rank": 101
+      "name": "Matutu, Sisipho",
+      "score": "89.58%",
+      "rank": 96
+    },
+    {
+      "name": "Tamia Williams",
+      "score": "89.47%",
+      "rank": 97
+    },
+    {
+      "name": "Nongxa, Siyasanga",
+      "score": "89.42%",
+      "rank": 98
     },
     {
       "name": "Wyngardt, Casey",
       "score": "89.38%",
+      "rank": 99
+    },
+    {
+      "name": "Pakati, Likho",
+      "score": "89.29%",
+      "rank": 100
+    },
+    {
+      "name": "Micheala Leonie Petersen",
+      "score": "89.23%",
+      "rank": 101
+    },
+    {
+      "name": "Nchunu, Thato",
+      "score": "89.23%",
       "rank": 102
     },
     {
-      "name": "Nongxa, Siyasanga",
-      "score": "89.36%",
+      "name": "Amber Derricka Smith",
+      "score": "89.19%",
       "rank": 103
     },
     {
-      "name": "Ngubomb, Hlomla",
-      "score": "89.29%",
+      "name": "Hendricks, Tasriq",
+      "score": "89.15%",
       "rank": 104
     },
     {
-      "name": "Rafeeq Bosch",
-      "score": "89.22%",
+      "name": "Lilitha Khumo Leshiba",
+      "score": "89.09%",
       "rank": 105
     },
     {
-      "name": "Ngamlana, Liso",
-      "score": "89.15%",
+      "name": "Fisher Carly",
+      "score": "88.89%",
       "rank": 106
     },
     {
-      "name": "Matutu, Sisipho",
-      "score": "89.13%",
+      "name": "Samson Kirstin L",
+      "score": "88.89%",
       "rank": 107
     },
     {
-      "name": "Fiona Van Wyk",
-      "score": "89.09%",
+      "name": "Farhat Johnson",
+      "score": "88.89%",
       "rank": 108
     },
     {
-      "name": "Onyeme, Ebube",
-      "score": "89.02%",
+      "name": "Thomas, Riyaas",
+      "score": "88.89%",
       "rank": 109
     },
     {
-      "name": "Uzair Rossier",
-      "score": "88.89%",
+      "name": "Anushka Meyer",
+      "score": "88.78%",
       "rank": 110
     },
     {
-      "name": "Nomdoe, Melachi A",
-      "score": "88.89%",
+      "name": "Titus, Mogammad Ayoob",
+      "score": "88.68%",
       "rank": 111
     },
     {
-      "name": "Hendricks, Tasriq",
-      "score": "88.80%",
+      "name": "Qureshi Abohurera",
+      "score": "88.64%",
       "rank": 112
     },
     {
-      "name": "Adams, Imtiaz",
-      "score": "88.68%",
+      "name": "Tabani Faith Lupuzi",
+      "score": "88.51%",
       "rank": 113
     },
     {
-      "name": "Nomcebo Ncwane",
-      "score": "88.61%",
+      "name": "Nwadigo, Amarachi C",
+      "score": "88.46%",
       "rank": 114
     },
     {
-      "name": "Abrahams, Zainab",
-      "score": "88.41%",
+      "name": "Andrea Landsman",
+      "score": "88.33%",
       "rank": 115
-    },
-    {
-      "name": "Tabani Faith Lupuzi",
-      "score": "88.41%",
-      "rank": 116
-    },
-    {
-      "name": "Thebe, Lethabo F",
-      "score": "88.31%",
-      "rank": 117
     },
     {
       "name": "Lakay, Qudusiyya",
       "score": "88.30%",
-      "rank": 118
+      "rank": 116
     },
     {
       "name": "Hill, Kirsten",
       "score": "88.28%",
+      "rank": 117
+    },
+    {
+      "name": "Uyathandwa Silwana",
+      "score": "88.24%",
+      "rank": 118
+    },
+    {
+      "name": "Soganga, Anele",
+      "score": "88.17%",
       "rank": 119
     },
     {
-      "name": "Mahlasela Sinokuhle",
-      "score": "88.17%",
+      "name": "Bergstedt, Sydney",
+      "score": "88.12%",
       "rank": 120
     },
     {
-      "name": "Nathan Kenneth Morrison",
-      "score": "88.16%",
+      "name": "Siwayiza Likhona",
+      "score": "88.00%",
       "rank": 121
     },
     {
-      "name": "Nwadigo, Amarachi C",
-      "score": "88.04%",
+      "name": "Morrison, Edric C",
+      "score": "87.80%",
       "rank": 122
     },
     {
-      "name": "Steffenson, Keano",
-      "score": "88.00%",
+      "name": "Abrahams, Mogamat Sohail",
+      "score": "87.72%",
       "rank": 123
     },
     {
-      "name": "Lilitha Khumo Leshiba",
-      "score": "88.00%",
+      "name": "Gasnola, Bilqees",
+      "score": "87.69%",
       "rank": 124
-    },
-    {
-      "name": "Micheala Leonie Petersen",
-      "score": "88.00%",
-      "rank": 125
-    },
-    {
-      "name": "Makhiwane, Kamvelihle",
-      "score": "88.00%",
-      "rank": 126
-    },
-    {
-      "name": "Rosco Carstens",
-      "score": "87.88%",
-      "rank": 127
-    },
-    {
-      "name": "Cupido Saskia D",
-      "score": "87.88%",
-      "rank": 128
-    },
-    {
-      "name": "Estment, Declan",
-      "score": "87.80%",
-      "rank": 129
     },
     {
       "name": "Axola Zicina",
       "score": "87.50%",
-      "rank": 130
-    },
-    {
-      "name": "Mbaraka ndawule",
-      "score": "87.50%",
-      "rank": 131
-    },
-    {
-      "name": "Tamia Williams",
-      "score": "87.50%",
-      "rank": 132
+      "rank": 125
     },
     {
       "name": "Jemima Ganger",
       "score": "87.50%",
-      "rank": 133
+      "rank": 126
     },
     {
       "name": "Zac Paul Gertse",
       "score": "87.50%",
-      "rank": 134
+      "rank": 127
+    },
+    {
+      "name": "Onyeme, Ebube",
+      "score": "87.50%",
+      "rank": 128
+    },
+    {
+      "name": "Tiara-Jodi Amber Williams",
+      "score": "87.50%",
+      "rank": 129
     },
     {
       "name": "Faas Aslam",
       "score": "87.50%",
-      "rank": 135
+      "rank": 130
+    },
+    {
+      "name": "Albertyn, Jaden C",
+      "score": "87.50%",
+      "rank": 131
     },
     {
       "name": "Waylon Alexander",
       "score": "87.50%",
-      "rank": 136
+      "rank": 132
     },
     {
-      "name": "Mohammad Ammaar Johnson",
+      "name": "Rosco Carstens",
       "score": "87.50%",
-      "rank": 137
-    },
-    {
-      "name": "Ethan Lenders",
-      "score": "87.50%",
-      "rank": 138
-    },
-    {
-      "name": "Farhat Johnson",
-      "score": "87.50%",
-      "rank": 139
-    },
-    {
-      "name": "Building, Uminathi",
-      "score": "87.34%",
-      "rank": 140
-    },
-    {
-      "name": "Abrahams, Mogamat Sohail",
-      "score": "87.27%",
-      "rank": 141
-    },
-    {
-      "name": "Kaka Siyahluma",
-      "score": "87.27%",
-      "rank": 142
+      "rank": 133
     },
     {
       "name": "Nonyukela, Zukhanye",
-      "score": "87.23%",
+      "score": "87.50%",
+      "rank": 134
+    },
+    {
+      "name": "Emery, Alexis",
+      "score": "87.39%",
+      "rank": 135
+    },
+    {
+      "name": "Mahlasela Sinokuhle",
+      "score": "87.38%",
+      "rank": 136
+    },
+    {
+      "name": "Tetani, Yolani",
+      "score": "87.38%",
+      "rank": 137
+    },
+    {
+      "name": "Botha Cody",
+      "score": "87.34%",
+      "rank": 138
+    },
+    {
+      "name": "Lisakhanya Mnyango",
+      "score": "87.32%",
+      "rank": 139
+    },
+    {
+      "name": "Andrea Hofmeyer",
+      "score": "87.27%",
+      "rank": 140
+    },
+    {
+      "name": "Forbes, Zahrah",
+      "score": "87.18%",
+      "rank": 141
+    },
+    {
+      "name": "Alexander Masoed R",
+      "score": "87.18%",
+      "rank": 142
+    },
+    {
+      "name": "Orgill, Catelyn H",
+      "score": "87.12%",
       "rank": 143
     },
     {
-      "name": "De Wet Cameron",
-      "score": "87.18%",
+      "name": "Edwards, Ismail",
+      "score": "87.12%",
       "rank": 144
     },
     {
-      "name": "Thomas, Riyaas",
-      "score": "86.96%",
+      "name": "Nathan Wilson",
+      "score": "87.10%",
       "rank": 145
     },
     {
-      "name": "Titus, Mogammad Ayoob",
-      "score": "86.96%",
+      "name": "Mkabayi, Qhawekazi",
+      "score": "87.04%",
       "rank": 146
     },
     {
-      "name": "Ondela Sofute",
-      "score": "86.90%",
+      "name": "Fillies, Divan X",
+      "score": "87.02%",
       "rank": 147
     },
     {
-      "name": "Bergstedt, Sydney",
+      "name": "Benjamin Octavia",
       "score": "86.90%",
       "rank": 148
     },
     {
-      "name": "Adams, Cole S",
-      "score": "86.84%",
+      "name": "Shanseau Khabana",
+      "score": "86.90%",
       "rank": 149
     },
     {
-      "name": "Morrison, Edric C",
-      "score": "86.84%",
+      "name": "Naketsana Kamohelo",
+      "score": "86.89%",
       "rank": 150
     },
     {
-      "name": "Majavie, Ethan",
-      "score": "86.84%",
+      "name": "Swartz, Mujahid",
+      "score": "86.63%",
       "rank": 151
     },
     {
-      "name": "Byne, Dominic J",
-      "score": "86.79%",
+      "name": "Hlalentla, Mvano",
+      "score": "86.61%",
       "rank": 152
     },
     {
-      "name": "Siwayiza Likhona",
-      "score": "86.76%",
+      "name": "Damian Khuzwayo",
+      "score": "86.59%",
       "rank": 153
     },
     {
-      "name": "Lisakhanya Mnyango",
-      "score": "86.67%",
+      "name": "Hugh O'ryan",
+      "score": "86.59%",
       "rank": 154
     },
     {
-      "name": "Whiting, Jayden",
-      "score": "86.67%",
+      "name": "Kaka Siyahluma",
+      "score": "86.55%",
       "rank": 155
     },
     {
-      "name": "Botha Cody",
-      "score": "86.57%",
+      "name": "Geldenhugs, Nabilah",
+      "score": "86.54%",
       "rank": 156
     },
     {
-      "name": "Edwards, Ismail",
-      "score": "86.55%",
+      "name": "Building, Uminathi",
+      "score": "86.52%",
       "rank": 157
     },
     {
-      "name": "Miya, Athenkosi L",
-      "score": "86.54%",
+      "name": "Majavie, Ethan",
+      "score": "86.52%",
       "rank": 158
     },
     {
-      "name": "Ngcengane, Mivuyo",
-      "score": "86.54%",
+      "name": "Busisiwa Tamara Gude",
+      "score": "86.44%",
       "rank": 159
     },
     {
-      "name": "Soganga, Anele",
-      "score": "86.49%",
+      "name": "Tshapi, Naledi S",
+      "score": "86.43%",
       "rank": 160
     },
     {
-      "name": "Tshapi, Naledi S",
-      "score": "86.47%",
+      "name": "Lang Emile",
+      "score": "86.40%",
       "rank": 161
     },
     {
-      "name": "Orgill, Catelyn H",
-      "score": "86.40%",
+      "name": "Ngcengane, Mivuyo",
+      "score": "86.32%",
       "rank": 162
     }
   ]
