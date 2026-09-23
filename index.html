@@ -25,7 +25,7 @@
     #slide2, #slide3 { background: linear-gradient(145deg, #f0f3f8 0%, #e8ecf4 100%); padding: 0; }
 
     /* ===== SANAS / AWS CONNECT SLIDES ===== */
-    #slide4, #slide5, #slide6, #slide7, #slide8, #slide9, #slide10 {
+    #slide4, #slide5, #slide6, #slide7, #slide8, #slide9, #slide10, #slide11, #slide12 {
       background: #0b1a33;
       padding: 0;
     }
@@ -36,6 +36,8 @@
     #slide8  { background: #0b1a33 url('sanas5.jpeg') center/contain no-repeat; }
     #slide9  { background: #0b1a33 url('sanas6.jpeg') center/contain no-repeat; }
     #slide10 { background: #0b1a33 url('sanas7.jpeg') center/contain no-repeat; }
+    #slide11 { background: #0b1a33 url('sanas8.jpeg') center/contain no-repeat; }
+    #slide12 { background: #0b1a33 url('sanas9.jpeg') center/contain no-repeat; }
 
     .slide-header { background: #0b1a33; backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); padding: 0.3vh 2vw; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.2vh 1vw; flex-shrink: 0; min-height: 10vh; border-bottom: 2px solid rgba(211,47,47,0.3); position: relative; overflow: hidden; box-shadow: 0 4px 30px rgba(0,0,0,0.3); border-radius: 0 0 12px 12px; margin: 0 0.5vw; }
     .slide-header::before { content: ''; position: absolute; top: 0; left: -150%; width: 300%; height: 100%; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.02) 20%, rgba(255,255,255,0.06) 40%, rgba(255,255,255,0.02) 60%, transparent 100%); animation: shimmerWhite 10s ease-in-out infinite; pointer-events: none; z-index: 0; }
@@ -159,15 +161,15 @@
       <button class="fullscreen-btn" id="fullscreenBtn"><span class="icon">⛶</span> FULL</button>
 
       <div class="slide active" id="slide0" data-index="0" data-slide="1">
-        <div class="slide-counter"><span class="current">1</span> / 11</div>
+        <div class="slide-counter"><span class="current">1</span> / 13</div>
       </div>
 
       <div class="slide" id="slide1" data-index="1" data-slide="2">
-        <div class="slide-counter"><span class="current">2</span> / 11</div>
+        <div class="slide-counter"><span class="current">2</span> / 13</div>
       </div>
 
       <div class="slide" id="slide2" data-index="2" data-slide="3">
-        <div class="slide-counter"><span class="current">3</span> / 11</div>
+        <div class="slide-counter"><span class="current">3</span> / 13</div>
         <div class="slide-header">
           <div class="logo-area"><img src="delta-logo-ribbon.png?v=36" alt="Delta" /><h1><span>DELTA</span> · SIS</h1></div>
           <div class="behavior-tags" id="tags1">
@@ -189,7 +191,7 @@
       </div>
 
       <div class="slide" id="slide3" data-index="3" data-slide="4">
-        <div class="slide-counter"><span class="current">4</span> / 11</div>
+        <div class="slide-counter"><span class="current">4</span> / 13</div>
         <div class="slide-header">
           <div class="logo-area"><img src="delta-logo-ribbon.png?v=36" alt="Delta" /><h1><span>DELTA</span> · SIS</h1></div>
           <div class="behavior-tags" id="tags2">
@@ -212,31 +214,39 @@
 
       <!-- ===== SANAS / AWS CONNECT SLIDES ===== -->
       <div class="slide" id="slide4" data-index="4" data-slide="5">
-        <div class="slide-counter"><span class="current">5</span> / 11</div>
+        <div class="slide-counter"><span class="current">5</span> / 13</div>
       </div>
 
       <div class="slide" id="slide5" data-index="5" data-slide="6">
-        <div class="slide-counter"><span class="current">6</span> / 11</div>
+        <div class="slide-counter"><span class="current">6</span> / 13</div>
       </div>
 
       <div class="slide" id="slide6" data-index="6" data-slide="7">
-        <div class="slide-counter"><span class="current">7</span> / 11</div>
+        <div class="slide-counter"><span class="current">7</span> / 13</div>
       </div>
 
       <div class="slide" id="slide7" data-index="7" data-slide="8">
-        <div class="slide-counter"><span class="current">8</span> / 11</div>
+        <div class="slide-counter"><span class="current">8</span> / 13</div>
       </div>
 
       <div class="slide" id="slide8" data-index="8" data-slide="9">
-        <div class="slide-counter"><span class="current">9</span> / 11</div>
+        <div class="slide-counter"><span class="current">9</span> / 13</div>
       </div>
 
       <div class="slide" id="slide9" data-index="9" data-slide="10">
-        <div class="slide-counter"><span class="current">10</span> / 11</div>
+        <div class="slide-counter"><span class="current">10</span> / 13</div>
       </div>
 
       <div class="slide" id="slide10" data-index="10" data-slide="11">
-        <div class="slide-counter"><span class="current">11</span> / 11</div>
+        <div class="slide-counter"><span class="current">11</span> / 13</div>
+      </div>
+
+      <div class="slide" id="slide11" data-index="11" data-slide="12">
+        <div class="slide-counter"><span class="current">12</span> / 13</div>
+      </div>
+
+      <div class="slide" id="slide12" data-index="12" data-slide="13">
+        <div class="slide-counter"><span class="current">13</span> / 13</div>
       </div>
 
       <div class="nav-controls">
@@ -335,8 +345,8 @@
       const TEAMS_MIN_DISPLAY   = 45;
       const MAX_DISPLAY         = 120;
 
-      // SANAS slide durations (ms) — indexes 4–10
-      const SANAS_DURATIONS = { 4: 10000, 5: 10000, 6: 12000, 7: 10000, 8: 10000, 9: 10000, 10: 10000 };
+      // SANAS slide durations (ms) — indexes 4–12
+      const SANAS_DURATIONS = { 4: 10000, 5: 10000, 6: 12000, 7: 10000, 8: 10000, 9: 10000, 10: 10000, 11: 10000, 12: 10000 };
 
       let currentIndex = 0;
       let timer = null;
