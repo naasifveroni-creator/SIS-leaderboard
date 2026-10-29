@@ -366,8 +366,8 @@
       const MAX_DISPLAY         = 120;
 
       // SANAS slide durations (ms) — indexes 4–16
-      // Added index 16 for the new Pioneers slide (15 seconds)
-      const SANAS_DURATIONS = { 4: 10000, 5: 10000, 6: 12000, 7: 10000, 8: 10000, 9: 10000, 10: 10000, 11: 10000, 12: 10000, 13: 10000, 14: 10000, 15: 20000, 16: 15000 };
+      // Index 16 is set to 7,200,000 ms (2 hours)
+      const SANAS_DURATIONS = { 4: 10000, 5: 10000, 6: 12000, 7: 10000, 8: 10000, 9: 10000, 10: 10000, 11: 10000, 12: 10000, 13: 10000, 14: 10000, 15: 20000, 16: 7200000 };
 
       let currentIndex = 0;
       let timer = null;
