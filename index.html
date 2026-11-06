@@ -43,7 +43,7 @@
     #slide15 { background: #0b1a33 url('sanas12.jpeg') center/contain no-repeat; }
     #slide16 { background: #0b1a33 url('pioneers.jpeg') center/contain no-repeat; }
 
-    /* ===== NEW YOUTUBE VIDEO SLIDE ===== */
+    /* ===== YOUTUBE SLIDE ===== */
     #slide17 {
       background: #000;
       padding: 0;
@@ -287,8 +287,9 @@
       <!-- ===== YOUTUBE SLIDE ===== -->
       <div class="slide" id="slide17" data-index="17" data-slide="18">
         <div class="slide-counter"><span class="current">18</span> / 18</div>
+        <!-- Removed loop=1 so it plays once -->
         <iframe class="video-iframe" 
-                src="https://www.youtube.com/embed/OFapIEPFjLw?autoplay=1&mute=1&loop=1&playlist=OFapIEPFjLw" 
+                src="https://www.youtube.com/embed/OFapIEPFjLw?autoplay=1&mute=1&controls=1&rel=0" 
                 title="Video Player" 
                 frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -607,9 +608,8 @@
       document.getElementById('nextSlide').addEventListener('click', nextSlide);
       document.getElementById('prevSlide').addEventListener('click', prevSlide);
 
-      wrapper.addEventListener('mouseenter', () => pauseSlideshow());
-      wrapper.addEventListener('mouseleave', () => resumeSlideshow());
-
+      // === REMOVED THE MOUSE HOVER PAUSE HERE SO IT NEVER GETS STUCK ===
+      
       document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight') nextSlide();
         if (e.key === 'ArrowLeft') prevSlide();
