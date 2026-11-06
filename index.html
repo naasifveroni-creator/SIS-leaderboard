@@ -278,7 +278,8 @@
       <!-- ===== NEW VIDEO SLIDE ===== -->
       <div class="slide" id="slide15" data-index="15" data-slide="16">
         <div class="slide-counter"><span class="current">16</span> / 16</div>
-        <video class="video-slide" autoplay muted loop playsinline>
+        <!-- Added 'controls' so you can manually hit play if the browser blocks it -->
+        <video class="video-slide" controls autoplay muted loop playsinline preload="auto">
           <source src="video.mp4" type="video/mp4">
         </video>
       </div>
@@ -500,19 +501,16 @@
         setTimeout(() => { isTransitioning = false; }, 800);
 
         // === VIDEO CONTROL ===
-        // Pause all videos safely (only if actually playing)
         document.querySelectorAll('video').forEach(v => {
           if (!v.paused) v.pause();
         });
         
-        // Play current video
         const currentVideo = slides[currentIndex].querySelector('video');
         if (currentVideo) {
           currentVideo.currentTime = 0;
           const playPromise = currentVideo.play();
           if (playPromise !== undefined) {
             playPromise.catch(e => {
-              // Ignore the harmless AbortError caused by rapid clicking
               if (e.name !== 'AbortError') {
                 console.log('Video playback error:', e);
               }
