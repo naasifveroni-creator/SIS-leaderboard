@@ -43,56 +43,19 @@
     #slide15 { background: #0b1a33 url('sanas12.jpeg') center/contain no-repeat; }
     #slide16 { background: #0b1a33 url('pioneers.jpeg') center/contain no-repeat; }
 
-    /* ===== VIDEO SLIDE WITH OVERLAY ===== */
+    /* ===== NEW YOUTUBE VIDEO SLIDE ===== */
     #slide17 {
-      background: #000; /* Black background for video */
+      background: #000;
       padding: 0;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .video-slide {
+    .video-iframe {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* Keeps vertical video from being squished */
-    }
-    .play-overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(11, 26, 51, 0.9);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 10;
-      color: white;
-      transition: opacity 0.3s ease;
-    }
-    .play-overlay.hidden {
-      opacity: 0;
-      pointer-events: none;
-      display: none;
-    }
-    .play-icon {
-      font-size: 10vh;
-      margin-bottom: 2vh;
-      color: #d32f2f;
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
-      width: 20vh;
-      height: 20vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 4px solid #d32f2f;
-    }
-    .play-text {
-      font-size: 3vh;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      color: #fff;
+      border: none;
     }
 
     .slide-header { background: #0b1a33; backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); padding: 0.3vh 2vw; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.2vh 1vw; flex-shrink: 0; min-height: 10vh; border-bottom: 2px solid rgba(211,47,47,0.3); position: relative; overflow: hidden; box-shadow: 0 4px 30px rgba(0,0,0,0.3); border-radius: 0 0 12px 12px; margin: 0 0.5vw; }
@@ -321,20 +284,16 @@
         <div class="slide-counter"><span class="current">17</span> / 18</div>
       </div>
 
-      <!-- ===== VIDEO SLIDE ===== -->
+      <!-- ===== YOUTUBE SLIDE ===== -->
       <div class="slide" id="slide17" data-index="17" data-slide="18">
         <div class="slide-counter"><span class="current">18</span> / 18</div>
-        
-        <!-- Clickable Overlay -->
-        <div class="play-overlay" id="playOverlay" onclick="document.getElementById('main-video').play(); this.classList.add('hidden');">
-          <div class="play-icon">▶</div>
-          <div class="play-text">CLICK TO PLAY</div>
-        </div>
-
-        <!-- Preload auto so it's ready -->
-        <video id="main-video" class="video-slide" controls autoplay muted loop playsinline preload="auto">
-          <source src="video.mp4" type="video/mp4">
-        </video>
+        <iframe class="video-iframe" 
+                src="https://www.youtube.com/embed/OFapIEPFjLw?autoplay=1&mute=1&loop=1&playlist=OFapIEPFjLw" 
+                title="Video Player" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+        </iframe>
       </div>
 
       <div class="nav-controls">
@@ -425,17 +384,6 @@
       const dotsContainer = document.getElementById('dotsContainer');
       const progressBars = document.querySelectorAll('.progress-bar');
       const wrapper = document.getElementById('slidesWrapper');
-      const video = document.getElementById('main-video');
-      const playOverlay = document.getElementById('playOverlay');
-
-      // Hide overlay when video is playing
-      if (video && playOverlay) {
-        video.addEventListener('play', () => playOverlay.classList.add('hidden'));
-        video.addEventListener('pause', () => {
-          // Only show overlay if the video actually ended
-          if (video.ended) playOverlay.classList.remove('hidden');
-        });
-      }
 
       // ── Timing constants ──
       const AGENTS_TIME_PER_ROW = 0.6;
@@ -445,7 +393,7 @@
       const MAX_DISPLAY         = 120;
 
       // SANAS slide durations (ms) — indexes 4–17
-      // Index 17 (Video) is set to 52,000 ms (52 seconds) to match your video length exactly!
+      // Index 17 (Video) is set to 52,000 ms (52 seconds)
       const SANAS_DURATIONS = { 4: 10000, 5: 10000, 6: 12000, 7: 10000, 8: 10000, 9: 10000, 10: 10000, 11: 10000, 12: 10000, 13: 10000, 14: 10000, 15: 10000, 16: 10000, 17: 52000 };
 
       let currentIndex = 0;
@@ -517,8 +465,6 @@
         clearSlideshowTimer();
         scrollAnimFrames.forEach(id => cancelAnimationFrame(id));
         scrollAnimFrames = [];
-        
-        if (video && !video.paused) video.pause();
       }
 
       function resumeSlideshow() {
@@ -526,10 +472,6 @@
         isPaused = false;
         startSlideshowTimer(slideDuration, elapsedTime);
         if (slides[currentIndex]) startInfiniteScroll(slides[currentIndex]);
-        
-        if (video && slides[currentIndex].id === 'slide17') {
-          video.play().catch(e => { if (e.name !== 'AbortError') console.log(e); });
-        }
       }
 
       function goToSlide(index) {
@@ -557,25 +499,6 @@
         startSlideshowTimer(getSlideDuration(slides[currentIndex]));
         isPaused = false;
         setTimeout(() => { isTransitioning = false; }, 800);
-
-        // VIDEO CONTROL
-        if (video) {
-          if (currentIndex === 17) {
-            video.currentTime = 0;
-            const playPromise = video.play();
-            if (playPromise !== undefined) {
-              playPromise.catch(e => { 
-                // If blocked, show the overlay
-                if (e.name !== 'AbortError') {
-                  playOverlay.classList.remove('hidden');
-                  console.log('Auto-play blocked, waiting for click.');
-                }
-              });
-            }
-          } else {
-            video.pause();
-          }
-        }
       }
 
       function nextSlide() { goToSlide(currentIndex + 1); }
