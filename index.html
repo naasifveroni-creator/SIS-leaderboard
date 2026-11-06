@@ -53,7 +53,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: contain; /* Keeps the whole video visible, just like the images */
+      object-fit: contain;
       z-index: 1;
     }
 
@@ -280,7 +280,6 @@
         <div class="slide-counter"><span class="current">16</span> / 16</div>
         <video class="video-slide" autoplay muted loop playsinline>
           <source src="video.mp4" type="video/mp4">
-          Your browser does not support the video tag.
         </video>
       </div>
 
@@ -381,7 +380,7 @@
       const MAX_DISPLAY         = 120;
 
       // SANAS slide durations (ms) — indexes 4–15
-      // Index 15 (Video) is set to 15,000 ms (15 seconds). Change this to match your video length!
+      // Index 15 (Video) is set to 15,000 ms. Change this to match your video length!
       const SANAS_DURATIONS = { 4: 10000, 5: 10000, 6: 12000, 7: 10000, 8: 10000, 9: 10000, 10: 10000, 11: 10000, 12: 10000, 13: 10000, 14: 10000, 15: 15000 };
 
       let currentIndex = 0;
@@ -453,6 +452,10 @@
         clearSlideshowTimer();
         scrollAnimFrames.forEach(id => cancelAnimationFrame(id));
         scrollAnimFrames = [];
+        
+        // Pause video on current slide
+        const currentVideo = slides[currentIndex].querySelector('video');
+        if (currentVideo && !currentVideo.paused) currentVideo.pause();
       }
 
       function resumeSlideshow() {
@@ -460,6 +463,14 @@
         isPaused = false;
         startSlideshowTimer(slideDuration, elapsedTime);
         if (slides[currentIndex]) startInfiniteScroll(slides[currentIndex]);
+        
+        // Resume video on current slide
+        const currentVideo = slides[currentIndex].querySelector('video');
+        if (currentVideo) {
+          currentVideo.play().catch(e => {
+            if (e.name !== 'AbortError') console.log('Video play error:', e);
+          });
+        }
       }
 
       function goToSlide(index) {
@@ -489,13 +500,24 @@
         setTimeout(() => { isTransitioning = false; }, 800);
 
         // === VIDEO CONTROL ===
-        // Pause all videos when leaving a slide
-        document.querySelectorAll('video').forEach(v => v.pause());
-        // Play the video on the current slide
+        // Pause all videos safely (only if actually playing)
+        document.querySelectorAll('video').forEach(v => {
+          if (!v.paused) v.pause();
+        });
+        
+        // Play current video
         const currentVideo = slides[currentIndex].querySelector('video');
         if (currentVideo) {
-          currentVideo.currentTime = 0; // Restart from beginning
-          currentVideo.play().catch(e => console.log('Video autoplay blocked:', e));
+          currentVideo.currentTime = 0;
+          const playPromise = currentVideo.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(e => {
+              // Ignore the harmless AbortError caused by rapid clicking
+              if (e.name !== 'AbortError') {
+                console.log('Video playback error:', e);
+              }
+            });
+          }
         }
       }
 
